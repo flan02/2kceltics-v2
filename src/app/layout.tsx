@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter, Recursive } from "next/font/google";
 import "./globals.css";
+import Navbar from "@/components/custom/Navbar";
+import Footer from "@/components/custom/Footer";
 
 const recursive = Recursive({ subsets: ["latin"] });
 const inter = Inter({ subsets: ["latin"] });
@@ -18,7 +20,9 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning >
       <body className={recursive.className}>
+        <Navbar />
         {children}
+        <Footer />
       </body>
     </html>
   );
