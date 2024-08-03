@@ -19,6 +19,10 @@ const config = {
       },
     },
     extend: {
+      lineHeight: {
+        'extra-loose': '2.5',
+        '12': '3rem',
+      },
       textShadow: {
         'default': '2px 2px 4px rgba(0, 128, 0, 0.4)',
         'md': '3px 3px 6px rgba(0, 128, 0, 0.5)',
