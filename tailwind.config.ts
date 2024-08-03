@@ -15,9 +15,16 @@ const config = {
       padding: "2rem",
       screens: {
         "2xl": "1400px",
+        "3xl": "1920px",
       },
     },
     extend: {
+      textShadow: {
+        'default': '2px 2px 4px rgba(0, 128, 0, 0.4)',
+        'md': '3px 3px 6px rgba(0, 128, 0, 0.5)',
+        'lg': '5px 5px 10px rgba(0, 0, 0, 0.6)',
+        'xl': '7px 7px 14px rgba(0, 0, 0, 0.7)',
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -102,7 +109,30 @@ const config = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [
+    require("tailwindcss-animate"),
+    function ({ addUtilities }: { addUtilities: any }) {
+      const newUtilities = {
+        '.text-shadow': {
+          textShadow: '2px 2px 4px rgba(0, 128, 0, 0.4)',
+        },
+        '.text-shadow-md': {
+          textShadow: '3px 3px 6px rgba(0, 128, 0, 0.5)',
+        },
+        '.text-shadow-lg': {
+          textShadow: '5px 5px 10px rgba(0, 0, 0, 0.6)',
+        },
+        '.text-shadow-xl': {
+          textShadow: '7px 7px 14px rgba(0, 0, 0, 0.7)',
+        },
+        '.text-shadow-none': {
+          textShadow: 'none',
+        },
+      };
+
+      addUtilities(newUtilities, ['responsive', 'hover']);
+    }
+  ],
 } satisfies Config
 
 export default config
