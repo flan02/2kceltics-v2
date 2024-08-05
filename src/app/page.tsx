@@ -7,11 +7,14 @@ import MainMenu from "@/components/custom/MainMenu";
 import About from "@/components/custom/About";
 import H2underline from "@/components/reutilizable/H2underline";
 import Schedule from "@/components/custom/Schedule";
+import Roster from "@/components/custom/Roster";
+import Marquee from "@/components/reutilizable/Marquee";
 
 export default function Home() {
   return (
     <>
-      <MaxWidthWrapper className="h-[calc(100vh-50px)] md:px-0 place-content-center">
+      <Marquee />
+      <MaxWidthWrapper className="h-[calc(100vh-50px)] md:px-0 place-content-center mb-24">
         <div>
           <div className="grid grid-cols-2">
             <article className="flex mt-8">
@@ -42,7 +45,11 @@ export default function Home() {
         <Schedule />
       </MaxWidthWrapper>
 
-      <MaxWidthWrapper className="py-12 max-w-screen-2xl">
+      <MaxWidthWrapper className="max-w-screen-3xl h-screen">
+        <Roster />
+      </MaxWidthWrapper>
+
+      <MaxWidthWrapper className="py-12 max-w-screen-3xl bg-zinc-100/60">
         <div className=''>
           <h1 className='text-3xl lowercase text-celtics text-center'>VISITORS COUNTER: &nbsp; 13 000</h1>
         </div>
