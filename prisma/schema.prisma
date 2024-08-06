@@ -1,0 +1,46 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Team {
+  id          String   @id @default(auto())  @map("_id") @db.ObjectId
+  name        String   // team name
+  team_code   String   // team code
+  logo_url    String   // team logo_url cloudinary
+  players     String?  // only BOS players markdown table
+  standings   String?  // only BOS standings markdown table
+}
+
+model Schedule {
+  id               String   @id @default(auto())  @map("_id") @db.ObjectId
+  season           String   // nba2k24 | nba2k25 | nba2k26 ... etc
+  gameNumber       Int      // game itself
+  nextGame         Int      @default(1) // game + 1
+  played           Boolean  @default(false) // game played or not
+  atHome           Boolean  // home true or away false
+  name1            String   // team name
+  name2            String   // opponent team name
+  team_code1       String   @default("BOS")   
+  team_code2       String   // abrrev. opponent team got from model Team
+  scoreTeam1       Int?     // team score
+  scoreTeam2       Int?     // opponent team score
+  gameStats        String?  // game stats markdown table provided by OpenAI
+  boxscoreTeam1    String?  // boxscore team1 markdown table provided by OpenAI
+  boxscoreTeam2    String?  // boxscore team2 markdown table provided by OpenAI
+  createdAt        DateTime @default(now()) // game created
+  updatedAt        DateTime @updatedAt // last update
+}
+
+
+// model Statistics {}
