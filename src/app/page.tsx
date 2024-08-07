@@ -10,7 +10,8 @@ import Schedule from "@/components/custom/Schedule";
 import Roster from "@/components/custom/Roster";
 import Marquee from "@/components/reutilizable/Marquee";
 
-export default function Home() {
+export default async function Home() {
+
   return (
     <>
       <Marquee />

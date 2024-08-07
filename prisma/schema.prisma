@@ -13,25 +13,52 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Season { 
+  NBA2K24
+}
+
+enum Tournament {
+  RS
+  PO
+}
+
+enum Stage {
+  RS
+  CUP
+  FIRST_ROUND
+  ESCF
+  ECF
+  FINALS
+}
+
+// Definiendo el tipo embebido Game
+type Game {
+  season           Season
+  type             Tournament
+  stage            Stage
+}
+
 model Team {
-  id          String   @id @default(auto())  @map("_id") @db.ObjectId
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
   name        String   // team name
   team_code   String   // team code
   logo_url    String   // team logo_url cloudinary
   players     String?  // only BOS players markdown table
   standings   String?  // only BOS standings markdown table
+  teamRecord  String?  // only BOS team record markdown table
 }
 
+
 model Schedule {
-  id               String   @id @default(auto())  @map("_id") @db.ObjectId
-  season           String   // nba2k24 | nba2k25 | nba2k26 ... etc
+  id               String   @id @default(auto()) @map("_id") @db.ObjectId
+  game             Game     // usando el tipo embebido Game
   gameNumber       Int      // game itself
   nextGame         Int      @default(1) // game + 1
-  played           Boolean  @default(false) // game played or not
+  wasPlayed        Boolean  @default(false) // game played or not
   atHome           Boolean  // home true or away false
-  name1            String   // team name
-  name2            String   // opponent team name
-  team_code1       String   @default("BOS")   
+  team1            String   // team name
+  team2            String   // opponent team name
+  team_code1       String   @default("BOS")
   team_code2       String   // abrrev. opponent team got from model Team
   scoreTeam1       Int?     // team score
   scoreTeam2       Int?     // opponent team score
@@ -39,8 +66,41 @@ model Schedule {
   boxscoreTeam1    String?  // boxscore team1 markdown table provided by OpenAI
   boxscoreTeam2    String?  // boxscore team2 markdown table provided by OpenAI
   createdAt        DateTime @default(now()) // game created
-  updatedAt        DateTime @updatedAt // last update
+  updatedAt        DateTime @updatedAt      // last update
 }
 
+model Statistic {
+  id               String     @id @default(auto()) @map("_id") @db.ObjectId
+  game             Game       // usando el tipo embebido Game
+  playerStats      PlayerStat[]
+  createdAt        DateTime   @default(now()) // game created
+  updatedAt        DateTime   @updatedAt      // last update 
+}
 
-// model Statistics {}
+model PlayerStat {
+  id               String     @id @default(auto()) @map("_id") @db.ObjectId
+  stat             Statistic  @relation(fields: [statId], references: [id])
+  statId           String     @db.ObjectId
+  name             String     // player name
+  min              Int        // minutes played
+  pts              Int        // points
+  reb              Int        // rebounds
+  ast              Int        // assists
+  stl              Int        // steals
+  blk              Int        // blocks
+  to               Int        // turnovers
+  fls              Int        // personal fouls
+  or               Int        // offensive rebounds
+  fg               Int        // field goals made
+  fga              Int        // field goals attempted
+  fgPct            Float?     // field goal percentage
+  fg3              Int        // 3-point field goals made
+  fg3a             Int        // 3-point field goals attempted
+  fg3Pct           Float?     // 3-point field goal percentage
+  ft               Int        // free throws made
+  fta              Int        // free throws attempted
+  ftPct            Float?     // free throw percentage
+  createdAt        DateTime   @default(now()) // game created
+  updatedAt        DateTime   @updatedAt      // last update
+}
+
