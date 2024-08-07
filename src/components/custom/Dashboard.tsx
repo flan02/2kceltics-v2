@@ -37,14 +37,14 @@ const Dashboard = async ({ opt, photo, given_name }: Props) => {
         {
           !opt
             ?
-            <div className='flex justify-center items-center min-h-[calc(100vh-150px)]'>
+            <div className='flex flex-col justify-center items-center min-h-[calc(100vh-150px)]'>
               <h1 className='text-center text-4xl text-celtics'>Welcome back admin {given_name} (flan02)!</h1>
               <p>NEXT STEPS</p>
               <ul>
+                <li>Create a logic that allow add +1 visit to our website each time that we got a new visit. CLIENT COMPONENT WITH API</li>
                 <li>Create addteam component, server logic and send teams to database</li>
                 <li>Create a logic that wont send empty keys-value to mongodb... middleware prisma</li>
                 <li>Create a markdown function to add in mongodb our table with player in markdown format</li>
-                <li>Create a logic that allow add +1 visit to our website each time that we got a new visit.</li>
               </ul>
             </div>
             : null

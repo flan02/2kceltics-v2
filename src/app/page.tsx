@@ -9,6 +9,7 @@ import H2underline from "@/components/reutilizable/H2underline";
 import Schedule from "@/components/custom/Schedule";
 import Roster from "@/components/custom/Roster";
 import Marquee from "@/components/reutilizable/Marquee";
+import VisitorsCounter from "@/components/custom/VisitorsCounter";
 
 export default async function Home() {
 
@@ -51,9 +52,7 @@ export default async function Home() {
       </MaxWidthWrapper>
 
       <MaxWidthWrapper className="py-12 max-w-screen-3xl bg-zinc-100/60">
-        <div className=''>
-          <h1 className='text-3xl lowercase text-celtics text-center'>VISITORS COUNTER: &nbsp; 13 000</h1>
-        </div>
+        <VisitorsCounter />
       </MaxWidthWrapper>
     </>
   );

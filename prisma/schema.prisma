@@ -62,6 +62,7 @@ model Schedule {
   team_code2       String   // abrrev. opponent team got from model Team
   scoreTeam1       Int?     // team score
   scoreTeam2       Int?     // opponent team score
+  video_url        String?  // game video_url youtube
   gameStats        String?  // game stats markdown table provided by OpenAI
   boxscoreTeam1    String?  // boxscore team1 markdown table provided by OpenAI
   boxscoreTeam2    String?  // boxscore team2 markdown table provided by OpenAI
@@ -104,3 +105,7 @@ model PlayerStat {
   updatedAt        DateTime   @updatedAt      // last update
 }
 
+model VisitCounter {
+  id    String     @id @default(auto()) @map("_id") @db.ObjectId
+  count Int    @default(0)
+}
