@@ -1,5 +1,5 @@
 import React from 'react'
-import Upload from '../reutilizable/Upload'
+import Upload from './dashboard/Upload'
 import { CloverIcon } from 'lucide-react'
 import Link from 'next/link'
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server'

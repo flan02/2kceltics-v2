@@ -45,7 +45,7 @@ model Team {
   logo_url    String   // team logo_url cloudinary
   players     String?  // only BOS players markdown table
   standings   String?  // only BOS standings markdown table
-  teamRecord  String?  // only BOS team record markdown table
+  team_record  String?  // only BOS team record markdown table
 }
 
 

@@ -9,7 +9,7 @@ type Props = {}
 
 const page = (props: Props) => {
   return (
-    <MaxWidthWrapper className='h-[calc(100vh-100px)]'>
+    <MaxWidthWrapper className='h-[calc(100vh-150px)]'>
       <article className='flex flex-col space-y-12 items-center justify-center h-full'>
         <Image src={CelticsTrebol} width={300} height={300} alt='Celtics trebol' />
         <Link href="/api/auth/login" className={buttonVariants({
