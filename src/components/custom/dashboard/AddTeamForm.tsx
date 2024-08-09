@@ -17,10 +17,12 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { createTeam } from "@/app/dashboard/actions"
-import { toast, useToast } from "@/components/ui/use-toast"
+import { toast } from "@/components/ui/use-toast"
 
 import { useEffect } from "react"
 import LoadingButton from "@/components/reutilizable/LoadingButton"
+import RichTextEditor from "../RichTextEditor"
+import { draftToMarkdown } from "markdown-draft-js"
 
 
 const formSchema = z.object({
@@ -143,7 +145,10 @@ export function AddTeamForm() {
             <FormItem>
               <FormLabel>Markdown Players Table</FormLabel>
               <FormControl>
-                <Input placeholder="optional" {...field} />
+                <RichTextEditor
+                  ref={field.ref}
+                  onChange={(draft) => field.onChange(draftToMarkdown(draft))}
+                />
               </FormControl>
               <FormMessage>{form.formState.errors.players?.message}</FormMessage>
             </FormItem>

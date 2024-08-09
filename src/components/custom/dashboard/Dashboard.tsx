@@ -1,11 +1,17 @@
 import Link from 'next/link'
 import React from 'react'
-import { buttonVariants } from '../../ui/button'
+import { Button, buttonVariants } from '../../ui/button'
 import Image from 'next/image'
 import Yo from '../../../../public/yo-unbackground.png'
 import AddTeam from './AddTeam'
 import Schedule from './Schedule'
 import AddStats from './AddStats'
+import TaskForm from '../TaskForm'
+import { getTasks, updateTask } from '@/app/dashboard/actions'
+import { CheckSquare } from 'lucide-react'
+import { Cross1Icon } from '@radix-ui/react-icons'
+import DoneTask from './DoneTask'
+
 
 type Props = {
   opt: string
@@ -15,10 +21,15 @@ type Props = {
 
 const Dashboard = async ({ opt, photo, given_name }: Props) => {
 
+  const tasks = await getTasks() // server function
+
   //console.log('photo url', photo);
   const addTeam = opt === 'addteam'
   const schedule = opt === 'schedule'
   const addStats = opt === 'addstats'
+
+  //console.log(tasks);
+
 
   return (
     <div className='mt-4 max-w-4xl mx-auto'>
@@ -46,15 +57,32 @@ const Dashboard = async ({ opt, photo, given_name }: Props) => {
                 <Image src={Yo} className='size-16 mx-auto rounded-full' width={100} height={100} alt="yo" />
                 <h1 className='text-center text-3xl text-celtics'>Welcome back admin {given_name} (flan02)!</h1>
               </div>
-              <p className='text-celtics shadow-sm'>TODO LIST</p>
-              <ul>
-                <li> ✔ Create a logic that allow add +1 visit to our website each time that we got a new visit. CLIENT COMPONENT WITH API</li>
-                <li> ✔ Create a form to upload data with server components</li>
-                <li> ✔ Create a logic that wont send empty keys-value to mongodb... middleware prisma</li>
-                <li> 🎀 Create addteam component, server logic and send teams to database</li>
-                <li> 👀 Create a markdown function to add in mongodb our table with player in markdown format</li>
-                <li> 👀 Personalizar pagina 404 not found. Foto de rondo enojado ?</li>
-              </ul>
+
+              <article className='border border-slate-200 p-2'>
+
+                {
+                  (tasks as any).map((task: any) => (
+                    <div key={task.id} className='flex justify-between space-y-2 items-center'>
+                      <div className='flex space-x-2 items-center'>
+                        <span>
+                          {
+                            task.done
+                              ? <CheckSquare size={24} fill='white' color='black' />
+                              : <Cross1Icon fill='red' color='red' className='size-6' />
+                          }
+                        </span>
+                        <span className={`${task.done ? "line-through" : "text-primary"} text-muted-foreground lg:text-base text-xs`}>{task.task}</span>
+                      </div>
+
+
+                      <DoneTask task={task} />
+
+
+                    </div>
+                  ))
+                }
+              </article>
+              <TaskForm />
             </div>
             : null
         }

@@ -109,3 +109,11 @@ model VisitCounter {
   id    String     @id @default(auto()) @map("_id") @db.ObjectId
   count Int    @default(0)
 }
+
+model Task {
+  id    String     @id @default(auto()) @map("_id") @db.ObjectId
+  task  String
+  done  Boolean    @default(false)
+  createdAt        DateTime   @default(now()) // game created
+  updatedAt        DateTime   @updatedAt      // last update
+}

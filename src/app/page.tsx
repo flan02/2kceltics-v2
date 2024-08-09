@@ -51,7 +51,7 @@ export default async function Home() {
         <Roster />
       </MaxWidthWrapper>
 
-      <MaxWidthWrapper className="py-12 max-w-screen-3xl bg-zinc-100/60">
+      <MaxWidthWrapper className="mt-36 py-8 max-w-screen-3xl bg-zinc-100/60">
         <VisitorsCounter />
       </MaxWidthWrapper>
     </>
