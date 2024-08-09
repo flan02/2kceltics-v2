@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Button } from "@/components/ui/button"
+
 import MaxWidthWrapper from "@/components/reutilizable/MaxWidthWrapper";
 import CelticsHero from "../../public/celtics-hero-removedbg.png";
 import { TrophyIcon } from "lucide-react";
@@ -10,21 +10,24 @@ import Schedule from "@/components/custom/Schedule";
 import Roster from "@/components/custom/Roster";
 import Marquee from "@/components/reutilizable/Marquee";
 import VisitorsCounter from "@/components/custom/VisitorsCounter";
-
+import CelticsTrebol from "../../public/celtics-trebol.png";
 export default async function Home() {
 
   return (
     <>
       <Marquee />
-      <MaxWidthWrapper className="h-[calc(100vh-50px)] md:px-0 place-content-center mb-24">
+      <MaxWidthWrapper className="h-[calc(100vh-100px)] lg:h-[calc(100vh-150px)] lg:px-16 xl:px-0 xl:pt-24 md:px-0 place-content-start lg:place-content-center mb-24">
         <div>
-          <div className="grid grid-cols-2">
+          <div className="grid md:grid-cols-2 grid-cols-1">
+            <section className="mt-24 md:mt-0 md:hidden block">
+              <Image src={CelticsTrebol} alt="CelticsTrebol Hero Image" />
+            </section>
             <article className="flex mt-8">
-              <H2underline firstPhrase="Feel the" underlinedPhrase="Celtics" secondPhrase="spirit like never before in our 2k simulation league" />
+              <H2underline className="" firstPhrase="Feel the" underlinedPhrase="Celtics" secondPhrase="spirit like never before in our 2k simulation league" />
 
             </article>
-            <section className="place-self-end">
-              <Image src={CelticsHero} alt="Celtics Hero Image" className="" />
+            <section className="place-self-end md:block hidden">
+              <Image src={CelticsHero} alt="CelticsStarting5 Hero Image" className="lg:px-8 px-0 xl:px-0" />
             </section>
           </div>
 

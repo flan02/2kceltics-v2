@@ -129,7 +129,7 @@ const config = {
           textShadow: '3px 3px 6px rgba(0, 128, 0, 0.5)',
         },
         '.text-shadow-lg': {
-          textShadow: '5px 5px 10px rgba(0, 0, 0, 0.6)',
+          textShadow: '5px 5px 10px rgba(0, 128, 0, 0.5)',
         },
         '.text-shadow-xl': {
           textShadow: '7px 7px 14px rgba(0, 0, 0, 0.7)',

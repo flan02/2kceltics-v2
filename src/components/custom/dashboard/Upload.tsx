@@ -1,5 +1,6 @@
 import Link from "next/link"
 import { buttonVariants } from "../../ui/button"
+import { MenuIcon } from "lucide-react"
 
 
 
@@ -22,7 +23,11 @@ const Upload = ({ isAdmin }: Props) => {
               Sign out
             </Link>
           </div>
-          : <p>dropdown menu</p>
+          :
+          <>
+            <p className="md:block hidden">dropdown menu</p>
+            <MenuIcon className="md:hidden block" color="green" />
+          </>
       }
     </>
   )

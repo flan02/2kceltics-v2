@@ -21,7 +21,7 @@ const Navbar = async (props: Props) => {
           <p className="text-celtics text-2xl">2KCELTICS <span className='text-base'>V2</span></p>
         </Link>
       </div>
-      <h1 className="text-celtics text-2xl">2023/24 WORLD CHAMPIONS</h1>
+      <h1 className="text-celtics text-2xl lg:block hidden">2023/24 WORLD CHAMPIONS</h1>
       <Upload isAdmin={isAdmin} />
     </header>
   )

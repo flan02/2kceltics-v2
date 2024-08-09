@@ -21,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning >
 
-      <body className={recursive.className}>
+      <body className={`${recursive.className}`}>
         <Navbar />
         {children}
         <Toaster />

@@ -2,10 +2,10 @@ import React from 'react'
 
 type Props = {}
 
-const AdvancedStatsPage = (props: Props) => {
+const AdvancedPage = (props: Props) => {
   return (
     <div>AdvancedStatsPage</div>
   )
 }
 
-export default AdvancedStatsPage
+export default AdvancedPage
