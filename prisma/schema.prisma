@@ -51,23 +51,23 @@ model Team {
 
 model Schedule {
   id               String   @id @default(auto()) @map("_id") @db.ObjectId
-  game             Game     // usando el tipo embebido Game
-  gameNumber       Int      // game itself
-  nextGame         Int      @default(1) // game + 1
-  wasPlayed        Boolean  @default(false) // game played or not
-  atHome           Boolean  // home true or away false
-  team1            String   // team name
-  team2            String   // opponent team name
-  team_code1       String   @default("BOS")
-  team_code2       String   // abrrev. opponent team got from model Team
+  game             Game?     // usando el tipo embebido Game
+  gameNumber       Int?      // game itself
+  nextGame         Int?      @default(1) // game + 1
+  wasPlayed        Boolean?  @default(false) // game played or not
+  atHome           Boolean?  // home true or away false
+  team1            String?   // team name
+  team2            String?   // opponent team name
+  team_code1       String?   @default("BOS")
+  team_code2       String?   // abrrev. opponent team got from model Team
   scoreTeam1       Int?     // team score
   scoreTeam2       Int?     // opponent team score
   video_url        String?  // game video_url youtube
   gameStats        String?  // game stats markdown table provided by OpenAI
   boxscoreTeam1    String?  // boxscore team1 markdown table provided by OpenAI
   boxscoreTeam2    String?  // boxscore team2 markdown table provided by OpenAI
-  createdAt        DateTime @default(now()) // game created
-  updatedAt        DateTime @updatedAt      // last update
+  createdAt        DateTime? @default(now()) // game created
+  updatedAt        DateTime? @updatedAt      // last update
 }
 
 model Statistic {

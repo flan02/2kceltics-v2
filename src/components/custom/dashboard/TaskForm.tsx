@@ -1,14 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 import React, { useEffect } from 'react'
-import { Button } from '../ui/button'
+import { Button } from '../../ui/button'
 import { ArrowBigRightDashIcon } from 'lucide-react'
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, } from '../ui/form'
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, } from '../../ui/form'
 import { useForm } from 'react-hook-form'
-import { Input } from '../ui/input'
-import LoadingButton from '../reutilizable/LoadingButton'
+import { Input } from '../../ui/input'
+import LoadingButton from '../../reutilizable/LoadingButton'
 import { createTask } from '@/app/dashboard/actions'
-import { toast } from '../ui/use-toast'
+import { toast } from '../../ui/use-toast'
 
 
 type Props = {}
@@ -67,6 +67,7 @@ const TaskForm = (props: Props) => {
                     <FormLabel></FormLabel>
                     <FormControl>
                       <Input placeholder="Add your new Task" {...field}
+                        autoComplete='off'
                         type='text'
                       />
                     </FormControl>

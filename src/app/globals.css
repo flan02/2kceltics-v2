@@ -70,7 +70,7 @@
 
 /* Chrome styling for scrollbar */
 ::-webkit-scrollbar {
-  width: 10px; /* Ancho del scroll */
+  width: 8px; /* Ancho del scroll */
 }
 
 /* bar styling */
@@ -81,12 +81,27 @@
 
 /* track bar styling */
 ::-webkit-scrollbar-track {
-  background-color: rgb(202, 248, 225); 
+  background-color: rgb(230, 245, 237); 
 }
 
 
-table, th {
-  border: 1px solid rgba(209, 213, 219, .7);
-  
+table{
+  display: grid;
+  overflow-x: scroll; 
+  border: 1px solid rgba(255,255,255, .4);
+  font-size: 10px;
+
+  @media (min-width: 992px) {
+    font-size: 16px;
+    display: block;
+    overflow-x: hidden; 
+  }
 }
 
+tr:hover {
+  background-color: rgb(235, 235, 235);
+}
+
+th {
+  border: 1px solid rgb(230, 230, 230);
+}

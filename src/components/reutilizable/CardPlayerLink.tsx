@@ -32,9 +32,9 @@ const CardPlayerLink = ({ player, cardTitle, className, isTag, link }: Props) =>
         </CardTitle>
         <CardContent className="relative w-full flex justify-end ">
           <Image
-            src={player} width={130} height={130}
+            src={player} width={100} height={100}
             alt={cardTitle}
-            className='mt-2 block object-contain' sizes="(max-width: 768px) 100vw, 33vw" priority />
+            className='mt-2 block object-contain w-auto h-auto' sizes="(max-width: 768px) 100vw, 33vw" priority />
         </CardContent>
       </Card>
 
