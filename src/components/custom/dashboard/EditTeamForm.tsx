@@ -68,7 +68,7 @@ enum EditorType {
   StandingsTable = "standings",
   TeamRecordTable = "team_record",
 }
-export default function AddTeamForm() {
+export default function EditTeam() {
 
   const [richEditor, setRichEditor] = useState(false)
   const [editorId, setEditorId] = useState<string | null>(null);
@@ -124,7 +124,6 @@ export default function AddTeamForm() {
 
 
   return (
-
 
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="w-full border rounded-lg border-slate-200 mb-16 p-16 b-16 space-y-8">

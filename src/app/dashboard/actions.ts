@@ -25,6 +25,7 @@ export async function createTeam({ name, team_code, logo_url, players, standings
         team_record
       }
     })
+    // revalidatePath('/dashboard?opt=addteam')
     return response
   } catch (error) {
     console.log(error);

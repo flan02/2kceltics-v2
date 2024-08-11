@@ -1,13 +1,13 @@
 
 import { lazy, useEffect, useState, Suspense } from "react"
-import AddTeamForm from "./AddTeamForm"
+import EditTeamForm from "./EditTeamForm"
 
 
 
 //const AddTeamForm = lazy(() => import("@/components/custom/dashboard/AddTeamForm"))
 
 
-export function AddTeam() {
+export function EditTeam() {
   /*const [addTeamForm, setAddTeamForm] = useState(false)
   useEffect(() => {
     const uploadComponent = async () => {
@@ -19,15 +19,15 @@ export function AddTeam() {
   }, [])
 */
   return (
-    <div className=' flex flex-col justify-start items-center mt-16 min-h-[calc(100vh-50px)]'>
-      <h1 className=' text-center text-4xl text-celtics'>Add a team</h1>
+    <div className='flex flex-col justify-start items-center mt-16 min-h-[calc(100vh-50px)]'>
+      <h1 className=' text-center text-4xl text-celtics'>Edit a team</h1>
       <br /><br />
-      <AddTeamForm />
+      <EditTeamForm />
 
     </div>
   )
 }
 
-export default AddTeam
+export default EditTeam
 //<Suspense fallback={<p className="h-full text-lg text-celtics ">Loading form...</p>}>
 //</Suspense>

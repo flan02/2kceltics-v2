@@ -11,6 +11,7 @@ import { getTasks, updateTask } from '@/app/dashboard/actions'
 import { CheckSquare } from 'lucide-react'
 import { Cross1Icon } from '@radix-ui/react-icons'
 import DoneTask from './DoneTask'
+import EditTeam from './EditTeam'
 
 
 type Props = {
@@ -27,13 +28,14 @@ const Dashboard = async ({ opt, photo, given_name }: Props) => {
   const addTeam = opt === 'addteam'
   const schedule = opt === 'schedule'
   const addStats = opt === 'addstats'
+  const editTeam = opt === 'editteam'
 
   //console.log(tasks);
 
 
   return (
     <div className='mt-4 max-w-4xl mx-auto'>
-      <nav className='flex justify-center'>
+      <nav className='flex justify-center space-x-1'>
         <Link href="/dashboard?opt=addteam" className={buttonVariants({
           variant: `${(opt === 'addteam') ? 'default' : 'outline'}`,
           className: 'transition-all duration-500 ease-in-out'
@@ -46,6 +48,10 @@ const Dashboard = async ({ opt, photo, given_name }: Props) => {
           variant: `${(opt === 'addstats') ? 'default' : 'outline'}`,
           className: 'transition-all duration-500 ease-in-out'
         })}>ADD STATS</Link>
+        <Link href="/dashboard?opt=editteam" className={buttonVariants({
+          variant: `${(opt === 'editteam') ? 'default' : 'outline'}`,
+          className: 'transition-all duration-500 ease-in-out'
+        })}>EDIT</Link>
 
       </nav>
       <section className='min-h-[calc(100vh-100px)] mt-4 border-t border-slate-200'>
@@ -94,6 +100,9 @@ const Dashboard = async ({ opt, photo, given_name }: Props) => {
         }
         {
           addStats ? <AddStats /> : null
+        }
+        {
+          editTeam ? <EditTeam /> : null
         }
       </section>
 
