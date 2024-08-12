@@ -98,8 +98,18 @@ table{
   }
 }
 
+body {
+  background-image: url('../../public/fissure.png');
+  background-size: contain;
+    /* Agrega un color de fondo semi-transparente */
+    background-color: rgba(255, 255, 255, 0.8); /* Ajusta la opacidad aquí */
+    background-blend-mode: overlay; /* Modo de mezcla para combinar el color y la imagen */
+  filter: opacity(1) blur(0) sepia(0) saturate(default) contrast(default);
+  }
+
 tr:hover {
-  background-color: rgb(235, 235, 235);
+  background-color: rgb(235, 235, 235, .8);
+  color: black;
 }
 
 th {

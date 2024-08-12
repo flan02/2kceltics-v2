@@ -48,6 +48,14 @@ model Team {
   team_record  String?  // only BOS team record markdown table
 }
 
+// TODO I'm gonna change schema because I new a team model with an array for each season 2k24,2k25,2k26 and inside put the team object with players, standings, team_record
+// model Team {
+// nba2k24: { players, standings, team_record } -> add playoffs record as well
+// nba2k25: { players, standings, team_record } -> add playoffs record as well
+// nba2k26: { players, standings, team_record } -> add playoffs record as well
+ //}
+// ? Because I'll need previous seasons data to show in the website
+
 
 model Schedule {
   id               String   @id @default(auto()) @map("_id") @db.ObjectId

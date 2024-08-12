@@ -21,7 +21,7 @@ export function EditTeam() {
   return (
     <div className='flex flex-col justify-start items-center mt-16 min-h-[calc(100vh-50px)]'>
       <h1 className=' text-center text-4xl text-celtics'>Edit a team</h1>
-      <br /><br />
+      <br />
       <EditTeamForm />
 
     </div>

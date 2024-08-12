@@ -15,7 +15,7 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { createTeam } from "@/app/dashboard/actions"
+import { createTeam, updateTeam } from "@/app/dashboard/actions"
 import { toast } from "@/components/ui/use-toast"
 
 import { useEffect, useState, Suspense, lazy, useRef } from "react"
@@ -34,9 +34,7 @@ const formSchema = z.object({
   team_code: z.string().max(3, {
     message: "Team code must be 3 characters.",
   }),
-  logo_url: z.string().url({
-    message: "Logo URL must be a valid URL.",
-  }),
+  logo_url: z.string({ message: "Current path is /public/logos/[team_code].png" }),
   players: z.string().optional(),
   standings: z.string().optional(),
   team_record: z.string().optional(),
@@ -45,15 +43,12 @@ const formSchema = z.object({
 function onSubmit(values: z.infer<typeof formSchema>) {
   //console.log(values)
 
-  createTeam({
-    ...values,
-    players: values.players || "",
-    standings: values.standings || "",
-    team_record: values.team_record || ""
+  updateTeam({
+    ...values
   })
 
   toast({
-    title: "You submitted the following values:",
+    title: "You updated the following values:",
     description: (
       <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
         <code className="text-white">{JSON.stringify(values, null, 2)}</code>
@@ -71,16 +66,16 @@ enum EditorType {
 export default function EditTeam() {
 
   const [richEditor, setRichEditor] = useState(false)
-  const [editorId, setEditorId] = useState<string | null>(null);
+  //const [editorId, setEditorId] = useState<string | null>(null);
+  //const editorRef = useRef<HTMLDivElement>(null);
   const [markdownSelected, setMarkdownSelected] = useState<EditorType | "">("");
   const [isOpen, setIsOpen] = useState<boolean>(false)
-  const editorRef = useRef<HTMLDivElement>(null);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "",
-      team_code: "",
-      logo_url: "",
+      name: "Boston Celtics",
+      team_code: "BOS",
+      logo_url: "/logos/BOS.png",
       players: "",
       standings: "",
       team_record: "",
@@ -95,22 +90,24 @@ export default function EditTeam() {
     if (isSubmitted && isMounted) {
       form.reset({ name: "", team_code: "", logo_url: "", players: "", standings: "", team_record: "" })
 
+      document.getElementsByClassName('DraftEditor-editorContainer')[0].textContent = "" // * Added manually
+
     }
     return () => {
       isMounted = false
     }
   }, [isSubmitted])
 
-
-  useEffect(() => {
-    if (editorRef.current) {
-      const generatedId = editorRef.current.querySelector('textarea')?.id;
-      if (generatedId) {
-        setEditorId(generatedId);
+  /*
+    useEffect(() => {
+      if (editorRef.current) {
+        const generatedId = editorRef.current.querySelector('textarea')?.id;
+        if (generatedId) {
+          setEditorId(generatedId);
+        }
       }
-    }
-  }, [editorRef.current]);
-
+    }, [editorRef.current]);
+  */
 
 
   useEffect(() => {
@@ -133,10 +130,10 @@ export default function EditTeam() {
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel htmlFor="team_name">Team name</FormLabel>
+              <FormLabel htmlFor="name">Team name</FormLabel>
               <FormControl>
                 <Input
-                  id="team_name"
+                  id="name"
                   placeholder="" {...field}
                   autoComplete="off"
                   required={true}
@@ -183,10 +180,6 @@ export default function EditTeam() {
           )}
         />
 
-
-
-
-
         {
           !isOpen
             ? <div className="text-right">
@@ -201,26 +194,21 @@ export default function EditTeam() {
         }
 
 
-
-
-
         {
           markdownSelected
             ?
-
             <FormField
-
               control={form.control}
-              name={(markdownSelected as EditorType)}
+              name={markdownSelected || undefined}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel htmlFor={editorId || undefined}>{`Markdown ${markdownSelected}`}</FormLabel>
+                  <FormLabel htmlFor={undefined}>{`Markdown ${markdownSelected} selected `}</FormLabel>
                   <Suspense fallback={<div>Loading RichEditor...</div>}>
                     <FormControl>
 
 
                       <RichTextEditor
-                        ariaLabel="Markdown Players Table"
+
                         ref={field.ref}
                         onChange={(draft) => field.onChange(draftToMarkdown(draft))}
                       />
@@ -235,22 +223,11 @@ export default function EditTeam() {
             : null
         }
 
-
-
-
-
-
-
-
-
-
         <div className="text-center">
           <LoadingButton type="submit" loading={isSubmitting}>
             Submit
           </LoadingButton>
-
         </div>
-
       </form>
     </Form>
 

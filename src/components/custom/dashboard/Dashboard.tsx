@@ -38,19 +38,19 @@ const Dashboard = async ({ opt, photo, given_name }: Props) => {
       <nav className='flex justify-center space-x-1'>
         <Link href="/dashboard?opt=addteam" className={buttonVariants({
           variant: `${(opt === 'addteam') ? 'default' : 'outline'}`,
-          className: 'transition-all duration-500 ease-in-out'
+          className: `transition-all duration-500 ease-in-out ${opt !== 'addteam' ? " hover:bg-zinc-200/60" : ""}`
         })}>ADD TEAM</Link>
         <Link href="/dashboard?opt=schedule" className={buttonVariants({
           variant: `${(opt === 'schedule') ? 'default' : 'outline'}`,
-          className: 'transition-all duration-500 ease-in-out'
+          className: `transition-all duration-500 ease-in-out ${opt !== 'schedule' ? " hover:bg-zinc-200/60" : ""}`
         })}>SCHEDULE</Link>
         <Link href="/dashboard?opt=addstats" className={buttonVariants({
           variant: `${(opt === 'addstats') ? 'default' : 'outline'}`,
-          className: 'transition-all duration-500 ease-in-out'
+          className: `transition-all duration-500 ease-in-out ${opt !== 'addstats' ? " hover:bg-zinc-200/60" : ""}`
         })}>ADD STATS</Link>
         <Link href="/dashboard?opt=editteam" className={buttonVariants({
           variant: `${(opt === 'editteam') ? 'default' : 'outline'}`,
-          className: 'transition-all duration-500 ease-in-out'
+          className: `transition-all duration-500 ease-in-out ${opt !== 'editteam' ? " hover:bg-zinc-200/60" : ""}`
         })}>EDIT</Link>
 
       </nav>

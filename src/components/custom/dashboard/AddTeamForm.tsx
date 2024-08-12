@@ -34,9 +34,7 @@ const formSchema = z.object({
   team_code: z.string().max(3, {
     message: "Team code must be 3 characters.",
   }),
-  logo_url: z.string().url({
-    message: "Logo URL must be a valid URL.",
-  }),
+  logo_url: z.string({ message: "Current path is /public/logos/[team_code].png" }),
   players: z.string().optional(),
   standings: z.string().optional(),
   team_record: z.string().optional(),
@@ -45,12 +43,15 @@ const formSchema = z.object({
 function onSubmit(values: z.infer<typeof formSchema>) {
   //console.log(values)
 
+
   createTeam({
     ...values,
     players: values.players || "",
     standings: values.standings || "",
     team_record: values.team_record || ""
   })
+
+
 
   toast({
     title: "You submitted the following values:",
@@ -60,7 +61,6 @@ function onSubmit(values: z.infer<typeof formSchema>) {
       </pre>
     ),
   })
-
 }
 
 enum EditorType {
@@ -70,11 +70,6 @@ enum EditorType {
 }
 export default function AddTeamForm() {
 
-  const [richEditor, setRichEditor] = useState(false)
-  const [editorId, setEditorId] = useState<string | null>(null);
-  const [markdownSelected, setMarkdownSelected] = useState<EditorType | "">("");
-  const [isOpen, setIsOpen] = useState<boolean>(false)
-  const editorRef = useRef<HTMLDivElement>(null);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -102,42 +97,19 @@ export default function AddTeamForm() {
   }, [isSubmitted])
 
 
-  useEffect(() => {
-    if (editorRef.current) {
-      const generatedId = editorRef.current.querySelector('textarea')?.id;
-      if (generatedId) {
-        setEditorId(generatedId);
-      }
-    }
-  }, [editorRef.current]);
-
-
-
-  useEffect(() => {
-    const uploadComponent = async () => {
-      await import("../RichTextEditor")
-      setRichEditor(true)
-    }
-
-    uploadComponent()
-  }, [])
-
-
   return (
-
-
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="w-full border rounded-lg border-slate-200 mb-16 p-16 b-16 space-y-8">
         <FormField
-
           control={form.control}
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel htmlFor="team_name">Team name</FormLabel>
+              <FormLabel htmlFor="name">Team name</FormLabel>
               <FormControl>
                 <Input
-                  id="team_name"
+
+                  id="name"
                   placeholder="" {...field}
                   autoComplete="off"
                   required={true}
@@ -184,74 +156,11 @@ export default function AddTeamForm() {
           )}
         />
 
-
-
-
-
-        {
-          !isOpen
-            ? <div className="text-right">
-              <Button onClick={() => setIsOpen(true)}>Add markdown data</Button>
-            </div>
-            :
-            <div className="space-x-2 w-max mx-auto">
-              <Button type="button" onClick={() => setMarkdownSelected(EditorType.PlayersList)} >PLAYERS</Button>
-              <Button type="button" onClick={() => setMarkdownSelected(EditorType.StandingsTable)} >STANDINGS</Button>
-              <Button type="button" onClick={() => setMarkdownSelected(EditorType.TeamRecordTable)} >RECORD</Button>
-            </div>
-        }
-
-
-
-
-
-        {
-          markdownSelected
-            ?
-
-            <FormField
-
-              control={form.control}
-              name={(markdownSelected as EditorType)}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel htmlFor={editorId || undefined}>{`Markdown ${markdownSelected}`}</FormLabel>
-                  <Suspense fallback={<div>Loading RichEditor...</div>}>
-                    <FormControl>
-
-
-                      <RichTextEditor
-                        ariaLabel="Markdown Players Table"
-                        ref={field.ref}
-                        onChange={(draft) => field.onChange(draftToMarkdown(draft))}
-                      />
-
-
-                    </FormControl>
-                    <FormMessage>{form.formState.errors.players?.message}</FormMessage>
-                  </Suspense>
-                </FormItem>
-              )}
-            />
-            : null
-        }
-
-
-
-
-
-
-
-
-
-
         <div className="text-center">
           <LoadingButton type="submit" loading={isSubmitting}>
             Submit
           </LoadingButton>
-
         </div>
-
       </form>
     </Form>
 

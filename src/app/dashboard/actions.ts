@@ -12,6 +12,8 @@ type Team = {
   team_record?: string
 }
 
+
+
 export async function createTeam({ name, team_code, logo_url, players, standings, team_record }: Team) {
   try {
     // console.log(name, team_code, logo_url, players);
@@ -30,6 +32,38 @@ export async function createTeam({ name, team_code, logo_url, players, standings
   } catch (error) {
     console.log(error);
     return error
+  }
+
+}
+
+export async function updateTeam(values: Team) {
+  //console.log(values)
+  const filteredData: Team = {
+    name: "Boston Celtics",
+    team_code: "BOS",
+    logo_url: "/logos/BOS.png",
+  }
+
+  Object.keys(values).forEach(key => {
+    if (values[key as keyof Team]?.trim() !== "") {
+      filteredData[key as keyof Team]! = values[key as keyof Team] as string
+    }
+  })
+
+  try {
+    const response = db.team.update({
+      where: {
+        id: "66b4de0f0fa088d80a9b93d1"  // * Added manually
+      },
+      data: {
+        ...filteredData
+      }
+    })
+    return response
+  } catch (error) {
+    console.log(error);
+    return error
+
   }
 
 }
