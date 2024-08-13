@@ -7,14 +7,22 @@ type Team = {
   name: string
   team_code: string
   logo_url: string
-  players?: string
-  standings?: string
-  team_record?: string
+}
+
+type TeamUpdate = {
+  seasons2k: {
+    season: string
+    total_games: number
+    players?: string
+    standings?: string
+    team_record?: string
+    playoffs_record?: string
+  }
+
 }
 
 
-
-export async function createTeam({ name, team_code, logo_url, players, standings, team_record }: Team) {
+export async function createTeam({ name, team_code, logo_url }: Team) {
   try {
     // console.log(name, team_code, logo_url, players);
     const response = db.team.create({
@@ -22,9 +30,6 @@ export async function createTeam({ name, team_code, logo_url, players, standings
         name,
         team_code,
         logo_url,
-        players,
-        standings,
-        team_record
       }
     })
     // revalidatePath('/dashboard?opt=addteam')
@@ -36,28 +41,38 @@ export async function createTeam({ name, team_code, logo_url, players, standings
 
 }
 
-export async function updateTeam(values: Team) {
-  //console.log(values)
-  const filteredData: Team = {
-    name: "Boston Celtics",
-    team_code: "BOS",
-    logo_url: "/logos/BOS.png",
+export async function updateTeam(values: TeamUpdate) {
+  console.log("Before filter", values)
+
+  const filteredData: TeamUpdate = {
+    seasons2k: {
+      season: "NBA2K24",
+      total_games: 0
+    }
   }
 
-  Object.keys(values).forEach(key => {
-    if (values[key as keyof Team]?.trim() !== "") {
-      filteredData[key as keyof Team]! = values[key as keyof Team] as string
+  Object.keys(values.seasons2k).forEach((key) => {
+    const value = values.seasons2k[key as keyof typeof values.seasons2k];
+    if (typeof value === 'string' && value.trim() !== '') {
+      (filteredData.seasons2k[key as keyof typeof values.seasons2k] as string) = value;
+    } else if (typeof value === 'number') {
+      (filteredData.seasons2k[key as keyof typeof values.seasons2k] as number) = value;
     }
-  })
+  });
 
-  try {
+  console.log("After Filter", filteredData)
+
+  // * I need to pass the id of the team to update from client component (server function drill props)
+  /*try {
     const response = db.team.update({
       where: {
-        id: "66b4de0f0fa088d80a9b93d1"  // * Added manually
+        id: "66b4de0f0fa088d80a9b93d1",
+
       },
       data: {
-        ...filteredData
+        seasons2k: { ...filteredData.seasons2k }
       }
+
     })
     return response
   } catch (error) {
@@ -65,6 +80,7 @@ export async function updateTeam(values: Team) {
     return error
 
   }
+*/
 
 }
 

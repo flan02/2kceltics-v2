@@ -43,9 +43,20 @@ model Team {
   name        String   // team name
   team_code   String   // team code
   logo_url    String   // team logo_url cloudinary
-  players     String?  // only BOS players markdown table
-  standings   String?  // only BOS standings markdown table
+  seasons2k   Season2k[]
+}
+
+// This table will be overwritten every game of the season. Following season will contain a new record
+model Season2k {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  team         Team     @relation(fields: [teamId], references: [id])
+  teamId       String   @db.ObjectId
+  season       Season   // season
+  total_games  Int      @default(0) // total games played in current season
+  players      String?  // only BOS players markdown table
+  standings    String?  // only BOS standings markdown table
   team_record  String?  // only BOS team record markdown table
+  playoffs_record String? // only BOS playoffs record markdown table
 }
 
 // TODO I'm gonna change schema because I new a team model with an array for each season 2k24,2k25,2k26 and inside put the team object with players, standings, team_record
