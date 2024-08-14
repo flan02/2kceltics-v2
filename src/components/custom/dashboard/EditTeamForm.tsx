@@ -23,18 +23,12 @@ import LoadingButton from "@/components/reutilizable/LoadingButton"
 //import RichTextEditor from "../RichTextEditor"
 import { draftToMarkdown } from "markdown-draft-js"
 import { Button } from "@/components/ui/button"
-import { parse } from "path"
 
-enum EditorType {
-  PlayersList = "players",
-  StandingsTable = "standings",
-  TeamRecordTable = "team_record",
-}
 
 const RichTextEditor = lazy(() => import("../RichTextEditor"));
 
 const formSchema = z.object({
-  total_games: z.string().min(1).max(3),
+  total_games: z.string().nullable(),
   players: z.string({ message: "Markdown table format" }).nullable(),
   standings: z.string().nullable(),
   team_record: z.string().nullable(),
@@ -61,7 +55,7 @@ function onSubmit(values: z.infer<typeof formSchema>) {
 
 
 export default function EditTeam() {
-
+  //const [textArea, setTextArea] = useState<string>("")
   const [richEditor, setRichEditor] = useState(false)
   const [markdownSelected, setMarkdownSelected] = useState<string>("");
   const [isOpen, setIsOpen] = useState<boolean>(false)
@@ -82,9 +76,9 @@ export default function EditTeam() {
   useEffect(() => {
     let isMounted = true
     if (isSubmitted && isMounted) {
-      form.reset({}) // * RESET FORM INPUTS
-
-      document.getElementsByClassName('DraftEditor-editorContainer')[0].textContent = "" // * Added manually
+      form.reset({ players: "", standings: "", team_record: "", playoffs_record: "", total_games: "" }) // * RESET FORM INPUTS
+      // setTextArea("")
+      // document.getElementsByClassName('DraftEditor-editorContainer')[0].textContent = textArea // * Added manually
 
     }
     return () => {
@@ -114,12 +108,11 @@ export default function EditTeam() {
               <FormLabel htmlFor="total_games">Total Games Played</FormLabel>
               <FormControl>
                 <Input
-
                   id="total_games"
-                  placeholder="number of games played" {...field}
-
+                  placeholder="number of games played"
+                  {...field}
                   autoComplete="off"
-                  required={true}
+                  value={field.value ?? ""}
                 />
               </FormControl>
               <FormMessage>{form.formState.errors.total_games?.message}</FormMessage>
@@ -132,10 +125,11 @@ export default function EditTeam() {
               <Button onClick={() => setIsOpen(true)}>Add markdown data</Button>
             </div>
             :
-            <div className="space-x-2 w-max mx-auto">
+            <div className="space-x-2 w-max -ml-4 sm:mx-auto">
               <Button type="button" onClick={() => setMarkdownSelected("players")} >PLAYERS</Button>
               <Button type="button" onClick={() => setMarkdownSelected("standings")} >STANDINGS</Button>
               <Button type="button" onClick={() => setMarkdownSelected("team_record")} >RECORD</Button>
+              <Button type="button" onClick={() => setMarkdownSelected("playoffs_record")} >PO RECORD</Button>
             </div>
         }
         {

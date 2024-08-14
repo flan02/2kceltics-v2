@@ -52,7 +52,7 @@ model Season2k {
   team         Team     @relation(fields: [teamId], references: [id])
   teamId       String   @db.ObjectId
   season       Season   // season
-  total_games  String   @default("0") // total games played in current season // * CHANGE TO STRING AND REFRESH PRISMA
+  total_games  String?  @default("0") // total games played in current season // * CHANGE TO STRING AND REFRESH PRISMA
   players      String?  // only BOS players markdown table
   standings    String?  // only BOS standings markdown table
   team_record  String?  // only BOS team record markdown table
