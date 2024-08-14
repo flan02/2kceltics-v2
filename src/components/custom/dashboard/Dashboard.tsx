@@ -7,7 +7,7 @@ import AddTeam from './AddTeam'
 import Schedule from './Schedule'
 import AddStats from './AddStats'
 import TaskForm from './TaskForm'
-import { getTasks, updateTask } from '@/app/dashboard/actions'
+import { getSeasons2k, getTasks, updateTask } from '@/app/dashboard/actions'
 import { CheckSquare } from 'lucide-react'
 import { Cross1Icon } from '@radix-ui/react-icons'
 import DoneTask from './DoneTask'
@@ -23,15 +23,12 @@ type Props = {
 const Dashboard = async ({ opt, photo, given_name }: Props) => {
 
   const tasks = await getTasks() // server function
+  //console.log(tasks);
 
-  //console.log('photo url', photo);
   const addTeam = opt === 'addteam'
   const schedule = opt === 'schedule'
   const addStats = opt === 'addstats'
   const editTeam = opt === 'editteam'
-
-  //console.log(tasks);
-
 
   return (
     <div className='mt-4 max-w-4xl mx-auto'>
@@ -112,6 +109,3 @@ const Dashboard = async ({ opt, photo, given_name }: Props) => {
 
 export default Dashboard
 
-{/* 
-  <Image src={photo} alt="admin image" className='' width={100} height={100} />
-  */}

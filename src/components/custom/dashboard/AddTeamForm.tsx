@@ -18,11 +18,9 @@ import { Input } from "@/components/ui/input"
 import { createTeam } from "@/app/dashboard/actions"
 import { toast } from "@/components/ui/use-toast"
 
-import { useEffect, useState, Suspense, lazy, useRef } from "react"
+import { useEffect, lazy } from "react"
 import LoadingButton from "@/components/reutilizable/LoadingButton"
-//import RichTextEditor from "../RichTextEditor"
-import { draftToMarkdown } from "markdown-draft-js"
-import { Button } from "@/components/ui/button"
+
 
 
 const RichTextEditor = lazy(() => import("../RichTextEditor"));
@@ -34,24 +32,14 @@ const formSchema = z.object({
   team_code: z.string().max(3, {
     message: "Team code must be 3 characters.",
   }),
-  logo_url: z.string({ message: "Current path is /public/logos/[team_code].png" }),
-  players: z.string().optional(),
-  standings: z.string().optional(),
-  team_record: z.string().optional(),
+  logo_url: z.string({ message: "Current path is /public/logos/[team_code].png" })
 })
 
 function onSubmit(values: z.infer<typeof formSchema>) {
   //console.log(values)
-
-
   createTeam({
-    ...values,
-    players: values.players || "",
-    standings: values.standings || "",
-    team_record: values.team_record || ""
+    ...values
   })
-
-
 
   toast({
     title: "You submitted the following values:",
@@ -75,10 +63,7 @@ export default function AddTeamForm() {
     defaultValues: {
       name: "",
       team_code: "",
-      logo_url: "",
-      players: "",
-      standings: "",
-      team_record: "",
+      logo_url: ""
     }
   })
 
@@ -88,7 +73,7 @@ export default function AddTeamForm() {
   useEffect(() => {
     let isMounted = true
     if (isSubmitted && isMounted) {
-      form.reset({ name: "", team_code: "", logo_url: "", players: "", standings: "", team_record: "" })
+      form.reset({ name: "", team_code: "", logo_url: "" })
 
     }
     return () => {

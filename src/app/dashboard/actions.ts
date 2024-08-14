@@ -1,6 +1,7 @@
 "use server"
 
 import { db } from "@/db"
+import { Season2k } from "@prisma/client"
 import { revalidatePath } from "next/cache"
 
 type Team = {
@@ -9,18 +10,27 @@ type Team = {
   logo_url: string
 }
 
-type TeamUpdate = {
-  seasons2k: {
-    season: string
-    total_games: number
-    players?: string
-    standings?: string
-    team_record?: string
-    playoffs_record?: string
+
+export async function getTeam(team: string) {
+  try {
+    const response = await db.team.findFirst({
+      where: {
+        team_code: team
+      },
+      select: {
+        id: true,
+        name: true,
+        team_code: true,
+      }
+    })
+    return response
+  } catch (error) {
+    console.log(error);
+    return error
+
   }
 
 }
-
 
 export async function createTeam({ name, team_code, logo_url }: Team) {
   try {
@@ -41,46 +51,42 @@ export async function createTeam({ name, team_code, logo_url }: Team) {
 
 }
 
-export async function updateTeam(values: TeamUpdate) {
-  console.log("Before filter", values)
+export async function updateTeam(values: Omit<Season2k, "id" | "teamId" | "season" | "createdAt" | "updatedAt">) {
+  try {
+    const team: any = await getTeam("BOS")
 
-  const filteredData: TeamUpdate = {
-    seasons2k: {
-      season: "NBA2K24",
-      total_games: 0
-    }
-  }
+    // * I need bring [id,teamId,season,total_games] from server actions calling a fc inside this fc
+    console.log("Before filter", values)
 
-  Object.keys(values.seasons2k).forEach((key) => {
-    const value = values.seasons2k[key as keyof typeof values.seasons2k];
-    if (typeof value === 'string' && value.trim() !== '') {
-      (filteredData.seasons2k[key as keyof typeof values.seasons2k] as string) = value;
-    } else if (typeof value === 'number') {
-      (filteredData.seasons2k[key as keyof typeof values.seasons2k] as number) = value;
-    }
-  });
+    const filteredData: any = {}
 
-  console.log("After Filter", filteredData)
+    Object.keys(values).forEach((key) => {
+      const value = values[key as keyof typeof values];
+      if (typeof value === 'string' && value.trim() !== '') {
+        (filteredData[key as keyof typeof values] as string) = value;
+      } else if (typeof value === 'number') {
+        (filteredData[key as keyof typeof values] as number) = value;
+      }
+    });
 
-  // * I need to pass the id of the team to update from client component (server function drill props)
-  /*try {
-    const response = db.team.update({
+    console.log("After Filter", filteredData)
+
+    const updateTeam = await db.season2k.update({
       where: {
-        id: "66b4de0f0fa088d80a9b93d1",
-
+        id: "66bb7d42178533af7ee9d735", // * Added manually
+        teamId: team.id
       },
       data: {
-        seasons2k: { ...filteredData.seasons2k }
+        ...filteredData
       }
-
     })
-    return response
+    // revalidatePath('/dashboard?opt=editteam')
+    return updateTeam
+
   } catch (error) {
     console.log(error);
-    return error
-
+    return error;
   }
-*/
 
 }
 
@@ -124,6 +130,18 @@ export async function updateTask(id: string, done: boolean, task?: string) {
       }
     })
     revalidatePath('/dashboard')
+    return response
+  } catch (error) {
+    console.log(error);
+    return error
+  }
+}
+
+
+
+export async function getSeasons2k() {
+  try {
+    const response = db.season2k.findMany()
     return response
   } catch (error) {
     console.log(error);

@@ -23,33 +23,28 @@ import LoadingButton from "@/components/reutilizable/LoadingButton"
 //import RichTextEditor from "../RichTextEditor"
 import { draftToMarkdown } from "markdown-draft-js"
 import { Button } from "@/components/ui/button"
+import { parse } from "path"
 
+enum EditorType {
+  PlayersList = "players",
+  StandingsTable = "standings",
+  TeamRecordTable = "team_record",
+}
 
 const RichTextEditor = lazy(() => import("../RichTextEditor"));
 
 const formSchema = z.object({
-  name: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
-  }),
-  team_code: z.string().max(3, {
-    message: "Team code must be 3 characters.",
-  }),
-  logo_url: z.string({ message: "Current path is /public/logos/[team_code].png" }),
-  seasons2k: z.object({
-    season: z.string(),
-    total_games: z.number(),
-    players: z.string().optional(),
-    standings: z.string().optional(),
-    team_record: z.string().optional(),
-    playoffs_record: z.string().optional(),
-  }),
+  total_games: z.string().min(1).max(3),
+  players: z.string({ message: "Markdown table format" }).nullable(),
+  standings: z.string().nullable(),
+  team_record: z.string().nullable(),
+  playoffs_record: z.string().nullable(),
 })
 
 function onSubmit(values: z.infer<typeof formSchema>) {
   console.log(values)
 
   updateTeam({ ...values })
-
 
   toast({
     title: "You updated the following values:",
@@ -62,14 +57,10 @@ function onSubmit(values: z.infer<typeof formSchema>) {
 
 }
 
-enum EditorType {
-  PlayersList = "players",
-  StandingsTable = "standings",
-  TeamRecordTable = "team_record",
-}
-export default function EditTeam() {
 
-  // * Default values are getting from the database, getTeam fc
+
+
+export default function EditTeam() {
 
   const [richEditor, setRichEditor] = useState(false)
   const [markdownSelected, setMarkdownSelected] = useState<string>("");
@@ -77,17 +68,11 @@ export default function EditTeam() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "Boston Celtics",
-      team_code: "BOS",
-      logo_url: "/logos/BOS.png",
-      seasons2k: {
-        season: "NBA2K24",
-        total_games: 0,
-        players: "",
-        standings: "",
-        team_record: "",
-        playoffs_record: ""
-      }
+      total_games: "",
+      players: "",
+      standings: "",
+      team_record: "",
+      playoffs_record: "",
     }
   })
 
@@ -97,7 +82,7 @@ export default function EditTeam() {
   useEffect(() => {
     let isMounted = true
     if (isSubmitted && isMounted) {
-      form.reset({ name: "", team_code: "", logo_url: "" })
+      form.reset({}) // * RESET FORM INPUTS
 
       document.getElementsByClassName('DraftEditor-editorContainer')[0].textContent = "" // * Added manually
 
@@ -119,65 +104,28 @@ export default function EditTeam() {
 
 
   return (
-
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="w-full border rounded-lg border-slate-200 mb-16 p-16 b-16 space-y-8">
         <FormField
-
           control={form.control}
-          name="name"
+          name="total_games"
           render={({ field }) => (
             <FormItem>
-              <FormLabel htmlFor="name">Team name</FormLabel>
+              <FormLabel htmlFor="total_games">Total Games Played</FormLabel>
               <FormControl>
                 <Input
-                  id="name"
-                  placeholder="" {...field}
+
+                  id="total_games"
+                  placeholder="number of games played" {...field}
+
                   autoComplete="off"
                   required={true}
                 />
               </FormControl>
-              <FormMessage>{form.formState.errors.name?.message}</FormMessage>
+              <FormMessage>{form.formState.errors.total_games?.message}</FormMessage>
             </FormItem>
           )}
         />
-
-        <FormField
-          control={form.control}
-          name="team_code"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel htmlFor="team_code">Team code</FormLabel>
-              <FormControl>
-                <Input
-                  id="team_code"
-                  autoComplete="off"
-                  required={true}
-                  placeholder="3 letters code" {...field} />
-              </FormControl>
-              <FormMessage>{form.formState.errors.team_code?.message}</FormMessage>
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="logo_url"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel htmlFor="logo_url">Logo url</FormLabel>
-              <FormControl>
-                <Input
-                  id="logo_url"
-                  autoComplete="off"
-                  required={true}
-                  placeholder="" {...field} />
-              </FormControl>
-              <FormMessage>{form.formState.errors.logo_url?.message}</FormMessage>
-            </FormItem>
-          )}
-        />
-
         {
           !isOpen
             ? <div className="text-right">
@@ -185,13 +133,11 @@ export default function EditTeam() {
             </div>
             :
             <div className="space-x-2 w-max mx-auto">
-              <Button type="button" onClick={() => setMarkdownSelected("seasons2k.players")} >PLAYERS</Button>
-              <Button type="button" onClick={() => setMarkdownSelected("seasons2k.standings")} >STANDINGS</Button>
-              <Button type="button" onClick={() => setMarkdownSelected("seasons2k.team_record")} >RECORD</Button>
+              <Button type="button" onClick={() => setMarkdownSelected("players")} >PLAYERS</Button>
+              <Button type="button" onClick={() => setMarkdownSelected("standings")} >STANDINGS</Button>
+              <Button type="button" onClick={() => setMarkdownSelected("team_record")} >RECORD</Button>
             </div>
         }
-
-
         {
           markdownSelected
             ?
@@ -208,14 +154,13 @@ export default function EditTeam() {
                         onChange={(draft) => field.onChange(draftToMarkdown(draft))}
                       />
                     </FormControl>
-                    <FormMessage>{form.formState.errors.seasons2k?.message}</FormMessage>
+                    <FormMessage>{(form.formState.errors as any)[markdownSelected]?.message}</FormMessage>
                   </Suspense>
                 </FormItem>
               )}
             />
             : null
         }
-
         <div className="text-center">
           <LoadingButton type="submit" loading={isSubmitting}>
             Submit

@@ -52,21 +52,14 @@ model Season2k {
   team         Team     @relation(fields: [teamId], references: [id])
   teamId       String   @db.ObjectId
   season       Season   // season
-  total_games  Int      @default(0) // total games played in current season
+  total_games  String   @default("0") // total games played in current season // * CHANGE TO STRING AND REFRESH PRISMA
   players      String?  // only BOS players markdown table
   standings    String?  // only BOS standings markdown table
   team_record  String?  // only BOS team record markdown table
   playoffs_record String? // only BOS playoffs record markdown table
+  createdAt        DateTime? @default(now()) // game created
+  updatedAt        DateTime? @updatedAt      // last update
 }
-
-// TODO I'm gonna change schema because I new a team model with an array for each season 2k24,2k25,2k26 and inside put the team object with players, standings, team_record
-// model Team {
-// nba2k24: { players, standings, team_record } -> add playoffs record as well
-// nba2k25: { players, standings, team_record } -> add playoffs record as well
-// nba2k26: { players, standings, team_record } -> add playoffs record as well
- //}
-// ? Because I'll need previous seasons data to show in the website
-
 
 model Schedule {
   id               String   @id @default(auto()) @map("_id") @db.ObjectId
