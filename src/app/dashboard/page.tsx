@@ -1,6 +1,5 @@
 import Dashboard from '@/components/custom/dashboard/Dashboard';
 import MaxWidthWrapper from '@/components/reutilizable/MaxWidthWrapper'
-import { Button } from '@/components/ui/button';
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server'
 import { notFound } from 'next/navigation';
 

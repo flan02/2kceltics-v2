@@ -11,7 +11,7 @@ import Roster from "@/components/custom/Roster";
 import Marquee from "@/components/reutilizable/Marquee";
 import VisitorsCounter from "@/components/custom/VisitorsCounter";
 import CelticsTrebol from "../../public/celtics-trebol.png";
-export default async function Home() {
+export default async function Home({ searchParams: { page, skip } }: { searchParams: { page: number, skip: number } }) {
 
   return (
     <>
@@ -47,7 +47,7 @@ export default async function Home() {
       </MaxWidthWrapper>
 
       <MaxWidthWrapper className="max-w-screen-3xl bg-zinc-200/60">
-        <Schedule />
+        <Schedule page={page} skip={skip} />
       </MaxWidthWrapper>
 
       <MaxWidthWrapper className="relative max-w-screen-3xl h-max">

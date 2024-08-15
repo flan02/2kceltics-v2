@@ -29,7 +29,10 @@ enum Tournament {
 
 enum Stage {
   RS
-  CUP
+  CUP_GP
+  CUP_QF
+  CUP_SF
+  CUP_THEFINAL
   FIRST_ROUND
   ESCF
   ECF
@@ -72,9 +75,8 @@ model Schedule {
   type             Tournament
   stage            Stage
   currentGame      Int       // parseInt(next_game) = parseInt(currentGame) + 1
-  wasPlayed        Boolean   @default(false) // game played or not
   atHome           AtHome    // home or away
-  team1            String    // team name
+  team1            String    @default("Boston Celtics")
   team2            String    // opponent team name
   team_code1       String    @default("BOS")
   team_code2       String    // abrrev. opponent team got from model Team

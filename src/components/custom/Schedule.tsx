@@ -9,7 +9,7 @@ import ScheduleList from "./ScheduleList"
 
 
 
-export default async function Schedule() {
+export default async function Schedule({ page, skip }: { page: number, skip: number }) {
 
   return (
 
@@ -21,7 +21,7 @@ export default async function Schedule() {
       <div className="bg-celtics text-white text-lg px-4 py-6">
         <h2>REGULAR SEASON 82 GAMES</h2>
       </div>
-      <ScheduleList />
+      <ScheduleList page={page} skip={skip} />
 
     </section>
 
