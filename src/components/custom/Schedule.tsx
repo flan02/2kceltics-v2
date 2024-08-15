@@ -1,21 +1,16 @@
 "use server"
-//import { db } from "@/db"
+
 import BackToTop from "../reutilizable/BackToTop"
+import CardSchedule from "../reutilizable/CardSchedule"
 import ScheduleList from "./ScheduleList"
 
 
 
 
 
+
 export default async function Schedule() {
-  /*
-  const logos = await db.team.findMany({
-    select: {
-      logo_url: true
-    }
-  })
-  const path = logos.map(path => path.logo_url)
-*/
+
   return (
 
     <section id="schedule" className="space-y-4 max-w-screen-lg flex flex-col mx-auto pt-12">
@@ -24,7 +19,7 @@ export default async function Schedule() {
         <BackToTop />
       </div>
       <div className="bg-celtics text-white text-lg px-4 py-6">
-        <h2>REGULAR SEASON 82</h2>
+        <h2>REGULAR SEASON 82 GAMES</h2>
       </div>
       <ScheduleList />
 

@@ -19,7 +19,7 @@ export function AddTeam() {
   }, [])
 */
   return (
-    <div className=' flex flex-col justify-start items-center mt-16 min-h-[calc(100vh-50px)]'>
+    <div className='flex flex-col justify-start items-center mt-16 min-h-[calc(100vh-50px)]'>
       <h1 className=' text-center text-4xl text-celtics'>Add a team</h1>
       <br />
       <AddTeamForm />

@@ -46,7 +46,7 @@ export default async function Home() {
         <About />
       </MaxWidthWrapper>
 
-      <MaxWidthWrapper className="max-w-screen-3xl h-screen bg-zinc-200/60">
+      <MaxWidthWrapper className="max-w-screen-3xl bg-zinc-200/60">
         <Schedule />
       </MaxWidthWrapper>
 
