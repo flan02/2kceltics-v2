@@ -51,6 +51,7 @@ const Dashboard = async ({ opt, photo, given_name }: Props) => {
         })}>EDIT</Link>
 
       </nav>
+
       <section className='min-h-[calc(100vh-100px)] mt-4 border-t border-slate-200'>
         {
           !opt

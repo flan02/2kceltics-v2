@@ -9,7 +9,7 @@ import ScheduleList from "./ScheduleList"
 
 
 
-export default async function Schedule({ page, skip }: { page: number, skip: number }) {
+export default async function Schedule({ searchParams: { page } }: { searchParams: { page: number } }) {
 
   return (
 
@@ -21,7 +21,7 @@ export default async function Schedule({ page, skip }: { page: number, skip: num
       <div className="bg-celtics text-white text-lg px-4 py-6">
         <h2>REGULAR SEASON 82 GAMES</h2>
       </div>
-      <ScheduleList page={page} skip={skip} />
+      <ScheduleList searchParams={{ page }} />
 
     </section>
 

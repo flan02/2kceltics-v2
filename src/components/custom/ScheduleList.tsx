@@ -6,10 +6,15 @@ import Link from "next/link"
 import { getScheduleGames } from "@/app/actions"
 import { Card, CardTitle } from "../ui/card"
 
+import { useSearchParamsContext } from "@/services/server/SearchParamsContext"
 
 
 
-export default async function ScheduleList({ page = 0, skip = 20 }: { page: number, skip: number }) {
+
+export default async function ScheduleList({ searchParams: { page } }: { searchParams: { page: number } }) {
+
+  // let { page } = useSearchParamsContext()
+
   const schedule = await getScheduleGames()
   const total_pages: number[] = schedule
     // .filter(game => game.scoreTeam1! > 0)
@@ -66,4 +71,5 @@ export default async function ScheduleList({ page = 0, skip = 20 }: { page: numb
     </article>
   )
 }
+
 

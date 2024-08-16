@@ -1,8 +1,10 @@
 "use server"
 
+import { updateProps } from "@/components/custom/dashboard/UpdateScheduleGame"
 import { db } from "@/db"
 import { Season2k } from "@prisma/client"
 import { revalidatePath } from "next/cache"
+import { redirect } from "next/dist/server/api-utils"
 
 type Team = {
   name: string
@@ -147,4 +149,27 @@ export async function getSeasons2k() {
     console.log(error);
     return error
   }
+}
+
+
+export async function getScheduleGame(values: updateProps) {
+
+  try {
+    const response = db.schedule.findFirst({
+      where: {
+        currentGame: values.currentGame,
+        season: values.season as "NBA2K24"
+      },
+      select: {
+        id: true
+      }
+    })
+
+    return response
+
+  } catch (error) {
+    console.log(error)
+    return error
+  }
+
 }

@@ -51,11 +51,6 @@ function onSubmit(values: z.infer<typeof formSchema>) {
   })
 }
 
-enum EditorType {
-  PlayersList = "players",
-  StandingsTable = "standings",
-  TeamRecordTable = "team_record",
-}
 export default function AddTeamForm() {
 
   const form = useForm<z.infer<typeof formSchema>>({

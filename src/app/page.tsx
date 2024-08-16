@@ -11,7 +11,15 @@ import Roster from "@/components/custom/Roster";
 import Marquee from "@/components/reutilizable/Marquee";
 import VisitorsCounter from "@/components/custom/VisitorsCounter";
 import CelticsLogo from "../../public/celtics-logo.png";
-export default async function Home({ searchParams: { page, skip } }: { searchParams: { page: number, skip: number } }) {
+
+//import { SearchParamsContext } from "@/services/server/SearchParamsContext";
+//import { ParsedUrlQuery } from "querystring";
+// { searchParams }: { [key: string]: string }
+
+
+
+
+export default async function Home({ searchParams: { page = 0 } }: { searchParams: { page: number } }) {
 
   return (
     <>
@@ -46,9 +54,11 @@ export default async function Home({ searchParams: { page, skip } }: { searchPar
         <About />
       </MaxWidthWrapper>
 
+      {/* <SearchParamsContext.Provider value={{ searchParams }} > */}
       <MaxWidthWrapper className="max-w-screen-3xl bg-zinc-200/60">
-        <Schedule page={page} skip={skip} />
+        <Schedule searchParams={{ page }} />
       </MaxWidthWrapper>
+      {/*  </SearchParamsContext.Provider> */}
 
       <MaxWidthWrapper className="relative max-w-screen-3xl h-max">
         <Roster />
@@ -60,3 +70,13 @@ export default async function Home({ searchParams: { page, skip } }: { searchPar
     </>
   );
 }
+
+/*
+export async function getServerSideProps({ query }: { query: ParsedUrlQuery }) {
+  return {
+    props: {
+      searchParams: query,
+    },
+  };
+}
+  */

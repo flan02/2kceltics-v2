@@ -22,7 +22,14 @@ const LiIcons = (props: LiIconsProps) => {
   )
 }
 
-
+const links = [
+  "Home",
+  "About",
+  "Guide",
+  "Blocks",
+  "Contact",
+  "Terms of Use"
+]
 
 const groupIcons: { [key: string]: React.ReactNode } = {
   github: <Icons.github key={0} />,
@@ -42,13 +49,12 @@ const Footer = (props: Props) => {
           <div className="flex flex-wrap items-center justify-between md:flex-nowrap">
             <div className="w-full space-x-12 flex justify-center text-gray-300 sm:w-7/12 md:justify-start">
               <ul className="list-disc list-inside space-y-8">
-                <li><a href="#" className="hover:text-sky-400 transition">Home</a></li>
+                {
+                  links.map((link, index) => (
+                    <li key={index}><a href="#" className="hover:text-sky-400 transition">{link}</a></li>
+                  ))
+                }
 
-                <li><a href="#" className="hover:text-sky-400 transition">About</a></li>
-                <li><a href="#" className="hover:text-sky-400 transition">Guide</a></li>
-                <li><a href="#" className="hover:text-sky-400 transition">Blocks</a></li>
-                <li><a href="#" className="hover:text-sky-400 transition">Contact</a></li>
-                <li><a href="#" className="hover:text-sky-400 transition">Terms of Use</a></li>
               </ul>
 
               <ul role="list" className="space-y-8">
@@ -67,14 +73,14 @@ const Footer = (props: Props) => {
                 <Heart fill='red' color='red' />
               </div>
 
-              <span className="block text-gray-300">2kceltics &copy; {new Date().getFullYear()}</span>
+              <span className="block text-white underline">2kceltics &copy; {new Date().getFullYear()}</span>
 
               <span className="flex justify-between text-white">
                 <a href="#" className="font-semibold">Terms of Use </a>
                 <a href="#" className="font-semibold"> Privacy Policy</a>
               </span>
 
-              <span className="block text-gray-300">Need help? <a href="#" className="font-semibold text-white"> Contact Us</a></span>
+              <span className="block text-gray-300">Need help? <a href="#" className="font-semibold text-white">&nbsp; Contact Us</a></span>
             </div>
           </div>
         </div>
