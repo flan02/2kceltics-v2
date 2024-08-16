@@ -10,7 +10,7 @@ import Schedule from "@/components/custom/Schedule";
 import Roster from "@/components/custom/Roster";
 import Marquee from "@/components/reutilizable/Marquee";
 import VisitorsCounter from "@/components/custom/VisitorsCounter";
-import CelticsTrebol from "../../public/celtics-trebol.png";
+import CelticsLogo from "../../public/celtics-logo.png";
 export default async function Home({ searchParams: { page, skip } }: { searchParams: { page: number, skip: number } }) {
 
   return (
@@ -19,8 +19,8 @@ export default async function Home({ searchParams: { page, skip } }: { searchPar
       <MaxWidthWrapper className="h-[calc(100vh-100px)] lg:h-[calc(100vh-150px)] lg:px-16 xl:px-0 xl:pt-24 md:px-0 place-content-start lg:place-content-center mb-24">
         <div>
           <div className="grid md:grid-cols-2 grid-cols-1">
-            <section className="mt-24 md:mt-0 md:hidden block">
-              <Image src={CelticsTrebol} alt="CelticsTrebol Hero Image" />
+            <section className="mt-24 md:mt-0 md:hidden block px-16">
+              <Image src={CelticsLogo} alt="CelticsTrebol Hero Image" />
             </section>
             <article className="flex mt-8">
               <H2underline className="" firstPhrase="Feel the" underlinedPhrase="Celtics" secondPhrase="spirit like never before in our 2k simulation league" />
