@@ -15,7 +15,7 @@ const DashboardPage = async ({ searchParams: { opt } }: { searchParams: { opt: s
   const ADMIN_EMAIL = process.env.ADMIN_EMAIL
   if (!user || user.email !== ADMIN_EMAIL) notFound()
   return (
-    <MaxWidthWrapper className='min-h-[calc(100vh-60px)]'>
+    <MaxWidthWrapper className='min-h-[calc(100vh-60px)] mb-16'>
       <Dashboard opt={opt} photo={user?.picture!} given_name={user?.given_name!} />
     </MaxWidthWrapper>
   )

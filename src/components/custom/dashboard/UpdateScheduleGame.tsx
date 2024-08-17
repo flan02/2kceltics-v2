@@ -7,6 +7,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input"
 import { updateTeamSchema } from "@/zod/validation"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { Search } from "lucide-react"
 import Link from "next/link"
 import { useEffect, useState } from "react"
 
@@ -37,15 +38,15 @@ const UpdateScheduleGame = () => {
     const formData = new FormData()
     Object.entries(values).forEach(([key, value]) => {
       if (value) formData.append(key, String(value))
-      // console.log(typeof value, value)
+      //console.log(typeof value, value)
     })
 
     try {
       const gameID = await getScheduleGame(values) as { id: string };
 
-      //console.log(gameID)
-      setToUpdateGame(gameID.id)
-
+      // console.log(gameID)
+      if (gameID) setToUpdateGame(gameID.id)
+      // else setToUpdateGame("false")
 
     } catch (error) {
       console.log(error)
@@ -62,7 +63,7 @@ const UpdateScheduleGame = () => {
 
   return (
     <>
-      <h2 className="text-sm text-celtics font-bold uppercase">Search game to update</h2>
+      <h2 className="text-sm text-celtics font-bold uppercase flex"><Search className="mr-2" size={18} />  Search game to update</h2>
       <Form {...form} >
         <form noValidate onSubmit={handleSubmit(onSubmit)} className="space-y-4" >
           <FormField
@@ -102,14 +103,15 @@ const UpdateScheduleGame = () => {
       {
         toUpdateGame
           ?
-          <>
-            <p>1 Game found to update</p>
+          <div className="">
+            <p className="text-muted-foreground">1 Game found to update</p>
             <Link
-              className="hover:underline"
-              href={`/dashboard/${toUpdateGame}`} target="_blank" rel="noopener" referrerPolicy="no-referrer">{toUpdateGame}</Link>
-          </>
-          : null
+              className="hover:underline text-sm"
+              href={`/dashboard/${toUpdateGame}`} rel="noopener" referrerPolicy="no-referrer">{toUpdateGame}</Link>
+          </div>
+          : <p className="text-muted-foreground">No game found yet.</p>
       }
+
     </>
   )
 }

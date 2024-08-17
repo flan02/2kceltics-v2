@@ -11,7 +11,8 @@ const Schedule = () => {
 
       <article className="p-16 border border-slate-200 w-full rounded-lg space-y-4">
         <UpdateScheduleGame />
-        <br />
+      </article>
+      <article className="p-16 border border-slate-200 w-full rounded-lg space-y-4">
         <CreateScheduleGame />
       </article>
 

@@ -25,7 +25,7 @@ export default async function CardSchedule({ currentGame, team_code2, atHome, sc
           <div className="h-[70%] pt-2">
             <div className="flex items-center justify-center">
               <p className="mr-8 font-bold text-xl text-muted-foreground">{atHome === "HOME" ? <Home color="green" /> : <Plane color="green" />}</p>
-              <Image src={`/logos/${team_code2}.png`} alt="philadelphia" width={60} height={60} />
+              <Image src={`/logos/${team_code2}.png`} alt={`${team_code2}`} width={60} height={60} className="w-auto h-auto" />
             </div>
           </div>
 

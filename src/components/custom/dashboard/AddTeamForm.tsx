@@ -20,20 +20,13 @@ import { toast } from "@/components/ui/use-toast"
 
 import { useEffect, lazy } from "react"
 import LoadingButton from "@/components/reutilizable/LoadingButton"
+import { formSchema } from "@/zod/validation"
 
 
 
 const RichTextEditor = lazy(() => import("../RichTextEditor"));
 
-const formSchema = z.object({
-  name: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
-  }),
-  team_code: z.string().max(3, {
-    message: "Team code must be 3 characters.",
-  }),
-  logo_url: z.string({ message: "Current path is /public/logos/[team_code].png" })
-})
+
 
 function onSubmit(values: z.infer<typeof formSchema>) {
   //console.log(values)
