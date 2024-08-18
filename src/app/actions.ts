@@ -1,5 +1,6 @@
 import { db } from "@/db"
 
+
 export async function getScheduleGames() {
   const response = await db.schedule.findMany({
     where: {
@@ -7,4 +8,20 @@ export async function getScheduleGames() {
     }
   })
   return response
-} 
+}
+
+
+export async function getNextGame() {
+  const response = await db.schedule.findMany({
+    where: {
+      season: "NBA2K24",
+      scoreTeam1: { gt: 0 }
+    },
+    select: {
+      scoreTeam1: true,
+    }
+  })
+
+  const nextGame: number = response.length + 1
+  return nextGame
+}

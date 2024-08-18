@@ -107,6 +107,16 @@ body {
   filter: opacity(1) blur(0) sepia(0) saturate(default) contrast(default);
   }
 
+.logo-background {
+  background-image: url('../../public/celtics-logo.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: rgba(255, 255, 255, 0.9);
+  background-blend-mode: overlay;
+  
+}
+
 tr:hover {
   background-color: rgb(235, 235, 235, .8);
   color: black;

@@ -29,7 +29,7 @@ export default async function Home({ searchParams: { page = 0 } }: { searchParam
             {/* ****************** */}
 
 
-            <article className="flex mt-8 md:order-1 lg:order-0">
+            <article className="flex mt-8 md:order-1 lg:order-0 ">
               <H2underline className="" firstPhrase="Feel the" underlinedPhrase="Celtics" secondPhrase="spirit like never before in our 2k simulation league" />
             </article>
             <section className="place-self-end md:block hidden md:mx-auto md:mt-24 lg:mt-0 md:order-0 lg:order-1 xl:mx-0">

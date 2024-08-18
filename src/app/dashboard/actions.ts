@@ -7,6 +7,7 @@ import { Schedule, Season2k } from "@prisma/client"
 import { revalidatePath } from "next/cache"
 
 
+
 type Team = {
   name: string
   team_code: string
@@ -73,7 +74,7 @@ export async function updateTeam(values: Omit<Season2k, "id" | "teamId" | "seaso
       }
     });
 
-    console.log("After Filter", filteredData)
+    // console.log("After Filter", filteredData)
 
     const updateTeam = await db.season2k.update({
       where: {
@@ -184,6 +185,8 @@ export async function createScheduleGame(values: Omit<Schedule, "id" | "createdA
         ...values
       }
     })
+
+    revalidatePath('/dashboard?opt=schedule')
     return response
   } catch (error) {
     console.log(error)
@@ -191,3 +194,21 @@ export async function createScheduleGame(values: Omit<Schedule, "id" | "createdA
   }
 }
 
+
+export async function getCurrentGame() {
+  const response = await db.schedule.findMany({
+    where: {
+      season: "NBA2K24",
+      currentGame: { gt: 0 }
+    },
+    select: {
+      currentGame: true,
+      stage: true,
+    }
+  })
+
+  const currentGame: number = response.length - 1
+
+
+  return response[currentGame]
+}

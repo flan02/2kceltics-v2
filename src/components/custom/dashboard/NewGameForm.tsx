@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 
 import { createScheduleGame } from "@/app/dashboard/actions"
@@ -9,8 +10,9 @@ import { toast } from "@/components/ui/use-toast"
 import { atHomeTypes, gameTypes, stageTypes } from "@/lib/types"
 import { createGameSchema } from "@/zod/validation"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { $Enums, AtHome, Season, Stage, Tournament } from "@prisma/client"
+import { AtHome, Season, Stage, Tournament } from "@prisma/client"
 import { SelectTrigger } from "@radix-ui/react-select"
+import { useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
@@ -32,11 +34,12 @@ export type createScheduleProps = {
 
 
 async function onSubmit(values: z.infer<typeof createGameSchema>) {
+
   // it goes to database
-  console.log(values)
+  // console.log(values)
   const response = await createScheduleGame(values)
 
-  console.log(response)
+  // console.log(response)
   toast({
     title: "New game has been created",
     description: (
@@ -65,6 +68,15 @@ const NewGameForm = () => {
 
   const { register, handleSubmit, formState, watch, trigger, control, setValue, setFocus, formState: { isSubmitting, isSubmitted } } = form
 
+  useEffect(() => {
+    if (isSubmitted) {
+      form.reset({
+        currentGame: 0,
+        team2: "",
+        team_code2: ""
+      })
+    }
+  }, [isSubmitted])
   return (
     <Form {...form} >
       <form noValidate onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -86,65 +98,6 @@ const NewGameForm = () => {
             </FormItem>
           )}
         />
-
-        <div className="flex justify-start space-x-8">
-          <FormField
-            control={control}
-            name="type"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel >Game type: </FormLabel>
-                <FormControl>
-                  <Select {...field} defaultValue=""
-                    onValueChange={(value) => field.onChange(value)}
-                    value={field.value}
-
-                  >
-                    <SelectTrigger className="border border-slate-200 text-md font-light shadow-md py-1.5 text-left pl-2 min-w-[150px] rounded-md">
-                      <SelectValue placeholder="Select RS or PO" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectGroup >
-                        {gameTypes.map((type, index) => (
-                          <SelectItem key={index} value={type}>{type}</SelectItem>
-                        ))}
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={control}
-            name="stage"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel >Stage: </FormLabel>
-                <FormControl>
-                  <Select {...field} defaultValue=""
-                    onValueChange={(value) => field.onChange(value)}
-                    value={field.value}
-                  >
-                    <SelectTrigger className="border border-slate-200 text-md font-light shadow-md py-1.5 text-left pl-2 w-[200px] rounded-md">
-                      <SelectValue placeholder="Select stage" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectGroup >
-                        {stageTypes.map((stage, index) => (
-                          <SelectItem key={index} value={stage}>{stage}</SelectItem>
-                        ))}
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
-
         <FormField
           control={control}
           name="currentGame"
@@ -158,6 +111,65 @@ const NewGameForm = () => {
             </FormItem>
           )}
         />
+
+        <FormField
+          control={control}
+          name="type"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel >Game type: </FormLabel>
+              <FormControl>
+                <Select {...field} defaultValue=""
+                  onValueChange={(value) => field.onChange(value)}
+                  value={field.value}
+
+                >
+                  <SelectTrigger className="border border-slate-200 text-md font-light shadow-md py-1.5 text-left pl-2 min-w-[150px] rounded-md">
+                    <SelectValue placeholder="Select RS or PO" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup >
+                      {gameTypes.map((type, index) => (
+                        <SelectItem key={index} value={type}>{type}</SelectItem>
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={control}
+          name="stage"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel >Stage: </FormLabel>
+              <FormControl>
+                <Select {...field} defaultValue=""
+                  onValueChange={(value) => field.onChange(value)}
+                  value={field.value}
+                >
+                  <SelectTrigger className="border border-slate-200 text-md font-light shadow-md py-1.5 text-left pl-2 w-[200px] rounded-md">
+                    <SelectValue placeholder="Select stage" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup >
+                      {stageTypes.map((stage, index) => (
+                        <SelectItem key={index} value={stage}>{stage}</SelectItem>
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+
+
 
         <FormField
           control={control}

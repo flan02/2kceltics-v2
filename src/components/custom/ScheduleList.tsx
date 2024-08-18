@@ -20,7 +20,7 @@ export default async function ScheduleList({ searchParams: { page } }: { searchP
     // .filter(game => game.scoreTeam1! > 0)
     .map(game => game.scoreTeam1 as number);
 
-  console.log(total_pages);
+  //console.log(total_pages);
   let limit = 20
   let amount_pages = Math.ceil(total_pages.length / limit)
 

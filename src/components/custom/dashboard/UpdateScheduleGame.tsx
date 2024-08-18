@@ -28,7 +28,7 @@ const UpdateScheduleGame = () => {
     resolver: zodResolver(updateTeamSchema),
     defaultValues: {
       currentGame: 0,
-      season: ""
+      season: "NBA2K24"
     }
   })
 
@@ -57,7 +57,7 @@ const UpdateScheduleGame = () => {
   useEffect(() => {
     form.reset({
       currentGame: 0,
-      season: ""
+      // season: "" // ? not reset I locked a default value
     })
   }, [isSubmitted])
 
@@ -86,7 +86,7 @@ const UpdateScheduleGame = () => {
               <FormItem>
                 <FormLabel htmlFor="season">Season</FormLabel>
                 <FormControl>
-                  <Input id="season" className="dark:text-blue-500" placeholder="NBA2K24, NBA2K25, etc..." {...field} />
+                  <Input id="season" className="dark:text-blue-500" autoComplete="off" placeholder="NBA2K24, NBA2K25, etc..." {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -103,10 +103,10 @@ const UpdateScheduleGame = () => {
       {
         toUpdateGame
           ?
-          <div className="">
+          <div className="flex flex-col pl-2 space-y-4">
             <p className="text-muted-foreground">1 Game found to update</p>
             <Link
-              className="hover:underline text-sm"
+              className="hover:underline text-sm text-celtics hover:text-slate-800"
               href={`/dashboard/${toUpdateGame}`} rel="noopener" referrerPolicy="no-referrer">{toUpdateGame}</Link>
           </div>
           : <p className="text-muted-foreground">No game found yet.</p>

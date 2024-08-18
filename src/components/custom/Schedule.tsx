@@ -1,7 +1,8 @@
 "use server"
 
+import { getNextGame } from "@/app/actions"
 import BackToTop from "../reutilizable/BackToTop"
-import CardSchedule from "../reutilizable/CardSchedule"
+
 import ScheduleList from "./ScheduleList"
 
 
@@ -10,6 +11,8 @@ import ScheduleList from "./ScheduleList"
 
 
 export default async function Schedule({ searchParams: { page } }: { searchParams: { page: number } }) {
+  const nextGame = await getNextGame()
+
 
   return (
 
@@ -20,8 +23,14 @@ export default async function Schedule({ searchParams: { page } }: { searchParam
       </div>
       <br />
       <br />
-      <div className="bg-celtics text-white text-lg px-4 py-6">
+      <div className="bg-celtics flex items-end justify-between text-white text-lg px-4 py-6">
         <h2>REGULAR SEASON 82 GAMES</h2>
+        {
+          nextGame
+            ? <h6 className="uppercase text-sm text-muted underline">next game: {nextGame}</h6>
+            : <h6 className="uppercase text-sm text-muted underline">NOT YET</h6>
+
+        }
       </div>
       <ScheduleList searchParams={{ page }} />
 
