@@ -17,9 +17,13 @@ type Props = {
   className?: string
   isTag: boolean
   link: string
+  dim: {
+    width: string
+    height: string
+  }
 }
 
-const CardPlayerLink = ({ player, cardTitle, className, isTag, link }: Props) => {
+const CardPlayerLink = ({ player, cardTitle, className, isTag, link, dim }: Props) => {
   return (
     <aside>
       <Card className="flex items-center shadow-md">
@@ -32,9 +36,9 @@ const CardPlayerLink = ({ player, cardTitle, className, isTag, link }: Props) =>
         </CardTitle>
         <CardContent className="relative w-full flex justify-end ">
           <Image
-            src={player} width={100} height={100}
+            src={player}
             alt={cardTitle}
-            className='mt-2 block object-contain w-auto h-auto' sizes="(max-width: 768px) 100vw, 33vw" priority />
+            className={`mt-2 block object-contain ${dim.width} ${dim.height}`} sizes="(max-width: 768px) 100vw, 33vw" priority />
         </CardContent>
       </Card>
 

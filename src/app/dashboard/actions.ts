@@ -1,10 +1,11 @@
 "use server"
 
+
 import { updateProps } from "@/components/custom/dashboard/UpdateScheduleGame"
 import { db } from "@/db"
-import { Season2k } from "@prisma/client"
+import { Schedule, Season2k } from "@prisma/client"
 import { revalidatePath } from "next/cache"
-import { redirect } from "next/dist/server/api-utils"
+
 
 type Team = {
   name: string
@@ -55,10 +56,11 @@ export async function createTeam({ name, team_code, logo_url }: Team) {
 
 export async function updateTeam(values: Omit<Season2k, "id" | "teamId" | "season" | "createdAt" | "updatedAt">) {
   try {
+    // TODO -> First we call to database retrieving our team id
     const team: any = await getTeam("BOS")
 
     // * I need bring [id,teamId,season,total_games] from server actions calling a fc inside this fc
-    console.log("Before filter", values)
+    // console.log("Before filter", values)
 
     const filteredData: any = {}
 
@@ -144,6 +146,7 @@ export async function updateTask(id: string, done: boolean, task?: string) {
 export async function getSeasons2k() {
   try {
     const response = db.season2k.findMany()
+    //console.log(response)
     return response
   } catch (error) {
     console.log(error);
@@ -153,7 +156,6 @@ export async function getSeasons2k() {
 
 
 export async function getScheduleGame(values: updateProps) {
-
   try {
     const response = db.schedule.findFirst({
       where: {
@@ -171,5 +173,21 @@ export async function getScheduleGame(values: updateProps) {
     console.log(error)
     return error
   }
-
 }
+
+
+export async function createScheduleGame(values: Omit<Schedule, "id" | "createdAt" | "updatedAt" | "video_url" | "gameStats" | "scoreTeam1" | "scoreTeam2" | "boxscoreTeam1" | "boxscoreTeam2">) {
+
+  try {
+    const response = db.schedule.create({
+      data: {
+        ...values
+      }
+    })
+    return response
+  } catch (error) {
+    console.log(error)
+    return error
+  }
+}
+

@@ -26,27 +26,33 @@ const players = [{
   link: "/season-stats"
 },
 {
-  title: "ROSTER",
-  photo: DWprofile,
-  isTag: true,
-  link: "roster"
-},
-{
   title: "SCHEDULE",
   photo: Jrueprofile,
   isTag: true,
   link: "schedule"
+},
+{
+  title: "ROSTER",
+  photo: DWprofile,
+  isTag: true,
+  link: "roster"
 }
+
 ]
 
 type Props = {}
 
+
+const dim = {
+  width: "w-48",
+  height: "h-[140px]"
+}
 const MobileMenu = (props: Props) => {
   return (
     <section className="grid grid-cols-1 grid-rows-5 space-y-4 mt-12 lg:mt-0 lg:hidden">
       {
         players.map((player, index) => (
-          <CardPlayerLink player={player.photo} cardTitle={player.title} key={index} isTag={player.isTag} link={player.link} />
+          <CardPlayerLink dim={dim} player={player.photo} cardTitle={player.title} key={index} isTag={player.isTag} link={player.link} />
 
         ))
       }

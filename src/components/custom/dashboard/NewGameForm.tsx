@@ -1,5 +1,6 @@
 'use client'
 
+import { createScheduleGame } from "@/app/dashboard/actions"
 import LoadingButton from "@/components/reutilizable/LoadingButton"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
@@ -8,11 +9,23 @@ import { toast } from "@/components/ui/use-toast"
 import { atHomeTypes, gameTypes, stageTypes } from "@/lib/types"
 import { createGameSchema } from "@/zod/validation"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { $Enums, AtHome, Season, Stage, Tournament } from "@prisma/client"
 import { SelectTrigger } from "@radix-ui/react-select"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
-type Props = {}
+export type createScheduleProps = {
+  season: Season,
+  type: Tournament,
+  stage: Stage,
+  currentGame: number,
+  atHome: AtHome,
+  team1: string,
+  team_code1: string,
+  team2: string,
+  team_code2: string
+
+}
 
 
 
@@ -21,6 +34,9 @@ type Props = {}
 async function onSubmit(values: z.infer<typeof createGameSchema>) {
   // it goes to database
   console.log(values)
+  const response = await createScheduleGame(values)
+
+  console.log(response)
   toast({
     title: "New game has been created",
     description: (
@@ -31,7 +47,7 @@ async function onSubmit(values: z.infer<typeof createGameSchema>) {
   })
 }
 
-const NewGameForm = (props: Props) => {
+const NewGameForm = () => {
   const form = useForm<z.infer<typeof createGameSchema>>({
     resolver: zodResolver(createGameSchema),
     defaultValues: {
@@ -39,11 +55,11 @@ const NewGameForm = (props: Props) => {
       type: undefined,
       stage: undefined,
       currentGame: 0,
-      athome: undefined,
+      atHome: undefined,
       team1: "Boston Celtics",
       team_code1: "BOS",
       team2: "",
-      team_code2: ""
+      team_code2: "",
     }
   })
 
@@ -79,7 +95,11 @@ const NewGameForm = (props: Props) => {
               <FormItem>
                 <FormLabel >Game type: </FormLabel>
                 <FormControl>
-                  <Select {...field} defaultValue="" >
+                  <Select {...field} defaultValue=""
+                    onValueChange={(value) => field.onChange(value)}
+                    value={field.value}
+
+                  >
                     <SelectTrigger className="border border-slate-200 text-md font-light shadow-md py-1.5 text-left pl-2 min-w-[150px] rounded-md">
                       <SelectValue placeholder="Select RS or PO" />
                     </SelectTrigger>
@@ -98,12 +118,15 @@ const NewGameForm = (props: Props) => {
           />
           <FormField
             control={control}
-            name="type"
+            name="stage"
             render={({ field }) => (
               <FormItem>
                 <FormLabel >Stage: </FormLabel>
                 <FormControl>
-                  <Select {...field} defaultValue="" >
+                  <Select {...field} defaultValue=""
+                    onValueChange={(value) => field.onChange(value)}
+                    value={field.value}
+                  >
                     <SelectTrigger className="border border-slate-200 text-md font-light shadow-md py-1.5 text-left pl-2 w-[200px] rounded-md">
                       <SelectValue placeholder="Select stage" />
                     </SelectTrigger>
@@ -138,12 +161,15 @@ const NewGameForm = (props: Props) => {
 
         <FormField
           control={control}
-          name="athome"
+          name="atHome"
           render={({ field }) => (
             <FormItem>
-              <FormLabel >Where: </FormLabel>
+              <FormLabel htmlFor="atHome">Where: </FormLabel>
               <FormControl>
-                <Select {...field} defaultValue="" >
+                <Select {...field} defaultValue=""
+                  onValueChange={(value) => field.onChange(value)}
+                  value={field.value}
+                >
                   <SelectTrigger className="border border-slate-200 text-md font-light shadow-md py-1.5 text-left pl-2 min-w-[150px] rounded-md">
                     <SelectValue placeholder="Select HOME or AWAY" />
                   </SelectTrigger>

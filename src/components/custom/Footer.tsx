@@ -1,6 +1,6 @@
 import React from 'react'
 import { Icons } from './Icons'
-import { Heart } from 'lucide-react'
+import { ArrowRight, Heart } from 'lucide-react'
 
 type Props = {
 }
@@ -48,10 +48,12 @@ const Footer = (props: Props) => {
         <div className="m-auto md:w-10/12 lg:w-8/12 xl:w-6/12">
           <div className="flex flex-wrap items-center justify-between md:flex-nowrap">
             <div className="w-full space-x-12 flex justify-center text-gray-300 sm:w-7/12 md:justify-start">
-              <ul className="list-disc list-inside space-y-8">
+              <ul className="list-inside space-y-8">
                 {
                   links.map((link, index) => (
-                    <li key={index}><a href="#" className="hover:text-sky-400 transition">{link}</a></li>
+                    <li key={index} className='flex space-x-2 items-end hover:text-sky-400'>
+                      <ArrowRight />
+                      <a href="#" className="transition">{link}</a></li>
                   ))
                 }
 

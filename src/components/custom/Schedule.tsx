@@ -18,6 +18,8 @@ export default async function Schedule({ searchParams: { page } }: { searchParam
         <h1 className="text-celtics mx-auto w-max text-center text-5xl md:text-7xl text-shadow uppercase mt-24">2023/24 SCHEDULE</h1>
         <BackToTop />
       </div>
+      <br />
+      <br />
       <div className="bg-celtics text-white text-lg px-4 py-6">
         <h2>REGULAR SEASON 82 GAMES</h2>
       </div>

@@ -6,19 +6,21 @@ import Link from "next/link"
 import { getScheduleGames } from "@/app/actions"
 import { Card, CardTitle } from "../ui/card"
 
-import { useSearchParamsContext } from "@/services/server/SearchParamsContext"
+//import { useSearchParamsContext } from "@/services/server/SearchParamsContext"
 
 
 
 
 export default async function ScheduleList({ searchParams: { page } }: { searchParams: { page: number } }) {
 
-  // let { page } = useSearchParamsContext()
+  let schedule = await getScheduleGames()
+  schedule = schedule.filter((game) => game.type == "RS")
 
-  const schedule = await getScheduleGames()
   const total_pages: number[] = schedule
     // .filter(game => game.scoreTeam1! > 0)
     .map(game => game.scoreTeam1 as number);
+
+  console.log(total_pages);
   let limit = 20
   let amount_pages = Math.ceil(total_pages.length / limit)
 

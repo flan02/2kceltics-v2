@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { buttonVariants } from "../../ui/button"
-import { MenuIcon } from "lucide-react"
+
+import DropdownCustom from "@/components/reutilizable/DropdownCustom"
 
 
 
@@ -9,6 +10,23 @@ type Props = {
 }
 
 const Upload = ({ isAdmin }: Props) => {
+  const options = {
+    label: "menu",
+    items: [
+      {
+        label: "Streams",
+        href: "/streamed-games"
+      },
+      {
+        label: "Season stats",
+        href: "/season-stats",
+      },
+      {
+        label: "Advanced",
+        href: "/advanced",
+      }
+    ]
+  }
 
   return (
     <>
@@ -24,10 +42,7 @@ const Upload = ({ isAdmin }: Props) => {
             </Link>
           </div>
           :
-          <>
-            <p className="md:block hidden">dropdown menu</p>
-            <MenuIcon className="md:hidden block" color="green" />
-          </>
+          <DropdownCustom label={options.label} items={options.items} />
       }
     </>
   )
