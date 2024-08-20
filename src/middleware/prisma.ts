@@ -1,4 +1,3 @@
-// src/middleware/middleware.ts
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
@@ -14,3 +13,29 @@ prisma.$use(async (params, next) => {
 });
 
 export default prisma;
+
+
+/*
+const prisma = new PrismaClient().$extends({
+  name: 'cleanNullFields',
+  query: {
+    async $allOperations({ model, operation, args, query }) {
+      if (operation === 'create' || operation === 'update') {
+        args.data = Object.fromEntries(
+          Object.entries(args.data).filter(([_, v]) => v != null)
+        );
+      }
+      return query(args);
+    },
+  },
+});
+
+export default prisma;
+*/
+
+
+
+
+
+
+

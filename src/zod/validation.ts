@@ -1,4 +1,3 @@
-import { create } from "domain";
 import { z } from "zod";
 
 
@@ -41,16 +40,30 @@ export const createGameSchema = z.object({
 
 })
 
-/* 
-season: NBA2K24
-type: RS PO  (select option)
-stage: RS ... PO ... (select option)
-currentGame: int 1-110
-atHome: HOME AWAY (select option)
 
-team1: Boston Celtics
-team2: "TEAM NAME"
+export const updateGameSchema = z.object({
+  id: z.string(),
+  type: z.enum(["RS", "PO"], { message: "Season must be NBA2K24, NBA2K25, NBA2K26, NBA2K27, NBA2K28" }),
+  stage: z.enum(["RS", "CUP_GP", "CUP_QF", "CUP_SF", "CUP_THEFINAL", "FIRST_ROUND", "ESCF", "ECF", "FINALS"], { message: "Stage must be RS, CUP_GP, CUP_QF, CUP_SF, CUP_THEFINAL, FIRST_ROUND, ESCF, ECF, FINALS" }),
+  video_url: z.string().url({ message: "This field must be a valid URL" }),
+  atHome: z.enum(["HOME", "AWAY"], { message: "This field must be HOME, AWAY" }),
+  currentGame: z.number().int().min(1, { message: "Current game must be between 1 a 100" }).max(110, { message: "Current game must be between 1 a 100" }),
+  //currentGame: z
+  //  .string()
+  //  .transform((value) => parseInt(value))
+  //  .refine((value) => !isNaN(value), { message: "This field must be a number" }),
+  team2: z.string().min(2, { message: "Team name must be at least 2 characters" }),
+  team_code2: z.string().max(3, { message: "Team code must be 3 characters" }),
+  scoreTeam1: z
+    .string()
+    .transform((value) => parseInt(value))
+    .refine((value) => !isNaN(value), { message: "This field must be a number" }),
+  scoreTeam2: z
+    .string()
+    .transform((value) => parseInt(value))
+    .refine((value) => !isNaN(value), { message: "This field must be a number" }),
+  boxscoreTeam1: z.string({ message: "This field is a markdown text" }).optional(),
+  boxscoreTeam2: z.string({ message: "This field is a markdown text" }).optional(),
+  gameStats: z.string({ message: "This field is a markdown text" }).optional(),
 
-team_code1: BOS
-team_code2: "TEAM CODE"
-*/
+})

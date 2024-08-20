@@ -6,6 +6,8 @@ import { db } from "@/db";
 import { cache } from "react";
 import { notFound } from 'next/navigation';
 import UpdateScheduleGameForm from '@/components/custom/update/UpdateScheduleGameForm';
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
 
 
@@ -49,7 +51,7 @@ export async function generateStaticParams() {
 // * Asynchronous function to generate metadata for the page
 /* 
 export async function generateMetadata() {
-  const game = await getGame(gameId)
+  const game = await getGame(add id here)
   const metadata = {
     title: `Update Game ${game.id}`,
     description: `Update the game ${game.id} with the form below`
@@ -61,11 +63,22 @@ export default async function UpdateGamePage({ params: { gameId } }: PageProps) 
 
   const game = await getGame(gameId)
   // console.log("Game obtained", game);
+
+  /*
+    const plainGameObject = {
+      ...game,
+    };
+  */
   return (
     <MaxWidthWrapper className='min-h-screen'>
-      <section className='mt-16'>
+      <section className='mt-16 space-y-4'>
         <h1 className='text-celtics text-3xl text-center'>UPDATE GAME PANEL</h1>
         <UpdateScheduleGameForm game={game} />
+        <div className='pt-8 pb-16'>
+          <Button asChild>
+            <Link href="/dashboard?opt=schedule">BACK</Link>
+          </Button>
+        </div>
       </section>
     </MaxWidthWrapper>
   )

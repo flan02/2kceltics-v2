@@ -1,12 +1,15 @@
 import React from 'react'
+import AddPlayerStatsForm from './AddPlayerStatsForm'
 
 type Props = {}
 
 const AddStats = () => {
   return (
-    <div className='flex justify-center items-center min-h-[calc(100vh-150px)]'>
-      <h1 className='text-center text-4xl text-celtics'>Add Stats</h1>
-    </div>
+    <section className='flex flex-col justify-start items-center mt-16 min-h-[calc(100vh-50px)]'>
+      <h1 className='text-center text-4xl text-celtics'>Add Player Stats</h1>
+      <br />
+      <AddPlayerStatsForm />
+    </section>
   )
 }
 

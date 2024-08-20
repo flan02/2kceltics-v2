@@ -14,7 +14,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     th: (props) => <th className="px-4 py-2" {...props} />,
     td: (props) => <td className="border px-4 py-2" {...props} />,
     h1: ({ children }) => (
-      <h1 style={{ color: 'blue', fontSize: '', width: '' }}>{children}</h1>
+      <h1 style={{ color: '#000', fontSize: '', width: '' }}>{children}</h1>
     ),
     img: (props) => (
       <Image

@@ -2,6 +2,7 @@
 'use client'
 
 import useVisitorsCounter from '@/hooks/useVisitorsCounter'
+import BackToTop from '../reutilizable/BackToTop'
 
 
 
@@ -21,6 +22,7 @@ const VisitorsCounter = (props: Props) => {
           <span key={index} className='bg-celtics hover:bg-white hover:text-celtics mr-2 px-2 text-3xl text-white'> {digit}</span>
         ))
       }
+      <BackToTop className='lg:mt-0' />
     </div>
   )
 }
