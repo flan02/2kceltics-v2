@@ -144,9 +144,20 @@ export async function updateTask(id: string, done: boolean, task?: string) {
 
 
 
-export async function getSeasons2k() {
+export async function getSeasons2k(season: any) {
   try {
-    const response = db.season2k.findMany()
+    const response = db.season2k.findMany(
+      {
+        where: {
+          season
+        },
+        select: {
+          season: true,
+          total_games: true,
+        }
+      },
+
+    )
     //console.log(response)
     return response
   } catch (error) {

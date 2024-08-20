@@ -25,6 +25,7 @@ import { draftToMarkdown } from "markdown-draft-js"
 import { Button } from "@/components/ui/button"
 
 
+
 const RichTextEditor = lazy(() => import("../RichTextEditor"));
 
 const formSchema = z.object({
@@ -51,10 +52,12 @@ function onSubmit(values: z.infer<typeof formSchema>) {
 
 }
 
+type Props = {
+  season2k: any
 
+}
 
-
-export default function EditTeam() {
+export default function EditTeam({ season2k }: Props) {
   //const [textArea, setTextArea] = useState<string>("")
   const [richEditor, setRichEditor] = useState(false)
   const [markdownSelected, setMarkdownSelected] = useState<string>("");
@@ -69,6 +72,7 @@ export default function EditTeam() {
       playoffs_record: "",
     }
   })
+
 
   const { register, handleSubmit, formState, watch, trigger, control, setValue, setFocus, formState: { isSubmitting, isSubmitted } } = form
 
@@ -105,11 +109,11 @@ export default function EditTeam() {
           name="total_games"
           render={({ field }) => (
             <FormItem>
-              <FormLabel htmlFor="total_games">Total Games Played</FormLabel>
+              <FormLabel htmlFor="total_games">{`Total Games Played Season ${season2k[0].season}:  ${season2k[0].total_games}`}</FormLabel>
               <FormControl>
                 <Input
                   id="total_games"
-                  placeholder="number of games played"
+                  placeholder="new current total games"
                   {...field}
                   autoComplete="off"
                   value={field.value ?? ""}

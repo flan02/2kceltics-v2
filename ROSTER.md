@@ -24,3 +24,4 @@ Aquí está la información extraída de la imagen en una tabla en formato markd
 
 
 
+
