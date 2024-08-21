@@ -188,7 +188,7 @@ export async function getScheduleGame(values: updateProps) {
 }
 
 
-export async function createScheduleGame(values: Omit<Schedule, "id" | "createdAt" | "updatedAt" | "video_url" | "gameStats" | "scoreTeam1" | "scoreTeam2" | "boxscoreTeam1" | "boxscoreTeam2">) {
+export async function createScheduleGame(values: Omit<Schedule, "id" | "createdAt" | "updatedAt" | "video_url" | "gameStats" | "scoreTeam1" | "scoreTeam2" | "boxscoreTeam1" | "boxscoreTeam2" | "result">) {
 
   try {
     const response = db.schedule.create({

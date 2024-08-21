@@ -63,3 +63,13 @@ export const updateGameSchema = z.object({
   gameStats: z.string({ message: "This field is a markdown text" }).optional(),
 
 })
+
+
+export const filterGamesSchema = z.object({
+  season: z.enum(["NBA2K22", "NBA2K23", "NBA2K24"]),
+  type: z.enum(["RS", "PO"]).optional(),
+  stage: z.enum(["RS", "CUP_GP", "CUP_QF", "CUP_SF", "CUP_THEFINAL", "FIRST_ROUND", "ESCF", "ECF", "FINALS"]).optional(),
+  atHome: z.enum(["HOME", "AWAY"]).optional(),
+  result: z.enum(["WIN", "LOSS"]).optional(),
+})
+

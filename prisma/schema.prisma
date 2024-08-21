@@ -13,7 +13,9 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum Season { 
+enum Season {
+  NBA2K22
+  NBA2K23 
   NBA2K24
 }
 
@@ -37,6 +39,12 @@ enum Stage {
   ESCF
   ECF
   FINALS
+}
+
+enum Result {
+  WIN
+  LOSS
+  DNP
 }
 
 // Definiendo el tipo embebido Game
@@ -86,6 +94,7 @@ model Schedule {
   gameStats        String?   // game stats markdown table provided by OpenAI
   boxscoreTeam1    String?   // boxscore team1 markdown table provided by OpenAI
   boxscoreTeam2    String?   // boxscore team2 markdown table provided by OpenAI
+  result           Result    @default(DNP) // game result
   createdAt        DateTime  @default(now()) // game created
   updatedAt        DateTime  @updatedAt      // last update
 }

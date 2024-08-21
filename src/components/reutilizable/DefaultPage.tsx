@@ -11,8 +11,22 @@ type Props = {
   className?: {
     title?: string
   }
-  photo_dimension?: { width: number, height: number }
+  photo_dimension: { width: number, height: number }
 }
+
+// TODO Example of usage
+/* 
+  const title = 'THIS SITE IS BEING DEVELOPED AT THIS MOMENT'
+  const photo_dimension = {
+    width: 400,
+    height: 400
+  }
+  const className = {
+    title: 'xl:text-7xl md:text-5xl lg:text-6xl text-5xl text-celtics leading-tight md:leading-tight lg:leading-tight xl:leading-tight'
+  }
+  image_url = '/marcus-smart23.png'
+*/
+
 
 const DefaultPage = ({ title, image_url, className, photo_dimension }: Props) => {
   return (
