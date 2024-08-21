@@ -176,7 +176,7 @@ const NewGameForm = () => {
           name="atHome"
           render={({ field }) => (
             <FormItem>
-              <FormLabel htmlFor="atHome">Where: </FormLabel>
+              <FormLabel htmlFor="atHome">Place: </FormLabel>
               <FormControl>
                 <Select {...field} defaultValue=""
                   onValueChange={(value) => field.onChange(value)}
