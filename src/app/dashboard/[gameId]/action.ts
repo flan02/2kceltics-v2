@@ -2,7 +2,7 @@
 import { db } from "@/db";
 import { Schedule } from "@prisma/client";
 
-export async function updateScheduleGame(values: Omit<Schedule, "season" | "team1" | "team_code1" | "createdAt" | "updatedAt" | "boxscoreTeam1" | "boxscoreTeam2" | "gameStats" | "createdAt" | "updatedAt">) {
+export async function updateScheduleGame(values: Omit<Schedule, "season" | "team1" | "team_code1" | "createdAt" | "updatedAt" | "boxscoreTeam1" | "boxscoreTeam2" | "gameStats" | "createdAt" | "updatedAt" | "result">) {
   const { id, ...rest } = values
 
   try {

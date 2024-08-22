@@ -1,30 +1,31 @@
-import YoutubeComponent from "@/components/custom/streamed-games/YoutubeComponent"
+import FilterForm from "@/components/custom/streamed-games/FilterForm"
 import DefaultPage from "@/components/reutilizable/DefaultPage"
 import MaxWidthWrapper from "@/components/reutilizable/MaxWidthWrapper"
+import { getStreamedGames } from "./action"
+
 
 
 type Props = {}
 
-const StreamedGamesPage = (props: Props) => {
-  const photo_dimension = {
-    width: 400,
-    height: 400
-  }
-  const className = {
-    title: 'xl:text-7xl md:text-5xl lg:text-6xl text-5xl text-celtics leading-tight md:leading-tight lg:leading-tight xl:leading-tight'
-  }
+export default async function StreamedGamesPage() {
+  const filteredGames = await getStreamedGames({
+    season: 'NBA2K24',
+    type: 'RS',
+    stage: undefined,
+    atHome: undefined,
+    result: undefined
+  })
+
+
+
   return (
     <MaxWidthWrapper className='min-w-[350px] lg:max-w-5xl lg:px-0 mb-16'>
-      {/* 
-      <DefaultPage title={'THIS SITE IS BEING DEVELOPED AT THIS MOMENT'} image_url={'/marcus-smart23.png'} className={className} photo_dimension={photo_dimension} />
-      */}
       <section className='flex flex-col justify-start items-center mt-16 py-8 border border-slate-200 rounded-lg w-full min-h-screen'>
         <h1 className=' text-center text-4xl text-celtics'>STREAMED GAMES</h1>
         <br />
-        <YoutubeComponent />
+        <FilterForm filteredGames={filteredGames} />
       </section>
     </MaxWidthWrapper>
   )
 }
 
-export default StreamedGamesPage

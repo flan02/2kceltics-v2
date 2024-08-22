@@ -61,6 +61,7 @@ export const updateGameSchema = z.object({
   boxscoreTeam1: z.string({ message: "This field is a markdown text" }).optional(),
   boxscoreTeam2: z.string({ message: "This field is a markdown text" }).optional(),
   gameStats: z.string({ message: "This field is a markdown text" }).optional(),
+  result: z.enum(["WIN", "LOSS"], { message: "Result must be WIN or LOSS" }).optional(),
 
 })
 

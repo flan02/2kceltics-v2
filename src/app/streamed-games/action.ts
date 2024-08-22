@@ -1,10 +1,11 @@
+'use server'
 import { db } from "@/db";
 import { filterGamesSchema } from "@/zod/validation";
 import { z } from "zod";
 
 
 export async function getStreamedGames(values: z.infer<typeof filterGamesSchema>) {
-
+  //console.log(values)
   try {
     const response = await db.schedule.findMany({
       where: {
@@ -19,6 +20,7 @@ export async function getStreamedGames(values: z.infer<typeof filterGamesSchema>
         season: true,
         currentGame: true,
         video_url: true,
+        atHome: true,
         team2: true,
         team_code2: true,
       }

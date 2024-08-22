@@ -23,7 +23,8 @@ interface Props {
 }
 
 async function onSubmit(values: z.infer<typeof updateGameSchema>) {
-  // console.log("Sending... to action.ts", values)
+
+
   const update = await updateScheduleGame(values)
 
 
@@ -94,19 +95,34 @@ const UpdateScheduleGameForm = ({ game }: Props) => {
             )}
           />
 
-          <FormField
-            control={control}
-            name="currentGame"
-            render={({ field }) => (
-              <FormItem className="w-full">
-                <FormLabel htmlFor="currentGame">Current Game:</FormLabel>
-                <FormControl>
-                  <Input id="currentGame" type="number" className="dark:text-blue-500" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <div className="w-full flex gap-4">
+            <FormField
+              control={control}
+              name="currentGame"
+              render={({ field }) => (
+                <FormItem className="w-[90px] md:w-max">
+                  <FormLabel htmlFor="currentGame" className="truncate">Current Game:</FormLabel>
+                  <FormControl>
+                    <Input id="currentGame" type="number" className="dark:text-blue-500" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={control}
+              name="result"
+              render={({ field }) => (
+                <FormItem className="w-[80px] md:w-max">
+                  <FormLabel htmlFor="result" className="truncate">Win or Loss:</FormLabel>
+                  <FormControl>
+                    <Input id="result" type="text" className="dark:text-blue-500" placeholder="Win or Loss" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
         </div>
 
         <div className="flex w-full space-x-8">

@@ -44,7 +44,6 @@ enum Stage {
 enum Result {
   WIN
   LOSS
-  DNP
 }
 
 // Definiendo el tipo embebido Game
@@ -94,7 +93,7 @@ model Schedule {
   gameStats        String?   // game stats markdown table provided by OpenAI
   boxscoreTeam1    String?   // boxscore team1 markdown table provided by OpenAI
   boxscoreTeam2    String?   // boxscore team2 markdown table provided by OpenAI
-  result           Result    @default(DNP) // game result
+  result           Result?   
   createdAt        DateTime  @default(now()) // game created
   updatedAt        DateTime  @updatedAt      // last update
 }
