@@ -11,6 +11,16 @@ export const formSchema = z.object({
   logo_url: z.string({ message: "Current path is /public/logos/[team_code].png" })
 })
 
+export const editTeamSchema = z.object({
+  season: z.enum(["NBA2K22", "NBA2K23", "NBA2K24", "NBA2K25"]),
+  total_games: z.string().nullable(),
+  players: z.string({ message: "Markdown table format" }).nullable(),
+  standings: z.string().nullable(),
+  team_record: z.string().nullable(),
+  playoffs_record: z.string().nullable(),
+})
+
+
 
 export const updateTeamSchema = z.object({
   currentGame: z

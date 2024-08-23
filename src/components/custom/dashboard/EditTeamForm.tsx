@@ -23,20 +23,17 @@ import LoadingButton from "@/components/reutilizable/LoadingButton"
 //import RichTextEditor from "../RichTextEditor"
 import { draftToMarkdown } from "markdown-draft-js"
 import { Button } from "@/components/ui/button"
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { seasonTypes } from "@/lib/types"
+import { editTeamSchema } from "@/zod/validation"
 
 
 
 const RichTextEditor = lazy(() => import("../RichTextEditor"));
 
-const formSchema = z.object({
-  total_games: z.string().nullable(),
-  players: z.string({ message: "Markdown table format" }).nullable(),
-  standings: z.string().nullable(),
-  team_record: z.string().nullable(),
-  playoffs_record: z.string().nullable(),
-})
 
-function onSubmit(values: z.infer<typeof formSchema>) {
+
+function onSubmit(values: z.infer<typeof editTeamSchema>) {
   console.log(values)
 
   updateTeam({ ...values })
@@ -62,9 +59,10 @@ export default function EditTeam({ season2k }: Props) {
   const [richEditor, setRichEditor] = useState(false)
   const [markdownSelected, setMarkdownSelected] = useState<string>("");
   const [isOpen, setIsOpen] = useState<boolean>(false)
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof editTeamSchema>>({
+    resolver: zodResolver(editTeamSchema),
     defaultValues: {
+      season: "NBA2K24",
       total_games: "",
       players: "",
       standings: "",
@@ -103,17 +101,45 @@ export default function EditTeam({ season2k }: Props) {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full border rounded-lg border-slate-200 mb-16 p-16 b-16 space-y-8">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full border border-slate-200 rounded-lg mb-16 px-4 py-16 lg:p-16 b-16 space-y-8">
+        <FormField
+          control={control}
+          name="season"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel >Select season: </FormLabel>
+              <FormControl>
+                <Select {...field} defaultValue=""
+                  onValueChange={(value) => field.onChange(value)}
+                  value={field.value}
+
+                >
+                  <SelectTrigger className="border border-slate-200 text-md shadow-md py-1.5 text-left pl-2 min-w-[150px] rounded-md">
+                    <SelectValue placeholder="" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup >
+                      {seasonTypes.map((type, index) => (
+                        <SelectItem key={index} value={type} >{type}</SelectItem>
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <FormField
           control={form.control}
           name="total_games"
           render={({ field }) => (
             <FormItem>
-              <FormLabel htmlFor="total_games">{`Total Games Played Season ${season2k[0].season}:  ${season2k[0].total_games}`}</FormLabel>
+              <FormLabel htmlFor="total_games">{`Game to edit markdown content`}</FormLabel>
               <FormControl>
                 <Input
                   id="total_games"
-                  placeholder="new current total games"
+                  placeholder="Enter game number"
                   {...field}
                   autoComplete="off"
                   value={field.value ?? ""}
@@ -123,13 +149,15 @@ export default function EditTeam({ season2k }: Props) {
             </FormItem>
           )}
         />
+
+
         {
           !isOpen
             ? <div className="text-right">
               <Button onClick={() => setIsOpen(true)}>Add markdown data</Button>
             </div>
             :
-            <div className="space-x-2 w-max -ml-4 sm:mx-auto">
+            <div className="space-x-2 w-max sm:mx-auto">
               <Button type="button" onClick={() => setMarkdownSelected("players")} >PLAYERS</Button>
               <Button type="button" onClick={() => setMarkdownSelected("standings")} >STANDINGS</Button>
               <Button type="button" onClick={() => setMarkdownSelected("team_record")} >RECORD</Button>
@@ -161,7 +189,7 @@ export default function EditTeam({ season2k }: Props) {
         }
         <div className="text-center">
           <LoadingButton type="submit" loading={isSubmitting}>
-            Submit
+            Edit
           </LoadingButton>
         </div>
       </form>

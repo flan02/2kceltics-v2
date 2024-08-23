@@ -20,29 +20,36 @@ type Props = {
   filteredGames: any
 }
 
-
+// * OnSubmit Function
 async function onSubmit(values: z.infer<typeof filterGamesSchema>) {
-
-  // it goes to database
   console.log(values)
-
-  const filteredGames = await getStreamedGames(values)
-  setBbdd(filteredGames);
-  //console.log("FILTERED GAMES", filteredGames)
-  //return filteredGames
-
+  try {
+    const queriedGames = await getStreamedGames(values)
+    return queriedGames
+  } catch (error) {
+    console.error(error)
+  }
 }
 
 
 
 const FilterForm = ({ filteredGames }: Props) => {
-  const [isLoaded, setIsLoaded] = useState<boolean>(false)
-  const [bbdd, setBbdd] = useState<any>(null)
+  const [queriedGames, setQueriedGames] = useState<any[]>([])
+  const [isLoaded, setIsLoaded] = useState(false)
+
+  const [filterValues, setFilterValues] = useState([{
+    season: undefined as "NBA2K22" | "NBA2K23" | "NBA2K24" | undefined,
+    type: undefined as "RS" | "PO" | undefined,
+    stage: undefined as "RS" | "CUP_GP" | "CUP_QF" | "CUP_SF" | "CUP_THEFINAL" | "FIRST_ROUND" | "ESCF" | "ECF" | "FINALS" | undefined,
+    atHome: undefined as "HOME" | "AWAY" | undefined,
+    result: undefined as "WIN" | "LOSS" | undefined
+  }])
+
   const form = useForm<z.infer<typeof filterGamesSchema>>({
     resolver: zodResolver(filterGamesSchema),
     defaultValues: {
-      season: 'NBA2K24',
-      type: 'RS',
+      season: undefined,
+      type: undefined,
       stage: undefined,
       atHome: undefined,
       result: undefined
@@ -50,13 +57,44 @@ const FilterForm = ({ filteredGames }: Props) => {
   })
   const { register, handleSubmit, formState, watch, trigger, control, setValue, setFocus, formState: { isSubmitting, isSubmitted } } = form
 
-  useEffect(() => {
+  const handleFormSubmit = async (values: z.infer<typeof filterGamesSchema>) => {
+
+    console.log("VALUES TO FILTER", values)
+
+    setFilterValues([{
+      season: values.season,
+      type: values.type,
+      stage: values.stage,
+      atHome: values.atHome,
+      result: values.result
+    }])
+
+    setIsLoaded(false)
+    // await new Promise(resolve => setTimeout(resolve, 1500)) // ! Simulating a delay intentionally
+    const games = await onSubmit(values) // * Calling onSubmit function
+    setQueriedGames(games!)
     setIsLoaded(true)
-    setBbdd(filteredGames)
-    return () => {
-      setIsLoaded(false)
+  }
+
+  useEffect(() => {
+
+    if (filteredGames) {
+      setQueriedGames(filteredGames)
+      setIsLoaded(true)
     }
-  }, [isLoaded])
+  }, [])
+
+  useEffect(() => {
+    if (isSubmitted) {
+      form.reset({
+        season: 'NBA2K24',
+        type: 'RS',
+        stage: undefined,
+        atHome: undefined,
+        result: undefined
+      })
+    }
+  }, [isSubmitted])
 
   return (
     <>
@@ -67,7 +105,7 @@ const FilterForm = ({ filteredGames }: Props) => {
         </div>
 
         <Form {...form} >
-          <form noValidate onSubmit={form.handleSubmit(onSubmit)} className='flex justify-between gap-2' >
+          <form noValidate onSubmit={form.handleSubmit(handleFormSubmit)} className='flex justify-between gap-2' >
             <div className='flex gap-4'>
               <div className='block lg:flex lg:gap-2'>
 
@@ -231,29 +269,30 @@ const FilterForm = ({ filteredGames }: Props) => {
           </form>
         </Form>
         <article>
-          <h6 className='text-midnight text-sm font-bold'>
-            Filtering by...
+          <h6 className='text-midnight text-sm font-bold'>Filtering by...
+            {
+              filterValues.map((value, index) => (
+                <p key={index} className='inline'>
+                  {value.season ? <span className='ml-2 px-2 py-1 bg-[#f9a826] text-slate-200 rounded-xl'> {value.season} </span> : null}
+                  {value.type ? <span className='ml-2 px-2 py-1 bg-[#f9a826] text-slate-200 rounded-xl'> {value.type} </span> : null}
+                  {value.stage ? <span className='ml-2 px-2 py-1 bg-[#f9a826] text-slate-200 rounded-xl'> {value.stage} </span> : null}
+                  {value.atHome ? <span className='ml-2 px-2 py-1 bg-[#f9a826] text-slate-200 rounded-xl'> {value.atHome} </span> : null}
+                  {value.result ? <span className='ml-2 px-2 py-1 bg-[#f9a826] text-slate-200 rounded-xl'> {value.result} </span> : null}
+                </p>
+              ))
+            }
           </h6>
         </article>
       </aside>
-
-
       {
         isLoaded
-          ? <GameCard filteredGames={filteredGames} isSubmitted={isSubmitted} />
-          :
-          <aside className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-4 w-full px-8 md:px-2 gap-4 md:gap-2'>
+          ? <GameCard filteredGames={!queriedGames ? filteredGames : queriedGames} isSubmitted={isSubmitted} />
+          : <aside className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-4 w-full px-8 md:px-2 gap-4 md:gap-2'>
             <SkeletonGameCard />
           </aside>
       }
-
-
     </>
   )
 }
 
 export default FilterForm
-
-function setBbdd(filteredGames: { season: import(".prisma/client").$Enums.Season; atHome: import(".prisma/client").$Enums.AtHome; id: string; currentGame: number; team2: string; team_code2: string; video_url: string | null; }[] | undefined) {
-  throw new Error('Function not implemented.');
-}

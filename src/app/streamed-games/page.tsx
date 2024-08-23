@@ -2,6 +2,7 @@ import FilterForm from "@/components/custom/streamed-games/FilterForm"
 import DefaultPage from "@/components/reutilizable/DefaultPage"
 import MaxWidthWrapper from "@/components/reutilizable/MaxWidthWrapper"
 import { getStreamedGames } from "./action"
+import { Button } from "@/components/ui/button"
 
 
 
@@ -24,7 +25,13 @@ export default async function StreamedGamesPage() {
         <h1 className=' text-center text-4xl text-celtics'>STREAMED GAMES</h1>
         <br />
         <FilterForm filteredGames={filteredGames} />
+
       </section>
+      <div className="text-center w-full">
+        <Button className='mt-4' asChild>
+          <a href="/">Back</a>
+        </Button>
+      </div>
     </MaxWidthWrapper>
   )
 }

@@ -11,7 +11,8 @@ import { getSeasons2k, getTasks, updateTask } from '@/app/dashboard/actions'
 import { CheckSquare } from 'lucide-react'
 import { Cross1Icon } from '@radix-ui/react-icons'
 import DoneTask from './DoneTask'
-import EditTeam from './EditTeam'
+import EditTeam from './AddSeason'
+import AddSeason from './AddSeason'
 
 
 type Props = {
@@ -28,7 +29,7 @@ const Dashboard = async ({ opt, photo, given_name }: Props) => {
   const addTeam = opt === 'addteam'
   const schedule = opt === 'schedule'
   const addStats = opt === 'addstats'
-  const editTeam = opt === 'editteam'
+  const addSeason = opt === 'addseason'
 
   return (
     <div className='mt-4 max-w-4xl mx-auto'>
@@ -45,10 +46,10 @@ const Dashboard = async ({ opt, photo, given_name }: Props) => {
           variant: `${(opt === 'addstats') ? 'default' : 'outline'}`,
           className: `transition-all duration-500 ease-in-out ${opt !== 'addstats' ? " hover:bg-zinc-200/60" : ""}`
         })}>ADD STATS</Link>
-        <Link href="/dashboard?opt=editteam" className={buttonVariants({
-          variant: `${(opt === 'editteam') ? 'default' : 'outline'}`,
-          className: `transition-all duration-500 ease-in-out ${opt !== 'editteam' ? " hover:bg-zinc-200/60" : ""}`
-        })}>EDIT</Link>
+        <Link href="/dashboard?opt=addseason" className={buttonVariants({
+          variant: `${(opt === 'addseason') ? 'default' : 'outline'}`,
+          className: `transition-all duration-500 ease-in-out ${opt !== 'addseason' ? " hover:bg-zinc-200/60" : ""}`
+        })}>ADD SEASON</Link>
 
       </nav>
 
@@ -100,7 +101,7 @@ const Dashboard = async ({ opt, photo, given_name }: Props) => {
           addStats ? <AddStats /> : null
         }
         {
-          editTeam ? <EditTeam /> : null
+          addSeason ? <AddSeason /> : null
         }
       </section>
 

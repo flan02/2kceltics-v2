@@ -131,7 +131,7 @@ export default function AddTeamForm() {
 
         <div className="text-center">
           <LoadingButton type="submit" loading={isSubmitting}>
-            Submit
+            Add Team
           </LoadingButton>
         </div>
       </form>

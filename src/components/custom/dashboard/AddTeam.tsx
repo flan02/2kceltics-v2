@@ -1,33 +1,33 @@
 
-import { lazy, useEffect, useState, Suspense } from "react"
+import { getSeasons2k } from "@/app/dashboard/actions";
 import AddTeamForm from "./AddTeamForm"
+import EditTeamForm from "./EditTeamForm";
+
+type Props = {
+  season: any
+  total_games: any
+}
 
 
 
-//const AddTeamForm = lazy(() => import("@/components/custom/dashboard/AddTeamForm"))
 
+export default async function AddTeam() {
+  const CURRENT_SEASON = process.env.CURRENT_SEASON;
+  const season2k: Props = await getSeasons2k(CURRENT_SEASON) as Props;
 
-export function AddTeam() {
-  /*const [addTeamForm, setAddTeamForm] = useState(false)
-  useEffect(() => {
-    const uploadComponent = async () => {
-      await import("@/components/custom/dashboard/AddTeamForm")
-      setAddTeamForm(true)
-    }
-
-    uploadComponent()
-  }, [])
-*/
   return (
-    <section className='flex flex-col justify-start items-center mt-16 min-h-[calc(100vh-50px)]'>
-      <h1 className=' text-center text-4xl text-celtics'>Add a team</h1>
-      <br />
-      <AddTeamForm />
+    <section className='flex flex-col space-y-6 justify-start items-center mt-16 min-h-[calc(100vh-50px)]'>
+      <h1 className=' text-center text-4xl text-celtics'>Add/Edit team</h1>
+      <div className="grid grid-cols-1 w-full">
+
+        <EditTeamForm season2k={season2k} />
+        <AddTeamForm />
+
+      </div>
+
 
     </section>
   )
 }
 
-export default AddTeam
-//<Suspense fallback={<p className="h-full text-lg text-celtics ">Loading form...</p>}>
-//</Suspense>
+
