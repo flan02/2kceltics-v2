@@ -36,7 +36,7 @@ const RichTextEditor = lazy(() => import("../RichTextEditor"));
 function onSubmit(values: z.infer<typeof editTeamSchema>) {
   console.log(values)
 
-  updateTeam({ ...values })
+  updateTeam(values)
 
   toast({
     title: "You updated the following values:",
@@ -56,13 +56,17 @@ type Props = {
 
 export default function EditTeam({ season2k }: Props) {
   //const [textArea, setTextArea] = useState<string>("")
+
+  // This is a common technique for managing state in functional React components when you need to know if a component is still mounted during an async operation.
+  const isMounted = useRef(false)
+
   const [richEditor, setRichEditor] = useState(false)
   const [markdownSelected, setMarkdownSelected] = useState<string>("");
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const form = useForm<z.infer<typeof editTeamSchema>>({
     resolver: zodResolver(editTeamSchema),
     defaultValues: {
-      season: "NBA2K24",
+      season: undefined,
       total_games: "",
       players: "",
       standings: "",
@@ -74,7 +78,15 @@ export default function EditTeam({ season2k }: Props) {
 
   const { register, handleSubmit, formState, watch, trigger, control, setValue, setFocus, formState: { isSubmitting, isSubmitted } } = form
 
-  //console.log(isSubmitting)
+
+  useEffect(() => {
+    isMounted.current = true
+
+    return () => {
+      isMounted.current = false
+    }
+  }, [])
+
   useEffect(() => {
     let isMounted = true
     if (isSubmitted && isMounted) {

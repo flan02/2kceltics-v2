@@ -3,7 +3,7 @@
 
 import { updateProps } from "@/components/custom/dashboard/UpdateScheduleGame"
 import { db } from "@/db"
-import { Schedule, Season2k } from "@prisma/client"
+import { Schedule, Season, Season2k } from "@prisma/client"
 import { revalidatePath } from "next/cache"
 
 
@@ -14,6 +14,39 @@ type Team = {
   logo_url: string
 }
 
+export async function createNewSeason(values: Omit<Season2k, "id" | "createdAt" | "updatedAt">) {
+  try {
+    const response = db.season2k.create({
+      data: {
+        ...values
+      }
+    })
+    revalidatePath('/dashboard?opt=addseason')
+    return response
+  } catch (error) {
+    console.log(error);
+    return error
+  }
+}
+
+export async function getSeason2k(season: Season) {
+  try {
+    const response = db.season2k.findFirst({
+      where: {
+        season
+      },
+      select: {
+        id: true,
+        season: true,
+        teamId: true,
+      }
+    })
+    return response
+  } catch (error) {
+    console.log(error);
+    return error
+  }
+}
 
 export async function getTeam(team: string) {
   try {
@@ -55,13 +88,12 @@ export async function createTeam({ name, team_code, logo_url }: Team) {
 
 }
 
-export async function updateTeam(values: Omit<Season2k, "id" | "teamId" | "season" | "createdAt" | "updatedAt">) {
+export async function updateTeam(values: Omit<Season2k, "id" | "teamId" | "createdAt" | "updatedAt">) {
   try {
     // TODO -> First we call to database retrieving our team id
-    const team: any = await getTeam("BOS")
+    const data: any = await getSeason2k(values.season as Season)
+    console.log(data)
 
-    // * I need bring [id,teamId,season,total_games] from server actions calling a fc inside this fc
-    // console.log("Before filter", values)
 
     const filteredData: any = {}
 
@@ -74,18 +106,15 @@ export async function updateTeam(values: Omit<Season2k, "id" | "teamId" | "seaso
       }
     });
 
-    // console.log("After Filter", filteredData)
-
-    const updateTeam = await db.season2k.update({
+    const updateTeam = db.season2k.update({
       where: {
-        id: "66bb7d42178533af7ee9d735", // * Added manually
-        teamId: team.id
+        id: data.id
       },
       data: {
         ...filteredData
       }
     })
-    // revalidatePath('/dashboard?opt=editteam')
+
     return updateTeam
 
   } catch (error) {

@@ -20,7 +20,7 @@ type Props = {
   filteredGames: any
 }
 
-// * OnSubmit Function
+// * OnSubmit Server Function
 async function onSubmit(values: z.infer<typeof filterGamesSchema>) {
   console.log(values)
   try {
@@ -58,9 +58,7 @@ const FilterForm = ({ filteredGames }: Props) => {
   const { register, handleSubmit, formState, watch, trigger, control, setValue, setFocus, formState: { isSubmitting, isSubmitted } } = form
 
   const handleFormSubmit = async (values: z.infer<typeof filterGamesSchema>) => {
-
-    console.log("VALUES TO FILTER", values)
-
+    // console.log("VALUES TO FILTER", values)
     setFilterValues([{
       season: values.season,
       type: values.type,

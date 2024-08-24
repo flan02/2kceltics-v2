@@ -1,5 +1,4 @@
 import FilterForm from "@/components/custom/streamed-games/FilterForm"
-import DefaultPage from "@/components/reutilizable/DefaultPage"
 import MaxWidthWrapper from "@/components/reutilizable/MaxWidthWrapper"
 import { getStreamedGames } from "./action"
 import { Button } from "@/components/ui/button"

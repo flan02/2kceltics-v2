@@ -1,5 +1,14 @@
 import { z } from "zod";
 
+export const createNewSeasonSchema = z.object({
+  teamId: z.string().min(24, { message: "Team ID must be 24 characters" }).max(24, { message: "Team ID must be 24 characters" }),
+  season: z.enum(["NBA2K21", "NBA2K22", "NBA2K23", "NBA2K24", "NBA2K25", "NBA2K26", "NBA2K27", "NBA2K28"]),
+  total_games: z.string().optional(),
+  players: z.string({ message: "Markdown table format" }).optional(),
+  standings: z.string().optional(),
+  team_record: z.string().optional(),
+  playoffs_record: z.string().optional(),
+})
 
 export const formSchema = z.object({
   name: z.string().min(2, {
@@ -12,7 +21,7 @@ export const formSchema = z.object({
 })
 
 export const editTeamSchema = z.object({
-  season: z.enum(["NBA2K22", "NBA2K23", "NBA2K24", "NBA2K25"]),
+  season: z.enum(["NBA2K22", "NBA2K23", "NBA2K24", "NBA2K25", "NBA2K26", "NBA2K27", "NBA2K28"], { message: "Season must be NBA2K22, NBA2K23, NBA2K24, NBA2K25, NBA2K26, NBA2K27, NBA2K28" }),
   total_games: z.string().nullable(),
   players: z.string({ message: "Markdown table format" }).nullable(),
   standings: z.string().nullable(),
