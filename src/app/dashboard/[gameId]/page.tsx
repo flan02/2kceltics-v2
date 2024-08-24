@@ -32,7 +32,7 @@ const getGames = cache(async () => {
   const games = await db.schedule.findMany(
     {
       where: {
-        season: "NBA2K24"
+        season: "NBA2K24"  // ! CHECK THAT BECAUSE NOW I USE MORE SEASONS...
       },
       select: {
         id: true

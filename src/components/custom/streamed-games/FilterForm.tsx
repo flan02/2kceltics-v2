@@ -22,7 +22,7 @@ type Props = {
 
 // * OnSubmit Server Function
 async function onSubmit(values: z.infer<typeof filterGamesSchema>) {
-  console.log(values)
+  // console.log(values)
   try {
     const queriedGames = await getStreamedGames(values)
     return queriedGames
