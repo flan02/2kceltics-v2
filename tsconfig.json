@@ -21,6 +21,20 @@
       "@/*": ["./src/*"]
     }
   },
+  // $ added for mdx manually
+  "mdx": {
+    "checkMdx": true,
+    "plugins": [
+      [
+        "remark-frontmatter",
+        [
+          "toml",
+          "yaml"
+        ]
+      ],
+      "remark-gfm"
+    ]
+  },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["node_modules"]
 }

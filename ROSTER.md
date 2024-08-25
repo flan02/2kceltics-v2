@@ -86,3 +86,21 @@ Aquí está la información extraída de la imagen en una tabla en formato markd
 | 44  | Robert Williams        | C   | 6-9 | 237 | October 17, 1997   | US 🇺🇸   | 3   | Texas A&M                                 |
 
 
+
+
+export const name = 'Elvio'
+
+export function Thing() {
+  return <>World</>;
+}
+
+# Hello <Thing />
+
+**Hello <Thing />**
+
+_Hello <Thing />_
+
+Hello <Thing />
+
+
+# GoodMoring {name.toUpperCase()}

@@ -11,12 +11,21 @@ import {
 } from "@/components/ui/card"
 
 import { db } from "@/db"
-import { Car } from "lucide-react"
+
 import Image from "next/image"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import { cache } from "react"
+import BoxScoreMarkdown from "@/components/markdown/BoxScoreMarkdown.mdx"
 
+
+import { MDXProvider } from "@mdx-js/react"
+import MarkdownRendered from "@/components/markdown/MarkdownRenderer"
+import { markdownToHtml } from "@/lib/markdownToHtml"
+import GamePlayerStats from "@/components/markdown/GamePlayerStats"
+import { Box } from "lucide-react"
+import Markdown from "@/components/markdown/Markdown"
+import MarkdownRenderer from "@/components/markdown/MarkdownRenderer"
 
 type PageProps = {
   params: {
@@ -33,6 +42,7 @@ const getGame = cache(async (gameId: string) => {
       }
     })
     if (!game) return notFound()
+
     return game
   } catch (error) {
     console.error(error);
@@ -74,7 +84,14 @@ export default async function GameIdPage({ params: { gameId } }: PageProps) {
 
   const game = await getGame(gameId)
 
-  console.log(game)
+  // console.log(game)
+  console.log(game?.boxscoreTeam1)
+
+  /*
+    const markdownBoxScore = game?.boxscoreTeam1
+    const contentHtml = await markdownToHtml(markdownBoxScore!)
+   <div dangerouslySetInnerHTML={{ __html: contentHtml }} id="boxscore" />
+  */
   return (
     <MaxWidthWrapper className='min-h-screen max-w-4xl'>
       <section className='mt-16 space-y-4'>
@@ -110,9 +127,18 @@ export default async function GameIdPage({ params: { gameId } }: PageProps) {
         </div>
         <Card>
           <CardContent>
-            <CardDescription>
+            <CardDescription className="py-8 text-center">
               <span className="text-midnight font-bold text-xl">Game Details Markdown</span>
             </CardDescription>
+
+            {/* MARKDOWN CONTENT CLIENT SIDE */}
+            <MarkdownRenderer markdown={game?.boxscoreTeam1!} />
+
+
+
+
+
+
           </CardContent>
         </Card>
         <div className="text-center">
@@ -120,10 +146,15 @@ export default async function GameIdPage({ params: { gameId } }: PageProps) {
             <Link href="/streamed-games">BACK</Link>
           </Button>
         </div>
+        {/*
         <pre>
           {JSON.stringify(game, null, 2)}
         </pre>
+        */}
+
       </section>
+
+
     </MaxWidthWrapper>
   )
 }

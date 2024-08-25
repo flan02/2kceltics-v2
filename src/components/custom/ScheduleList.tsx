@@ -14,7 +14,9 @@ import { Card, CardTitle } from "../ui/card"
 export default async function ScheduleList({ searchParams: { page } }: { searchParams: { page: number } }) {
 
   let schedule = await getScheduleGames()
-  schedule = schedule.filter((game) => game.type == "RS")
+  schedule = schedule
+    .filter((game) => game.type == "RS")
+    .sort((a, b) => a.currentGame - b.currentGame)
 
   const total_pages: number[] = schedule
     // .filter(game => game.scoreTeam1! > 0)
