@@ -132,13 +132,7 @@ export default async function GameIdPage({ params: { gameId } }: PageProps) {
             </CardDescription>
 
             {/* MARKDOWN CONTENT CLIENT SIDE */}
-            <MarkdownRenderer markdown={game?.boxscoreTeam1!} />
-
-
-
-
-
-
+            <MarkdownRenderer markdown={game?.boxscoreTeam2!} />
           </CardContent>
         </Card>
         <div className="text-center">
@@ -146,12 +140,6 @@ export default async function GameIdPage({ params: { gameId } }: PageProps) {
             <Link href="/streamed-games">BACK</Link>
           </Button>
         </div>
-        {/*
-        <pre>
-          {JSON.stringify(game, null, 2)}
-        </pre>
-        */}
-
       </section>
 
 

@@ -77,10 +77,10 @@ export const updateGameSchema = z.object({
     .string()
     .transform((value) => parseInt(value))
     .refine((value) => !isNaN(value), { message: "This field must be a number" }),
-  boxscoreTeam1: z.string({ message: "This field is a markdown text" }).optional(),
-  boxscoreTeam2: z.string({ message: "This field is a markdown text" }).optional(),
-  gameStats: z.string({ message: "This field is a markdown text" }).optional(),
-  result: z.enum(["WIN", "LOSS"], { message: "Result must be WIN or LOSS" }).optional(),
+  boxscoreTeam1: z.string({ message: "This field is a markdown text" }).nullable(),
+  boxscoreTeam2: z.string({ message: "This field is a markdown text" }).nullable(),
+  gameStats: z.string({ message: "This field is a markdown text" }).nullable(),
+  result: z.enum(["WIN", "LOSS"], { message: "Result must be WIN or LOSS" }),
 
 })
 

@@ -13,7 +13,7 @@ import { Suspense, useEffect, useRef } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { atHomeTypes, gameTypes, stageTypes } from "@/lib/types"
+import { atHomeTypes, gameTypes, resultTypes, stageTypes } from "@/lib/types"
 import RichTextEditor from "../RichTextEditor"
 import { draftToMarkdown } from "markdown-draft-js"
 import { updateScheduleGame } from "@/app/dashboard/[gameId]/action"
@@ -24,7 +24,7 @@ interface Props {
 
 async function onSubmit(values: z.infer<typeof updateGameSchema>) {
 
-
+  console.log("VALUES ON FORM", values)
   const update = await updateScheduleGame(values)
 
 
@@ -109,16 +109,31 @@ const UpdateScheduleGameForm = ({ game }: Props) => {
                 </FormItem>
               )}
             />
+
             <FormField
               control={control}
               name="result"
               render={({ field }) => (
-                <FormItem className="w-[80px] md:w-max">
-                  <FormLabel htmlFor="result" className="truncate">Win or Loss:</FormLabel>
+                <FormItem className="w-full">
+                  <FormLabel className="truncate" >Win or Loss: </FormLabel>
                   <FormControl>
-                    <Input id="result" type="text" className="dark:text-blue-500" placeholder="Win or Loss" {...field} />
+                    <Select {...field}
+                      onValueChange={(value) => field.onChange(value)}
+                      value={field.value}
+                    >
+                      <SelectTrigger className="border border-slate-200 text-md shadow-md py-1.5 text-left pl-2 w-full rounded-md">
+                        <SelectValue placeholder="" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectGroup >
+                          {resultTypes.map((type, index) => (
+                            <SelectItem key={index} value={type}>{type}</SelectItem>
+                          ))}
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage>{form.formState.errors.type?.message}</FormMessage>
                 </FormItem>
               )}
             />

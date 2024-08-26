@@ -5,6 +5,8 @@ import { getScheduleGame } from "@/app/dashboard/actions"
 import LoadingButton from "@/components/reutilizable/LoadingButton"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { seasonTypes } from "@/lib/types"
 import { updateTeamSchema } from "@/zod/validation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Search } from "lucide-react"
@@ -79,19 +81,38 @@ const UpdateScheduleGame = () => {
               </FormItem>
             )}
           />
+
           <FormField
             control={control}
             name="season"
             render={({ field }) => (
               <FormItem>
-                <FormLabel htmlFor="season">Season</FormLabel>
+                <FormLabel >Season: </FormLabel>
                 <FormControl>
-                  <Input id="season" className="dark:text-blue-500" autoComplete="off" placeholder="NBA2K24, NBA2K25, etc..." {...field} />
+                  <Select {...field} defaultValue=""
+                    onValueChange={(value) => field.onChange(value)}
+                    value={field.value}
+
+                  >
+                    <SelectTrigger className="border border-slate-200 text-md shadow-md py-1.5 text-left pl-2 min-w-[150px] rounded-md">
+                      <SelectValue placeholder="" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup >
+                        {seasonTypes.map((type, index) => (
+                          <SelectItem key={index} value={type}>{type}</SelectItem>
+                        ))
+                        }
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
+
+
           <div className="text-center">
             <LoadingButton type="submit" loading={isSubmitting}>
               Search
