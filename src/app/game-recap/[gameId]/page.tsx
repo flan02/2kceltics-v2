@@ -26,10 +26,14 @@ import GamePlayerStats from "@/components/markdown/GamePlayerStats"
 import { Box } from "lucide-react"
 import Markdown from "@/components/markdown/Markdown"
 import MarkdownRenderer from "@/components/markdown/MarkdownRenderer"
+import { stat } from "fs"
 
 type PageProps = {
   params: {
     gameId: string // ? its name must be the same as the folder name between brackets []
+  }
+  searchParams: {
+    stats: string
   }
 }
 
@@ -80,23 +84,23 @@ export async function generateMetadata() {
 */
 
 
-export default async function GameIdPage({ params: { gameId } }: PageProps) {
+export default async function GameIdPage({ params: { gameId }, searchParams: { stats } }: PageProps) {
 
   const game = await getGame(gameId)
-
-  // console.log(game)
-  console.log(game?.boxscoreTeam1)
-
   /*
     const markdownBoxScore = game?.boxscoreTeam1
     const contentHtml = await markdownToHtml(markdownBoxScore!)
    <div dangerouslySetInnerHTML={{ __html: contentHtml }} id="boxscore" />
   */
+
+  const BOS = stats === game?.team_code1
+  const OPP = stats === game?.team_code2
+  const TOTAL = stats === "TOTAL"
   return (
     <MaxWidthWrapper className='min-h-screen max-w-4xl'>
       <section className='mt-16 space-y-4'>
         <h1 className='text-celtics text-3xl text-center'>GAME RECAP</h1>
-        <div className="grid grid-cols-1 md:grid-cols-1 gap-2">
+        <div className="grid grid-cols-1 md:grid-cols-1 gap-2 min-h-[330px]">
 
           <Card className="md:flex md:justify-center py-4 block md:py-0">
             <div className="w-full flex justify-center md:block">
@@ -127,15 +131,34 @@ export default async function GameIdPage({ params: { gameId } }: PageProps) {
         </div>
         <Card>
           <CardContent>
-            <CardDescription className="py-8 text-center">
-              <span className="text-midnight font-bold text-xl">Game Details Markdown</span>
+            <CardDescription className="py-8 flex justify-between items-end">
+              <span className="text-midnight font-bold text-xl" >Game details</span>
+              <span className="space-x-1">
+                <Button asChild className="text-xs px-2 md:text-base">
+                  <Link href={`./${game?.id}?stats=${game?.team_code1}`}>{game?.team_code1}</Link>
+                </Button>
+                <Button asChild className="text-xs px-2 md:text-base">
+                  <Link href={`./${game?.id}?stats=${game?.team_code2}`}>{game?.team_code2}</Link>
+                </Button><Button asChild className="text-xs px-2 md:text-base">
+                  <Link href={`./${game?.id}?stats=TOTAL`}>TOTAL</Link>
+                </Button>
+              </span>
             </CardDescription>
 
-            {/* MARKDOWN CONTENT CLIENT SIDE */}
-            <MarkdownRenderer markdown={game?.boxscoreTeam2!} />
+            {/* MARKDOWN CONTENT SERVER SIDE */}
+
+
           </CardContent>
+          <CardContent className="w-max mx-auto">
+            {stats === undefined && <MarkdownRenderer markdown={game?.boxscoreTeam1!} />}
+            {BOS ? <MarkdownRenderer markdown={game?.boxscoreTeam1!} /> : null}
+            {OPP ? <MarkdownRenderer markdown={game?.boxscoreTeam2!} /> : null}
+            {TOTAL ? <MarkdownRenderer markdown={game?.gameStats!} /> : null}
+
+          </CardContent>
+
         </Card>
-        <div className="text-center">
+        <div className="text-center pb-16">
           <Button asChild>
             <Link href="/streamed-games">BACK</Link>
           </Button>

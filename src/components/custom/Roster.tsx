@@ -2,9 +2,13 @@ import React from 'react'
 import BackToTop from '../reutilizable/BackToTop'
 import MarkdownRoster from '../../components/markdown/MarkdownRoster.mdx'
 import MdxLayout from '../mdx-layout'
-type Props = {}
+import { getCurrentRoster } from '@/app/actions'
+import MarkdownRenderer from '../markdown/MarkdownRenderer'
 
-const Roster = (props: Props) => {
+
+export default async function Roster() {
+  // const roster = await getCurrentRoster()
+  // {roster && <MarkdownRenderer markdown={roster.players!} />}
   return (
     <section id="roster" className="max-w-screen-xl flex flex-col mx-auto pt-12">
       <div className="flex mx-auto mb-12">
@@ -14,12 +18,13 @@ const Roster = (props: Props) => {
       <br />
       <br />
       <aside className='flex justify-center'>
+        {/* INSERTED WITHOUT BBDD CALL */}
         <MdxLayout>
           <MarkdownRoster />
         </MdxLayout>
+
       </aside>
     </section>
   )
 }
 
-export default Roster

@@ -25,3 +25,20 @@ export async function getNextGame() {
   const nextGame: number = response.length + 1
   return nextGame
 }
+
+
+export async function getCurrentRoster() {
+  try {
+    const response = await db.season2k.findFirst({
+      where: {
+        season: "NBA2K24"
+      },
+      select: {
+        players: true
+      }
+    })
+    return response
+  } catch (error) {
+    console.error(error)
+  }
+}
