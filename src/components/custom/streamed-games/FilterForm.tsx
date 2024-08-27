@@ -5,7 +5,7 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectVa
 import { atHomeTypes, gameTypes, resultTypes, seasonTypes, stageTypes } from '@/lib/types';
 import { Search } from 'lucide-react';
 import LoadingButton from '@/components/reutilizable/LoadingButton';
-import { useForm } from 'react-hook-form';
+import { set, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { filterGamesSchema } from '@/zod/validation';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -34,8 +34,13 @@ async function onSubmit(values: z.infer<typeof filterGamesSchema>) {
 
 
 const FilterForm = ({ filteredGames }: Props) => {
+  let limit = 12
+  let total_pages = filteredGames.length
+  const [page, setPage] = useState<number>(1)
+  const [isFormQuery, setIsFormQuery] = useState<boolean>(false)
   const [queriedGames, setQueriedGames] = useState<any[]>([])
-  console.log("QUERIED GAMES", queriedGames)
+  //console.log("QUERIED GAMES", queriedGames)
+  //console.log("FILTERED GAMES", filteredGames)
   const [isLoaded, setIsLoaded] = useState(false)
 
   const [filterValues, setFilterValues] = useState([{
@@ -68,21 +73,30 @@ const FilterForm = ({ filteredGames }: Props) => {
       result: values.result
     }])
 
+
     setIsLoaded(false)
     // await new Promise(resolve => setTimeout(resolve, 1500)) // ! Simulating a delay intentionally
     const games = await onSubmit(values) // * Calling onSubmit function
-    setQueriedGames(games!)
+    setIsFormQuery(true)
+    setPage(1)
+    console.log("PAGE AFTER SUBMIT", page)
+    console.log(games)
+    setQueriedGames(games!)  // $ POINT OF INTEREST
     setIsLoaded(true)
   }
 
 
   // ! BECAUSE OF THIS USEEFFECT IT WOULD BE BETTER TO USE A CLIENT SIDE PAGINATION
   useEffect(() => {
-    if (filteredGames) {
-      setQueriedGames(filteredGames)
+    console.log("current page", page);
+    if (filteredGames && !isFormQuery) {
+      // if (queriedGames.length === 0) {
+      // setQueriedGames(filteredGames.slice(0, limit))
+
+      setQueriedGames(filteredGames.slice((page - 1) * limit, page * limit))
       setIsLoaded(true)
     }
-  }, [])
+  }, [page])
 
   useEffect(() => {
     if (isSubmitted) {
@@ -286,7 +300,19 @@ const FilterForm = ({ filteredGames }: Props) => {
       </aside>
       {
         isLoaded
-          ? <GameCard filteredGames={!queriedGames ? filteredGames : queriedGames} isSubmitted={isSubmitted} />
+          ? <>
+            <GameCard filteredGames={!queriedGames ? filteredGames : queriedGames} isSubmitted={isSubmitted} />
+            <div className='mt-16'>
+              {
+                total_pages > limit
+                  ? <div className='flex justify-center gap-4'>
+                    <button onClick={() => setPage(page - 1)} disabled={page === 1} className={`${page === 1 ? "bg-slate-950 text-slate-500" : "bg-slate-600 text-slate-200"} border border-slate-200  text-sm p-2 rounded-md`}>PREV</button>
+                    <button onClick={() => setPage(page + 1)} disabled={page === Math.ceil(total_pages / limit)} className={`${page === Math.ceil(total_pages / limit) ? "bg-slate-950 text-slate-500" : "bg-slate-600 text-slate-200"} border border-slate-200  text-sm p-2 rounded-md`}>NEXT</button>
+                  </div>
+                  : null
+              }
+            </div>
+          </>
           : <aside className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-4 w-full px-8 md:px-2 gap-4 md:gap-2'>
             <SkeletonGameCard />
           </aside>

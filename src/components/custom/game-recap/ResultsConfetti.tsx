@@ -6,10 +6,10 @@ import React from 'react'
 import useWindowSize from 'react-use/lib/useWindowSize'
 import Confetti from 'react-confetti'
 import { Button } from "@/components/ui/button"
-import { Check, Cross, Gamepad, LucideCross, TrophyIcon, X } from "lucide-react"
+import { Check, Gamepad, X } from "lucide-react"
 import Image from "next/image"
 import { Schedule } from "@prisma/client"
-import { clear } from "console"
+
 
 type Props = {
   game: Omit<Schedule, "updatedAt">

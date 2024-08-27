@@ -4,6 +4,7 @@ import { CloverIcon } from 'lucide-react'
 import Link from 'next/link'
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server'
 import Image from 'next/image'
+import { ModeToggle } from '../reutilizable/ModeToggle'
 
 type Props = {}
 
@@ -26,7 +27,9 @@ const Navbar = async (props: Props) => {
         <h1 className="text-celtics text-2xl lg:block hidden">2023/24 WORLD CHAMPIONS</h1>
         <Image className="w-auto h-auto" src='/trophy.png' alt='celtics' width={30} height={30} />
       </div>
+
       <Upload isAdmin={isAdmin} />
+
     </header>
   )
 }

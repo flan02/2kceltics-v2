@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -88,6 +89,7 @@
 
 
 body {
+  
   background-image: url('../../public/fissure.png');
   background-size: contain;
     /* Agrega un color de fondo semi-transparente */
