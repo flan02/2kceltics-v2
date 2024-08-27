@@ -35,6 +35,7 @@ async function onSubmit(values: z.infer<typeof filterGamesSchema>) {
 
 const FilterForm = ({ filteredGames }: Props) => {
   const [queriedGames, setQueriedGames] = useState<any[]>([])
+  console.log("QUERIED GAMES", queriedGames)
   const [isLoaded, setIsLoaded] = useState(false)
 
   const [filterValues, setFilterValues] = useState([{
@@ -74,8 +75,9 @@ const FilterForm = ({ filteredGames }: Props) => {
     setIsLoaded(true)
   }
 
-  useEffect(() => {
 
+  // ! BECAUSE OF THIS USEEFFECT IT WOULD BE BETTER TO USE A CLIENT SIDE PAGINATION
+  useEffect(() => {
     if (filteredGames) {
       setQueriedGames(filteredGames)
       setIsLoaded(true)

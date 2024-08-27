@@ -23,7 +23,9 @@ export async function getStreamedGames(values: z.infer<typeof filterGamesSchema>
         atHome: true,
         team2: true,
         team_code2: true,
-        result: true
+        result: true,
+        stage: true,
+        type: true
       }
     })
 

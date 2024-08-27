@@ -27,7 +27,7 @@ const ResultsConfetti = ({ game }: Props) => {
     if (isMountedConfetti && isMounted) {
       const timeout = setTimeout(() => {
         setIsMountedConfetti(false)
-      }, 8000)
+      }, 5000)
       return () => {
         clearTimeout(timeout)
 
@@ -36,7 +36,8 @@ const ResultsConfetti = ({ game }: Props) => {
     return () => isMounted = false
   }, [showResults])
 
-
+  console.log("width", width)
+  console.log("height", height)
 
   return (
     <div className="text-center p-8 space-y-6 w-full" >
@@ -48,7 +49,7 @@ const ResultsConfetti = ({ game }: Props) => {
         <div className="space-y-4">
           {
             isMountedConfetti && game.result == "WIN"
-              ? <Confetti width={width} height={height} />
+              ? <Confetti width={width - 20} height={height} />
               : null
           }
           <div className="flex w-full items-center justify-center">

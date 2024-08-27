@@ -1,4 +1,5 @@
 import { db } from "@/db"
+import { $Enums } from "@prisma/client"
 
 
 export async function getScheduleGames() {
@@ -10,20 +11,35 @@ export async function getScheduleGames() {
   return response
 }
 
+const CURRENT_SEASON = process.env.CURRENT_SEASON as $Enums.Season
 
 export async function getNextGame() {
   const response = await db.schedule.findMany({
     where: {
-      season: "NBA2K24",
+      season: CURRENT_SEASON,
       scoreTeam1: { gt: 0 }
     },
     select: {
       scoreTeam1: true,
+      team_code2: true,
     }
   })
 
   const nextGame: number = response.length + 1
   return nextGame
+}
+
+export async function getNextTeam(currentGame: string) {
+  const response = await db.schedule.findFirst({
+    where: {
+      season: CURRENT_SEASON,
+      currentGame: parseInt(currentGame)
+    },
+    select: {
+      team2: true
+    }
+  })
+  return response?.team2
 }
 
 

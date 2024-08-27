@@ -97,7 +97,7 @@ export default async function GameIdPage({ params: { gameId }, searchParams: { s
   const OPP = stats === game?.team_code2
   const TOTAL = stats === "TOTAL"
   return (
-    <MaxWidthWrapper className='min-h-screen max-w-4xl'>
+    <MaxWidthWrapper className='min-h-screen max-w-5xl'>
       <section className='mt-16 space-y-4'>
         <h1 className='text-celtics text-3xl text-center'>GAME RECAP</h1>
         <div className="grid grid-cols-1 md:grid-cols-1 gap-2 min-h-[330px]">
@@ -149,7 +149,7 @@ export default async function GameIdPage({ params: { gameId }, searchParams: { s
 
 
           </CardContent>
-          <CardContent className="w-max mx-auto">
+          <CardContent className="px-0 grid place-content-center">
             {stats === undefined && <MarkdownRenderer markdown={game?.boxscoreTeam1!} />}
             {BOS ? <MarkdownRenderer markdown={game?.boxscoreTeam1!} /> : null}
             {OPP ? <MarkdownRenderer markdown={game?.boxscoreTeam2!} /> : null}

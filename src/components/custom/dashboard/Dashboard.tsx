@@ -91,18 +91,10 @@ const Dashboard = async ({ opt, photo, given_name }: Props) => {
             </div>
             : null
         }
-        {
-          addTeam ? <AddTeam /> : null
-        }
-        {
-          schedule ? <Schedule /> : null
-        }
-        {
-          addStats ? <AddStats /> : null
-        }
-        {
-          addSeason ? <AddSeason /> : null
-        }
+        {addTeam ? <AddTeam /> : null}
+        {schedule ? <Schedule /> : null}
+        {addStats ? <AddStats /> : null}
+        {addSeason ? <AddSeason /> : null}
       </section>
 
     </div>

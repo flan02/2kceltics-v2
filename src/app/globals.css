@@ -108,9 +108,9 @@ body {
 
 table{
   display: grid;
-  overflow-x: scroll; 
+  overflow-x: hidden; 
   border: 1px solid rgba(255,255,255, .4);
-  font-size: 14px;
+  font-size: 11px;
   @media (min-width: 992px) {
     font-size: 16px;
     display: block;
@@ -124,6 +124,7 @@ tr:hover {
 }
 
 th {
+ padding: 0 4px;
   border: 1px solid rgb(230, 230, 230);
 }
 
@@ -132,9 +133,11 @@ tr {
 }
 
 td{
-  padding: 0 8px;
-  text-align: center;
+  padding: 0 4px;  
   border: 1px solid rgb(230, 230, 230);
+  @media (min-width: 992px) {
+   padding: 0 8px;
+  }
 }
 
 thead {

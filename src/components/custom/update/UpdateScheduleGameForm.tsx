@@ -50,7 +50,7 @@ const UpdateScheduleGameForm = ({ game }: Props) => {
       id: game.id,
       type: game.type,
       stage: game.stage,
-      result: game.result || "WIN",
+      result: game.result || undefined,
       video_url: game.video_url || undefined,
       currentGame: game.currentGame,
       atHome: game.atHome,
