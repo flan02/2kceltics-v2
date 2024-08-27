@@ -11,7 +11,6 @@ import { getTasks } from '@/app/dashboard/actions'
 import { CheckSquare } from 'lucide-react'
 import { Cross1Icon } from '@radix-ui/react-icons'
 import DoneTask from './DoneTask'
-import EditTeam from './AddSeason'
 import AddSeason from './AddSeason'
 
 

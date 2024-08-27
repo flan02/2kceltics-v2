@@ -11,22 +11,12 @@ import {
 } from "@/components/ui/card"
 
 import { db } from "@/db"
-
 import Image from "next/image"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import { cache } from "react"
-import BoxScoreMarkdown from "@/components/markdown/BoxScoreMarkdown.mdx"
-
-
-import { MDXProvider } from "@mdx-js/react"
-import MarkdownRendered from "@/components/markdown/MarkdownRenderer"
-import { markdownToHtml } from "@/lib/markdownToHtml"
-import GamePlayerStats from "@/components/markdown/GamePlayerStats"
-import { Box } from "lucide-react"
-import Markdown from "@/components/markdown/Markdown"
 import MarkdownRenderer from "@/components/markdown/MarkdownRenderer"
-import { stat } from "fs"
+
 
 type PageProps = {
   params: {
@@ -84,9 +74,9 @@ export async function generateMetadata() {
 */
 
 
-export default async function GameIdPage({ params: { gameId }, searchParams: { stats } }: PageProps) {
+export default async function GameIdPage({ params: { gameId: id }, searchParams: { stats } }: PageProps) {
 
-  const game = await getGame(gameId)
+  const game = await getGame(id)
   /*
     const markdownBoxScore = game?.boxscoreTeam1
     const contentHtml = await markdownToHtml(markdownBoxScore!)

@@ -79,8 +79,8 @@ const FilterForm = ({ filteredGames }: Props) => {
     const games = await onSubmit(values) // * Calling onSubmit function
     setIsFormQuery(true)
     setPage(1)
-    console.log("PAGE AFTER SUBMIT", page)
-    console.log(games)
+    // console.log("PAGE AFTER SUBMIT", page)
+    // console.log(games)
     setQueriedGames(games!)  // $ POINT OF INTEREST
     setIsLoaded(true)
   }
@@ -88,7 +88,7 @@ const FilterForm = ({ filteredGames }: Props) => {
 
   // ! BECAUSE OF THIS USEEFFECT IT WOULD BE BETTER TO USE A CLIENT SIDE PAGINATION
   useEffect(() => {
-    console.log("current page", page);
+    //  console.log("current page", page);
     if (filteredGames && !isFormQuery) {
       // if (queriedGames.length === 0) {
       // setQueriedGames(filteredGames.slice(0, limit))

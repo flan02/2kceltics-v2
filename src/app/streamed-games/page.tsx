@@ -2,7 +2,7 @@ import FilterForm from "@/components/custom/streamed-games/FilterForm"
 import MaxWidthWrapper from "@/components/reutilizable/MaxWidthWrapper"
 import { getStreamedGames } from "./action"
 import { Button } from "@/components/ui/button"
-import Link from "next/link"
+
 
 
 
@@ -24,11 +24,6 @@ export default async function StreamedGamesPage({ searchParams: { page = 0 } }: 
   let filteredGames = request!
     .filter((game: any) => game.video_url !== null)
     .sort((a: any, b: any) => parseInt(b.currentGame) - parseInt(a.currentGame))
-
-
-
-
-
 
 
   return (
