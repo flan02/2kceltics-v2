@@ -74,9 +74,9 @@ export async function generateMetadata() {
 */
 
 
-export default async function GameIdPage({ params: { gameId: id }, searchParams: { stats } }: PageProps) {
+export default async function GameIdPage({ params: { gameId }, searchParams: { stats } }: PageProps) {
 
-  const game = await getGame(id)
+  const game = await getGame(gameId)
   /*
     const markdownBoxScore = game?.boxscoreTeam1
     const contentHtml = await markdownToHtml(markdownBoxScore!)

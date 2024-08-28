@@ -4,15 +4,21 @@ import { CloverIcon } from 'lucide-react'
 import Link from 'next/link'
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server'
 import Image from 'next/image'
-import { ModeToggle } from '../reutilizable/ModeToggle'
+import { getKindeUser } from '@/app/dashboard/actions'
+import { User } from '@prisma/client'
 
 type Props = {}
 
 const Navbar = async (props: Props) => {
   const { getUser } = getKindeServerSession()
-  const user = await getUser()
-  //console.log(user);
-  const ADMIN_EMAIL = process.env.ADMIN_EMAIL
+  const userKinde = getUser()
+
+
+  const user = await getKindeUser(userKinde?.id!) as User
+
+  if (!user) console.log("User not found on prisma")
+  // console.log("User saved on prisma", user)
+  const ADMIN_EMAIL = process.env.NODE_ENV === 'development' ? process.env.ADMIN_EMAIL : "chanivetdan@hotmail.com"
   let isAdmin = false
   if (user?.email === ADMIN_EMAIL) isAdmin = true
   return (

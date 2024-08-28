@@ -1,6 +1,9 @@
+// * Im not using this fcuntion in my project. Ive created an api route to handle the visit counter
+/*
 // src/middleware/visitCounter.ts
 import { PrismaClient } from '@prisma/client';
 import { NextResponse } from 'next/server';
+
 
 const prisma = new PrismaClient();
 
@@ -16,3 +19,4 @@ async function visitCounter(req: Request, res: NextResponse, next: () => void) {
 }
 
 export default visitCounter;
+*/

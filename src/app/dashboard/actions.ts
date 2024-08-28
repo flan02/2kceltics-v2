@@ -14,6 +14,27 @@ type Team = {
   logo_url: string
 }
 
+export async function getKindeUser(kindeId: string) {
+
+  try {
+    const response = await db.user.findUnique({
+      where: {
+        kindeId
+      }, select: {
+        id: true,
+        email: true,
+        given_name: true,
+        picture: true,
+        kindeId: true,
+      }
+    })
+    return response
+  } catch (error) {
+    console.log(error);
+    return error
+  }
+}
+
 export async function createNewSeason(values: Omit<Season2k, "id" | "createdAt" | "updatedAt">) {
   try {
     const response = db.season2k.create({
