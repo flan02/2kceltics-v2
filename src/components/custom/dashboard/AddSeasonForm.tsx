@@ -52,7 +52,7 @@ async function onSubmit(values: any) { // ! CHANGE THIS SCHEMA
 const AddSeasonForm = (props: Props) => {
   const [isLoaded, setIsLoaded] = useState(false)
 
-  // This is a common technique for managing state in functional React components when you need to know if a component is still mounted during an async operation.
+  // * This is a common technique for managing state in functional React components when you need to know if a component is still mounted during an async operation.
   const isMounted = useRef(false)
 
   const form = useForm<z.infer<typeof createNewSeasonSchema>>({

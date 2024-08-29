@@ -11,13 +11,14 @@ import Link from 'next/link';
 
 
 
-type PageProps = {
+interface PageProps {
   params: {
     gameId: string // ? its name must be the same as the folder name between brackets []
   }
 }
 
 // * This is how I cache the data. I can use the cache function to store the possible data that will come via url at the compile time, so the page will load faster.
+
 const getGame = cache(async (gameId: string) => {
   const game = await db.schedule.findUnique({
     where: {
@@ -28,6 +29,7 @@ const getGame = cache(async (gameId: string) => {
   return game
 })
 
+/*
 const getGames = cache(async () => {
   const games = await db.schedule.findMany(
     {
@@ -39,18 +41,21 @@ const getGames = cache(async () => {
       }
     }
   )
-  return games
+  if (!games) return notFound()
+  return games.map(({ id }) => id)
 })
-
+*/
 // * This is how I generate static paths. After this fc the slugs will be generated immediately and the page will be created faster
+/*
 export async function generateStaticParams() {
   const games = await getGames()
-  return games.map(({ id }) => ({ params: { gameId: id } }))
+  return games.map((id) => ({ params: { gameId: id } }))
 }
+*/
 
 // * Asynchronous function to generate metadata for the page
 /* 
-export async function generateMetadata() {
+export async function generateMetadata({ params: { gameId } }: PageProps): Promise<Metadata> {
   const game = await getGame(add id here)
   const metadata = {
     title: `Update Game ${game.id}`,
@@ -62,8 +67,10 @@ export async function generateMetadata() {
 export default async function UpdateGamePage({ params: { gameId } }: PageProps) {
 
   const game = await getGame(gameId)
-  // console.log("Game obtained", game);
 
+  //console.log("Game obtained", game);
+
+  if (!game) notFound();
   /*
     const plainGameObject = {
       ...game,

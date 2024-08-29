@@ -35,7 +35,8 @@ const UpdateScheduleGame = () => {
   })
 
   const { register, handleSubmit, formState, watch, trigger, control, setValue, setFocus, formState: { isSubmitting, isSubmitted } } = form
-  async function onSubmit(values: updateProps): Promise<any> {
+
+  async function onSubmit(values: updateProps): Promise<void> {
     //console.log('what the fuck');
     const formData = new FormData()
     Object.entries(values).forEach(([key, value]) => {
@@ -47,13 +48,16 @@ const UpdateScheduleGame = () => {
       const gameID = await getScheduleGame(values) as { id: string };
 
       // console.log(gameID)
-      if (gameID) setToUpdateGame(gameID.id)
-      // else setToUpdateGame("false")
+      if (gameID) {
+        setToUpdateGame(gameID.id)
+      } else {
+        setToUpdateGame(null)
+      }
 
     } catch (error) {
       console.log(error)
-      return error
     }
+
   }
 
   useEffect(() => {
@@ -126,9 +130,15 @@ const UpdateScheduleGame = () => {
           ?
           <div className="flex flex-col pl-2 space-y-4">
             <p className="text-muted-foreground">1 Game found to update</p>
-            <Link
-              className="hover:underline text-sm text-celtics hover:text-slate-800"
-              href={`/dashboard/${toUpdateGame}`} rel="noopener" referrerPolicy="no-referrer">{toUpdateGame}</Link>
+            {
+              toUpdateGame
+                ?
+                <Link
+                  className="hover:underline text-sm text-celtics hover:text-slate-800"
+                  href={`/dashboard/${toUpdateGame}`} rel="noopener" referrerPolicy="no-referrer">{toUpdateGame}
+                </Link>
+                : null
+            }
           </div>
           : <p className="text-muted-foreground">No game found yet.</p>
       }

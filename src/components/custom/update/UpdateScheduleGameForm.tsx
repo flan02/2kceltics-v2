@@ -9,14 +9,17 @@ import LoadingButton from "@/components/reutilizable/LoadingButton"
 import { z } from "zod"
 import { updateGameSchema } from "@/zod/validation"
 import { toast } from "@/components/ui/use-toast"
-import { Suspense, useEffect, useRef } from "react"
+import { lazy, Suspense, useEffect, useRef, useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { atHomeTypes, gameTypes, resultTypes, stageTypes } from "@/lib/types"
-import RichTextEditor from "../RichTextEditor"
 import { draftToMarkdown } from "markdown-draft-js"
 import { updateScheduleGame } from "@/app/dashboard/[gameId]/action"
+import { Skeleton } from "@/components/ui/skeleton"
+
+//import RichTextEditor from "../RichTextEditor"
+const RichTextEditor = lazy(() => import("../RichTextEditor"));
 
 interface Props {
   game: Schedule
@@ -24,7 +27,7 @@ interface Props {
 
 async function onSubmit(values: z.infer<typeof updateGameSchema>) {
 
-  console.log("VALUES ON FORM", values)
+  //console.log("VALUES ON FORM", values)
   const update = await updateScheduleGame(values)
 
 
@@ -42,7 +45,10 @@ async function onSubmit(values: z.infer<typeof updateGameSchema>) {
 
 
 const UpdateScheduleGameForm = ({ game }: Props) => {
-  const richTextRef = useRef(null);
+  const [isLoaded, setIsLoaded] = useState(false)
+  // This is a common technique for managing state in functional React components when you need to know if a component is still mounted during an async operation.
+  const isMounted = useRef(false)
+
   // {JSON.stringify(game, null, 2)}
   const form = useForm<z.infer<typeof updateGameSchema>>({
     resolver: zodResolver(updateGameSchema),
@@ -66,8 +72,16 @@ const UpdateScheduleGameForm = ({ game }: Props) => {
 
   const { register, handleSubmit, formState, watch, trigger, control, setValue, setFocus, formState: { isSubmitting, isSubmitted } } = form
 
-  // useEffect(() => {}, [isSubmitted])
-  // if (isSubmitted) {}
+  useEffect(() => {
+    isMounted.current = true
+    if (isMounted.current) {
+      setIsLoaded(true)
+    }
+
+    return () => {
+      isMounted.current = false
+    }
+  }, [])
 
 
   return (
@@ -326,63 +340,77 @@ const UpdateScheduleGameForm = ({ game }: Props) => {
             )}
           />
         </div>
+        {
+          isLoaded
+            ?
+            <FormField
+              control={form.control}
+              name="boxscoreTeam1"
+              render={({ field }) => (
+                <Suspense fallback={<Skeleton className="h-[200px]" />}>
+                  <FormItem>
+                    <FormLabel>Boxscore Boston Celtics: </FormLabel>
+                    <FormControl>
+                      <RichTextEditor
+                        ref={field.ref}
+                        onChange={(draft) => field.onChange(draftToMarkdown(draft))}
+                      />
+                    </FormControl>
+                    <FormMessage>{form.formState.errors.boxscoreTeam1?.message}</FormMessage>
+                  </FormItem>
+                </Suspense>
+              )}
+            />
+            : <Skeleton className="h-[200px]" />
+        }
 
-        <FormField
-          control={form.control}
-          name="boxscoreTeam1"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Boxscore Boston Celtics: </FormLabel>
-              <Suspense fallback={<div>Loading RichEditor...</div>}>
-                <FormControl>
-                  <RichTextEditor
-                    ref={field.ref}
-                    onChange={(draft) => field.onChange(draftToMarkdown(draft))}
-                  />
-                </FormControl>
-                <FormMessage>{form.formState.errors.boxscoreTeam1?.message}</FormMessage>
-              </Suspense>
-            </FormItem>
-          )}
-        />
+        {
+          isLoaded
+            ?
+            <FormField
+              control={form.control}
+              name="boxscoreTeam2"
+              render={({ field }) => (
+                <Suspense fallback={<Skeleton className="h-[200px]" />}>
+                  <FormItem>
+                    <FormLabel>{`Boxscore ${game.team2}: (optional)`}</FormLabel>
+                    <FormControl>
+                      <RichTextEditor
+                        ref={field.ref}
+                        onChange={(draft) => field.onChange(draftToMarkdown(draft))}
+                      />
+                    </FormControl>
+                    <FormMessage>{form.formState.errors.boxscoreTeam1?.message}</FormMessage>
+                  </FormItem>
+                </Suspense>
+              )}
+            />
+            : <Skeleton className="h-[200px]" />
+        }
 
-        <FormField
-          control={form.control}
-          name="boxscoreTeam2"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>{`Boxscore ${game.team2}: (optional)`}</FormLabel>
-              <Suspense fallback={<div>Loading RichEditor...</div>}>
-                <FormControl>
-                  <RichTextEditor
-                    ref={field.ref}
-                    onChange={(draft) => field.onChange(draftToMarkdown(draft))}
-                  />
-                </FormControl>
-                <FormMessage>{form.formState.errors.boxscoreTeam1?.message}</FormMessage>
-              </Suspense>
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="gameStats"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>{`Game stats:`}</FormLabel>
-              <Suspense fallback={<div>Loading RichEditor...</div>}>
-                <FormControl>
-                  <RichTextEditor
-                    ref={field.ref}
-                    onChange={(draft) => field.onChange(draftToMarkdown(draft))}
-                  />
-                </FormControl>
-                <FormMessage>{form.formState.errors.boxscoreTeam1?.message}</FormMessage>
-              </Suspense>
-            </FormItem>
-          )}
-        />
+        {
+          isLoaded
+            ?
+            <FormField
+              control={form.control}
+              name="gameStats"
+              render={({ field }) => (
+                <Suspense fallback={<Skeleton className="h-[200px]" />}>
+                  <FormItem>
+                    <FormLabel>{`Game stats:`}</FormLabel>
+                    <FormControl>
+                      <RichTextEditor
+                        ref={field.ref}
+                        onChange={(draft) => field.onChange(draftToMarkdown(draft))}
+                      />
+                    </FormControl>
+                    <FormMessage>{form.formState.errors.boxscoreTeam1?.message}</FormMessage>
+                  </FormItem>
+                </Suspense>
+              )}
+            />
+            : <Skeleton className="h-[200px]" />
+        }
 
         <div className="text-center">
           <LoadingButton className="" type="submit" loading={isSubmitting}>

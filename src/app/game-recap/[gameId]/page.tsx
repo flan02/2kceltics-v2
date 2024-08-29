@@ -43,7 +43,7 @@ const getGame = cache(async (gameId: string) => {
   }
 })
 
-
+/*
 const getGames = cache(async () => {
   const games = await db.schedule.findMany({
     select: {
@@ -53,14 +53,15 @@ const getGames = cache(async () => {
   //console.log("ALL GAMES OBTAINED", games)
   return games
 })
-
+*/
 
 // * This is how I generate static paths. After this fc the slugs will be generated immediately and the page will be created faster
+/*
 export async function generateStaticParams() {
   const games = await getGames()
   return games.map(({ id }) => ({ params: { gameId: id } }))
 }
-
+*/
 
 // * Asynchronous function to generate metadata for the page
 /* 
