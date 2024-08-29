@@ -60,6 +60,7 @@ const Dashboard = async ({ opt, photo, given_name }: Props) => {
               <div className='space-y-4'>
                 <Image src={Yo} className='size-16 mx-auto rounded-full' width={100} height={100} alt="yo" />
                 <h1 className='text-center text-3xl text-celtics'>Welcome back admin {given_name} (flan02)!</h1>
+
               </div>
 
               <article className='border border-slate-200 p-2'>

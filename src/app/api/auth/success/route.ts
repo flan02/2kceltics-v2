@@ -6,10 +6,10 @@ import { NextRequest, NextResponse } from "next/server";
 export async function GET(_req: NextRequest, res: NextResponse) {
   const { getUser, isAuthenticated } = getKindeServerSession();
   const user = getUser();
-  console.log("User from Kinde", user);
+  //console.log("User from Kinde", user);
 
-  const isAuth = isAuthenticated();
-  console.log("is authenticated", isAuth);
+  //const isAuth = isAuthenticated();
+  //console.log("is authenticated", isAuth);
 
 
   if (!user || user == null || !user.id) {

@@ -15,7 +15,6 @@ type Team = {
 }
 
 export async function getKindeUser(kindeId: string) {
-
   try {
     const response = await db.user.findUnique({
       where: {

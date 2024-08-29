@@ -8,12 +8,6 @@ import { getKindeUser } from './actions';
 
 
 const DashboardPage = async ({ searchParams: { opt } }: { searchParams: { opt: string } }) => {
-  /*
-  const user = {
-    picture: 'https://lh3.googleusercontent.com/a-/AOh14Gg6w8R7yU7Xz1m6GJq8j1qjvz6t9L9k9j2w4ZLl=s96-c',
-    given_name: 'Jhon Doe'
-  }
-  */
   const { getUser } = getKindeServerSession()
   const userKinde = getUser()
 
@@ -35,4 +29,8 @@ const DashboardPage = async ({ searchParams: { opt } }: { searchParams: { opt: s
 
 
 export default DashboardPage
+
+
+
+
 
