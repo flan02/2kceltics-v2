@@ -10,9 +10,9 @@ export default async function Roster() {
   // const roster = await getCurrentRoster()
   // {roster && <MarkdownRenderer markdown={roster.players!} />}
   return (
-    <section id="roster" className="max-w-screen-xl flex flex-col mx-auto pt-12">
-      <div className="flex mx-auto mb-12">
-        <h1 className="text-celtics mx-auto w-max text-center text-5xl md:text-7xl text-shadow uppercase mt-24">2023/24 ROSTER</h1>
+    <section id="roster" className="max-w-screen-xl flex flex-col mx-auto pt-4 lg:pt-12">
+      <div className="flex mx-auto mb-2 lg:mb-12">
+        <h1 className="text-celtics mx-auto w-max text-center text-4xl sm:text-5xl md:text-7xl text-shadow uppercase mt-24">2023/24 ROSTER</h1>
         <BackToTop />
       </div>
       <br />

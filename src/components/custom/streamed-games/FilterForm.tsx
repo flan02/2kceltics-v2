@@ -112,7 +112,7 @@ const FilterForm = ({ filteredGames }: Props) => {
 
   return (
     <>
-      <aside className='border border-slate-200 space-y-4 rounded-lg p-4 w-[calc(100%-20px)]'>
+      <aside className='border border-slate-200 space-y-4 rounded-lg p-4 w-[calc(100%-10px)]'>
         <div className='flex w-max'>
 
           <h2 className='font-bold text-midnight text-lg'>SEARCH FILTERS</h2>
@@ -120,8 +120,8 @@ const FilterForm = ({ filteredGames }: Props) => {
 
         <Form {...form} >
           <form noValidate onSubmit={form.handleSubmit(handleFormSubmit)} className='flex justify-between gap-2' >
-            <div className='flex gap-4'>
-              <div className='block lg:flex lg:gap-2'>
+            <div className='flex flex-col md:flex-row gap-4 space-y-4 md:space-y-0'>
+              <div className='block lg:flex lg:gap-2 space-y-4 md:space-y-0'>
 
                 <FormField
                   control={control}
@@ -134,7 +134,7 @@ const FilterForm = ({ filteredGames }: Props) => {
                           onValueChange={(value) => field.onChange(value)}
                           value={field.value}
                         >
-                          <SelectTrigger className="border border-slate-200 text-md shadow-md py-1.5 text-left pl-2 w-[150px] rounded-md">
+                          <SelectTrigger className="border border-slate-200 text-md shadow-md py-1.5 text-left pl-2 min-w-[300px] md:min-w-[150px] rounded-md">
                             <SelectValue placeholder="Select Season" />
                           </SelectTrigger>
                           <SelectContent>
@@ -163,7 +163,7 @@ const FilterForm = ({ filteredGames }: Props) => {
                           onValueChange={(value) => field.onChange(value)}
                           value={field.value}
                         >
-                          <SelectTrigger className="border border-slate-200 text-md shadow-md py-1.5 text-left pl-2 w-[150px] rounded-md">
+                          <SelectTrigger className="border border-slate-200 text-md shadow-md py-1.5 text-left pl-2 min-w-[300px] md:min-w-[150px] rounded-md">
                             <SelectValue placeholder="Select RS/PO" />
                           </SelectTrigger>
                           <SelectContent>
@@ -194,7 +194,7 @@ const FilterForm = ({ filteredGames }: Props) => {
                           onValueChange={(value) => field.onChange(value)}
                           value={field.value}
                         >
-                          <SelectTrigger className="border border-slate-200 text-md shadow-md py-1.5 text-left pl-2 w-[150px] rounded-md">
+                          <SelectTrigger className="border border-slate-200 text-md shadow-md py-1.5 text-left pl-2 min-w-[300px] md:min-w-[150px] rounded-md">
                             <SelectValue placeholder="Select stage" />
                           </SelectTrigger>
                           <SelectContent>
@@ -222,7 +222,7 @@ const FilterForm = ({ filteredGames }: Props) => {
                           onValueChange={(value) => field.onChange(value)}
                           value={field.value}
                         >
-                          <SelectTrigger className="border border-slate-200 text-md shadow-md py-1.5 text-left pl-2 w-[150px] rounded-md">
+                          <SelectTrigger className="border border-slate-200 text-md shadow-md py-1.5 text-left pl-2 min-w-[300px] md:min-w-[150px] rounded-md">
                             <SelectValue placeholder="HOME or AWAY" />
                           </SelectTrigger>
                           <SelectContent>
@@ -253,7 +253,7 @@ const FilterForm = ({ filteredGames }: Props) => {
                           onValueChange={(value) => field.onChange(value)}
                           value={field.value}
                         >
-                          <SelectTrigger className="border border-slate-200 text-md shadow-md py-1.5 text-left pl-2 w-[90px] md:w-[150px] rounded-md">
+                          <SelectTrigger className="border border-slate-200 text-md shadow-md py-1.5 text-left pl-2 min-w-[300px] md:min-w-[150px] rounded-md">
                             <SelectValue placeholder="WIN or LOSS" />
                           </SelectTrigger>
                           <SelectContent>
@@ -273,7 +273,7 @@ const FilterForm = ({ filteredGames }: Props) => {
 
 
                 <div className="self-end ">
-                  <LoadingButton type="submit" loading={isSubmitting} className='w-[90px] md:w-fit'>
+                  <LoadingButton type="submit" loading={isSubmitting} className='min-w-[300px] md:min-w-fit'>
                     <Search size={18} /> <span className='mt-1'>Search</span>
                   </LoadingButton>
                 </div>

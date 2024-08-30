@@ -16,10 +16,10 @@ const VisitorsCounter = (props: Props) => {
 
   return (
     <div className='flex justify-center items-end'>
-      <h1 className='text-xl text-celtics text-center underline mr-4'>VISITORS COUNTER:</h1>
+      <h1 className='text-sm md:text-xl text-celtics text-center underline mr-4'>VISITORS COUNTER:</h1>
       {
         digits?.map((digit, index) => (
-          <span key={index} className='bg-celtics hover:bg-white hover:text-celtics mr-2 px-2 text-xl md:text-3xl text-white'> {digit}</span>
+          <span key={index} className='bg-celtics hover:bg-white hover:text-celtics mr-2 px-2 text-base md:text-3xl text-white'> {digit}</span>
         ))
       }
       <BackToTop className='lg:mt-0' />

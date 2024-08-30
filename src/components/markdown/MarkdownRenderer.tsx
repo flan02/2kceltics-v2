@@ -9,7 +9,7 @@ type Props = {
 
 const MarkdownRenderer = ({ markdown }: Props) => {
   return (
-    <ReactMarkdown remarkPlugins={[remarkGfm]} className="text-midnight">
+    <ReactMarkdown remarkPlugins={[remarkGfm]} className="text-midnight min-w-[300px]">
       {markdown}
     </ReactMarkdown>
   )

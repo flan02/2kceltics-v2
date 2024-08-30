@@ -10,7 +10,7 @@ import Image, { ImageProps } from 'next/image'
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
     // Allows customizing built-in components, e.g. to add styling.
-    table: ({ children }) => <table style={{}}>{children}</table>,
+    table: ({ children }) => <table style={{ overflowX: "scroll" }}>{children}</table>,
     th: (props) => <th className="px-4 py-2" {...props} />,
     td: (props) => <td className="border px-4 py-2" {...props} />,
     h1: ({ children }) => (

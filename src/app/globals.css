@@ -110,9 +110,9 @@ body {
 
 table{
   display: grid;
-  overflow-x: hidden; 
+  overflow-x: scroll; 
   border: 1px solid rgba(255,255,255, .4);
-  font-size: 11px;
+  font-size: 12px;
   @media (min-width: 992px) {
     font-size: 16px;
     display: block;
@@ -126,16 +126,22 @@ tr:hover {
 }
 
 th {
- padding: 0 4px;
+ padding: 0 3px;
+ font-size: 11px;
   border: 1px solid rgb(230, 230, 230);
+  @media (min-width: 992px) {
+    font-size: 16px;
+    padding: 0 6px;
+  }
 }
 
 tr {
+
   border: 1px solid rgb(230, 230, 230);
 }
 
 td{
-  padding: 0 4px;  
+  padding: 0 3px;  
   border: 1px solid rgb(230, 230, 230);
   @media (min-width: 992px) {
    padding: 0 8px;

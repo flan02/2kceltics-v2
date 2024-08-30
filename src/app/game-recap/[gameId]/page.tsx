@@ -96,7 +96,7 @@ export default async function GameIdPage({ params: { gameId }, searchParams: { s
           <Card className="md:flex md:justify-center py-4 block md:py-0">
             <div className="w-full flex justify-center md:block">
               <CardHeader>
-                <CardTitle className="text-midnight font-bold uppercase">{`Season ${game?.season} Game #${game?.currentGame}`}</CardTitle>
+                <CardTitle className="text-midnight font-bold uppercase -mt-5 sm:mt-0 leading-[24px] sm:leading-none">{`Season ${game?.season} Game #${game?.currentGame}`}</CardTitle>
               </CardHeader>
               <CardContent>
 
@@ -106,7 +106,7 @@ export default async function GameIdPage({ params: { gameId }, searchParams: { s
                 </CardDescription>
 
 
-                <CardDescription className="flex flex-col space-y-1 mt-4">
+                <CardDescription className="flex flex-col space-y-1 mt-4 min-w-[150px]">
                   <span className="text-base text-slate-800 font-bold">Type: {game?.type === "RS" ? "Regular Season" : "Playoffs"}</span>
                   <span className="text-base text-slate-800 font-bold">Rival: {game?.team2}</span>
                   <span className="text-base text-slate-800 font-bold">at {game?.atHome}</span>

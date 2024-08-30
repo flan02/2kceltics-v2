@@ -26,8 +26,8 @@ type Props = {
 const CardPlayerLink = ({ player, cardTitle, className, isTag, link, dim }: Props) => {
   return (
     <aside>
-      <Card className="flex items-center shadow-md">
-        <CardTitle className="text-muted-foreground hover:underline ml-4 text-2xl w-full">
+      <Card className="flex items-center shadow-md h-[120px] mx-2">
+        <CardTitle className="text-muted-foreground hover:underline ml-4 text-xl w-full">
           {
             isTag
               ? <LinkClient to={link} smooth="true" duration={1000} className='uppercase text-muted-foreground'>{cardTitle}</LinkClient>

@@ -35,8 +35,8 @@ export default async function ScheduleList({ searchParams: { page } }: { searchP
 
   const currentSchedule = schedule.slice(page * limit, (page + 1) * limit)
   return (
-    <article className="pb-24 space-y-8">
-      <div className="space-y-2 grid grid-cols-1 lg:grid-rows-10 lg:grid-flow-col space-x-2">
+    <article className="pb-24 space-y-8 min-w-[350px]">
+      <div className="space-y-2 grid grid-cols-1 lg:grid-rows-10 lg:grid-flow-col lg:px-0 lg:space-x-2">
         {
           currentSchedule
             .map((game, index) => ( // Add parentheses around the parameter list
@@ -68,7 +68,7 @@ export default async function ScheduleList({ searchParams: { page } }: { searchP
         }
       </div>
       <div className="flex justify-end">
-        <Card className="flex w-max px-4">
+        <Card className="flex w-max px-4 mr-2">
           <CardTitle className="text-muted-foreground py-4">TEAM RECORD: <span className="text-celtics">{`${W} W`}</span> - <span className="text-red-600">{`${L} L`}</span></CardTitle>
         </Card>
       </div>

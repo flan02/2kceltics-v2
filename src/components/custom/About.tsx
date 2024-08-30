@@ -8,8 +8,8 @@ type Props = {}
 
 const About = (props: Props) => {
   return (
-    <section className="max-w-screen-xl mx-auto pt-12 lg:pb-0 lg:pt-12">
-      <h1 className="text-celtics mx-auto w-max text-center text-5xl sm:text-6xl lg:text-7xl text-shadow uppercase mt-24">Our Mission</h1>
+    <section className="max-w-screen-xl mx-auto lg:pb-0 lg:pt-12">
+      <h1 className="text-celtics mx-auto w-max text-center text-5xl sm:text-6xl lg:text-7xl text-shadow uppercase mt-16 lg:mt-24">Our Mission</h1>
       <article className='max-w-screen-lg mt-16 h-max mx-auto px-3 md:px-0'>
         <h3 className='text-celtics text-shadow text-base sm:text-lg lg:text-xl'>
           As a Celtics fan, you can now experience the thrill of the game like never before. Our 2k simulation league is the perfect place to feel the Celtics spirit and enjoy the game in a new way. Join us and be part of the action!

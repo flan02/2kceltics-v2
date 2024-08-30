@@ -18,12 +18,12 @@ export default async function Home({ searchParams: { page = 0 } }: { searchParam
   return (
     <>
       <Marquee />
-      <MaxWidthWrapper className="h-[calc(100vh-100px)] lg:h-[calc(100vh-150px)] lg:px-16 xl:px-0 xl:pt-24 md:px-0 place-content-start lg:place-content-end mb-24">
+      <MaxWidthWrapper className="min-w-[350px] h-[calc(100vh-100px)] lg:h-[calc(100vh-150px)] lg:px-16 xl:px-0 xl:pt-24 md:px-0 place-content-start lg:place-content-end mb-24">
         <div className="space-y-0 md:space-y-8">
           <div className="grid lg:grid-cols-2 grid-cols-1 lg:mb-24 xl:mb-0 mb-0">
 
             {/* Mobile celtics logo */}
-            <section className="mt-16 md:mt-0 md:hidden block px-32 sm:px-48">
+            <section className="mt-16 md:mt-0 md:hidden block px-16 sm:px-48">
               <Image src={CelticsLogo} alt="CelticsTrebol Hero Image" />
             </section>
             {/* ****************** */}
@@ -44,7 +44,7 @@ export default async function Home({ searchParams: { page = 0 } }: { searchParam
         </div>
       </MaxWidthWrapper>
 
-      <MaxWidthWrapper className="max-w-screen-3xl bg-zinc-200/60 sm:px-10 md:px-24">
+      <MaxWidthWrapper className="max-w-screen-3xl bg-zinc-200/60 px-0 sm:px-10 md:px-24">
         <MainMenu />
       </MaxWidthWrapper>
 
@@ -53,12 +53,12 @@ export default async function Home({ searchParams: { page = 0 } }: { searchParam
       </MaxWidthWrapper>
 
       {/* <SearchParamsContext.Provider value={{ searchParams }} > */}
-      <MaxWidthWrapper className="max-w-screen-3xl bg-zinc-200/60">
+      <MaxWidthWrapper className="max-w-screen-3xl bg-zinc-200/60 px-0">
         <Schedule searchParams={{ page }} />
       </MaxWidthWrapper>
       {/*  </SearchParamsContext.Provider> */}
 
-      <MaxWidthWrapper className="relative max-w-screen-3xl h-max">
+      <MaxWidthWrapper className="relative max-w-screen-3xl h-max px-0">
         <Roster />
       </MaxWidthWrapper>
 
