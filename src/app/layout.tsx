@@ -11,11 +11,23 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "2kceltics | Home",
   description: "2kceltics v2",
+  metadataBase: new URL("https://www.2kceltics.xyz"),
   authors: {
     name: "Dan Chanivet",
     url: "https://danchanivet.tech",
   },
   publisher: "Vercel",
+  openGraph: {
+    images: [
+      {
+        url: "./opengraph-image.png",
+        width: 1200,
+        height: 630,
+        alt: "2kceltics banner",
+      },
+
+    ]
+  }
 };
 
 export default function RootLayout({

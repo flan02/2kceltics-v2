@@ -6,36 +6,42 @@ import DWprofile from "../../../../public/dw-profile.png"
 import Jrueprofile from "../../../../public/jrue-profile.png"
 
 import CardPlayerLink from "@/components/reutilizable/CardPlayerLink"
+import { CalendarDays, ChartSpline, MonitorPlay, NotebookPen, User } from "lucide-react"
 
 const players = [{
   title: "STREAMED GAMES",
   photo: JBprofile,
   isTag: false,
-  link: "/streamed-games"
+  link: "/streamed-games",
+  icon: <MonitorPlay />
 },
 {
   title: "ADVANCED STATS",
   photo: JTprofile,
   isTag: false,
-  link: "/advanced"
+  link: "/advanced",
+  icon: <ChartSpline />
 },
 {
   title: "SEASON STATS",
   photo: KPprofile,
   isTag: false,
-  link: "/season-stats"
+  link: "/season-stats",
+  icon: <NotebookPen />
 },
 {
   title: "SCHEDULE",
   photo: Jrueprofile,
   isTag: true,
-  link: "schedule"
+  link: "schedule",
+  icon: <CalendarDays />
 },
 {
   title: "ROSTER",
   photo: DWprofile,
   isTag: true,
-  link: "roster"
+  link: "roster",
+  icon: <User />
 }
 
 ]
@@ -52,7 +58,7 @@ const MobileMenu = (props: Props) => {
     <section className="grid grid-cols-1 grid-rows-5 space-y-4 mt-12 lg:mt-0 lg:hidden pb-24 md:pb-0">
       {
         players.map((player, index) => (
-          <CardPlayerLink dim={dim} player={player.photo} cardTitle={player.title} key={index} isTag={player.isTag} link={player.link} />
+          <CardPlayerLink cardTitle={player.title} key={index} isTag={player.isTag} link={player.link} icon={player.icon} />
 
         ))
       }

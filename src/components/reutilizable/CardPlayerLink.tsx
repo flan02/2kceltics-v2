@@ -7,26 +7,28 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+
 import Image, { StaticImageData } from "next/image"
 import Link from "next/link"
 import { Link as LinkClient } from "react-scroll"
 
 type Props = {
-  player: StaticImageData
+  player?: StaticImageData
   cardTitle: string
   className?: string
   isTag: boolean
   link: string
-  dim: {
+  dim?: {
     width: string
     height: string
   }
+  icon: React.ReactNode
 }
 
-const CardPlayerLink = ({ player, cardTitle, className, isTag, link, dim }: Props) => {
+const CardPlayerLink = ({ player, cardTitle, className, isTag, link, dim, icon }: Props) => {
   return (
     <aside>
-      <Card className="flex items-center shadow-md h-[120px] mx-2">
+      <Card className="flex items-center shadow-md h-[80px] mx-2">
         <CardTitle className="text-muted-foreground hover:underline ml-4 text-xl w-full">
           {
             isTag
@@ -34,11 +36,10 @@ const CardPlayerLink = ({ player, cardTitle, className, isTag, link, dim }: Prop
               : <Link href={link} className="uppercase text-muted-foreground">{cardTitle}</Link>
           }
         </CardTitle>
-        <CardContent className="relative w-full flex justify-end ">
-          <Image
-            src={player}
-            alt={cardTitle}
-            className={`mt-2 block object-contain ${dim.width} ${dim.height}`} sizes="(max-width: 768px) 100vw, 33vw" priority />
+        <CardContent className="w-fit flex justify-center mr-4">
+          <div className="absolute">
+            {icon}
+          </div>
         </CardContent>
       </Card>
 
