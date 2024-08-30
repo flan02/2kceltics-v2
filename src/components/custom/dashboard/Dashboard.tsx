@@ -33,6 +33,13 @@ const Dashboard = async ({ opt, photo, given_name }: Props) => {
   return (
     <div className='mt-4 max-w-4xl mx-auto'>
       <nav className='flex justify-center space-x-1'>
+        {
+          given_name &&
+          <Link href="/dashboard" className={buttonVariants({
+            variant: `${(opt === '') ? 'default' : 'outline'}`,
+            className: `transition-all duration-500 ease-in-out ${opt !== '' ? " hover:bg-zinc-200/60" : ""}`
+          })}>DASHBOARD</Link>
+        }
         <Link href="/dashboard?opt=addteam" className={buttonVariants({
           variant: `${(opt === 'addteam') ? 'default' : 'outline'}`,
           className: `transition-all duration-500 ease-in-out ${opt !== 'addteam' ? " hover:bg-zinc-200/60" : ""}`
@@ -60,7 +67,14 @@ const Dashboard = async ({ opt, photo, given_name }: Props) => {
               <div className='space-y-4'>
                 <Image src={Yo} className='size-16 mx-auto rounded-full' width={100} height={100} alt="yo" />
                 <h1 className='text-center text-3xl text-celtics'>Welcome back admin {given_name} (flan02)!</h1>
+                {
+                  given_name
+                  &&
+                  <Link href="/api/auth/logout" className={buttonVariants({ size: "sm", variant: "destructive" })}>
+                    Sign out
+                  </Link>
 
+                }
               </div>
 
               <article className='border border-slate-200 p-2'>

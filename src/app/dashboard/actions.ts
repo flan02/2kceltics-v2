@@ -14,11 +14,12 @@ type Team = {
   logo_url: string
 }
 
-export async function getKindeUser(kindeId: string) {
+export async function getKindeUser(kindeId?: string) {
   try {
     const response = await db.user.findUnique({
       where: {
-        kindeId
+        //  kindeId
+        email: process.env.ADMIN_EMAIL
       }, select: {
         id: true,
         email: true,

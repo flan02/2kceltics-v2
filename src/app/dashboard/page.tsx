@@ -8,16 +8,13 @@ import { getKindeUser } from './actions';
 
 
 const DashboardPage = async ({ searchParams: { opt } }: { searchParams: { opt: string } }) => {
-  const { getUser } = getKindeServerSession()
-  const userKinde = getUser()
-
-  if (!userKinde) notFound()
-
-
-  const user = await getKindeUser(userKinde.id!) as User
-
+  // const { getUser } = getKindeServerSession()
+  // const userKinde = getUser()
+  // console.log("User from Kinde", userKinde);
+  // if (!userKinde) notFound()
+  const user = await getKindeUser() as User
   if (!user) console.log("User not found on prisma")
-  console.log("User saved on prisma", user)
+  // console.log("User saved on prisma", user)
 
 
   return (

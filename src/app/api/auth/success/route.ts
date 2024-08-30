@@ -3,10 +3,10 @@ import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { NextRequest, NextResponse } from "next/server";
 
 
-export async function GET(_req: NextRequest, res: NextResponse) {
-  const { getUser, isAuthenticated } = getKindeServerSession();
+export async function GET(req: NextRequest, res: NextResponse) {
+  const { getUser } = getKindeServerSession();
   const user = getUser();
-  //console.log("User from Kinde", user);
+  console.log("MIDDLEWARE SUCCESS KINDE getUser()", user);
 
   //const isAuth = isAuthenticated();
   //console.log("is authenticated", isAuth);
@@ -34,5 +34,17 @@ export async function GET(_req: NextRequest, res: NextResponse) {
     });
   }
 
-  return NextResponse.redirect("http://localhost:3000/dashboard");
+  console.log("Middleware dbUser from bbdd", dbUser);
+  if (dbUser.email === "xbox_dan@hotmail.com") {
+    const url = new URL(req.url)
+    const searchParams = url.searchParams
+    const redirectUrl = new URL('http://localhost:3000/dashboard')
+    redirectUrl.search = searchParams.toString()
+    //return NextResponse.redirect("http://localhost:3000/dashboard");
+    return NextResponse.redirect(redirectUrl.toString());
+  }
+  else {
+    return NextResponse.redirect("http://localhost:3000");
+  }
+
 }
