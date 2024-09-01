@@ -35,7 +35,7 @@ export default async function ScheduleList({ searchParams: { page } }: { searchP
 
   const currentSchedule = schedule.slice(page * limit, (page + 1) * limit)
   return (
-    <article className="pb-24 space-y-8 min-w-[350px]">
+    <article className="pb-24 space-y-8 min-w-[350px] border">
       <div className="space-y-2 grid grid-cols-1 lg:grid-rows-10 lg:grid-flow-col lg:px-0 lg:space-x-2">
         {
           currentSchedule
