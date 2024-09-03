@@ -16,7 +16,7 @@ export default async function Schedule({ searchParams: { page } }: { searchParam
 
   return (
 
-    <section id="schedule" className="space-y-4 max-w-screen-lg flex flex-col mx-auto mt-40 lg:mt-0 pt-12">
+    <section id="schedule" className="space-y-4 max-w-screen-lg flex flex-col mx-auto mt-24 lg:mt-0 pt-12">
       <div className="flex mx-auto">
         <h1 className="text-celtics mx-auto w-max text-center text-4xl md:text-7xl text-shadow uppercase mt-8 lg:mt-24">2023/24 SCHEDULE</h1>
         <BackToTop />

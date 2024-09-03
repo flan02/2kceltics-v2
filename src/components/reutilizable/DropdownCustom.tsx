@@ -40,6 +40,7 @@ type Props = {
   items: {
     label: string;
     href: string;
+    icon: React.ReactNode
   }[];
 };
 
@@ -54,13 +55,16 @@ const DropdownCustom = ({ label, items }: Props) => {
         <DropdownMenuTrigger className="text-celtics px-4 py-1 border rounded-lg shadow-lg">
           <MenuIcon className="" color="green" />
         </DropdownMenuTrigger>
-        <DropdownMenuContent>
+        <DropdownMenuContent className="mr-5">
           <DropdownMenuLabel className="uppercase text-celtics">{label}</DropdownMenuLabel>
           <DropdownMenuSeparator />
           {
             items.map((item: any, index: number) => (
               <DropdownMenuItem key={index} className="hover:bg-slate-200/70">
-                <Link href={item.href} className="text-muted-foreground hover:underline" >{item.label}</Link>
+                <div className="flex items-center justify-center gap-2">
+                  <span>{item.icon}</span>
+                  <Link href={item.href} className="text-muted-foreground hover:underline" target={item.label == "My website" ? "_blank" : ""} >{item.label}</Link>
+                </div>
               </DropdownMenuItem>
             ))
           }

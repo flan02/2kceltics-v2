@@ -23,6 +23,7 @@ const VisitorsCounter = (props: Props) => {
         ))
       }
       <BackToTop className='lg:mt-0' />
+      <p className='text-celtics text-xs uppercase absolute right-0 mr-4 hidden lg:block'>since december, 2020</p>
     </div>
   )
 }

@@ -1,17 +1,13 @@
 'use client'
 import SkeletonGameCard from '@/components/reutilizable/SkeletonGameCard';
 import { Button } from '@/components/ui/button';
-import { $Enums } from '@prisma/client';
-
-
 import Image from 'next/image';
 import Link from 'next/link';
-
+import { useState } from 'react';
 import LiteYouTubeEmbed from 'react-lite-youtube-embed';
 import 'react-lite-youtube-embed/dist/LiteYouTubeEmbed.css';
 
 type Props = {
-
   isSubmitted?: boolean,
   filteredGames: {
     id: number,
@@ -32,7 +28,6 @@ const GameCard = ({ filteredGames }: Props) => {
   filteredGames?.map((game: any) => game.video_url !== null && video_url.push(game))
   // console.log("ARRAY VIDEO URL", video_url);
   return (
-
     <aside className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-4 w-full px-8 md:px-2 gap-4 md:gap-2'>
       {
         !video_url
@@ -45,6 +40,7 @@ const GameCard = ({ filteredGames }: Props) => {
               .map((game: any, index: number) => (
                 <div className={`relative border border-slate-300 rounded-xl hover:bg-slate-200/50 hover:border hover:border-slate-900`} key={index}>
                   <LiteYouTubeEmbed
+                    cookie={false}
                     id={game.video_url}
                     title={`RS ${game.season} #${game.currentGame} Celtics vs Knicks Full Game`}
                     poster="hqdefault"

@@ -2,6 +2,7 @@ import Link from "next/link"
 import { buttonVariants } from "../../ui/button"
 
 import DropdownCustom from "@/components/reutilizable/DropdownCustom"
+import { ChartSpline, Map, MapPinMinusInsideIcon, MonitorPlay, NotebookPen, WholeWord } from "lucide-react"
 
 
 
@@ -15,15 +16,23 @@ const Upload = ({ isAdmin }: Props) => {
     items: [
       {
         label: "Streams",
-        href: "/streamed-games"
+        href: "/streamed-games",
+        icon: <MonitorPlay size={16} />
       },
       {
         label: "Season stats",
         href: "/season-stats",
+        icon: <NotebookPen size={16} />
       },
       {
         label: "Advanced",
         href: "/advanced",
+        icon: <ChartSpline size={16} />
+      },
+      {
+        label: "My website",
+        href: "https://www.danchanivet.tech",
+        icon: <MapPinMinusInsideIcon size={16} />
       }
     ]
   }

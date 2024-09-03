@@ -18,13 +18,13 @@ export default async function Home({ searchParams: { page = 0 } }: { searchParam
   return (
     <>
       <Marquee />
-      <MaxWidthWrapper className="min-w-[350px] h-[calc(100vh-100px)] lg:h-[calc(100vh-150px)] lg:px-16 xl:px-0 xl:pt-24 md:px-0 place-content-start lg:place-content-end mb-24">
+      <MaxWidthWrapper className="min-w-[350px] h-[calc(100vh-100px)] lg:h-[calc(100vh-150px)] lg:px-16 xl:px-0 xl:pt-24 md:px-0 place-content-start lg:place-content-end mb-36">
         <div className="space-y-0 md:space-y-8">
           <div className="grid lg:grid-cols-2 grid-cols-1 lg:mb-24 xl:mb-0 mb-0">
 
             {/* Mobile celtics logo */}
-            <section className="mt-16 md:mt-0 md:hidden block px-16 sm:px-48">
-              <Image src={CelticsLogo} alt="CelticsTrebol Hero Image" />
+            <section className="mt-16 md:mt-0 md:hidden block ">
+              <Image src={CelticsLogo} alt="CelticsTrebol Hero Image" className="mx-auto w-40 h-40" />
             </section>
             {/* ****************** */}
 
@@ -37,9 +37,10 @@ export default async function Home({ searchParams: { page = 0 } }: { searchParam
             </section>
           </div>
 
-          <div className="flex items-center justify-center">
+          <div className="flex items-center justify-center ">
             <span className="text-celtics text-shadow text-5xl mr-2 font-bold">x 18</span>
-            <TrophyIcon size={40} color="green" className="text-shadow-md" />
+            {/* <TrophyIcon size={40} color="green" className="text-shadow-md" /> */}
+            <Image className="w-auto h-auto -mt-8" src='/trophy.png' alt='celtics' width={35} height={35} />
           </div>
         </div>
       </MaxWidthWrapper>
@@ -48,7 +49,7 @@ export default async function Home({ searchParams: { page = 0 } }: { searchParam
         <MainMenu />
       </MaxWidthWrapper>
 
-      <MaxWidthWrapper className="max-w-screen-3xl h-screen md:px-16 lg:px-24">
+      <MaxWidthWrapper className="max-w-screen-3xl h-max pb-0 lg:pb-32 md:px-16 lg:px-24">
         <About />
       </MaxWidthWrapper>
 

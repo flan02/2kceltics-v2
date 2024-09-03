@@ -119,7 +119,7 @@ const FilterForm = ({ filteredGames }: Props) => {
         </div>
 
         <Form {...form} >
-          <form noValidate onSubmit={form.handleSubmit(handleFormSubmit)} className='flex justify-between gap-2' >
+          <form noValidate onSubmit={form.handleSubmit(handleFormSubmit)} className='flex justify-center sm:justify-between gap-2' >
             <div className='flex flex-col md:flex-row gap-4 space-y-4 md:space-y-0'>
               <div className='block lg:flex lg:gap-2 space-y-4 md:space-y-0'>
 
@@ -134,7 +134,7 @@ const FilterForm = ({ filteredGames }: Props) => {
                           onValueChange={(value) => field.onChange(value)}
                           value={field.value}
                         >
-                          <SelectTrigger className="border border-slate-200 text-md shadow-md py-1.5 text-left pl-2 min-w-[300px] md:min-w-[150px] rounded-md">
+                          <SelectTrigger className="border border-slate-200 text-md shadow-md py-1.5 text-left pl-2 min-w-[300px] sm:min-w-full md:min-w-[150px] rounded-md">
                             <SelectValue placeholder="Select Season" />
                           </SelectTrigger>
                           <SelectContent>
@@ -241,7 +241,7 @@ const FilterForm = ({ filteredGames }: Props) => {
                 />
               </div>
 
-              <div className='block lg:flex w-max space-y-8 lg:gap-2'>
+              <div className='h-[200px] md:h-auto flex flex-col justify-between lg:flex lg:flex-row w-max space-y-8 lg:gap-2'>
                 <FormField
                   control={control}
                   name="result"
@@ -272,7 +272,7 @@ const FilterForm = ({ filteredGames }: Props) => {
                 />
 
 
-                <div className="self-end ">
+                <div className="self-end">
                   <LoadingButton type="submit" loading={isSubmitting} className='min-w-[300px] md:min-w-fit'>
                     <Search size={18} /> <span className='mt-1'>Search</span>
                   </LoadingButton>

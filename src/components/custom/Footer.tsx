@@ -1,6 +1,6 @@
 import React from 'react'
 import { Icons } from './Icons'
-import { ArrowRight, Heart } from 'lucide-react'
+import { ArrowRight, Heart, Linkedin, MapPinCheckInsideIcon, Twitch } from 'lucide-react'
 
 type Props = {
 }
@@ -8,13 +8,15 @@ type Props = {
 type LiIconsProps = {
   component: React.ReactNode
   icon_name?: string
+  socialMediaUrl: string
+
 }
 
 
 const LiIcons = (props: LiIconsProps) => {
   return (
     <li>
-      <a href="#" className="flex items-center space-x-3 hover:text-sky-400 transition" referrerPolicy='no-referrer' rel='noopener' target='_blank'>
+      <a href={`${props.socialMediaUrl}`} className="flex items-center space-x-3 hover:text-sky-400 transition" referrerPolicy='no-referrer' rel='noopener' target='_blank'>
         {props.component}
         <span className='capitalize'>{props.icon_name}</span>
       </a>
@@ -23,12 +25,22 @@ const LiIcons = (props: LiIconsProps) => {
 }
 
 const links = [
-  "Home",
-  "About",
-  "Guide",
-  "Blocks",
-  "Contact",
-  "Terms of Use"
+  {
+    name: "Home",
+    url: "#"
+  },
+  {
+    name: "About",
+    url: "#"
+  },
+  {
+    name: "Guide",
+    url: "#"
+  },
+  {
+    name: "Contact",
+    url: "#"
+  },
 ]
 
 const groupIcons: { [key: string]: React.ReactNode } = {
@@ -36,10 +48,20 @@ const groupIcons: { [key: string]: React.ReactNode } = {
   twitter: <Icons.twitter key={1} />,
   youtube: <Icons.youtube key={2} />,
   facebook: <Icons.facebook key={3} />,
-  medium: <Icons.medium key={4} />,
-  pinterest: <Icons.pinterest key={5} />,
-  instagram: <Icons.instagram key={6} />
+  linkedin: <Linkedin key={4} size={20} />,
+  twitch: <Twitch key={5} />,
+  curriculum: <MapPinCheckInsideIcon />
 }
+
+const socialMediaUrl: string[] = [
+  "https://www.github.com/flan02",
+  "https://www.twitter.com/flano2",
+  "https://www.youtube.com/@flan_02",
+  "https://www.facebook.com/dan.chanivet/",
+  "https://www.linkedin.com/in/dan-chanivet-574084b2/",
+  "https://www.twitch.tv/flano2",
+  "https://danchanivet.me",
+]
 
 const Footer = (props: Props) => {
   return (
@@ -53,7 +75,7 @@ const Footer = (props: Props) => {
                   links.map((link, index) => (
                     <li key={index} className='flex space-x-2 items-end hover:text-sky-400'>
                       <ArrowRight />
-                      <a href="#" className="transition">{link}</a></li>
+                      <a href={`/${link.url}`} className="transition">{link.name}</a></li>
                   ))
                 }
 
@@ -62,20 +84,20 @@ const Footer = (props: Props) => {
               <ul role="list" className="space-y-8">
                 {
                   Object.keys(groupIcons).map((key, index) => (
-                    <LiIcons key={key} component={groupIcons[key]} icon_name={key} />
+                    <LiIcons key={key} component={groupIcons[key]} icon_name={key} socialMediaUrl={socialMediaUrl[index]} />
                   ))
                 }
 
               </ul>
             </div>
-            <div className="w-10/12 m-auto  mt-16 space-y-6 text-center sm:text-left sm:w-5/12 sm:mt-auto">
+            <div className="w-10/12 m-auto mt-10 space-y-6 text-center sm:text-left sm:w-5/12 sm:mt-auto">
               <div className="flex">
 
-                <span className="block text-gray-300">We created this website for every Celtics fans with love </span>
-                <Heart fill='red' color='red' />
+                <span className="block text-gray-300">I&apos;ve created this website for every Celtics fan with love </span>
+                <Heart fill='red' color='red' className='self-end' />
               </div>
 
-              <span className="block text-white underline">2kceltics &copy; {new Date().getFullYear()}</span>
+              <span className="block text-muted-foreground underline">2kceltics &copy; {new Date().getFullYear()}</span>
 
               <span className="flex justify-between text-white">
                 <a href="#" className="font-semibold">Terms of Use </a>
