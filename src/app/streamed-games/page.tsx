@@ -38,7 +38,7 @@ export default async function StreamedGamesPage({ searchParams: { page = 0 } }: 
       </section>
       <div className="text-center w-max mt-8 flex flex-col mx-auto">
 
-        <Button className='mt-4' asChild>
+        <Button className='mt-4 dark:bg-celtics dark:hover:bg-celtics/90 dark:text-green-50' asChild>
           <a href="/">Back</a>
         </Button>
       </div>

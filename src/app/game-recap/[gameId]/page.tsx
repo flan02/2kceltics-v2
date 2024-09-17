@@ -93,23 +93,23 @@ export default async function GameIdPage({ params: { gameId }, searchParams: { s
         <h1 className='text-celtics text-3xl text-center'>GAME RECAP</h1>
         <div className="grid grid-cols-1 md:grid-cols-1 gap-2 min-h-[330px]">
 
-          <Card className="md:flex md:justify-center py-4 block md:py-0">
-            <div className="w-full flex justify-center md:block">
+          <Card className="md:flex md:justify-center py-4 block md:py-0 dark:bg-night-90 ">
+            <div className="w-full flex justify-center md:block dark:bg-night-90">
               <CardHeader>
-                <CardTitle className="text-midnight font-bold uppercase -mt-5 sm:mt-0 leading-[24px] sm:leading-none">{`Season ${game?.season} Game #${game?.currentGame}`}</CardTitle>
+                <CardTitle className="text-midnight dark:text-zinc-700 font-bold uppercase -mt-5 sm:mt-0 leading-[24px] sm:leading-none">{`Season ${game?.season} Game #${game?.currentGame}`}</CardTitle>
               </CardHeader>
               <CardContent>
 
                 <CardDescription className="flex items-center">
-                  <span className="text-slate-700 text-lg font-bold mr-2">VS</span>
+                  <span className="text-slate-700 dark:text-zinc-700 text-lg font-bold mr-2">VS</span>
                   <Image src={`/logos/${game?.team_code2}.png`} width={100} height={100} className='mr-2 w-16 h-16' alt={`${game?.team_code2}-logo`} />
                 </CardDescription>
 
 
                 <CardDescription className="flex flex-col space-y-1 mt-4 min-w-[150px]">
-                  <span className="text-base text-slate-800 font-bold">Type: {game?.type === "RS" ? "Regular Season" : "Playoffs"}</span>
-                  <span className="text-base text-slate-800 font-bold">Rival: {game?.team2}</span>
-                  <span className="text-base text-slate-800 font-bold">at {game?.atHome}</span>
+                  <span className="text-base dark:text-zinc-700 text-slate-800 font-bold">Type: {game?.type === "RS" ? "Regular Season" : "Playoffs"}</span>
+                  <span className="text-base dark:text-zinc-700 text-slate-800 font-bold">Rival: {game?.team2}</span>
+                  <span className="text-base dark:text-zinc-700 text-slate-800 font-bold">at {game?.atHome}</span>
                 </CardDescription>
 
               </CardContent>
@@ -120,17 +120,19 @@ export default async function GameIdPage({ params: { gameId }, searchParams: { s
             <ResultsConfetti game={game!} />
           </Card>
         </div>
+
+
         <Card>
-          <CardContent>
-            <CardDescription className="py-8 flex justify-between items-end">
-              <span className="text-midnight font-bold text-xl" >Game details</span>
+          <CardContent className="dark:bg-night-90">
+            <CardDescription className="py-8 flex justify-between items-end ">
+              <span className="text-midnight dark:text-zinc-700 font-bold text-xl" >Game details</span>
               <span className="space-x-1">
-                <Button asChild className="text-xs px-2 md:text-base">
+                <Button asChild className="text-xs px-2 md:text-base dark:bg-celtics dark:hover:bg-celtics/90 dark:text-white">
                   <Link href={`./${game?.id}?stats=${game?.team_code1}`}>{game?.team_code1}</Link>
                 </Button>
-                <Button asChild className="text-xs px-2 md:text-base">
+                <Button asChild className="text-xs px-2 md:text-base dark:bg-celtics dark:hover:bg-celtics/90 dark:text-white">
                   <Link href={`./${game?.id}?stats=${game?.team_code2}`}>{game?.team_code2}</Link>
-                </Button><Button asChild className="text-xs px-2 md:text-base">
+                </Button><Button asChild className="text-xs px-2 md:text-base dark:bg-celtics dark:hover:bg-celtics/90 dark:text-white">
                   <Link href={`./${game?.id}?stats=TOTAL`}>TOTAL</Link>
                 </Button>
               </span>
@@ -140,7 +142,7 @@ export default async function GameIdPage({ params: { gameId }, searchParams: { s
 
 
           </CardContent>
-          <CardContent className="px-0 grid place-content-center">
+          <CardContent className="px-0 grid place-content-center dark:bg-night-90">
             {stats === undefined && <MarkdownRenderer markdown={game?.boxscoreTeam1!} />}
             {BOS ? <MarkdownRenderer markdown={game?.boxscoreTeam1!} /> : null}
             {OPP ? <MarkdownRenderer markdown={game?.boxscoreTeam2!} /> : null}
@@ -150,7 +152,7 @@ export default async function GameIdPage({ params: { gameId }, searchParams: { s
 
         </Card>
         <div className="text-center pb-16">
-          <Button asChild>
+          <Button asChild className="dark:bg-celtics dark:text-white">
             <Link href="/streamed-games">BACK</Link>
           </Button>
         </div>

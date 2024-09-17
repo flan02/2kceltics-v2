@@ -19,6 +19,9 @@ const config = {
       },
     },
     extend: {
+      backgroundImage: {
+        'fissure': "url('../../public/fissure.png')",
+      },
       lineHeight: {
         'extra-loose': '2.5',
         '12': '3rem',
@@ -65,12 +68,29 @@ const config = {
         },
         'celtics': '#007A33',
         'purple': '#3f3cbb',
+        'night': {
+          10: '#e2e3e5',  // Tonalidad más clara
+          20: '#b9bbbe',
+          30: '#8f9195',
+          40: '#666a6d',
+          50: '#3d4145',  // Tonalidad intermedia
+          60: '#2f3236',
+          70: '#25272b',
+          80: '#1d1f22',
+          90: '#191b1e',
+          100: '#17191c', // Color base
+        },
+        'nighty': '#0f0f1a',
         'midnight': '#121063',
         'metal': '#565584',
         'tahiti': '#3ab7bf',
         'silver': '#ecebff',
         'bubble-gum': '#ff77e9',
         'bermuda': '#78dcca',
+        'emerald': '#007A33',
+        'sunset': '#ffcc00',
+        'slate': '#708090',
+
       },
       borderRadius: {
         lg: "var(--radius)",

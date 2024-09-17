@@ -41,7 +41,7 @@ const ResultsConfetti = ({ game }: Props) => {
 
   return (
     <div className="text-center p-8 space-y-6 w-full" >
-      <Button onClick={() => setShowResults(!showResults)}>
+      <Button className="dark:text-white dark:bg-celtics dark:hover:bg-celtics/90" onClick={() => setShowResults(!showResults)}>
         View Results
       </Button>
       {

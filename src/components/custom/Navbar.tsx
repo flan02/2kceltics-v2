@@ -3,6 +3,7 @@ import Upload from './dashboard/Upload'
 import { CloverIcon } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { ModeToggle } from '../reutilizable/ModeToggle'
 
 
 type Props = {}
@@ -29,7 +30,10 @@ const Navbar = async (props: Props) => {
         <Image className="w-auto h-auto" src='/trophy.png' alt='celtics' width={30} height={30} />
       </div>
 
-      <Upload isAdmin={isAdmin} />
+      <div className='flex gap-1 z-50'>
+        <ModeToggle />
+        <Upload isAdmin={isAdmin} />
+      </div>
 
     </header>
   )

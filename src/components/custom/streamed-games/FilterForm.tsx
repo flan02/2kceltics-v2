@@ -115,15 +115,16 @@ const FilterForm = ({ filteredGames }: Props) => {
       <aside className='border border-slate-200 space-y-4 rounded-lg p-4 w-[calc(100%-10px)]'>
         <div className='flex w-max'>
 
-          <h2 className='font-bold text-midnight text-lg'>SEARCH FILTERS</h2>
+          <h2 className='font-bold text-midnight dark:text-zinc-700 text-lg'>SEARCH FILTERS</h2>
         </div>
 
         <Form {...form} >
           <form noValidate onSubmit={form.handleSubmit(handleFormSubmit)} className='flex justify-center sm:justify-between gap-2' >
             <div className='flex flex-col md:flex-row gap-4 space-y-4 md:space-y-0'>
-              <div className='block lg:flex lg:gap-2 space-y-4 md:space-y-0'>
+              <div className='block lg:flex lg:gap-2 space-y-4 md:space-y-0 '>
 
                 <FormField
+
                   control={control}
                   name="season"
                   render={({ field }) => (
@@ -273,7 +274,7 @@ const FilterForm = ({ filteredGames }: Props) => {
 
 
                 <div className="self-end">
-                  <LoadingButton type="submit" loading={isSubmitting} className='min-w-[300px] md:min-w-fit'>
+                  <LoadingButton type="submit" loading={isSubmitting} className='min-w-[300px] md:min-w-fit dark:bg-celtics dark:text-green-50'>
                     <Search size={18} /> <span className='mt-1'>Search</span>
                   </LoadingButton>
                 </div>
@@ -283,7 +284,7 @@ const FilterForm = ({ filteredGames }: Props) => {
           </form>
         </Form>
         <article>
-          <h6 className='text-midnight text-sm font-bold'>Filtering by...
+          <h6 className='text-midnight dark:text-zinc-700 text-sm font-bold'>Filtering by...
             {
               filterValues.map((value, index) => (
                 <p key={index} className='inline'>
@@ -306,8 +307,8 @@ const FilterForm = ({ filteredGames }: Props) => {
               {
                 total_pages > limit
                   ? <div className='flex justify-center gap-4'>
-                    <button onClick={() => setPage(page - 1)} disabled={page === 1} className={`${page === 1 ? "bg-slate-950 text-slate-500" : "bg-slate-600 text-slate-200"} border border-slate-200  text-sm p-2 rounded-md`}>PREV</button>
-                    <button onClick={() => setPage(page + 1)} disabled={page === Math.ceil(total_pages / limit)} className={`${page === Math.ceil(total_pages / limit) ? "bg-slate-950 text-slate-500" : "bg-slate-600 text-slate-200"} border border-slate-200  text-sm p-2 rounded-md`}>NEXT</button>
+                    <button onClick={() => setPage(page - 1)} disabled={page === 1} className={`${page === 1 ? "bg-gray-200 dark:bg-night-90 text-slate-500" : "bg-slate-200 dark:bg-night-50 text-slate-200"} border border-slate-200  text-sm p-2 rounded-md`}>PREV</button>
+                    <button onClick={() => setPage(page + 1)} disabled={page === Math.ceil(total_pages / limit)} className={`${page === Math.ceil(total_pages / limit) ? "bg-gray-200 dark:bg-night-90 text-slate-500" : "bg-slate-600 dark:bg-night-50 text-slate-200"} border border-slate-200  text-sm p-2 rounded-md`}>NEXT</button>
                   </div>
                   : null
               }

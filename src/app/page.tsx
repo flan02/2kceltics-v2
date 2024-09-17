@@ -2,7 +2,6 @@ import Image from "next/image";
 
 import MaxWidthWrapper from "@/components/reutilizable/MaxWidthWrapper";
 import CelticsHero from "../../public/celtics-hero-removedbg.png";
-import { TrophyIcon } from "lucide-react";
 import MainMenu from "@/components/custom/MainMenu";
 import About from "@/components/custom/About";
 import H2underline from "@/components/reutilizable/H2underline";
@@ -45,7 +44,7 @@ export default async function Home({ searchParams: { page = 0 } }: { searchParam
         </div>
       </MaxWidthWrapper>
 
-      <MaxWidthWrapper className="max-w-screen-3xl bg-zinc-200/60 px-0 sm:px-10 md:px-24">
+      <MaxWidthWrapper className="max-w-screen-3xl dark:bg-night-80/50 bg-zinc-200/60 px-0 sm:px-10 md:px-24">
         <MainMenu />
       </MaxWidthWrapper>
 
@@ -54,7 +53,7 @@ export default async function Home({ searchParams: { page = 0 } }: { searchParam
       </MaxWidthWrapper>
 
       {/* <SearchParamsContext.Provider value={{ searchParams }} > */}
-      <MaxWidthWrapper className="max-w-screen-3xl bg-zinc-200/60 px-0">
+      <MaxWidthWrapper className="max-w-screen-3xl dark:bg-night-80/50 bg-zinc-200/60 px-0">
         <Schedule searchParams={{ page }} />
       </MaxWidthWrapper>
       {/*  </SearchParamsContext.Provider> */}
@@ -63,7 +62,7 @@ export default async function Home({ searchParams: { page = 0 } }: { searchParam
         <Roster />
       </MaxWidthWrapper>
 
-      <MaxWidthWrapper className="mt-36 py-6 max-w-screen-3xl bg-zinc-200/70">
+      <MaxWidthWrapper className="mt-36 py-6 max-w-screen-3xl bg-zinc-200/70 dark:bg-night-80/50">
         <VisitorsCounter />
       </MaxWidthWrapper>
     </>

@@ -55,7 +55,7 @@ export default function RootLayout({
       <meta name="twitter:description" content="2kceltics v2 created by Dan Chanivet" />
       <meta name="twitter:image" content="https://opengraph.b-cdn.net/production/images/a13bd035-00fd-4ba3-a010-7c2c46260eba.jpg?token=-wLRIoq9gpRyzt23-Wi2L338yaGYQvsHhl7Yfufo1uA&height=630&width=1200&expires=33261025516">
       </meta>
-      <body className={`${recursive.className}`}>
+      <body className={`${recursive.className} dark:bg-night-100 bg-fissure bg-contain bg-white/80 bg-blend-overlay filter opacity-100 blur-0 sepia-0 saturate-100 contrast-100`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

@@ -13,35 +13,35 @@ const players = [{
   photo: JBprofile,
   isTag: false,
   link: "/streamed-games",
-  icon: <MonitorPlay />
+  icon: <MonitorPlay color="#444" />
 },
 {
   title: "ADVANCED STATS",
   photo: JTprofile,
   isTag: false,
   link: "/advanced",
-  icon: <ChartSpline />
+  icon: <ChartSpline color="#444" />
 },
 {
   title: "SEASON STATS",
   photo: KPprofile,
   isTag: false,
   link: "/season-stats",
-  icon: <NotebookPen />
+  icon: <NotebookPen color="#444" />
 },
 {
   title: "SCHEDULE",
   photo: Jrueprofile,
   isTag: true,
   link: "schedule",
-  icon: <CalendarDays />
+  icon: <CalendarDays color="#444" />
 },
 {
   title: "ROSTER",
   photo: DWprofile,
   isTag: true,
   link: "roster",
-  icon: <User />
+  icon: <User color="#444" />
 }
 
 ]

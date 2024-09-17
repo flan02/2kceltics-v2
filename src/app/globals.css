@@ -86,17 +86,16 @@
 }
 
 
+.dark ::-webkit-scrollbar-thumb {
+  background-color: rgb(49 51 54);
+  border-radius: 5px; /* Borde redondeado */
+}
 
+.dark ::-webkit-scrollbar-track {
+   
+  background-color: rgb(29 31 34);
+}
 
-body {
-  
-  background-image: url('../../public/fissure.png');
-  background-size: contain;
-    /* Agrega un color de fondo semi-transparente */
-    background-color: rgba(255, 255, 255, 0.8); /* Ajusta la opacidad aquí */
-    background-blend-mode: overlay; /* Modo de mezcla para combinar el color y la imagen */
-  filter: opacity(1) blur(0) sepia(0) saturate(default) contrast(default);
-  }
 
 .logo-background {
   background-image: url('../../public/celtics-logo.png');
@@ -109,20 +108,33 @@ body {
 }
 
 table{
-  display: grid;
+  display: block; /* grid */
   overflow-x: scroll; 
   border: 1px solid rgba(255,255,255, .4);
   font-size: 12px;
-  @media (min-width: 992px) {
+}
+
+@media (min-width: 992px) {
+  table {
     font-size: 16px;
-    display: block;
-    overflow-x: hidden; 
+    overflow-x: hidden; /* Elimina el scroll horizontal en pantallas grandes */
   }
+}
+
+.dark table {
+  border: 1px solid rgb(0,0,0); /* Cambiar la opacidad del borde */
+  background-color: rgba(23, 25, 28, 0.9); /* Fondo oscuro */
+  color: rgba(255, 255, 255, 0.3); /* Texto más claro */
 }
 
 tr:hover {
   background-color: rgb(235, 235, 235, .8);
   color: black;
+}
+
+.dark tr:hover {
+  background-color: rgb(0, 0, 0, .3);
+  color: gray;
 }
 
 th {
@@ -135,9 +147,14 @@ th {
   }
 }
 
-tr {
+.dark th {
+  border: 1px solid rgba(10,10,10, .5);
+  
+}
 
-  border: 1px solid rgb(230, 230, 230);
+.dark td {
+  
+  border: 1px solid rgba(10,10,10, .5);
 }
 
 td{

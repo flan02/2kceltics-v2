@@ -73,7 +73,7 @@ const Footer = (props: Props) => {
               <ul className="list-inside space-y-8">
                 {
                   links.map((link, index) => (
-                    <li key={index} className='flex space-x-2 items-end hover:text-sky-400'>
+                    <li key={index} className='flex space-x-2 items-end hover:text-sky-400 dark:text-zinc-700'>
                       <ArrowRight />
                       <a href={`/${link.url}`} className="transition">{link.name}</a></li>
                   ))
@@ -81,7 +81,7 @@ const Footer = (props: Props) => {
 
               </ul>
 
-              <ul role="list" className="space-y-8">
+              <ul role="list" className="space-y-8 dark:text-zinc-700">
                 {
                   Object.keys(groupIcons).map((key, index) => (
                     <LiIcons key={key} component={groupIcons[key]} icon_name={key} socialMediaUrl={socialMediaUrl[index]} />
@@ -93,18 +93,18 @@ const Footer = (props: Props) => {
             <div className="w-10/12 m-auto mt-10 space-y-6 text-center sm:text-left sm:w-5/12 sm:mt-auto">
               <div className="flex">
 
-                <span className="block text-gray-300">I&apos;ve created this website for every Celtics fan with love </span>
+                <span className="block text-gray-300 dark:text-zinc-700">I&apos;ve created this website for every Celtics fan with love </span>
                 <Heart fill='red' color='red' className='self-end' />
               </div>
 
-              <span className="block text-muted-foreground underline">2kceltics &copy; {new Date().getFullYear()}</span>
+              <span className="block text-muted-foreground underline dark:text-celtics">2kceltics &copy; {new Date().getFullYear()}</span>
 
               <span className="flex justify-between text-white">
-                <a href="#" className="font-semibold">Terms of Use </a>
-                <a href="#" className="font-semibold"> Privacy Policy</a>
+                <a href="#" className="font-semibold dark:text-zinc-700">Terms of Use </a>
+                <a href="#" className="font-semibold dark:text-zinc-700"> Privacy Policy</a>
               </span>
 
-              <span className="block text-gray-300">Need help? <a href="#" className="font-semibold text-white">&nbsp; Contact Us</a></span>
+              <span className="block text-gray-300 dark:text-zinc-700">Need help? <a href="#" className="font-semibold text-white dark:text-zinc-700">&nbsp; Contact Us</a></span>
             </div>
           </div>
         </div>

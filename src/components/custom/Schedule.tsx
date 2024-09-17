@@ -24,7 +24,7 @@ export default async function Schedule({ searchParams: { page } }: { searchParam
       <br />
       <br />
       <div className="bg-celtics flex items-end justify-between text-white text-lg px-4 py-6">
-        <h2 className="text-sm md:text-base">REGULAR SEASON 82 GAMES</h2>
+        <h2 className="text-sm md:text-base dark:text-zinc-700">REGULAR SEASON 82 GAMES</h2>
         {
           nextGame
             ? <h6 className="uppercase text-xs lg:text-sm text-muted underline">next game: {nextGame}</h6>

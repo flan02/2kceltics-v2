@@ -26,12 +26,12 @@ const About = (props: Props) => {
           <div>
             <Link className='flex items-center'
               href="https://www.youtube.com/channel/UCz_FxdOU_XMhTKtZMuqwKNQ" target='_blank'>
-              <span className='hover:underline text-xs mr-2 uppercase'>Follow us on Youtube </span>
+              <span className='hover:underline dark:text-zinc-500 text-xs mr-2 uppercase'>Follow us on Youtube </span>
               <Youtube size={32} color='red' />
             </Link>
             <Link className='flex items-center'
               href="https://www.twitch.tv/flano2" target='_blank'>
-              <span className='hover:underline text-xs mr-3 uppercase'>Follow us on Twitch </span>
+              <span className='hover:underline dark:text-zinc-500 text-xs mr-3 uppercase'>Follow us on Twitch </span>
               <Twitch size={30} color='purple' />
 
             </Link>

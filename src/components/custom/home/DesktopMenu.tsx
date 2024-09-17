@@ -17,7 +17,7 @@ const DesktopMenu = (props: Props) => {
       <div className='relative h-[450px] inline-block filter grayscale hover:grayscale-0 transition duration-300'>
         <Image src={JaysonTatumPoster} alt="jaylen brown poster" className='block lg:object-cover xl:object-cover' fill sizes="(max-width: 768px) 100vw, 33vw" priority />
         <div className='relative flex h-full justify-center items-center '>
-          <Link href='/streamed-games' className='text-center text-3xl xl:text-5xl text-slate-200 hover:text-white z-10 hover:underline'>
+          <Link href='/streamed-games' className='text-center text-3xl xl:text-5xl text-white hover:text-yellow-50 z-10 hover:underline'>
             <span> STREAMED <br /> GAMES </span>
           </Link>
         </div>
@@ -26,7 +26,7 @@ const DesktopMenu = (props: Props) => {
       <div className='relative h-[450px] inline-block border border-black filter grayscale hover:grayscale-0 transition duration-300'>
         <Image src={IsaiahThomas} alt="isaiah thomas poster" className='block lg:object-cover xl:object-cover' fill sizes="(max-width: 768px) 100vw, 33vw" priority />
         <div className='relative flex h-full justify-center items-center '>
-          <Link href='/advanced' className='text-center text-3xl xl:text-5xl text-slate-200 hover:text-white z-10 hover:underline'>
+          <Link href='/advanced' className='text-center text-3xl xl:text-5xl text-white hover:text-yellow-50 z-10 hover:underline'>
             <span> ADVANCED <br /> STATS </span>
           </Link>
         </div>
@@ -35,7 +35,7 @@ const DesktopMenu = (props: Props) => {
       <div className='relative h-[450px] col-span-2 inline-block border border-black filter grayscale hover:grayscale-0 transition duration-300'>
         <Image src={BigThree} alt="big three poster" className='block lg:object-cover xl:object-fill' fill sizes="(max-width: 768px) 100vw, 33vw" priority />
         <div className='relative flex h-full justify-center items-center '>
-          <Link href='/season-stats' className='text-center text-3xl xl:text-5xl text-slate-200 hover:text-white z-10 hover:underline'>
+          <Link href='/season-stats' className='text-center text-3xl xl:text-5xl text-white hover:text-yellow-50 z-10 hover:underline'>
             <span> SEASON STATS </span>
           </Link>
         </div>
