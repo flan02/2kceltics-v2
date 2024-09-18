@@ -61,14 +61,14 @@ const ResultsConfetti = ({ game }: Props) => {
           <div className="flex">
             <div className="flex flex-col w-full items-center justify-end space-y-4">
               <Image src={`/logos/${game.atHome == "AWAY" ? game.team_code1 : game.team_code2}.png`} className="w-auto h-auto" width={40} height={40} alt="celtics-logo" />
-              <h6 className="text-midnight text-2xl font-bold">{game.atHome == "AWAY" ? game.scoreTeam1 : game.scoreTeam2}</h6>
+              <h6 className="text-midnight dark:text-zinc-700 text-2xl font-bold">{game.atHome == "AWAY" ? game.scoreTeam1 : game.scoreTeam2}</h6>
             </div>
             <div className="flex items-center">
-              <p className="text-midnight font-bold text-xl">VS</p>
+              <p className="text-midnight dark:text-zinc-700 font-bold text-xl">VS</p>
             </div>
             <div className="flex flex-col w-full items-center justify-end space-y-4">
               <Image src={`/logos/${game.atHome == "HOME" ? game.team_code1 : game.team_code2}.png`} className="w-auto h-auto" width={40} height={40} alt={`${game.team2}-logo`} />
-              <h6 className="text-midnight text-2xl font-bold">{game.atHome == "HOME" ? game.scoreTeam1 : game.scoreTeam2}</h6>
+              <h6 className="text-midnight dark:text-zinc-700 text-2xl font-bold">{game.atHome == "HOME" ? game.scoreTeam1 : game.scoreTeam2}</h6>
             </div>
           </div>
           {

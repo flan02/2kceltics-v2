@@ -93,8 +93,8 @@ export default async function GameIdPage({ params: { gameId }, searchParams: { s
         <h1 className='text-celtics text-3xl text-center'>GAME RECAP</h1>
         <div className="grid grid-cols-1 md:grid-cols-1 gap-2 min-h-[330px]">
 
-          <Card className="md:flex md:justify-center py-4 block md:py-0 dark:bg-night-90 ">
-            <div className="w-full flex justify-center md:block dark:bg-night-90">
+          <Card className="md:flex md:justify-center py-4 block md:py-0 dark:bg-night-80/60 bg-white/20">
+            <div className="w-full flex justify-center md:block dark:bg-night-90/50">
               <CardHeader>
                 <CardTitle className="text-midnight dark:text-zinc-700 font-bold uppercase -mt-5 sm:mt-0 leading-[24px] sm:leading-none">{`Season ${game?.season} Game #${game?.currentGame}`}</CardTitle>
               </CardHeader>
@@ -122,8 +122,8 @@ export default async function GameIdPage({ params: { gameId }, searchParams: { s
         </div>
 
 
-        <Card>
-          <CardContent className="dark:bg-night-90">
+        <Card className="dark:bg-night-80/60 bg-white/10">
+          <CardContent className="">
             <CardDescription className="py-8 flex justify-between items-end ">
               <span className="text-midnight dark:text-zinc-700 font-bold text-xl" >Game details</span>
               <span className="space-x-1">
@@ -142,7 +142,7 @@ export default async function GameIdPage({ params: { gameId }, searchParams: { s
 
 
           </CardContent>
-          <CardContent className="px-0 grid place-content-center dark:bg-night-90">
+          <CardContent className="px-0 grid place-content-center">
             {stats === undefined && <MarkdownRenderer markdown={game?.boxscoreTeam1!} />}
             {BOS ? <MarkdownRenderer markdown={game?.boxscoreTeam1!} /> : null}
             {OPP ? <MarkdownRenderer markdown={game?.boxscoreTeam2!} /> : null}
