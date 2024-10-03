@@ -10,6 +10,7 @@ import Roster from "@/components/custom/Roster";
 import Marquee from "@/components/reutilizable/Marquee";
 import VisitorsCounter from "@/components/custom/VisitorsCounter";
 import CelticsLogo from "../../public/celtics-logo.png";
+import React from "react";
 
 
 export default async function Home({ searchParams: { page = 0 } }: { searchParams: { page: number } }) {

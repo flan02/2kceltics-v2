@@ -1,0 +1,41 @@
+import React from 'react'
+import BracketSpace from './BracketSpace'
+import Image from 'next/image'
+
+type PlayoffsBracketProps = {
+  bracket: any[],
+  order: boolean
+}
+const Box2 = ({ bracket, order }: PlayoffsBracketProps) => {
+  return (
+    <>
+      {
+        bracket.map((b, index) => (
+          <div key={index} className='2xl:text-xl xl:text-lg flex items-center justify-start 2xl:w-full w-max'>
+            <div className='space-y-4 flex space-x-2 w-full'>
+              <div className={`2xl:flex items-center hidden mt-4 ${order ? "order-1 ml-2" : ""}`}>
+                <div className='w-8 border border-gray-300 dark:border-zinc-500 h-[0.5px]'></div>
+              </div>
+              <div className='space-y-6 w-full'>
+                <div className={`flex items-center  space-x-2 p-2 bg-white dark:bg-night-80/50 dark:text-zinc-500 text-black rounded-lg border shadow-md ${b.team1 === "BOS" ? "border-celtics" : ""}`}>
+                  <Image src={`/logos/${b.team1}.png`} className='w-auto h-auto' width={24} height={24} alt={b.team1} />
+                  <span>{b.team1} ({b.seed1}) {b.score1}</span>
+                </div>
+                <div className="flex items-center space-x-2 p-2 bg-white dark:bg-night-80/50 dark:text-zinc-500 text-black rounded-lg border shadow-md">
+                  <Image src={`/logos/${b.team2}.png`} className={`w-auto h-auto`} width={24} height={24} alt={b.team2} />
+                  <span>{b.team2} ({b.seed2}) {b.score2}</span>
+                </div>
+              </div>
+            </div>
+            {
+              index < bracket.length - 1 && <BracketSpace />
+            }
+          </div>
+        ))
+      }
+
+    </>
+  )
+}
+
+export default Box2

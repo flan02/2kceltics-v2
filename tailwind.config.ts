@@ -16,6 +16,7 @@ const config = {
       screens: {
         "2xl": "1400px",
         "3xl": "1920px",
+        "xs": "500px"
       },
     },
     extend: {
@@ -135,6 +136,7 @@ const config = {
         "accordion-up": "accordion-up 0.2s ease-out",
         "flashing": "flashing 1.4s infinite linear",
         "marquee-x": "marquee-x 30s linear infinite",
+        "marquee-xs": "marquee-x 20s linear infinite",
       },
     },
   },
