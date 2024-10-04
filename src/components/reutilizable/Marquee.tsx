@@ -8,7 +8,7 @@ export default async function Marquee() {
   const nextTeam = await getNextTeam(nextGame.toString())
 
   return (
-    <div className="absolute whitespace-nowrap overflow-hidden w-[100%] top-[50px] left-0 dark:bg-nighty bg-zinc-300/60 py-2 md:py-4 uppercase font-bold">
+    <div className="absolute whitespace-nowrap overflow-hidden w-[100%] top-[50px] left-0 dark:bg-nighty bg-zinc-200/70 py-2 md:py-4 uppercase font-bold">
       <div className='min-w-full animate-marquee-x text-celtics dark:text-green-50'>
 
         <h6 className="inline-block uppercase text-xs md:text-base"><span className='underline'>NEXT GAME #{nextGame.toString()}:</span> &nbsp; &nbsp; &nbsp; BOSTON CELTICS <span className='lowercase'>vs</span> {nextTeam}  &nbsp; - &nbsp; starting 5: C - Kristap Porzingis | PF - Jayson Tatum | SF - Jaylen Brown | SG - Jrue Holiday | PG - Derrick White </h6>

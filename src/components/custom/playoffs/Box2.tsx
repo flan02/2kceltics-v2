@@ -13,7 +13,8 @@ const Box2 = ({ bracket, order }: PlayoffsBracketProps) => {
         bracket.map((b, index) => (
           <div key={index} className='2xl:text-xl xl:text-lg flex items-center justify-start 2xl:w-full w-max'>
             <div className='space-y-4 flex space-x-2 w-full'>
-              <div className={`2xl:flex items-center hidden mt-4 ${order ? "order-1 ml-2" : ""}`}>
+              <div className={`xl:flex items-center hidden mt-4 ${order ? "order-1 ml-2" : ""}`}>
+                <div className={`w-[1px] border border-gray-300 dark:border-zinc-500 h-[120px] ${order ? "order-1" : ""}`}></div>
                 <div className='w-8 border border-gray-300 dark:border-zinc-500 h-[0.5px]'></div>
               </div>
               <div className='space-y-6 w-full'>

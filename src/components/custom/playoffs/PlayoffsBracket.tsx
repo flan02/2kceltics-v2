@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Box from './Box';
 import Box2 from './Box2';
 import BoxTheFinals from './BoxTheFinals';
+import { Button } from '@/components/ui/button';
 
 
 
@@ -179,7 +180,7 @@ const PlayoffsBracket = () => {
         <div className={`min-w-[1024px] border shadow-xl rounded-xl p-4 grid grid-cols-7 gap-4 ${dimensions.width < 640 ? 'text-xs' : 'text-base'} text-white`}>
           {/* First Column - Western Conference */}
           <div className="space-y-4">
-            <Box bracket={bracketWest} />
+            <Box bracket={bracketWest} order={false} />
           </div>
 
           {/* Second Column - Western Conference - Next Round */}
@@ -211,7 +212,7 @@ const PlayoffsBracket = () => {
 
           {/* Fourth Column - Eastern Conference - Next Round */}
           <div className="space-y-4">
-            <Box bracket={bracketEast} />
+            <Box bracket={bracketEast} order={true} />
           </div>
 
 
@@ -223,6 +224,12 @@ const PlayoffsBracket = () => {
       {/* Placeholder for Finals */}
       <div className="mt-8 px-4 flex items-center justify-between space-x-4 w-full">
         <div className="p-4 border shadow-lg rounded font-bold text-xs md:text-base">West Conference</div>
+        <div className="text-center w-max mt-8 flex flex-col mx-auto">
+
+          <Button className='mb-4 dark:bg-celtics dark:hover:bg-celtics/90 dark:text-black' asChild>
+            <a href="/">Back</a>
+          </Button>
+        </div>
         <div className="p-4 border shadow-lg rounded font-bold text-xs md:text-base">East Conference</div>
       </div>
     </div>

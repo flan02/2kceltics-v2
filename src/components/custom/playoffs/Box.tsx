@@ -3,11 +3,12 @@ import React from 'react'
 
 type PlayoffsBracketProps = {
   bracket: any[]
+  order: boolean
 }
 
 
 
-const Box = ({ bracket }: PlayoffsBracketProps) => {
+const Box = ({ bracket, order }: PlayoffsBracketProps) => {
   return (
     bracket.map((b, index) => (
       <div className='2xl:text-xl xl:text-lg 2xl:w-full w-max' key={index}>
@@ -18,7 +19,7 @@ const Box = ({ bracket }: PlayoffsBracketProps) => {
           </span>
         </div>
         <div className='text-center dark:text-zinc-500 text-gray-400'>|</div>
-        <div className="flex items-center space-x-2 p-2 bg-white dark:bg-night-80/50 dark:text-zinc-500 text-black rounded-lg border shadow-md">
+        <div className={`flex items-center space-x-2 p-2 bg-white dark:bg-night-80/50 dark:text-zinc-500 text-black rounded-lg border shadow-md`}>
           <Image src={`/logos/${b.team2}.png`} className='w-auto h-auto' width={`${b.team2 === "MIA" ? 20 : 24}`} height={`${b.team2 === "MIA" ? 20 : 24}`} alt={b.team2} />
           <span>
             {b.team2} ({b.seed2}) &nbsp; {b.score2}
