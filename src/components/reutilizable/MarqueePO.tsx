@@ -9,7 +9,7 @@ const MarqueePO = (props: Props) => {
       <div className='min-w-full flex items-center animate-marquee-xs text-celtics dark:text-green-50'>
 
         <Image src='/playoffs-logo.png' alt='playoffs-logo' width={80} height={80} className='w-auto h-auto' />
-        <h6 className="inline-block uppercase ml-24 mr-24 text-xs md:text-base">NEXT GAME #R2G1:  &nbsp; Boston Celtics vs Cleveland Cavaliers</h6>
+        <h6 className="inline-block uppercase ml-24 mr-24 text-xs md:text-base">NEXT GAME #R1G1:  &nbsp; Boston Celtics vs Miami Heat</h6>
 
 
       </div>

@@ -11,6 +11,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "gravatar.com",
       },
+      {
+        protocol: "https",
+        hostname: "res.cloudinary.com",
+      },
     ],
   },
   // Configure `pageExtensions` to include markdown and MDX files

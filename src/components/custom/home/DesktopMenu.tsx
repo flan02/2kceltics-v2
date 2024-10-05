@@ -7,11 +7,15 @@ import JaysonTatumPoster from "../../../../public/jaysononlebron.jpg";
 
 import ScheduleTag from '@/components/custom/ScheduleTag';
 import RosterTag from '@/components/custom/RosterTag';
+import Playoffs from "../Playoffs";
 
 
-type Props = {}
+type Props = {
+  playoffs: boolean
+}
 
-const DesktopMenu = (props: Props) => {
+const DesktopMenu = ({ playoffs }: Props) => {
+
   return (
     <aside className='hidden lg:grid lg:grid-cols-4 lg:grid-rows-2 lg:mt-12'>
       <div className='relative h-[450px] inline-block filter grayscale hover:grayscale-0 transition duration-300'>
@@ -44,7 +48,8 @@ const DesktopMenu = (props: Props) => {
       </div>
 
       <RosterTag />
-      <ScheduleTag />
+      <ScheduleTag playoffs={playoffs} />
+      {playoffs && <Playoffs />}
 
     </aside>
   )

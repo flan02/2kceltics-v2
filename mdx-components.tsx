@@ -12,7 +12,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     // Allows customizing built-in components, e.g. to add styling.
     table: ({ children }) => <table className=''>{children}</table>,
     th: (props) => <th className="px-4 py-2" {...props} />,
-    td: (props) => <td className="px-4 py-2" {...props} />,
+    td: (props) => <td className="text-muted-foreground dark:text-zinc-500" {...props} />,
     h1: ({ children }) => (
       <h1 style={{ color: '#000', fontSize: '', width: '' }}>{children}</h1>
     ),
