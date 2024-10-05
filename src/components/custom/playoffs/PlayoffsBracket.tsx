@@ -174,7 +174,7 @@ const PlayoffsBracket = () => {
 
   return (
     <div className="flex flex-col items-center justify-center p-4 h-screen">
-      <h1 className='text-3xl sm:text-5xl text-celtics lg:mt-16 mt-4 sm:mt-8 mb-4 lg:mb-8'>PLAYOFFS 2023/24</h1>
+      <h1 className='text-3xl sm:text-5xl text-celtics mt-16 lg:mt-12 sm:mt-4 mb-4 lg:mb-8'>PLAYOFFS 2023/24</h1>
       <div className='w-full max-w-full overflow-x-auto overflow-y-hidden'>
 
 
