@@ -12,7 +12,7 @@ const bracketWest = [
   {
     team1: 'OKC',
     team2: 'NOP',
-    score1: 4,
+    score1: 0,
     score2: 0,
     seed1: 1,
     seed2: 8
@@ -20,16 +20,16 @@ const bracketWest = [
   {
     team1: 'LAC',
     team2: 'DAL',
-    score1: 2,
-    score2: 4,
+    score1: 0,
+    score2: 0,
     seed1: 4,
     seed2: 5
   },
   {
     team1: 'MIN',
     team2: 'PHO',
-    score1: 2,
-    score2: 4,
+    score1: 0,
+    score2: 0,
     seed1: 3,
     seed2: 6
   },
@@ -37,7 +37,7 @@ const bracketWest = [
     team1: 'DEN',
     team2: 'LAL',
     score1: 0,
-    score2: 4,
+    score2: 0,
     seed1: 2,
     seed2: 7
   }
@@ -47,7 +47,7 @@ const bracketEast = [
   {
     team1: 'BOS',
     team2: 'MIA',
-    score1: 4,
+    score1: 0,
     score2: 0,
     seed1: 1,
     seed2: 8,
@@ -55,24 +55,24 @@ const bracketEast = [
   {
     team1: 'CLE',
     team2: 'ORL',
-    score1: 4,
-    score2: 1,
+    score1: 0,
+    score2: 0,
     seed1: 5,
     seed2: 4
   },
   {
     team1: 'MIL',
     team2: 'IND',
-    score1: 2,
-    score2: 4,
+    score1: 0,
+    score2: 0,
     seed1: 3,
     seed2: 6
   },
   {
     team1: 'PHI',
     team2: 'NYK',
-    score1: 4,
-    score2: 3,
+    score1: 0,
+    score2: 0,
     seed1: 7,
     seed2: 2
   }
@@ -155,6 +155,7 @@ const bracketTheFinals = [
 const PlayoffsBracket = () => {
 
 
+  const [empty, setEmpty] = useState(true);
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
 
   useEffect(() => {
@@ -173,41 +174,41 @@ const PlayoffsBracket = () => {
 
   return (
     <div className="flex flex-col items-center justify-center p-4 h-screen">
-      <h1 className='text-3xl sm:text-5xl text-celtics mt-16 sm:mt-8 mb-4 lg:mb-8'>PLAYOFFS 2023/24</h1>
-      <div className='w-full max-w-full overflow-x-auto'>
+      <h1 className='text-3xl sm:text-5xl text-celtics lg:mt-16 mt-4 sm:mt-8 mb-4 lg:mb-8'>PLAYOFFS 2023/24</h1>
+      <div className='w-full max-w-full overflow-x-auto overflow-y-hidden'>
 
 
         <div className={`min-w-[1024px] border shadow-xl rounded-xl p-4 grid grid-cols-7 gap-4 ${dimensions.width < 640 ? 'text-xs' : 'text-base'} text-white`}>
           {/* First Column - Western Conference */}
           <div className="space-y-4">
-            <Box bracket={bracketWest} order={false} />
+            <Box bracket={bracketWest} order={empty} />
           </div>
 
           {/* Second Column - Western Conference - Next Round */}
           <div className="space-y-36 place-content-center">
-            <Box2 bracket={bracketWest2ND} order={false} />
+            <Box2 bracket={bracketWest2ND} order={false} empty={empty} />
           </div>
 
           {/* Third Column - Western Conference Finals - Next Round */}
           <div className="space-y-4 place-content-center mt-4">
-            <Box2 bracket={bracketWCF} order={false} />
+            <Box2 bracket={bracketWCF} order={false} empty={empty} />
           </div>
 
 
           <div className=''>
-            <BoxTheFinals bracket={bracketTheFinals} />
+            <BoxTheFinals bracket={bracketTheFinals} empty={empty} />
           </div>
 
 
           {/* Fourth Column - Eastern Conference Finals - Next Round */}
           <div className="space-y-4 place-content-center mt-6 ml-6 2xl:mt-2.5 2xl:ml-0">
-            <Box2 bracket={bracketECF} order={true} />
+            <Box2 bracket={bracketECF} order={true} empty={empty} />
           </div>
 
 
           {/* Third Column - Eastern Conference */}
           <div className="space-y-36 place-content-center">
-            <Box2 bracket={bracketEast2ND} order={true} />
+            <Box2 bracket={bracketEast2ND} order={true} empty={empty} />
           </div>
 
           {/* Fourth Column - Eastern Conference - Next Round */}

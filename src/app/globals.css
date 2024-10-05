@@ -114,16 +114,41 @@ table{
   font-size: 12px;
 }
 
+
+table td:nth-child(1) {
+  min-width: 50px;  /* Ajusta el ancho que necesites */
+  min-height: 50px; /* Ajusta la altura que necesites */
+  padding: 0 0;
+}
+
+table td {
+  padding: 8px 16px;
+}
+
 @media (min-width: 992px) {
   table {
-    font-size: 16px;
-    overflow-x: hidden; /* Elimina el scroll horizontal en pantallas grandes */
+    font-size: 16px;    
   }
+
+
+  /* Aplica el tamaño solo a las celdas de la primera columna */
+table td:nth-child(1) {
+  min-width: 60px;  /* Ajusta el ancho que necesites */
+  min-height: 60px; /* Ajusta la altura que necesites */
+  padding: 0 0;
+
 }
+ 
+table td {
+  padding: 8px 16px;
+}
+}
+
+
 
 .dark table {
   border: 1px solid rgb(0,0,0); /* Cambiar la opacidad del borde */
-  background-color: rgba(23, 25, 28, 0.9); /* Fondo oscuro */
+  background-color: rgba(23, 25, 28, 0.5); /* Fondo oscuro */
   color: rgba(255, 255, 255, 0.3); /* Texto más claro */
 }
 

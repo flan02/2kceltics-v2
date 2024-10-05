@@ -22,7 +22,7 @@ const Navbar = async (props: Props) => {
           <CloverIcon size={24} color='#007A33' className='mr-1 mb-1' />
           */}
 
-          <p className="text-celtics text-2xl">2KCELTICS <span className='text-base'>V2</span></p>
+          <p className="text-celtics text-xl md:text-2xl">2KCELTICS <span className='text-sm md:text-base'>V2</span></p>
         </Link>
       </div>
       <div className='flex items-end'>
