@@ -2,6 +2,7 @@
 'use client'
 import MdxLayout from '@/components/mdx-layout'
 import TotalSeasonStats from '../../components/markdown/TotalSeasonStats.mdx'
+import PerGameSeasonStats from '../../components/markdown/PerGameSeasonStats.mdx'
 import MaxWidthWrapper from '@/components/reutilizable/MaxWidthWrapper'
 import { Button } from '@/components/ui/button'
 import React from 'react'
@@ -30,16 +31,36 @@ const SeasonStatsPage = (props: Props) => {
         */}
 
       </div>
-      <div className='text-end text-muted-foreground dark:text-zinc-500 uppercase'>
-        <p className='uppercase text-celtics lg:font-bold'>regular season</p>
-      </div>
-      <aside className='flex justify-center'>
-        {/* INSERTED WITHOUT BBDD CALL */}
-        <MdxLayout>
-          <TotalSeasonStats />
-        </MdxLayout>
 
-      </aside>
+
+      <section className='space-y-20'>
+        <div>
+          <div className='text-end text-muted-foreground dark:text-zinc-500 uppercase'>
+            <p className='uppercase text-celtics lg:font-bold'>regular season per game stats</p>
+          </div>
+          <aside className='flex justify-center'>
+            {/* INSERTED WITHOUT BBDD CALL */}
+            <MdxLayout>
+              <PerGameSeasonStats />
+            </MdxLayout>
+
+          </aside>
+        </div>
+
+        <div>
+          <div className='text-end text-muted-foreground dark:text-zinc-500 uppercase'>
+            <p className='uppercase text-celtics lg:font-bold'>regular season total stats</p>
+          </div>
+          <aside className='flex justify-center'>
+            {/* INSERTED WITHOUT BBDD CALL */}
+            <MdxLayout>
+              <TotalSeasonStats />
+            </MdxLayout>
+
+          </aside>
+        </div>
+      </section>
+
 
       <div className="text-center w-max mt-8 flex flex-col mx-auto">
 
