@@ -15,7 +15,7 @@ type Props = {
 export default async function StreamedGamesPage({ searchParams: { page = 0 } }: Props) {
   let request = await getStreamedGames({
     season: 'NBA2K24',
-    type: 'RS',
+    type: ["RS", "PO"],
     stage: undefined,
     atHome: undefined,
     result: undefined

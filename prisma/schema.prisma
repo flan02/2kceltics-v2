@@ -33,6 +33,11 @@ enum Tournament {
   PO
 }
 
+enum Conference {
+  EAST
+  WEST
+}
+
 enum Stage {
   RS
   CUP_GP
@@ -42,6 +47,15 @@ enum Stage {
   FIRST_ROUND
   ESCF
   ECF
+  FINALS
+}
+
+enum Round {
+  FIRST_ROUND
+  ECSF
+  WCSF
+  ECF
+  WCF
   FINALS
 }
 
@@ -75,6 +89,7 @@ model Team {
   name        String   // team name
   team_code   String   // team code
   logo_url    String   // team logo_url cloudinary
+  conference  Conference @default(EAST)
   seasons2k   Season2k[]
 }
 
@@ -162,3 +177,32 @@ model Task {
   createdAt        DateTime   @default(now()) // game created
   updatedAt        DateTime   @updatedAt      // last update
 }
+
+// Playoffs logic and table structure to upload to MongoDB every season
+model Playoffs {
+  id    String     @id @default(auto()) @map("_id") @db.ObjectId
+  season Season
+  seeds  Seed[]  // 16 seeds
+  gamesPlayed Int @default(0) // current game of the playoffs
+  champ  String? // champion team name
+  mvp    String? // finals MVP player name
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Seed {
+  id        String     @id @default(auto()) @map("_id") @db.ObjectId
+  playoffs  Playoffs   @relation(fields: [playoffsId], references: [id])
+  playoffsId    String     @db.ObjectId
+  team_code String     // team code
+  conference Conference // conference [EAST, WEST]
+  position  String     // seed position ["1", "2", "3", "4", "5", "6", "7", "8"]
+  wins      Int        @default(0)      // wins counter 0-16
+  losses    Int        @default(0)      // losses counter 0-12
+  round     Round      @default(FIRST_ROUND) // round [FIRST_ROUND, ECSF, WCSF, ECF, WCF, FINALS]
+  eliminated Boolean   @default(false)  // eliminated from playoffs
+  createdAt DateTime   @default(now())  // game created
+  updatedAt DateTime   @updatedAt       // last update
+}
+
+

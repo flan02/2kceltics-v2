@@ -3,8 +3,10 @@
 
 import { updateProps } from "@/components/custom/dashboard/UpdateScheduleGame"
 import { db } from "@/db"
-import { Schedule, Season, Season2k } from "@prisma/client"
+import { SeasonType } from "@/lib/types"
+import { Conference, Schedule, Season, Season2k } from "@prisma/client"
 import { revalidatePath } from "next/cache"
+import { ZodEnum } from "zod"
 
 
 
@@ -272,4 +274,176 @@ export async function getCurrentGame() {
 
 
   return response[currentGame]
+}
+
+
+interface Seed {
+  team_code: string
+  position: number
+  conference: string
+}
+
+
+
+export async function createNewPlayoffs(data: any) {
+
+  //console.log(data)
+  /* 
+  console.log(data.season)
+  const filteredData: any = {}
+  Object.keys(data).forEach((key) => {
+    const value = data[key as keyof typeof data];
+    if (typeof value === 'string' && value.trim() !== '') {
+      (filteredData[key as keyof typeof data] as string) = value;
+    } else if (typeof value === 'number') {
+      (filteredData[key as keyof typeof data] as number) = value;
+    }
+  });
+  */
+
+  let WEST: any = []
+  let EAST: any = []
+  let season: any
+  data.forEach((value: any, key: any) => {
+    //console.log(key, value)
+    if (key.includes("west")) {
+      WEST.push(value)
+    }
+    if (key.includes("east")) {
+      EAST.push(value)
+    }
+    if (key.includes("season")) {
+      season = value
+    }
+
+  })
+
+  //console.log(WEST)
+  //console.log(WEST[0])
+
+  let west: Seed[] = [];
+  let east: Seed[] = [];
+  for (let i = 0; i < WEST.length; i++) {
+    west[i] = {
+      team_code: WEST[i],
+      position: i + 1,
+      conference: "WEST",
+    }
+  }
+
+  //console.log(west)
+
+  for (let i = 0; i < EAST.length; i++) {
+    east[i] = {
+      team_code: EAST[i],
+      position: i + 1,
+      conference: "EAST",
+    }
+  }
+
+  //console.log(east)
+
+  const conference = [...west, ...east]
+
+
+  try {
+    const response = await db.playoffs.create({
+      data: {
+        season,
+        champ: "",
+        mvp: "",
+      }
+    })
+
+    const playoffs = await db.playoffs.findFirst({
+      where: {
+        season
+      },
+      select: {
+        id: true
+      }
+    })
+
+
+    if (playoffs?.id) await createSeeds(conference, playoffs.id)
+
+
+  } catch (error) {
+    console.log(error)
+    return error
+  }
+}
+
+
+export async function getPlayoffs(season: any) {
+  try {
+    const response = await db.playoffs.findFirst({
+      where: {
+        season
+      },
+      select: {
+        id: true,
+        gamesPlayed: true,
+      }
+    })
+    return response
+  } catch (error) {
+    console.log(error)
+    return error
+  }
+}
+
+export async function createSeeds(conference: any, playoffsId: any) {
+  try {
+    const response = await db.seed.createMany({
+      data: conference.map((value: any) => ({
+        team_code: value.team_code,
+        position: value.position.toString(),
+        conference: value.conference as Conference,
+        playoffsId
+      }))
+    })
+
+    revalidatePath('/dashboard?opt=addplayoffs')
+    return response
+  } catch (error) {
+    console.log(error)
+    return error
+  }
+}
+
+
+export async function getSeeds(season: any) {
+  try {
+    const playoffs = await db.playoffs.findFirst({
+      where: {
+        season
+      },
+      select: {
+        id: true
+      }
+    })
+
+    if (playoffs?.id) {
+      const response = await db.seed.findMany({
+        where: {
+          playoffsId: playoffs.id
+        },
+        select: {
+          team_code: true,
+          position: true,
+          conference: true,
+          wins: true,
+          losses: true,
+          round: true,
+          eliminated: true,
+        }
+      })
+      return response
+    }
+    return playoffs
+  } catch (error) {
+    console.log(error)
+    return error
+  }
 }

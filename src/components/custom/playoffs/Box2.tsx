@@ -6,48 +6,95 @@ type PlayoffsBracketProps = {
   bracket: any[],
   order: boolean
   empty?: boolean
+  conferenceFinals?: boolean
 }
-const Box2 = ({ bracket, order, empty }: PlayoffsBracketProps) => {
+const Box2 = ({ bracket, order, empty, conferenceFinals }: PlayoffsBracketProps) => {
+
+  let bracketOrdered
+  let matchup: any[] = [];
+  bracketOrdered = bracket
+  if (conferenceFinals == undefined) {
+    const positionPairs = [
+      [1, 8],
+      [4, 5],
+      [3, 6],
+      [2, 7]
+    ];
+    positionPairs.forEach((pair, index) => {
+      const matched = bracket.find(b => b.position == pair[0] || b.position == pair[1]);
+      if (matched) {
+        matchup.push(matched);
+      }
+    });
+
+    bracketOrdered = matchup;
+
+  }
   return (
-    <>
+    <div className={`${order && conferenceFinals ? "-mt-6" : ""}`}>
+
       {
-        bracket.map((b, index) => (
-          <div key={index} className='2xl:text-xl xl:text-lg flex items-center justify-start 2xl:w-full w-max'>
-            <div className='space-y-4 flex space-x-2 w-full'>
-              <div className={`xl:flex items-center hidden mt-4 ${order ? "order-1 ml-2" : ""}`}>
-                <div className={`w-[1px] border border-gray-200 dark:border-zinc-800 h-[120px] ${order ? "order-1" : ""}`}></div>
-                <div className='w-8 border border-gray-200 dark:border-zinc-800 h-[0.5px]'></div>
-              </div>
-              <div className='space-y-6 w-full'>
-                <div className={`flex items-center space-x-2 p-2 min-w-[120px] min-h-10 bg-gray-100/40 dark:bg-night-80/50 dark:text-zinc-700 text-muted-foreground rounded-lg border shadow-md ${b.team1 === "BOS" && !empty ? "border-celtics" : ""}`}>
+        bracketOrdered!
+          .map((b, index) => (
+            <div key={index} className={` 2xl:text-xl xl:text-lg 2xl:w-full w-max`}>
+
+              <div className={` flex space-x-2 w-full `}>
+
+
+
+                <div className={`space-y-1 w-full `}>
+                  <div className={`${order && conferenceFinals ? "xl:mr-0 -ml-4" : ""} flex items-center space-x-2 p-2 min-w-[120px] min-h-10 bg-gray-100/40 dark:bg-night-80/50 dark:text-zinc-700 text-muted-foreground rounded-lg border shadow-md ${b.team_code === "BOS" && !empty ? "border-celtics" : ""}`}>
+                    {
+                      !empty &&
+                      <>
+                        <Image src={`/logos/${b.team_code}.png`} className='w-auto h-auto' width={24} height={24} alt={b.team_code} />
+                        <p>{b.team_code} ({b.position}) <span className='ml-4'>{
+                          b.wins > 8 && b.wins > 12
+                            ? 4 :
+                            b.wins < 8 && b.wins > 4
+                              ? b.wins - 4
+                              :
+                              conferenceFinals && b.wins >= 8
+                                ? b.wins - 8
+                                : 4
+
+
+                        }</span></p>
+                      </>
+                    }
+
+
+                  </div>
+
                   {
-                    !empty &&
-                    <>
-                      <Image src={`/logos/${b.team1}.png`} className='w-auto h-auto' width={24} height={24} alt={b.team1} />
-                      <span>{b.team1} ({b.seed1}) {b.score1}</span>
-                    </>
+                    (index == 0 || index == 2) && <div className='text-center dark:text-zinc-700 text-gray-300'>|</div>
+                  }
+                  {
+                    (index == 1 && !conferenceFinals) && <BracketSpace />
                   }
                 </div>
-                <div className="flex items-center min-h-10 space-x-2 p-2 bg-gray-100/40 dark:bg-night-80/50 dark:text-zinc-700 text-muted-foreground rounded-lg border shadow-md">
-                  {
-                    !empty &&
-                    <>
-                      <Image src={`/logos/${b.team2}.png`} className='w-auto h-auto' width={24} height={24} alt={b.team2} />
-                      <span>{b.team2} ({b.seed2}) {b.score2}</span>
-                    </>
-                  }
-                </div>
+
               </div>
+
+
             </div>
-            {
-              index < bracket.length - 1 && <BracketSpace />
-            }
-          </div>
-        ))
+          ))
       }
 
-    </>
+    </div>
   )
 }
 
 export default Box2
+
+
+/* 
+
+ {         
+                  (index == 0 || index == 2) && <div className={` xl:flex items-center hidden mt-2 ${order ? "order-1 ml-2" : ""}`}>
+                    <div className={`w-[1px] border border-gray-200 dark:border-zinc-800 h-[120px] ${order ? "order-1" : ""}`}></div>
+                    <div className='w-8 border border-gray-200 dark:border-zinc-800 h-[0.5px]'></div>
+                  </div>
+                
+                }
+*/

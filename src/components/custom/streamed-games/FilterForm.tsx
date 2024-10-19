@@ -5,7 +5,7 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectVa
 import { atHomeTypes, gameTypes, resultTypes, seasonTypes, stageTypes } from '@/lib/types';
 import { Search } from 'lucide-react';
 import LoadingButton from '@/components/reutilizable/LoadingButton';
-import { set, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { filterGamesSchema } from '@/zod/validation';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -67,7 +67,7 @@ const FilterForm = ({ filteredGames }: Props) => {
     // console.log("VALUES TO FILTER", values)
     setFilterValues([{
       season: values.season,
-      type: values.type,
+      type: Array.isArray(values.type) ? values.type[0] : values.type,
       stage: values.stage,
       atHome: values.atHome,
       result: values.result

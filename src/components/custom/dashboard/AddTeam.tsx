@@ -17,7 +17,7 @@ export default async function AddTeam() {
 
   return (
     <section className='flex flex-col space-y-6 justify-start items-center mt-16 min-h-[calc(100vh-50px)]'>
-      <h1 className=' text-center text-4xl text-celtics'>Add/Edit team</h1>
+      <h1 className=' text-center text-4xl text-celtics'>Add/Edit Team</h1>
       <div className="grid grid-cols-1 w-full">
 
         <EditTeamForm season2k={season2k} />

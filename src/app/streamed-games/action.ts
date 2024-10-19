@@ -10,7 +10,7 @@ export async function getStreamedGames(values: z.infer<typeof filterGamesSchema>
     const response = await db.schedule.findMany({
       where: {
         season: values.season,
-        type: values.type,
+        type: Array.isArray(values.type) ? { in: values.type } : values.type,
         stage: values.stage,
         atHome: values.atHome,
         result: values.result
