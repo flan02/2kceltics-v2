@@ -162,7 +162,7 @@ const FilterForm = ({ filteredGames }: Props) => {
                       <FormControl>
                         <Select {...field} defaultValue=""
                           onValueChange={(value) => field.onChange(value)}
-                          value={field.value}
+                          value={Array.isArray(field.value) ? JSON.stringify(field.value) : field.value}
                         >
                           <SelectTrigger className="border border-slate-200 text-md shadow-md py-1.5 text-left pl-2 min-w-[300px] md:min-w-[150px] rounded-md">
                             <SelectValue placeholder="Select RS/PO" />
