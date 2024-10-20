@@ -29,9 +29,36 @@ const Box2 = ({ bracket, order, empty, conferenceFinals }: PlayoffsBracketProps)
 
     bracketOrdered = matchup;
 
+
   }
+
+  const bracketMaker = [0]
+
+  //console.log(order)
+  console.log(conferenceFinals)
+
   return (
     <div className={`${order && conferenceFinals ? "-mt-6" : ""}`}>
+
+      {
+        bracketMaker.map((b, index) => (
+          <aside key={index}>
+            <div className={` xl:flex items-center hidden mt-2 ${order ? "justify-end ml-2" : ""}`}>
+              <div className={`w-[1px] border border-gray-200 dark:border-zinc-800 h-[120px] ${order ? "order-1" : ""}`}></div>
+              <div className='w-8 border border-gray-200 dark:border-zinc-800 h-[0.5px]'></div>
+            </div>
+
+            {(index == 0 && !conferenceFinals) && <BracketSpace />}
+            {(!conferenceFinals) &&
+              <div className={` xl:flex items-center hidden mt-2 ${order ? "justify-end ml-2" : ""}`}>
+                <div className={`w-[1px] border border-gray-200 dark:border-zinc-800 h-[120px] ${order ? "order-1" : ""}`}></div>
+                <div className='w-8 border border-gray-200 dark:border-zinc-800 h-[0.5px]'></div>
+              </div>
+            }
+          </aside>
+        ))
+      }
+
 
       {
         bracketOrdered!
@@ -81,6 +108,8 @@ const Box2 = ({ bracket, order, empty, conferenceFinals }: PlayoffsBracketProps)
           ))
       }
 
+
+
     </div>
   )
 }
@@ -89,7 +118,6 @@ export default Box2
 
 
 /* 
-
  {         
                   (index == 0 || index == 2) && <div className={` xl:flex items-center hidden mt-2 ${order ? "order-1 ml-2" : ""}`}>
                     <div className={`w-[1px] border border-gray-200 dark:border-zinc-800 h-[120px] ${order ? "order-1" : ""}`}></div>
@@ -97,4 +125,5 @@ export default Box2
                   </div>
                 
                 }
+
 */

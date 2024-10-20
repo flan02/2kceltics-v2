@@ -10,166 +10,12 @@ type SeedProps = {
   seeds: Omit<Seed, 'id' | 'playoffsId' | 'createAt' | 'updatedAt'>[]
 }
 
-// * FIRST ROUND RETRIEVED FROM DATABASE
-const bracketWest = [
-  {
-    team1: 'OKC',
-    team2: 'NOP',
-    score1: 0,
-    score2: 0,
-    seed1: 1,
-    seed2: 8
-  },
-  {
-    team1: 'LAC',
-    team2: 'DAL',
-    score1: 0,
-    score2: 0,
-    seed1: 4,
-    seed2: 5
-  },
-  {
-    team1: 'MIN',
-    team2: 'PHO',
-    score1: 0,
-    score2: 0,
-    seed1: 3,
-    seed2: 6
-  },
-  {
-    team1: 'DEN',
-    team2: 'LAL',
-    score1: 0,
-    score2: 0,
-    seed1: 2,
-    seed2: 7
-  }
-]
 
-const bracketEast = [
-  {
-    team1: 'BOS',
-    team2: 'MIA',
-    score1: 0,
-    score2: 0,
-    seed1: 1,
-    seed2: 8,
-  },
-  {
-    team1: 'CLE',
-    team2: 'ORL',
-    score1: 0,
-    score2: 0,
-    seed1: 5,
-    seed2: 4
-  },
-  {
-    team1: 'MIL',
-    team2: 'IND',
-    score1: 0,
-    score2: 0,
-    seed1: 3,
-    seed2: 6
-  },
-  {
-    team1: 'PHI',
-    team2: 'NYK',
-    score1: 0,
-    score2: 0,
-    seed1: 7,
-    seed2: 2
-  }
-]
-
-// * SECOND ROUND RETRIEVED FROM DATABASE
-const bracketWest2ND = [
-  {
-    team1: 'OKC',
-    team2: 'DAL',
-    score1: 0,
-    score2: 0,
-    seed1: 1,
-    seed2: 5
-  },
-  {
-    team1: 'PHO',
-    team2: 'LAL',
-    score1: 0,
-    score2: 0,
-    seed1: 6,
-    seed2: 7
-  }
-]
-
-const bracketEast2ND = [
-  {
-    team1: 'BOS',
-    team2: 'CLE',
-    score1: 0,
-    score2: 0,
-    seed1: 1,
-    seed2: 5
-  },
-  {
-    team1: 'IND',
-    team2: 'PHI',
-    score1: 0,
-    score2: 0,
-    seed1: 6,
-    seed2: 7
-  }
-]
-
-// * CONFERENCE FINALS RETRIEVED FROM DATABASE
-const bracketWCF = [
-  {
-    team1: 'DAL',
-    team2: 'LAL',
-    score1: 0,
-    score2: 0,
-    seed1: 5,
-    seed2: 7
-  }
-]
-
-const bracketECF = [
-  {
-    team1: 'BOS',
-    team2: 'IND',
-    score1: 0,
-    score2: 0,
-    seed1: 1,
-    seed2: 6
-  }
-]
-
-// * FINALS RETRIEVED FROM DATABASE
-const bracketTheFinals = [
-  {
-    team1: 'BOS',
-    team2: 'DAL',
-    score1: 0,
-    score2: 0,
-    seed1: 1,
-    seed2: 5
-  }
-]
 
 const PlayoffsBracket = ({ seeds }: SeedProps) => {
 
-  //console.log(seeds);
 
-  /* 
-  0: 
-  conference: "WEST"
-  losses: 0
-  position: "1"
-  round: "FIRST_ROUND"
-  team_code: "OKC"
-  wins: 0
-  */
-
-  const [empty, setEmpty] = useState(false);
+  const [empty, setEmpty] = useState(true);
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
 
   useEffect(() => {
@@ -200,7 +46,7 @@ const PlayoffsBracket = ({ seeds }: SeedProps) => {
 
           {/* Second Column - Western Conference - Next Round */}
           <div className="place-content-center">
-            <Box2 bracket={seeds.filter(b => b.conference == "WEST" && b.wins > 3)} order={false} empty={empty} />
+            <Box2 conferenceFinals={false} bracket={seeds.filter(b => b.conference == "WEST" && b.wins > 3)} order={false} empty={empty} />
           </div>
 
           {/* Third Column - Western Conference Finals - Next Round */}
@@ -221,7 +67,7 @@ const PlayoffsBracket = ({ seeds }: SeedProps) => {
 
           {/* Third Column - Eastern Conference */}
           <div className="place-content-center">
-            <Box2 bracket={seeds.filter(b => b.conference == "EAST" && b.wins > 3)} order={true} empty={empty} />
+            <Box2 conferenceFinals={false} bracket={seeds.filter(b => b.conference == "EAST" && b.wins > 3)} order={true} empty={empty} />
           </div>
 
           {/* Fourth Column - Eastern Conference - Next Round */}
