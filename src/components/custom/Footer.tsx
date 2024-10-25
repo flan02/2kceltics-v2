@@ -73,7 +73,7 @@ const Footer = (props: Props) => {
               <ul className="list-inside space-y-8">
                 {
                   links.map((link, index) => (
-                    <li key={index} className='flex space-x-2 items-end hover:text-sky-400 dark:text-zinc-700'>
+                    <li key={index} className='flex space-x-2 items-end hover:text-sky-400 dark:text-zinc-700 dark:hover:text-sky-400'>
                       <ArrowRight />
                       <a href={`/${link.url}`} className="transition">{link.name}</a></li>
                   ))

@@ -13,35 +13,35 @@ const labels = [{
   photo: JBprofile,
   isTag: false,
   link: "/streamed-games",
-  icon: <MonitorPlay color="#444" />
+  icon: <MonitorPlay color="#888" />
 },
 {
   title: "ADVANCED STATS",
   photo: JTprofile,
   isTag: false,
   link: "/advanced",
-  icon: <ChartSpline color="#444" />
+  icon: <ChartSpline color="#888" />
 },
 {
   title: "SEASON STATS",
   photo: KPprofile,
   isTag: false,
   link: "/season-stats",
-  icon: <NotebookPen color="#444" />
+  icon: <NotebookPen color="#888" />
 },
 {
   title: "SCHEDULE",
   photo: Jrueprofile,
   isTag: true,
   link: "schedule",
-  icon: <CalendarDays color="#444" />
+  icon: <CalendarDays color="#888" />
 },
 {
   title: "ROSTER",
   photo: DWprofile,
   isTag: true,
   link: "roster",
-  icon: <User color="#444" />
+  icon: <User color="#888" />
 }
 ]
 
@@ -62,7 +62,7 @@ const MobileMenu = ({ playoffs }: Props) => {
           <CardPlayerLink cardTitle={player.title} key={index} isTag={player.isTag} link={player.link} icon={player.icon} />
         ))
       }
-      {playoffs && <CardPlayerLink cardTitle="PLAYOFFS" isTag={false} link="/playoffs" icon={<Trophy color="#444" />} />}
+      {playoffs && <CardPlayerLink cardTitle="PLAYOFFS" isTag={false} link="/playoffs" icon={<Trophy color="#888" />} />}
     </section>
   )
 }

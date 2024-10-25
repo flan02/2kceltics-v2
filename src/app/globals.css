@@ -253,3 +253,6 @@ animation: filter-scale 8s infinite;
 }
 }
 
+.text-grad {
+  @apply bg-gradient-to-r from-celtics to-lime-400 dark:from-green-500 dark:to-green-100 bg-clip-text text-transparent; 
+}

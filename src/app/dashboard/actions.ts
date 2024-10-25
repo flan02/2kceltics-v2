@@ -115,7 +115,7 @@ export async function updateTeam(values: Omit<Season2k, "id" | "teamId" | "creat
   try {
     // TODO -> First we call to database retrieving our team id
     const data: any = await getSeason2k(values.season as Season)
-    console.log(data)
+    //console.log(data)
 
 
     const filteredData: any = {}

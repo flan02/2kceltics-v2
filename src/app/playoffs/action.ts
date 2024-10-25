@@ -21,8 +21,8 @@ export const updateSeed = async (values: any) => {
     const updatedSeeds = valuesArray.map(async (seed: any) => {
       const { wins, losses, eliminated, id, conference } = seed; // ? Destructure the values from the seed. team_code and playoffsId is not required
 
-      console.log("Current conference", conference)
-      console.log("Current wins", wins)
+      //console.log("Current conference", conference)
+      //console.log("Current wins", wins)
 
       let round: Round = Round.FIRST_ROUND; // ? Set the default round to FIRST_ROUND
 
@@ -53,7 +53,7 @@ export const updateSeed = async (values: any) => {
 
       // Actualizamos cada seed individualmente
 
-      console.log("next round", round)
+      //console.log("next round", round)
       return db.seed.update({
         where: {
           id: id,  // Use the unique identifier for the seed

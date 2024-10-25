@@ -29,6 +29,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "date-fns": "^3.6.0",
+    "framer-motion": "^11.11.9",
     "ky": "^1.5.0",
     "lucide-react": "^0.424.0",
     "markdown-draft-js": "^2.4.0",

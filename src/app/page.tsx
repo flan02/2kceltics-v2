@@ -11,6 +11,8 @@ import Marquee from "@/components/reutilizable/Marquee";
 import VisitorsCounter from "@/components/custom/VisitorsCounter";
 import CelticsLogo from "../../public/celtics-logo.png";
 import React from "react";
+import { AnimatedNumber } from "@/components/core/animated-number";
+import { AnimatedNumberBasic } from "@/components/reutilizable/AnimatedNumberBasic";
 
 
 export default async function Home({ searchParams: { page = 0 } }: { searchParams: { page: number } }) {
@@ -24,13 +26,14 @@ export default async function Home({ searchParams: { page = 0 } }: { searchParam
 
             {/* Mobile celtics logo */}
             <section className="mt-16 md:mt-0 md:hidden block ">
-              <Image src={CelticsLogo} alt="CelticsTrebol Hero Image" className="mx-auto w-40 h-40" />
+              {/* for mobile it worked with size-40 */}
+              <Image src={CelticsLogo} alt="CelticsTrebol Hero Image" className="mx-auto size-48" />
             </section>
             {/* ****************** */}
 
 
             <article className="flex mt-8 md:order-1 lg:order-0 ">
-              <H2underline className="" firstPhrase="Feel the" underlinedPhrase="Celtics" secondPhrase="spirit like never before in our 2k simulation league" />
+              <H2underline className="text-grad" firstPhrase="Feel the" underlinedPhrase="Celtics" secondPhrase="spirit like never before in our 2k simulation league" />
             </article>
             <section className="place-self-end md:block hidden md:mx-auto md:mt-24 lg:mt-0 md:order-0 lg:order-1 xl:mx-0">
               <Image src={CelticsHero} alt="CelticsStarting5 Hero Image" className="px-0 md:px-10 lg:py-4 lg:px-8 xl:p-0" />
@@ -38,7 +41,8 @@ export default async function Home({ searchParams: { page = 0 } }: { searchParam
           </div>
 
           <div className="flex items-center justify-center ">
-            <span className="text-celtics text-shadow text-5xl mr-2 font-bold">x 18</span>
+            {/* <span className="text-celtics text-shadow text-5xl mr-2 font-bold">x 18</span>*/}
+            <AnimatedNumberBasic />
             {/* <TrophyIcon size={40} color="green" className="text-shadow-md" /> */}
             <Image className="w-auto h-auto -mt-8" src='/trophy.png' alt='celtics' width={35} height={35} />
           </div>
