@@ -164,6 +164,7 @@ const updateSeedProps = {
   id: z.string(),
   wins: z.number().optional(),
   losses: z.number().optional(),
+  position: z.string().optional(),
   eliminated: z.boolean(),
   playoffsId: z.string(),
   conference: z.enum(["WEST", "EAST"])

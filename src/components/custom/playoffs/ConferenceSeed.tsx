@@ -33,7 +33,7 @@ const ConferenceSeed = ({ seeds, conference, control, setValue, getValues }: Pro
     round: seed.round,
   }))
 
-
+  // console.log("These are teams in the playoffs bracket", seeds);
 
   const [games, setGames] = useState<Game[]>(initGames);
 
@@ -100,6 +100,7 @@ const ConferenceSeed = ({ seeds, conference, control, setValue, getValues }: Pro
       <h1 className='uppercase text-celtics dark:text-celtics text-2xl text-center mb-6'>{conference} CONFERENCE</h1>
       {
         games
+          .sort((a: any, b: any) => a.position - b.position)
           .map((seed: any, index) => (
             <section key={seed.id} className={`p-2 rounded-md ${seed.eliminated ? "bg-zinc-300 opacity-50 dark:bg-black dark:opacity-40" : "border  dark:bg-zinc-900/50 dark:hover:bg-zinc-800/30 hover:bg-green-100/50 bg-zinc-200/30"}`}>
 
@@ -167,7 +168,12 @@ const ConferenceSeed = ({ seeds, conference, control, setValue, getValues }: Pro
 
                         </div>
                       </FormItem>
-
+                      <FormItem hidden={true} >
+                        <FormControl >
+                          <Input id="position" type="text" hidden={true} {...field} />
+                        </FormControl>
+                        <FormMessage> </FormMessage>
+                      </FormItem>
                       <FormItem hidden={true} >
                         <FormControl >
                           <Input id="playoffsId" type="text" hidden={true} {...field} />

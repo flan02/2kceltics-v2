@@ -38,6 +38,12 @@ enum Conference {
   WEST
 }
 
+enum Role {
+  USER
+  ADMIN
+  MOD
+}
+
 enum Stage {
   RS
   CUP_GP
@@ -73,12 +79,10 @@ type Game {
 
 model User {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  kindeId   String   @unique
   email     String   @unique
-  firstName String
-  lastName  String
-  picture   String?
-  given_name String?
+  name      String
+  image     String?
+  role      Role     @default(USER)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

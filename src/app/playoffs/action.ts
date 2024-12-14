@@ -24,34 +24,8 @@ export const updateSeed = async (values: any) => {
       //console.log("Current conference", conference)
       //console.log("Current wins", wins)
 
-      let round: Round = Round.FIRST_ROUND; // ? Set the default round to FIRST_ROUND
-
-      if (conference == "EAST") {
-        if (wins > 3 && wins < 8) {
-          round = Round.ECSF;  // Eastern Conference Semifinals
-        } else if (wins > 7 && wins < 12) {
-          round = Round.ECF;   // Eastern Conference Finals
-        } else if (wins > 11 && wins < 17) {
-          round = Round.FINALS; // Finals
-        } else {
-          round = Round.FIRST_ROUND; // Default
-        }
-      }
-
-      if (conference == "WEST") {
-        if (wins > 3 && wins < 8) {
-          round = Round.WCSF;  // Eastern Conference Semifinals
-        } else if (wins > 7 && wins < 12) {
-          round = Round.WCF;   // Eastern Conference Finals
-        } else if (wins > 11 && wins < 17) {
-          round = Round.FINALS; // Finals
-        } else {
-          round = Round.FIRST_ROUND; // Default
-        }
-      }
-
-
-      // Actualizamos cada seed individualmente
+      //let round: Round = Round.FIRST_ROUND; // ? Set the default round to FIRST_ROUND
+      const round = determineRound(wins, conference);
 
       //console.log("next round", round)
       return db.seed.update({
@@ -92,3 +66,72 @@ export const updateSeed = async (values: any) => {
   }
 
 }
+
+
+function determineRound(wins: number, conference: any) {
+  if (conference === "EAST") {
+    if (wins > 3 && wins < 8) return Round.ECSF;
+    if (wins > 7 && wins < 12) return Round.ECF;
+    if (wins > 11 && wins < 17) return Round.FINALS;
+  } else if (conference === "WEST") {
+    if (wins > 3 && wins < 8) return Round.WCSF;
+    if (wins > 7 && wins < 12) return Round.WCF;
+    if (wins > 11 && wins < 17) return Round.FINALS;
+  }
+  return Round.FIRST_ROUND;
+}
+
+
+/* 
+   const updatedSeeds = valuesArray.map(async (seed: any) => {
+      const { wins, losses, eliminated, id, conference } = seed; // ? Destructure the values from the seed. team_code and playoffsId is not required
+
+      //console.log("Current conference", conference)
+      //console.log("Current wins", wins)
+
+
+
+      let round: Round = Round.FIRST_ROUND; // ? Set the default round to FIRST_ROUND
+
+      if (conference == "EAST") {
+        if (wins > 3 && wins < 8) {
+          round = Round.ECSF;  // Eastern Conference Semifinals
+        } else if (wins > 7 && wins < 12) {
+          round = Round.ECF;   // Eastern Conference Finals
+        } else if (wins > 11 && wins < 17) {
+          round = Round.FINALS; // Finals
+        } else {
+          round = Round.FIRST_ROUND; // Default
+        }
+      }
+
+      if (conference == "WEST") {
+        if (wins > 3 && wins < 8) {
+          round = Round.WCSF;  // Eastern Conference Semifinals
+        } else if (wins > 7 && wins < 12) {
+          round = Round.WCF;   // Eastern Conference Finals
+        } else if (wins > 11 && wins < 17) {
+          round = Round.FINALS; // Finals
+        } else {
+          round = Round.FIRST_ROUND; // Default
+        }
+      }
+
+      console.log("WINS ON SERVER SIDE", wins);
+
+      // Actualizamos cada seed individualmente
+
+      //console.log("next round", round)
+      return db.seed.update({
+        where: {
+          id: id,  // Use the unique identifier for the seed
+        },
+        data: {
+          wins: wins,
+          losses: losses,
+          eliminated,
+          round
+        },
+      });
+    })
+*/

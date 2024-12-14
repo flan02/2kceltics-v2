@@ -13,6 +13,9 @@ import { Cross1Icon } from '@radix-ui/react-icons'
 import DoneTask from './DoneTask'
 import AddSeason from './AddSeason'
 import AddPlayoffs from './AddPlayoffs'
+import { auth, signOut } from '@/auth'
+import SignOut from '@/components/reutilizable/sign-out'
+
 
 
 type Props = {
@@ -22,7 +25,7 @@ type Props = {
 }
 
 const Dashboard = async ({ opt, photo, given_name }: Props) => {
-
+  const session = await auth()
   const tasks = await getTasks() // server function
   //console.log(tasks);
 
@@ -62,6 +65,9 @@ const Dashboard = async ({ opt, photo, given_name }: Props) => {
         })}>
           /
         </Link>
+        {
+          session && session.user && <SignOut />
+        }
       </nav>
 
       <section className='min-h-[calc(100vh-100px)] mt-4 border-t border-slate-200'>
@@ -70,7 +76,13 @@ const Dashboard = async ({ opt, photo, given_name }: Props) => {
             ?
             <div className='flex flex-col justify-start items-center mt-12 space-y-8'>
               <div className='space-y-4'>
-                <Image src={Yo} className='size-16 mx-auto rounded-full' width={100} height={100} alt="yo" />
+                <div className='flex'>
+                  <Image src={Yo} className='size-16 mx-auto rounded-full' width={100} height={100} alt="yo" />
+
+
+
+
+                </div>
                 <h1 className='text-center text-3xl text-celtics'>Welcome back admin {given_name} (flan02)!</h1>
 
               </div>

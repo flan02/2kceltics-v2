@@ -3,10 +3,10 @@
 
 import { updateProps } from "@/components/custom/dashboard/UpdateScheduleGame"
 import { db } from "@/db"
-import { SeasonType } from "@/lib/types"
+
 import { Conference, Schedule, Season, Season2k } from "@prisma/client"
 import { revalidatePath } from "next/cache"
-import { ZodEnum } from "zod"
+
 
 
 
@@ -16,25 +16,41 @@ type Team = {
   logo_url: string
 }
 
-export async function getKindeUser(kindeId?: string) {
+export async function loggedAsAdmin(email: string) {
+  //console.log("loggedAsAdmin", id);
   try {
-    const response = await db.user.findUnique({
+    const isAdmin = await db.user.findFirst({
       where: {
-        //  kindeId
-        email: process.env.ADMIN_EMAIL
-      }, select: {
-        id: true,
-        email: true,
-        given_name: true,
-        picture: true,
-        kindeId: true,
+        email
       }
     })
-    return response
+
+    //console.log('isAdmin', isAdmin);
+    if (!isAdmin) return null
+
+    return isAdmin
   } catch (error) {
-    console.log(error);
-    return error
+    console.error("We found the following error: ", error)
+    return null
   }
+}
+
+export async function createUser(name: string, email: string, image: string) {
+  try {
+    const newUser = await db.user.create({
+      data: {
+        name,
+        email,
+        image
+      }
+
+    })
+    return true
+  } catch (error) {
+    console.error("We found an error creating this new user: ", error)
+    return { message: "We found an error creating this new user", status: 500 }
+  }
+
 }
 
 export async function createNewSeason(values: Omit<Season2k, "id" | "createdAt" | "updatedAt">) {
