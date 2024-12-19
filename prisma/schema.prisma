@@ -70,12 +70,11 @@ enum Result {
   LOSS
 }
 
-// Definiendo el tipo embebido Game
-type Game {
-  season           Season
-  type             Tournament
-  stage            Stage
+enum StatType {
+  TOTAL
+  AVG 
 }
+
 
 model User {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
@@ -134,39 +133,19 @@ model Schedule {
   updatedAt        DateTime  @updatedAt      // last update
 }
 
-model Statistic {
-  id               String     @id @default(auto()) @map("_id") @db.ObjectId
-  game             Game       // usando el tipo embebido Game
-  playerStats      PlayerStat[]
-  createdAt        DateTime   @default(now()) // game created
-  updatedAt        DateTime   @updatedAt      // last update 
-}
 
-model PlayerStat {
-  id               String     @id @default(auto()) @map("_id") @db.ObjectId
-  stat             Statistic  @relation(fields: [statId], references: [id])
-  statId           String     @db.ObjectId
-  name             String     // player name
-  min              Int        // minutes played
-  pts              Int        // points
-  reb              Int        // rebounds
-  ast              Int        // assists
-  stl              Int        // steals
-  blk              Int        // blocks
-  to               Int        // turnovers
-  fls              Int        // personal fouls
-  or               Int        // offensive rebounds
-  fg               Int        // field goals made
-  fga              Int        // field goals attempted
-  fgPct            Float?     // field goal percentage
-  fg3              Int        // 3-point field goals made
-  fg3a             Int        // 3-point field goals attempted
-  fg3Pct           Float?     // 3-point field goal percentage
-  ft               Int        // free throws made
-  fta              Int        // free throws attempted
-  ftPct            Float?     // free throw percentage
-  createdAt        DateTime   @default(now()) // game created
-  updatedAt        DateTime   @updatedAt      // last update
+// | NEW MODEL PLAYERSTAT
+// ? During RS update the player stats each 5 games
+ model PlayerStat {
+   id              String     @id @default(auto()) @map("_id") @db.ObjectId
+   season          Season
+   type            Tournament
+   stage           Stage
+   span            String?  // only RS should show the span of games played (5, 10, 15, 20, 25) for the actual stat. Updating it each 5 games
+   statType        StatType
+   gamestat        String    // actual game stat
+   createdAt       DateTime   @default(now()) // game created
+   updatedAt       DateTime   @updatedAt      // last update
 }
 
 model VisitCounter {

@@ -1,23 +1,25 @@
 //import DefaultPage from '@/components/reutilizable/DefaultPage'
-'use client'
-import MdxLayout from '@/components/mdx-layout'
-import TotalSeasonStats from '../../components/markdown/TotalSeasonStats.mdx'
-import PerGameSeasonStats from '../../components/markdown/PerGameSeasonStats.mdx'
+
 import MaxWidthWrapper from '@/components/reutilizable/MaxWidthWrapper'
 import { Button } from '@/components/ui/button'
 import React from 'react'
+import { getPlayerStats } from '../dashboard/actions'
+import MarkdownRenderer from '@/components/markdown/MarkdownRenderer'
+import { GameStatProps } from '@/components/custom/dashboard/AddPlayerStatsForm'
+import { $Enums } from '@prisma/client'
+import NoStats from '@/components/reutilizable/NoStats'
 
 
 type Props = {}
 
-const SeasonStatsPage = (props: Props) => {
-  const photo_dimension = {
-    width: 400,
-    height: 400
-  }
-  const className = {
-    title: 'xl:text-7xl md:text-5xl lg:text-6xl text-4xl text-celtics leading-tight md:leading-tight lg:leading-tight xl:leading-tight'
-  }
+const SeasonStatsPage = async () => {
+  const season = process.env.CURRENT_SEASON! as $Enums.Season
+
+  const average = await getPlayerStats(season, 'AVG') as GameStatProps
+  const total = await getPlayerStats(season, 'TOTAL') as GameStatProps
+
+  //console.log(average)
+
   return (
     <MaxWidthWrapper className='min-h-[calc(100vh-150px)] mt-4 mb-12 pb-8 place-content-start border'>
       {/*
@@ -39,11 +41,11 @@ const SeasonStatsPage = (props: Props) => {
             <p className='uppercase text-celtics lg:font-bold'>regular season per game stats</p>
           </div>
           <aside className='flex justify-center'>
-            {/* INSERTED WITHOUT BBDD CALL */}
-            <MdxLayout>
-              <PerGameSeasonStats />
-            </MdxLayout>
-
+            {
+              average
+                ? <MarkdownRenderer markdown={average.gamestat} />
+                : <NoStats />
+            }
           </aside>
         </div>
 
@@ -52,10 +54,11 @@ const SeasonStatsPage = (props: Props) => {
             <p className='uppercase text-celtics lg:font-bold'>regular season total stats</p>
           </div>
           <aside className='flex justify-center'>
-            {/* INSERTED WITHOUT BBDD CALL */}
-            <MdxLayout>
-              <TotalSeasonStats />
-            </MdxLayout>
+            {
+              total
+                ? <MarkdownRenderer markdown={total.gamestat} />
+                : <NoStats />
+            }
 
           </aside>
         </div>
@@ -73,3 +76,13 @@ const SeasonStatsPage = (props: Props) => {
 }
 
 export default SeasonStatsPage
+
+/*
+const photo_dimension = { width: 400, height: 400 }
+const className = { title: 'xl:text-7xl md:text-5xl lg:text-6xl text-4xl text-celtics leading-tight md:leading-tight lg:leading-tight xl:leading-tight' }
+*/
+/* INSERTED WITHOUT BBDD CALL 
+          <MdxLayout>
+            <PerGameSeasonStats />
+          </MdxLayout>
+*/

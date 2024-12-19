@@ -1,10 +1,13 @@
 "use server"
 
 
+import { GameStatProps } from "@/components/custom/dashboard/AddPlayerStatsForm"
 import { updateProps } from "@/components/custom/dashboard/UpdateScheduleGame"
 import { db } from "@/db"
+import { SeasonType, seasonTypes } from "@/lib/types"
 
-import { Conference, Schedule, Season, Season2k } from "@prisma/client"
+
+import { Conference, Schedule, Season, Season2k, StatType } from "@prisma/client"
 import { revalidatePath } from "next/cache"
 
 
@@ -458,6 +461,37 @@ export async function getSeeds(season: any) {
       return response
     }
     return playoffs
+  } catch (error) {
+    console.log(error)
+    return error
+  }
+}
+
+
+export async function createPlayerStats(values: GameStatProps) {
+  try {
+    const response = db.playerStat.create({
+      data: {
+        ...values
+      }
+    })
+    return response
+  } catch (error) {
+    console.log(error)
+    return error
+  }
+}
+
+
+export async function getPlayerStats(season: Season, statType: StatType, span?: string) {
+  try {
+    const response = db.playerStat.findFirst({
+      where: {
+        season,
+        statType
+      }
+    })
+    return response
   } catch (error) {
     console.log(error)
     return error

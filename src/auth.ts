@@ -3,7 +3,7 @@ import GitHub from 'next-auth/providers/github'
 import { createUser, loggedAsAdmin } from './app/dashboard/actions'
 
 import { User } from 'types'
-import { notFound } from 'next/navigation'
+
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [GitHub],

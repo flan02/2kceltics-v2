@@ -25,7 +25,7 @@ const BoxTheFinals = ({ bracket, empty }: PlayoffsBracketProps) => {
         bracket.map((b, index) => (
           <div key={index} className=''>
             {
-              empty ? <div className={`flex items-center space-x-2 p-2 xl:w-full w-[180px] bg-gray-100/40 min-h-16 dark:bg-night-80/50 dark:text-zinc-500 text-black rounded-lg border shadow-md ${b.team_code == "BOS" && !empty ? "border-celtics" : ""}`}></div>
+              !empty ? <div className={`flex items-center space-x-2 p-2 xl:w-full w-[180px] bg-gray-100/40 min-h-16 dark:bg-night-80/50 dark:text-zinc-500 text-black rounded-lg border shadow-md ${b.team_code == "BOS" && !empty ? "border-celtics" : ""}`}></div>
                 :
                 <div className={`flex items-center space-x-2 p-2 xl:w-max bg-gray-100/40 dark:bg-night-80/50 dark:text-zinc-700 text-muted-foreground rounded-lg border shadow-md ${b.team_code == "BOS" ? "border-celtics" : ""}`}>
                   <Image src={`/logos/${b.team_code}.png`} className='w-auto h-auto' width={36} height={36} alt={b.team_code} />

@@ -44,10 +44,11 @@ export async function getNextTeam(currentGame: string) {
 
 
 export async function getCurrentRoster() {
+  const season = process.env.CURRENT_SEASON as $Enums.Season
   try {
     const response = await db.season2k.findFirst({
       where: {
-        season: "NBA2K24"
+        season
       },
       select: {
         players: true

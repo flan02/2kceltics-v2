@@ -15,7 +15,7 @@ type SeedProps = {
 const PlayoffsBracket = ({ seeds }: SeedProps) => {
 
 
-  const [empty, setEmpty] = useState(true);
+  const [empty, setEmpty] = useState(true); // During RS, in playoffs this value turns into false
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
 
   useEffect(() => {

@@ -1,6 +1,12 @@
+
+
 export const gameTypes = ["RS", "PO"]
 
 export const stageTypes = ["RS", "CUP_GP", "CUP_QF", "CUP_SF", "CUP_THEFINAL", "FIRST_ROUND", "ESCF", "ECF", "FINALS"]
+
+export const spanTypes = ["5", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55", "60", "65", "70", "75", "82"]
+
+export const statTypes = ["TOTAL", "AVG"]
 
 export const atHomeTypes = ["HOME", "AWAY"]
 

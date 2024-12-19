@@ -10,7 +10,7 @@ type Props = {}
 const PlayoffsPage = async (props: Props) => {
   const response: any = await getSeeds("NBA2K24")
 
-  console.log(response);
+  //console.log(response);
   return (
     <>
       <MarqueePO />

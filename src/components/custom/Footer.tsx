@@ -66,9 +66,9 @@ const socialMediaUrl: string[] = [
 const Footer = (props: Props) => {
   return (
     <footer className="relative py-20 flex flex-col items-center bg-cyan-900 overflow-hidden md:py-40">
-      <div className="relative z-[1] container m-auto px-6 md:px-12">
-        <div className="m-auto md:w-10/12 lg:w-8/12 xl:w-6/12">
-          <div className="flex flex-wrap items-center justify-between md:flex-nowrap">
+      <div className="relative z-[1] m-auto px-6 md:px-12">
+        <div className="m-auto md:w-10/12 lg:w-9/12 xl:w-10/12">
+          <div className="flex flex-wrap items-center justify-between md:flex-nowrap lg:space-x-16">
             <div className="w-full space-x-12 flex justify-center text-gray-300 sm:w-7/12 md:justify-start">
               <ul className="list-inside space-y-8">
                 {

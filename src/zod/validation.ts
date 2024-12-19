@@ -12,6 +12,15 @@ export const createNewSeasonSchema = z.object({
   playoffs_record: z.string().optional(),
 })
 
+export const createNewGameStatSchema = z.object({
+  season: z.enum(["NBA2K21", "NBA2K22", "NBA2K23", "NBA2K24", "NBA2K25", "NBA2K26", "NBA2K27", "NBA2K28"]),
+  type: z.enum(["RS", "PO"]),
+  stage: z.enum(["RS", "CUP_GP", "CUP_QF", "CUP_SF", "CUP_THEFINAL", "FIRST_ROUND", "ESCF", "ECF", "FINALS"]),
+  span: z.enum(["5", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55", "60", "65", "70", "75", "82"]).optional(),
+  statType: z.enum(["TOTAL", "AVG"]),
+  gamestat: z.string({ message: "Markdown table format" })
+})
+
 export const formSchema = z.object({
   name: z.string().min(2, {
     message: "Username must be at least 2 characters.",
