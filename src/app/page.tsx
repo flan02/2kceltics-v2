@@ -26,12 +26,11 @@ export default async function Home({ searchParams: { page = 0 } }: { searchParam
           <div className="grid lg:grid-cols-2 grid-cols-1 lg:mb-24 xl:mb-0 mb-0">
 
             {/* Mobile celtics logo */}
-            <section className="mt-16 md:mt-0 md:hidden block ">
+            <section className="mt-8 md:mt-0 md:hidden block ">
               {/* for mobile it worked with size-40 */}
-              <Image src={TheJays} alt="CelticsTrebol Hero Image" className="mx-auto size-72" />
+              <Image src={TheJays} alt="CelticsTrebol Hero Image" className="mx-auto w-[304px] h-72" />
             </section>
             {/* ****************** */}
-
 
             <article className="flex mt-8 md:order-1 lg:order-0 ">
               <H2underline className="text-grad" firstPhrase="Feel the" underlinedPhrase="Celtics" secondPhrase="spirit like never before in our 2k simulation league" />
