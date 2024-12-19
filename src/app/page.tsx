@@ -10,6 +10,7 @@ import Roster from "@/components/custom/Roster";
 import Marquee from "@/components/reutilizable/Marquee";
 import VisitorsCounter from "@/components/custom/VisitorsCounter";
 import CelticsLogo from "../../public/celtics-logo.png";
+import TheJays from "../../public/the_jays_trophy-no-bg.png";
 import React from "react";
 import { AnimatedNumber } from "@/components/core/animated-number";
 import { AnimatedNumberBasic } from "@/components/reutilizable/AnimatedNumberBasic";
@@ -27,7 +28,7 @@ export default async function Home({ searchParams: { page = 0 } }: { searchParam
             {/* Mobile celtics logo */}
             <section className="mt-16 md:mt-0 md:hidden block ">
               {/* for mobile it worked with size-40 */}
-              <Image src={CelticsLogo} alt="CelticsTrebol Hero Image" className="mx-auto size-48" />
+              <Image src={TheJays} alt="CelticsTrebol Hero Image" className="mx-auto size-72" />
             </section>
             {/* ****************** */}
 
