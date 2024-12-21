@@ -67,7 +67,7 @@ export const createGameSchema = z.object({
   team_code1: z.string().regex(/BOS/, { message: "Team code must be BOS" }),
   team2: z.string().min(2, { message: "Team name must be at least 2 characters" }),
   team_code2: z.string().max(3, { message: "Team code must be 3 characters" }),
-
+  playoffGame: z.string({ message: "Example R1G1" })
 })
 
 
@@ -91,6 +91,7 @@ export const updateGameSchema = z.object({
   boxscoreTeam1: z.string({ message: "This field is a markdown text" }).nullable(),
   boxscoreTeam2: z.string({ message: "This field is a markdown text" }).nullable(),
   gameStats: z.string({ message: "This field is a markdown text" }).nullable(),
+  playoffGame: z.string({ message: "Example R1G1" }),
   result: z.enum(["WIN", "LOSS"], { message: "Result must be WIN or LOSS" }),
 
 })

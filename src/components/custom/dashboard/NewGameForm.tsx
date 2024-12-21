@@ -26,6 +26,7 @@ export type createScheduleProps = {
   team_code1: string,
   team2: string,
   team_code2: string
+  playoffGame?: string
 
 }
 
@@ -63,6 +64,7 @@ const NewGameForm = () => {
       team_code1: "BOS",
       team2: "",
       team_code2: "",
+      playoffGame: ""
     }
   })
 
@@ -200,6 +202,19 @@ const NewGameForm = () => {
           )}
         />
 
+        <FormField
+          control={control}
+          name="playoffGame"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel htmlFor="playoffGame">Playoff Game</FormLabel>
+              <FormControl>
+                <Input id="playoffGame" type="string" className="dark:text-blue-500" placeholder="" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <FormField
           control={form.control}
           name="team2"

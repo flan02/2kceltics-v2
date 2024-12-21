@@ -21,8 +21,9 @@ export async function Schedule() {
             game
               ?
               <div className="bg-black text-gray-300 dark:text-muted-foreground text-sm pl-4 py-2 rounded-lg">
-                <h3 className="text-slate-200 text-sm">Last game added: {game.currentGame}</h3>
+                <h3 className="text-slate-200 text-sm">{`Last game added: ${game.currentGame}`}</h3>
                 <h3 className="text-slate-200 text-sm">Stage: {game.stage}</h3>
+                <h3>{`${game.type == "PO" ? `Game: ${game.playoffGame}` : ''}`}</h3>
               </div>
               : <h3 className="text-slate-200 text-sm pl-4 py-2">There are no game to display.</h3>
           }

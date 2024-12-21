@@ -66,7 +66,8 @@ const UpdateScheduleGameForm = ({ game }: Props) => {
       scoreTeam2: game.scoreTeam2!,
       boxscoreTeam1: "",
       boxscoreTeam2: "",
-      gameStats: ""
+      gameStats: "",
+      playoffGame: game.playoffGame || undefined
     }
   })
 
@@ -130,7 +131,7 @@ const UpdateScheduleGameForm = ({ game }: Props) => {
               name="result"
               render={({ field }) => (
                 <FormItem className="w-full">
-                  <FormLabel className="truncate" >Win or Loss: </FormLabel>
+                  <FormLabel className="truncate"> Win or Loss: </FormLabel>
                   <FormControl>
                     <Select {...field}
                       onValueChange={(value) => field.onChange(value)}
@@ -184,33 +185,51 @@ const UpdateScheduleGameForm = ({ game }: Props) => {
               </FormItem>
             )}
           />
-          <FormField
-            control={control}
-            name="stage"
-            render={({ field }) => (
-              <FormItem className="w-full">
-                <FormLabel >Stage: </FormLabel>
-                <FormControl>
-                  <Select {...field}
-                    onValueChange={(value) => field.onChange(value)}
-                    value={field.value}
-                  >
-                    <SelectTrigger className="border border-slate-200 text-md shadow-md py-1.5 text-left pl-2 w-full rounded-md">
-                      <SelectValue placeholder="Select stage" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectGroup >
-                        {stageTypes.map((stage, index) => (
-                          <SelectItem key={index} value={stage}>{stage}</SelectItem>
-                        ))}
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
-                </FormControl>
-                <FormMessage>{form.formState.errors.stage?.message}</FormMessage>
-              </FormItem>
-            )}
-          />
+
+          <div className="w-full flex gap-4">
+            <FormField
+              control={control}
+              name="stage"
+              render={({ field }) => (
+                <FormItem className="w-full">
+                  <FormLabel >Stage: </FormLabel>
+                  <FormControl>
+                    <Select {...field}
+                      onValueChange={(value) => field.onChange(value)}
+                      value={field.value || undefined}
+                    >
+                      <SelectTrigger className="border border-slate-200 text-md shadow-md py-1.5 text-left pl-2 w-full rounded-md">
+                        <SelectValue placeholder="Select stage" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectGroup >
+                          {stageTypes.map((stage, index) => (
+                            <SelectItem key={index} value={stage}>{stage}</SelectItem>
+                          ))}
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+                  </FormControl>
+                  <FormMessage>{form.formState.errors.playoffGame?.message}</FormMessage>
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={control}
+
+              name="playoffGame"
+              render={({ field }) => (
+                <FormItem className="w-[90px] md:w-max">
+                  <FormLabel htmlFor="playoffGame" className="truncate">Playoffs Game:</FormLabel>
+                  <FormControl>
+                    <Input disabled={game.type == "RS"} id="playoffGame" type="text" className="dark:text-blue-500" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
         </div>
 
         <div className="flex w-full space-x-8">

@@ -128,7 +128,9 @@ model Schedule {
   gameStats        String?   // game stats markdown table provided by OpenAI
   boxscoreTeam1    String?   // boxscore team1 markdown table provided by OpenAI
   boxscoreTeam2    String?   // boxscore team2 markdown table provided by OpenAI
-  result           Result?   
+  result           Result?
+  playoffGame      String?   // playoff game number
+  //advanced         Boolean?  // team advanced to next round   
   createdAt        DateTime  @default(now()) // game created
   updatedAt        DateTime  @updatedAt      // last update
 }

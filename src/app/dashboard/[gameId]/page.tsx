@@ -29,6 +29,31 @@ const getGame = cache(async (gameId: string) => {
   return game
 })
 
+
+
+export default async function UpdateGamePage({ params: { gameId } }: PageProps) {
+
+  const game = await getGame(gameId)
+
+  if (!game) notFound();
+
+  return (
+    <MaxWidthWrapper className='min-h-screen'>
+      <section className='mt-16 space-y-4'>
+        <h1 className='text-celtics text-3xl text-center'>UPDATE GAME PANEL</h1>
+        <UpdateScheduleGameForm game={game} />
+        <div className='pt-8 pb-16'>
+          <Button asChild>
+            <Link href="/dashboard?opt=schedule">BACK</Link>
+          </Button>
+        </div>
+      </section>
+    </MaxWidthWrapper>
+  )
+}
+
+
+
 /*
 const getGames = cache(async () => {
   const games = await db.schedule.findMany(
@@ -63,31 +88,3 @@ export async function generateMetadata({ params: { gameId } }: PageProps): Promi
   }
 }
 */
-
-export default async function UpdateGamePage({ params: { gameId } }: PageProps) {
-
-  const game = await getGame(gameId)
-
-  //console.log("Game obtained", game);
-
-  if (!game) notFound();
-  /*
-    const plainGameObject = {
-      ...game,
-    };
-  */
-  return (
-    <MaxWidthWrapper className='min-h-screen'>
-      <section className='mt-16 space-y-4'>
-        <h1 className='text-celtics text-3xl text-center'>UPDATE GAME PANEL</h1>
-        <UpdateScheduleGameForm game={game} />
-        <div className='pt-8 pb-16'>
-          <Button asChild>
-            <Link href="/dashboard?opt=schedule">BACK</Link>
-          </Button>
-        </div>
-      </section>
-    </MaxWidthWrapper>
-  )
-}
-
