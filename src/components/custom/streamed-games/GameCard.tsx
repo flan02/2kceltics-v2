@@ -42,12 +42,13 @@ const GameCard = ({ filteredGames }: Props) => {
                   <LiteYouTubeEmbed
                     cookie={false}
                     id={game.video_url}
-                    title={`RS ${game.season} #${game.currentGame} Celtics vs Knicks Full Game`}
+                    title='YouTube video player'
+                    //title={`RS ${game.season} #${game.currentGame} Celtics vs Knicks Full Game`}
                     poster="hqdefault"
                     aspectWidth={16}
                     aspectHeight={9}
                   />
-                  <h5 className='absolute top-0 left-0 z-10 w-full py-2 pl-1 bg-[rgba(0,0,0,0.3)] text-sm text-zinc-200 truncate'>{`RS ${game.season} #${game.currentGame} ${game.atHome == "HOME" ? game.team_code2 : "BOS"} vs ${game.atHome == "HOME" ? "BOS" : game.team_code2} Full Game`}</h5>
+                  <h5 className='absolute top-0 left-0 z-10 w-full py-2 pl-1 bg-[rgba(0,0,0,0.3)] text-sm text-zinc-200 truncate'>{`RS ${game.season} #${game.playoffGame == null ? game.currentGame : game.playoffGame} ${game.atHome == "HOME" ? game.team_code2 : "BOS"} vs ${game.atHome == "HOME" ? "BOS" : game.team_code2} Full Game`}</h5>
                   <div className={`px-4 pb-4 pt-2 flex justify-between ${game.stage == "CUP_GP" ? "bg-orange-200/40 dark:bg-night-70" : ""} ${game.type == "PO" ? "dark:bg-[#241825] bg-[#d9e6da]" : ""}`}>
                     <div className='flex items-center'>
                       <Image src={`/logos/${game.atHome == "HOME" ? game.team_code2 : "BOS"}.png`} width={100} height={100} className='mr-2 w-16 h-16' alt="celtics-logo" />

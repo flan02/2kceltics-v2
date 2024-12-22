@@ -25,7 +25,8 @@ export async function getStreamedGames(values: z.infer<typeof filterGamesSchema>
         team_code2: true,
         result: true,
         stage: true,
-        type: true
+        type: true,
+        playoffGame: true
       }
     })
 

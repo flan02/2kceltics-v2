@@ -36,10 +36,11 @@ export async function getNextTeam(currentGame: string) {
       currentGame: parseInt(currentGame)
     },
     select: {
-      team2: true
+      team2: true,
+      playoffGame: true
     }
   })
-  return response?.team2
+  return response
 }
 
 

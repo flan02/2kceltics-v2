@@ -13,7 +13,7 @@ import { Cross1Icon } from '@radix-ui/react-icons'
 import DoneTask from './DoneTask'
 import AddSeason from './AddSeason'
 import AddPlayoffs from './AddPlayoffs'
-import { auth, signOut } from '@/auth'
+import { auth } from '@/auth'
 import SignOut from '@/components/reutilizable/sign-out'
 
 
