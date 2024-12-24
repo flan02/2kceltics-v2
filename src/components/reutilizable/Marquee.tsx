@@ -7,7 +7,7 @@ export default async function Marquee() {
   const nextGame = await getNextGame()
   const nextTeam = await getNextTeam(nextGame.toString())
 
-  //console.log(nextTeam, nextGame);
+  console.log(nextTeam, nextGame);
   return (
     <div className="absolute whitespace-nowrap overflow-hidden w-[100%] top-[50px] left-0 dark:bg-nighty bg-zinc-200/70 py-2 md:py-4 uppercase font-bold">
       <div className='min-w-full animate-marquee-x text-celtics dark:text-green-50'>

@@ -127,6 +127,18 @@ const config = {
         flashing: {
           "0%, 100%": { opacity: '0.2' },
           "20%": { opacity: '1' },
+        },
+        roll: {
+          '0%': { transform: 'translateX(0) rotate(0deg)' },
+          '100%': { transform: 'translateX(100px) rotate(360deg)' }
+        },
+        dotsFade: {
+          '0%, 100%': { opacity: '0.3' },
+          '50%': { opacity: '1' },
+        },
+        slide: {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(100px)' }
         }
       },
       animation: {
@@ -137,6 +149,9 @@ const config = {
         "flashing": "flashing 1.4s infinite linear",
         "marquee-x": "marquee-x 30s linear infinite",
         "marquee-xs": "marquee-x 20s linear infinite",
+        "roll": 'roll 2s infinite alternate',
+        "dotsFade": 'dotsFade 2s infinite',
+        'slide': 'slide 2s infinite alternate'
       },
     },
   },
