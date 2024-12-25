@@ -13,12 +13,8 @@ const DashboardPage = async ({ searchParams: { opt } }: { searchParams: { opt: s
 
   const session = await auth()
 
-  //console.log(session);
-  // if (!session) redirect('/login')
-
   return (
     <MaxWidthWrapper className='min-h-[calc(100vh-60px)] mb-16'>
-
       {
         session && session.user
           ? <Dashboard opt={opt} photo={session?.user?.image!} given_name={session?.user?.name!} />
@@ -36,13 +32,9 @@ const DashboardPage = async ({ searchParams: { opt } }: { searchParams: { opt: s
             }
           </article>
       }
-
-
-
     </MaxWidthWrapper>
   )
 }
-
 
 export default DashboardPage
 

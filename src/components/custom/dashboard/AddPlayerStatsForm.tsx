@@ -63,7 +63,7 @@ const AddPlayerStatsForm = () => {
         title: "A new game stat was added!",
         description: (
           <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-            <code className="text-white">{JSON.stringify(data, null, 2)}</code>
+            <code className="text-muted-foreground">{JSON.stringify(data, null, 2)}</code>
           </pre>
         ),
       })

@@ -1,13 +1,14 @@
+import { Stage } from "@prisma/client";
+
 "use server"
 
 
+import { Tournament } from "@prisma/client";
 import { GameStatProps } from "@/components/custom/dashboard/AddPlayerStatsForm"
 import { updateProps } from "@/components/custom/dashboard/UpdateScheduleGame"
 import { db } from "@/db"
 import { SeasonType, seasonTypes } from "@/lib/types"
-
-
-import { Conference, Schedule, Season, Season2k, StatType } from "@prisma/client"
+import { Conference, Schedule, Season, Season2k, StatType, Tournament, Stage } from "@prisma/client"
 import { revalidatePath } from "next/cache"
 
 
@@ -485,11 +486,14 @@ export async function createPlayerStats(values: GameStatProps) {
 }
 
 
-export async function getPlayerStats(season: Season, statType: StatType, span?: string) {
+export async function getPlayerStats(type: Tournament, season: Season, statType: StatType, stage: Stage, span?: string) {
+
   try {
     const response = db.playerStat.findFirst({
       where: {
         season,
+        type,
+        stage,
         statType
       }
     })

@@ -21,18 +21,3 @@ const PlayoffStats = ({ season, round }: PlayoffProps) => {
 
 export default PlayoffStats
 
-/* 
- <div>
-    <div className='text-end text-muted-foreground dark:text-zinc-500 uppercase'>
-      <p className='uppercase text-celtics lg:font-bold'>regular season total stats</p>
-    </div>
-    <aside className='flex justify-center'>
-      {
-        total
-          ? <MarkdownRenderer markdown={total.gamestat} />
-          : <NoStats />
-      }
-
-    </aside>
-  </div>
-*/

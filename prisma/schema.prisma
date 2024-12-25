@@ -142,6 +142,7 @@ model Schedule {
    id              String     @id @default(auto()) @map("_id") @db.ObjectId
    season          Season
    type            Tournament
+   
    stage           Stage
    span            String?  // only RS should show the span of games played (5, 10, 15, 20, 25) for the actual stat. Updating it each 5 games
    statType        StatType

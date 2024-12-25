@@ -21,11 +21,11 @@ const VisitorsCounter = (props: Props) => {
         {
           print
             ? <section className='flex gap-0'>
-              <Star className="size-6" color='#007A33' fill={`${print_number >= 5000 ? '#007A33' : '#fff'}`} />
-              <Star className="size-6" color='#007A33' fill={`${print_number >= 15000 ? '#007A33' : '#fff'}`} />
-              <Star className="size-6 " color='#007A33' fill={`${print_number >= 25000 ? '#007A33' : '#fff'}`} />
-              <Star className="size-6 " color='#007A33' fill={`${print_number >= 50000 ? '#007A33' : '#fff'}`} />
-              <Star className="size-6" color='#007A33' fill={`${print_number >= 100000 ? '#007A33' : '#fff'}`} />
+              <Star className="size-6" color='#007A33' fill={`${print_number >= 5000 ? '#007A33' : '#aaa'}`} />
+              <Star className="size-6" color='#007A33' fill={`${print_number >= 15000 ? '#007A33' : '#aaa'}`} />
+              <Star className="size-6 " color='#007A33' fill={`${print_number >= 25000 ? '#007A33' : '#aaa'}`} />
+              <Star className="size-6 " color='#007A33' fill={`${print_number >= 50000 ? '#007A33' : '#aaa'}`} />
+              <Star className="size-6" color='#007A33' fill={`${print_number >= 100000 ? '#007A33' : '#aaa'}`} />
             </section>
             : <Loading />
         }
