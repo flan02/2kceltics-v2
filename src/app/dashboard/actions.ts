@@ -1,9 +1,5 @@
-import { Stage } from "@prisma/client";
-
 "use server"
 
-
-import { Tournament } from "@prisma/client";
 import { GameStatProps } from "@/components/custom/dashboard/AddPlayerStatsForm"
 import { updateProps } from "@/components/custom/dashboard/UpdateScheduleGame"
 import { db } from "@/db"
