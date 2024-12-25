@@ -21,6 +21,7 @@ import Image from 'next/image'
 import VisitorsCounter from '@/components/custom/season-stats/VisitorsCounter'
 import ChooseStats from '@/components/custom/season-stats/ChooseStats'
 
+
 const SeasonStatsPage = async ({ searchParams: { opt, round } }: { searchParams: { opt: string, round?: string } }) => {
   const season = process.env.CURRENT_SEASON! as $Enums.Season
 

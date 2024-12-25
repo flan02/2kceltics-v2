@@ -2,11 +2,10 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 //import CelticsOldDuo from "../../../../public/antoine-walker-paul-pierce.png";
-import Pp11 from "../../../../public/pp11-three.png";
-import KP_dunk from "../../../../public/kp-dunk.png";
-type Props = {}
+import Pp11 from "../../../../public/pp11-three.png"
+import KP_dunk from "../../../../public/kp-dunk.png"
 
-const ChooseStats = (props: Props) => {
+const ChooseStats = () => {
 
 
   // TODO: CREATE AN INTERFACE FOR MOBILE PHONES !

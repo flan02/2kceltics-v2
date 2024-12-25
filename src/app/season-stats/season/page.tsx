@@ -5,6 +5,7 @@ import MaxWidthWrapper from '@/components/reutilizable/MaxWidthWrapper'
 import Link from 'next/link'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { getPlayerStats } from '@/app/dashboard/actions'
+import { GameStatProps } from '@/components/custom/dashboard/AddPlayerStatsForm'
 
 
 
