@@ -1,3 +1,5 @@
+import { Season } from "@prisma/client";
+
 import SeasonStats from '../../../components/custom/season-stats/SeasonStats'
 import MaxWidthWrapper from '@/components/reutilizable/MaxWidthWrapper'
 import Link from 'next/link'
@@ -8,7 +10,7 @@ import { GameStatProps } from '@/components/custom/dashboard/AddPlayerStatsForm'
 
 
 const PlayoffsStatPage = async () => {
-  const current = process.env.CURRENT_SEASON
+  const current = process.env.CURRENT_SEASON as Season
   const type = 'PO'
   const stage = 'FIRST_ROUND' // default .. Users can change this using select-option
   const average = await getPlayerStats(type, current, 'AVG', stage) as GameStatProps

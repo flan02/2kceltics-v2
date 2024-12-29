@@ -1,3 +1,5 @@
+import { Season } from "@prisma/client";
+
 
 
 import SeasonStats from '../../../components/custom/season-stats/SeasonStats'
@@ -10,7 +12,7 @@ import { GameStatProps } from '@/components/custom/dashboard/AddPlayerStatsForm'
 
 
 const SeasonsStatPage = async () => {
-  const current = process.env.CURRENT_SEASON
+  const current = process.env.CURRENT_SEASON as Season
   const type = 'RS'
   const average = await getPlayerStats(type, current, 'AVG', 'RS') as GameStatProps // 3rd param ... span
   const total = await getPlayerStats(type, current, 'TOTAL', 'RS') as GameStatProps
