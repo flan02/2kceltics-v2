@@ -186,7 +186,6 @@ const AddPlayerStatsForm = () => {
                 <Select
                   {...field}
                   defaultValue=""
-                  placeholder=""
                   onValueChange={(value) => field.onChange(value)}
                   value={field.value}
                 >
