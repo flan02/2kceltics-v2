@@ -30,13 +30,13 @@ type Props = {
 
 const DefaultPage = ({ title, image_url, className, photo_dimension }: Props) => {
   return (
-    <div className="space-y-12">
-      <div className="md:hidden flex justify-center">
+    <div className="space-y-24 h-[calc(100vh-200px)]">
+      <div className="md:hidden flex justify-center mt-16">
         <Image src="/celtics-title.png" alt="celtics-title" width={300} height={300} />
       </div>
       <section className='grid grid-cols-1 md:grid-cols-2 items-center h-max'>
         <aside className='h-full flex items-center'>
-          <h1 className={cn("text-center md:text-shadow-lg md:text-left", className?.title)}>
+          <h1 className={cn("text-center md:text-shadow-lg md:text-center mb-16", className?.title)}>
             {title}
           </h1>
         </aside>

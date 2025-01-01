@@ -15,7 +15,7 @@ datasource db {
 
 enum Season {
   NBA2K22
-  NBA2K23 
+  NBA2K23
   NBA2K24
   NBA2K25
   NBA2K26
@@ -72,9 +72,8 @@ enum Result {
 
 enum StatType {
   TOTAL
-  AVG 
+  AVG
 }
-
 
 model User {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
@@ -86,109 +85,104 @@ model User {
   updatedAt DateTime @updatedAt
 }
 
-
 model Team {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  name        String   // team name
-  team_code   String   // team code
-  logo_url    String   // team logo_url cloudinary
-  conference  Conference @default(EAST)
-  seasons2k   Season2k[]
+  id         String     @id @default(auto()) @map("_id") @db.ObjectId
+  name       String // team name
+  team_code  String // team code
+  logo_url   String // team logo_url cloudinary
+  conference Conference @default(EAST)
+  seasons2k  Season2k[]
 }
 
 // This table will be overwritten every game of the season. Following season will contain a new record
 model Season2k {
-  id           String   @id @default(auto()) @map("_id") @db.ObjectId
-  team         Team     @relation(fields: [teamId], references: [id])
-  teamId       String   @db.ObjectId
-  season       Season   // season
-  total_games  String?  @default("0") // total games played in current season // * CHANGE TO STRING AND REFRESH PRISMA
-  players      String?  // only BOS players markdown table
-  standings    String?  // only BOS standings markdown table
-  team_record  String?  // only BOS team record markdown table
+  id              String    @id @default(auto()) @map("_id") @db.ObjectId
+  team            Team      @relation(fields: [teamId], references: [id])
+  teamId          String    @db.ObjectId
+  season          Season // season
+  total_games     String?   @default("0") // total games played in current season // * CHANGE TO STRING AND REFRESH PRISMA
+  players         String? // only BOS players markdown table
+  standings       String? // only BOS standings markdown table
+  team_record     String? // only BOS team record markdown table
   playoffs_record String? // only BOS playoffs record markdown table
-  createdAt        DateTime? @default(now()) // game created
-  updatedAt        DateTime? @updatedAt      // last update
+  createdAt       DateTime? @default(now()) // game created
+  updatedAt       DateTime? @updatedAt // last update
 }
 
 model Schedule {
-  id               String    @id @default(auto()) @map("_id") @db.ObjectId
-  season           Season
-  type             Tournament
-  stage            Stage
-  currentGame      Int       // parseInt(next_game) = parseInt(currentGame) + 1
-  atHome           AtHome    // home or away
-  team1            String    @default("Boston Celtics")
-  team2            String    // opponent team name
-  team_code1       String    @default("BOS")
-  team_code2       String    // abrrev. opponent team got from model Team
-  scoreTeam1       Int?      @default(0) // team score
-  scoreTeam2       Int?      @default(0) // opponent team score
-  video_url        String?   // game video_url youtube
-  gameStats        String?   // game stats markdown table provided by OpenAI
-  boxscoreTeam1    String?   // boxscore team1 markdown table provided by OpenAI
-  boxscoreTeam2    String?   // boxscore team2 markdown table provided by OpenAI
-  result           Result?
-  playoffGame      String?   // playoff game number
+  id            String     @id @default(auto()) @map("_id") @db.ObjectId
+  season        Season
+  type          Tournament
+  stage         Stage
+  currentGame   Int // parseInt(next_game) = parseInt(currentGame) + 1
+  atHome        AtHome // home or away
+  team1         String     @default("Boston Celtics")
+  team2         String // opponent team name
+  team_code1    String     @default("BOS")
+  team_code2    String // abrrev. opponent team got from model Team
+  scoreTeam1    Int?       @default(0) // team score
+  scoreTeam2    Int?       @default(0) // opponent team score
+  video_url     String? // game video_url youtube
+  gameStats     String? // game stats markdown table provided by OpenAI
+  boxscoreTeam1 String? // boxscore team1 markdown table provided by OpenAI
+  boxscoreTeam2 String? // boxscore team2 markdown table provided by OpenAI
+  result        Result?
+  playoffGame   String? // playoff game number
   //advanced         Boolean?  // team advanced to next round   
-  createdAt        DateTime  @default(now()) // game created
-  updatedAt        DateTime  @updatedAt      // last update
+  createdAt     DateTime   @default(now()) // game created
+  updatedAt     DateTime   @updatedAt // last update
 }
-
 
 // | NEW MODEL PLAYERSTAT
 // ? During RS update the player stats each 5 games
- model PlayerStat {
-   id              String     @id @default(auto()) @map("_id") @db.ObjectId
-   season          Season
-   type            Tournament
-   
-   stage           Stage
-   span            String?  // only RS should show the span of games played (5, 10, 15, 20, 25) for the actual stat. Updating it each 5 games
-   statType        StatType
-   gamestat        String    // actual game stat
-   createdAt       DateTime   @default(now()) // game created
-   updatedAt       DateTime   @updatedAt      // last update
+model PlayerStat {
+  id        String     @id @default(auto()) @map("_id") @db.ObjectId
+  season    Season
+  type      Tournament
+  stage     Stage
+  span      String? // only RS should show the span of games played (5, 10, 15, 20, 25) for the actual stat. Updating it each 5 games
+  statType  StatType
+  gamestat  String // actual game stat
+  createdAt DateTime   @default(now()) // game created
+  updatedAt DateTime   @updatedAt // last update
 }
 
 model VisitCounter {
-  id    String     @id @default(auto()) @map("_id") @db.ObjectId
+  id    String @id @default(auto()) @map("_id") @db.ObjectId
   count Int    @default(0)
 }
 
 model Task {
-  id    String     @id @default(auto()) @map("_id") @db.ObjectId
-  task  String
-  done  Boolean    @default(false)
-  createdAt        DateTime   @default(now()) // game created
-  updatedAt        DateTime   @updatedAt      // last update
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  task      String
+  done      Boolean  @default(false)
+  createdAt DateTime @default(now()) // game created
+  updatedAt DateTime @updatedAt // last update
 }
 
 // Playoffs logic and table structure to upload to MongoDB every season
 model Playoffs {
-  id    String     @id @default(auto()) @map("_id") @db.ObjectId
-  season Season
-  seeds  Seed[]  // 16 seeds
-  gamesPlayed Int @default(0) // current game of the playoffs
-  champ  String? // champion team name
-  mvp    String? // finals MVP player name
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  season      Season
+  seeds       Seed[] // 16 seeds
+  gamesPlayed Int      @default(0) // current game of the playoffs
+  champ       String? // champion team name
+  mvp         String? // finals MVP player name
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 model Seed {
-  id        String     @id @default(auto()) @map("_id") @db.ObjectId
-  playoffs  Playoffs   @relation(fields: [playoffsId], references: [id])
-  playoffsId    String     @db.ObjectId
-  team_code String     // team code
+  id         String     @id @default(auto()) @map("_id") @db.ObjectId
+  playoffs   Playoffs   @relation(fields: [playoffsId], references: [id])
+  playoffsId String     @db.ObjectId
+  team_code  String // team code
   conference Conference // conference [EAST, WEST]
-  position  String     // seed position ["1", "2", "3", "4", "5", "6", "7", "8"]
-  wins      Int        @default(0)      // wins counter 0-16
-  losses    Int        @default(0)      // losses counter 0-12
-  round     Round      @default(FIRST_ROUND) // round [FIRST_ROUND, ECSF, WCSF, ECF, WCF, FINALS]
-  eliminated Boolean   @default(false)  // eliminated from playoffs
-  createdAt DateTime   @default(now())  // game created
-  updatedAt DateTime   @updatedAt       // last update
+  position   String // seed position ["1", "2", "3", "4", "5", "6", "7", "8"]
+  wins       Int        @default(0) // wins counter 0-16
+  losses     Int        @default(0) // losses counter 0-12
+  round      Round      @default(FIRST_ROUND) // round [FIRST_ROUND, ECSF, WCSF, ECF, WCF, FINALS]
+  eliminated Boolean    @default(false) // eliminated from playoffs
+  createdAt  DateTime   @default(now()) // game created
+  updatedAt  DateTime   @updatedAt // last update
 }
-
-

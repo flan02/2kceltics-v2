@@ -12,7 +12,7 @@ const PlayersTable = async (props: Props) => {
       players: true,
     },
   });
-  return table.map((player) => player.players) // * This is the line that probably is causing the error
+  return table.map((player) => player.players)
 }
 
 export default PlayersTable

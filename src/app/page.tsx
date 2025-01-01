@@ -6,7 +6,6 @@ import MainMenu from "@/components/custom/MainMenu";
 import About from "@/components/custom/About";
 import H2underline from "@/components/reutilizable/H2underline";
 import Schedule from "@/components/custom/Schedule";
-import Roster from "@/components/custom/Roster";
 import Marquee from "@/components/reutilizable/Marquee";
 import VisitorsCounter from "@/components/custom/VisitorsCounter";
 import CelticsLogo from "../../public/celtics-logo.png";
@@ -14,6 +13,8 @@ import TheJays from "../../public/the_jays_trophy-no-bg.png";
 import React from "react";
 import { AnimatedNumber } from "@/components/core/animated-number";
 import { AnimatedNumberBasic } from "@/components/reutilizable/AnimatedNumberBasic";
+import Roster from "@/components/custom/Roster";
+
 
 
 export default async function Home({ searchParams: { page = 0 } }: { searchParams: { page: number } }) {

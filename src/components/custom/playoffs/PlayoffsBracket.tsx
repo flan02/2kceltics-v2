@@ -1,3 +1,4 @@
+
 'use client'
 import React, { useState, useEffect } from 'react';
 import Box from './Box';
@@ -5,6 +6,7 @@ import Box2 from './Box2';
 import BoxTheFinals from './BoxTheFinals';
 import { Button } from '@/components/ui/button';
 import { Seed } from '@prisma/client';
+import Link from 'next/link';
 
 type SeedProps = {
   seeds: Omit<Seed, 'id' | 'playoffsId' | 'createAt' | 'updatedAt'>[]
@@ -87,7 +89,7 @@ const PlayoffsBracket = ({ seeds }: SeedProps) => {
         <div className="text-center w-max mt-2 flex flex-col mx-auto">
 
           <Button className='dark:bg-celtics dark:hover:bg-celtics/90 dark:text-black' asChild>
-            <a href="/">Back</a>
+            <Link href="/">Back</Link>
           </Button>
         </div>
         <div className="px-4 py-2 border shadow-lg rounded font-bold text-xs md:text-base">East Conference</div>
