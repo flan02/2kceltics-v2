@@ -42,7 +42,7 @@ const About = (props: Props) => {
         <div className='flex mt-8 items-center justify-end'>
           <Image src={Yo} alt='Profile photo' className='size-16 mt-1 rounded-full' />
           <h6 className='text-muted-foreground text-sm md:text-base ml-4'>
-            <VideoPlayer src="/gifs/speed-lines.webm" alt="Speed Lines" className="hidden lg:block lg:fixed top-[1/2] left-[0.1] -ml-12 mt-8 transform -translate-x-1/2 -translate-y-1/2 w-72 h-auto z-10 rounded-md" />
+            <VideoPlayer src="/gifs/speed-lines.webm" alt="Speed Lines" className="fixed top-[1/2] left-[0.1] -ml-12 mt-8 transform -translate-x-1/2 -translate-y-1/2 w-72 h-auto z-10 rounded-md" />
             Best regards, <br />
             Dan Chanivet. <br />
             Creator of 2kceltics.xyz

@@ -13,6 +13,7 @@ import Image from 'next/image'
 import VisitorsCounter from '@/components/custom/season-stats/VisitorsCounter'
 import ChooseStatsDesktop from '@/components/custom/season-stats/ChooseStatsDesktop'
 import ChooseStatsMobile from '@/components/custom/season-stats/ChooseStatsMobile'
+import VideoPlayer from '@/components/reutilizable/VideoPlayer'
 
 
 const SeasonStatsPage = async ({ searchParams: { opt, round } }: { searchParams: { opt: string, round?: string } }) => {
@@ -67,7 +68,9 @@ const SeasonStatsPage = async ({ searchParams: { opt, round } }: { searchParams:
           </div>
         </div>
         <div className="col-span-full lg:col-span-1 hidden w-full lg:block mt-32 lg:mx-0 lg:mt-20 h-fit">
+          <VideoPlayer src="/gifs/sprite-stars.webm" alt="Sprite Stars" className="hidden lg:block fixed top-[1/2] lg:mt-36 lg:ml-36 xl:mt-36 xl:ml-40 left-[1/2] transform -translate-x-1/2 -translate-y-1/2 w-24 h-auto z-10 rounded-md" />
           <Image src={TheJays} alt="The Jays Trophy" className="w-full object-cover" />
+          <VideoPlayer src="/gifs/sprite-stars.webm" alt="Sprite Stars" className="hidden lg:block fixed top-[0.1] lg:-mt-40 lg:ml-64 xl:-mt-44 xl:ml-64 left-[0.1] transform -translate-x-1/2 -translate-y-1/2 w-24 h-auto z-10 rounded-md" />
         </div>
       </MaxWidthWrapper>
 
