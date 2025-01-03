@@ -14,6 +14,7 @@ import React from "react";
 import { AnimatedNumber } from "@/components/core/animated-number";
 import { AnimatedNumberBasic } from "@/components/reutilizable/AnimatedNumberBasic";
 import Roster from "@/components/custom/Roster";
+import VideoPlayer from "@/components/reutilizable/VideoPlayer";
 
 
 
@@ -30,13 +31,17 @@ export default async function Home({ searchParams: { page = 0 } }: { searchParam
             <section className="mt-8 md:mt-0 md:hidden block ">
               {/* for mobile it worked with size-40 */}
               <Image src={TheJays} alt="CelticsTrebol Hero Image" className="mx-auto w-[304px] h-72" />
+              <VideoPlayer src="/gifs/sprite-stars.webm" alt="Sprite Stars" className="lg:hidden block fixed top-[0.1] -mt-44 -ml-4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-24 h-auto z-10 rounded-md" />
+              <VideoPlayer src="/gifs/sprite-stars.webm" alt="Sprite Stars" className="lg:hidden block fixed top-[0.1] -mt-36 ml-20 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-24 h-auto z-10 rounded-md" />
             </section>
             {/* ****************** */}
 
-            <article className="flex mt-8 md:order-1 lg:order-0 ">
+            <article className="flex mt-8 md:order-1 lg:order-0">
               <H2underline className="text-grad" firstPhrase="Feel the" underlinedPhrase="Celtics" secondPhrase="spirit like never before in our 2k simulation league" />
             </article>
+
             <section className="place-self-end md:block hidden md:mx-auto md:mt-24 lg:mt-0 md:order-0 lg:order-1 xl:mx-0">
+              <VideoPlayer src="/gifs/twinkle-stars.webm" alt="Twinkle Stars" className="hidden lg:block lg:fixed top-[0.15] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-72 h-auto z-10 rounded-md" />
               <Image src={CelticsHero} alt="CelticsStarting5 Hero Image" className="px-0 md:px-10 lg:py-4 lg:px-8 xl:p-0" />
             </section>
           </div>
@@ -45,6 +50,7 @@ export default async function Home({ searchParams: { page = 0 } }: { searchParam
             {/* <span className="text-celtics text-shadow text-5xl mr-2 font-bold">x 18</span>*/}
             <AnimatedNumberBasic />
             {/* <TrophyIcon size={40} color="green" className="text-shadow-md" /> */}
+            <VideoPlayer src="/gifs/sprite-stars.webm" alt="Sprite Stars" className="hidden lg:block lg:fixed top-[1/3] mt-40 ml-8 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-72 h-auto z-10 rounded-md" />
             <Image className="w-auto h-auto -mt-8" src='/trophy.png' alt='celtics' width={35} height={35} />
           </div>
         </div>

@@ -16,7 +16,7 @@ export function AnimatedNumberBasic() {
         className='text-grad text-4xl md:text-5xl mr-2 font-bold'
         springOptions={{
           bounce: 0.7,
-          duration: 4000,
+          duration: 2500,
         }}
         value={value}
       />

@@ -35,10 +35,9 @@ const PlayoffsBracket = ({ seeds }: SeedProps) => {
   }, []);
 
   return (
-    <div className="flex flex-col items-center justify-center p-4 h-screen">
+    <div className="flex flex-col items-center justify-center p-4 ">
       <h1 className='text-3xl sm:text-5xl text-celtics mt-16 lg:mt-8 sm:mt-4 mb-4 lg:mb-8'>PLAYOFFS 2023/24</h1>
       <div className='w-full max-w-full overflow-x-auto overflow-y-hidden'>
-
 
         <div className={`min-w-[1024px] border shadow-xl rounded-xl p-4 grid grid-cols-7 gap-4 ${dimensions.width < 640 ? 'text-xs' : 'text-base'} text-white`}>
           {/* First Column - Western Conference */}
@@ -84,7 +83,7 @@ const PlayoffsBracket = ({ seeds }: SeedProps) => {
       </div>
 
       {/* Placeholder for Finals */}
-      <div className="mt-1 px-4 flex items-center justify-between space-x-4 w-full">
+      <div className="m-10 lg:mt-1 px-4 flex items-center justify-between space-x-4 w-full">
         <div className="px-4 py-2 border shadow-lg rounded font-bold text-xs md:text-base">West Conference</div>
         <div className="text-center w-max mt-2 flex flex-col mx-auto">
 

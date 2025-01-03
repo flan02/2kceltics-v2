@@ -5,7 +5,7 @@ import React from 'react'
 import Pp11 from "../../../../public/pp11-three.png"
 import KP_dunk from "../../../../public/kp-dunk.png"
 
-const ChooseStats = () => {
+const ChooseStatsDesktop = () => {
 
 
   // TODO: CREATE AN INTERFACE FOR MOBILE PHONES !
@@ -35,4 +35,4 @@ const ChooseStats = () => {
   )
 }
 
-export default ChooseStats
+export default ChooseStatsDesktop

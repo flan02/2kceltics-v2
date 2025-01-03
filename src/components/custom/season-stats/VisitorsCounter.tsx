@@ -21,15 +21,15 @@ const VisitorsCounter = (props: Props) => {
         {
           print
             ? <section className='flex gap-0'>
-              <Star className="size-6" color='#007A33' fill={`${print_number >= 5000 ? '#007A33' : '#aaa'}`} />
-              <Star className="size-6" color='#007A33' fill={`${print_number >= 15000 ? '#007A33' : '#aaa'}`} />
-              <Star className="size-6 " color='#007A33' fill={`${print_number >= 25000 ? '#007A33' : '#aaa'}`} />
-              <Star className="size-6 " color='#007A33' fill={`${print_number >= 50000 ? '#007A33' : '#aaa'}`} />
-              <Star className="size-6" color='#007A33' fill={`${print_number >= 100000 ? '#007A33' : '#aaa'}`} />
+              <Star className="size-4 lg:size-6" color='#007A33' fill={`${print_number >= 5000 ? '#007A33' : '#aaa'}`} />
+              <Star className="size-4 lg:size-6" color='#007A33' fill={`${print_number >= 15000 ? '#007A33' : '#aaa'}`} />
+              <Star className="size-4 lg:size-6 " color='#007A33' fill={`${print_number >= 25000 ? '#007A33' : '#aaa'}`} />
+              <Star className="size-4 lg:size-6 " color='#007A33' fill={`${print_number >= 50000 ? '#007A33' : '#aaa'}`} />
+              <Star className="size-4 lg:size-6" color='#007A33' fill={`${print_number >= 100000 ? '#007A33' : '#aaa'}`} />
             </section>
             : <Loading />
         }
-        <div className='text-md uppercase mt-1 text-purple'>
+        <div className='text-md uppercase -mt-0.5 lg:mt-1 text-purple'>
           25,000 next goal
         </div>
       </article>

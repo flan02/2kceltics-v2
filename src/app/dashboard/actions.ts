@@ -490,7 +490,31 @@ export async function getPlayerStats(type: Tournament, season: Season, statType:
         season,
         type,
         stage,
-        statType
+        statType,
+        span
+      }
+    })
+    return response
+  } catch (error) {
+    console.log(error)
+    return error
+  }
+}
+
+
+
+export async function getPlayerStatsTotals(type: Tournament, season: Season, statType: StatType, stage: Stage, span?: string) {
+
+  try {
+    const response = db.playerStat.findFirst({
+      where: {
+        season,
+        type,
+        stage,
+        statType,
+        span: {
+          not: null
+        }
       }
     })
     return response

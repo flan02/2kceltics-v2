@@ -2,31 +2,42 @@ import React from 'react'
 import { GameStatProps } from '../dashboard/AddPlayerStatsForm'
 import MarkdownRenderer from '@/components/markdown/MarkdownRenderer'
 import NoStats from '@/components/reutilizable/NoStats'
+import { $Enums } from '@prisma/client'
 
 
 type SeasonProps = {
   average: GameStatProps
   total: GameStatProps
   stage?: string
+  span?: string
+  opt?: $Enums.Stage
+  label: 'Regular Season' | 'Playoffs'
 }
 
-const SeasonStats = async ({ average, total, stage }: SeasonProps) => {
-
-  switch (stage) {
+const SeasonStats = async ({ average, total, opt, span, label }: SeasonProps) => {
+  let title
+  switch (span) {
     case 'FIRST_ROUND':
-      stage = 'First Round'
+      title = 'First Round'
       break
     case 'ESCF':
-      stage = 'Eastern Conference Semifinals'
+      title = 'Eastern Conference Semifinals'
+      break
+    case 'ECF':
+      title = 'Eastern Conference Finals'
+      break
+    case 'FINALS':
+      title = 'The Finals'
       break
     default:
-      stage = 'Regular Season'
+      label
   }
+
   return (
     <section className='mt-4 flex flex-col space-y-20'>
       <div>
         <div className='text-end text-muted-foreground dark:text-zinc-500 uppercase'>
-          <p className='uppercase text-celtics lg:font-bold'>{stage} Per Game Stats</p>
+          <p className='uppercase text-celtics lg:font-bold text-sm lg:text-md'>{!span ? label : title} Per Game Stats</p>
         </div>
         <aside className='flex justify-center'>
           {
@@ -35,11 +46,10 @@ const SeasonStats = async ({ average, total, stage }: SeasonProps) => {
               : <NoStats />
           }
         </aside>
-
       </div>
       <div>
         <div className='text-end text-muted-foreground dark:text-zinc-500 uppercase'>
-          <p className='uppercase text-celtics lg:font-bold'>{stage} Total Stats</p>
+          <p className='uppercase text-celtics lg:font-bold'>{!span ? label : title} Total Stats</p>
         </div>
         <aside className='flex justify-center'>
           {
@@ -47,12 +57,9 @@ const SeasonStats = async ({ average, total, stage }: SeasonProps) => {
               ? <MarkdownRenderer markdown={total.gamestat} />
               : <NoStats />
           }
-
         </aside>
-
       </div>
     </section>
-
   )
 }
 

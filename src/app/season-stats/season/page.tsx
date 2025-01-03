@@ -16,11 +16,12 @@ const SeasonsStatPage = async () => {
   const type = 'RS'
   const average = await getPlayerStats(type, current, 'AVG', 'RS') as GameStatProps // 3rd param ... span
   const total = await getPlayerStats(type, current, 'TOTAL', 'RS') as GameStatProps
+  const opt = undefined
 
   return (
-    <MaxWidthWrapper className='mt-4 md:mt-12 lg:mt-24 space-y-8'>
-      <h1 className='uppercase text-celtics text-4xl font-bold'>Season {current}</h1>
-      <SeasonStats average={average} total={total} />
+    <MaxWidthWrapper className='mt-8 md:mt-12 lg:mt-24 space-y-8'>
+      <h1 className='uppercase text-celtics text-2xl lg:text-4xl font-bold'>Season {current}</h1>
+      <SeasonStats average={average} total={total} span={opt} label="Regular Season" />
       <br /><br /><br />
       <div className='md:pb-16 lg:pb-24 flex justify-center'>
         <Button asChild className='px-2 py-0 dark:bg-celtics dark:hover:bg-celtics/90 dark:text-black '>
