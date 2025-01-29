@@ -67,7 +67,7 @@ const UpdateScheduleGameForm = ({ game }: Props) => {
       boxscoreTeam1: "",
       boxscoreTeam2: "",
       gameStats: "",
-      playoffGame: game.playoffGame || undefined
+      playoffGame: game.playoffGame || null
     }
   })
 
@@ -223,7 +223,7 @@ const UpdateScheduleGameForm = ({ game }: Props) => {
                 <FormItem className="w-[90px] md:w-max">
                   <FormLabel htmlFor="playoffGame" className="truncate">Playoffs Game:</FormLabel>
                   <FormControl>
-                    <Input disabled={game.type == "RS"} id="playoffGame" type="text" className="dark:text-blue-500" {...field} />
+                    <Input disabled={game.type == "RS"} id="playoffGame" type="text" className="dark:text-blue-500" {...field} value={field.value || ''} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

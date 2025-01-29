@@ -16,6 +16,7 @@ import Link from "next/link"
 import { notFound } from "next/navigation"
 import { cache } from "react"
 import MarkdownRenderer from "@/components/markdown/MarkdownRenderer"
+import NoStats from "@/components/reutilizable/NoStats"
 
 
 type PageProps = {
@@ -78,11 +79,7 @@ export async function generateMetadata() {
 export default async function GameIdPage({ params: { gameId }, searchParams: { stats } }: PageProps) {
 
   const game = await getGame(gameId)
-  /*
-    const markdownBoxScore = game?.boxscoreTeam1
-    const contentHtml = await markdownToHtml(markdownBoxScore!)
-   <div dangerouslySetInnerHTML={{ __html: contentHtml }} id="boxscore" />
-  */
+
 
   const BOS = stats === game?.team_code1
   const OPP = stats === game?.team_code2

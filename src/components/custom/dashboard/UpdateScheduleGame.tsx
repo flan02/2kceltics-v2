@@ -9,6 +9,7 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectVa
 import { seasonTypes } from "@/lib/types"
 import { updateTeamSchema } from "@/zod/validation"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { Season } from "@prisma/client"
 import { Search } from "lucide-react"
 import Link from "next/link"
 import { useEffect, useState } from "react"
@@ -19,7 +20,7 @@ import { useForm } from "react-hook-form"
 
 export type updateProps = {
   currentGame: number
-  season: string
+  season: Season | undefined
 }
 
 const UpdateScheduleGame = () => {
@@ -30,7 +31,7 @@ const UpdateScheduleGame = () => {
     resolver: zodResolver(updateTeamSchema),
     defaultValues: {
       currentGame: 0,
-      season: "NBA2K24"
+      season: undefined
     }
   })
 
@@ -63,7 +64,7 @@ const UpdateScheduleGame = () => {
   useEffect(() => {
     form.reset({
       currentGame: 0,
-      // season: "" // ? not reset I locked a default value
+      season: undefined // ? not reset I locked a default value
     })
   }, [isSubmitted])
 

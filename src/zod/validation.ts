@@ -47,13 +47,13 @@ export const updateTeamSchema = z.object({
     .string()
     .transform((value) => parseInt(value))
     .refine((value) => !isNaN(value), { message: "This field must be a number" }),
-  season: z.enum(["NBA2K24", "NBA2K25", "NBA2K26", "NBA2K27", "NBA2K28"], { message: "This field can only be NBA2K24, NBA2K25, NBA2K26, NBA2K27, NBA2K28" }),
+  season: z.enum(["NBA2K22", "NBA2K23", "NBA2K24", "NBA2K25", "NBA2K26", "NBA2K27", "NBA2K28"], { message: "This field can only be NBA2K24, NBA2K25, NBA2K26, NBA2K27, NBA2K28" }),
 })
 
 
 export const createGameSchema = z.object({
   //season: z.string().regex(/NBA2K2[4-8]/, { message: "Season must be NBA2K24, NBA2K25, NBA2K26, NBA2K27, NBA2K28" }),
-  season: z.enum(["NBA2K24"], { message: "Season must be NBA2K24, NBA2K25, NBA2K26, NBA2K27, NBA2K28" }),
+  season: z.enum(["NBA2K22", "NBA2K23", "NBA2K24", "NBA2K25", "NBA2K26", "NBA2K27", "NBA2K28"], { message: "Season must be NBA2K24, NBA2K25, NBA2K26, NBA2K27, NBA2K28" }),
   type: z.enum(["RS", "PO"], {
     errorMap: () => ({ message: "Selecciona una opción válida: RS o PO" }),
   }),
@@ -75,7 +75,7 @@ export const updateGameSchema = z.object({
   id: z.string(),
   type: z.enum(["RS", "PO"], { message: "Season must be NBA2K24, NBA2K25, NBA2K26, NBA2K27, NBA2K28" }),
   stage: z.enum(["RS", "CUP_GP", "CUP_QF", "CUP_SF", "CUP_THEFINAL", "FIRST_ROUND", "ESCF", "ECF", "FINALS"], { message: "Stage must be RS, CUP_GP, CUP_QF, CUP_SF, CUP_THEFINAL, FIRST_ROUND, ESCF, ECF, FINALS" }),
-  video_url: z.string().max(11, { message: "This field must contain only 11 characters" }),
+  video_url: z.string().min(11, { message: "This field must contain only 11 characters" }).max(11, { message: "This field must contain only 11 characters" }),
   atHome: z.enum(["HOME", "AWAY"], { message: "This field must be HOME, AWAY" }),
   currentGame: z.number().int().min(1, { message: "Current game must be between 1 a 100" }).max(110, { message: "Current game must be between 1 a 100" }),
   team2: z.string().min(2, { message: "Team name must be at least 2 characters" }),
@@ -91,7 +91,7 @@ export const updateGameSchema = z.object({
   boxscoreTeam1: z.string({ message: "This field is a markdown text" }).nullable(),
   boxscoreTeam2: z.string({ message: "This field is a markdown text" }).nullable(),
   gameStats: z.string({ message: "This field is a markdown text" }).nullable(),
-  playoffGame: z.string({ message: "Example R1G1" }),
+  playoffGame: z.string({ message: "Example R1G1" }).nullable(),
   result: z.enum(["WIN", "LOSS"], { message: "Result must be WIN or LOSS" }),
 
 })

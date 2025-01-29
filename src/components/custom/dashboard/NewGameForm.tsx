@@ -7,7 +7,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectGroup, SelectItem, SelectValue } from "@/components/ui/select"
 import { toast } from "@/components/ui/use-toast"
-import { atHomeTypes, gameTypes, stageTypes } from "@/lib/types"
+import { atHomeTypes, gameTypes, seasonTypes, stageTypes } from "@/lib/types"
 import { createGameSchema } from "@/zod/validation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { AtHome, Season, Stage, Tournament } from "@prisma/client"
@@ -30,14 +30,10 @@ export type createScheduleProps = {
 
 }
 
-
-
-
-
 async function onSubmit(values: z.infer<typeof createGameSchema>) {
 
   // it goes to database
-  // console.log(values)
+  //console.log('it goes to db', values)
   const response = await createScheduleGame(values)
 
   // console.log(response)
@@ -55,7 +51,7 @@ const NewGameForm = () => {
   const form = useForm<z.infer<typeof createGameSchema>>({
     resolver: zodResolver(createGameSchema),
     defaultValues: {
-      season: "NBA2K24",
+      season: undefined,
       type: undefined,
       stage: undefined,
       currentGame: 0,
@@ -83,20 +79,29 @@ const NewGameForm = () => {
     <Form {...form} >
       <form noValidate onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
         <FormField
-          control={form.control}
+          control={control}
           name="season"
           render={({ field }) => (
             <FormItem>
-              <FormLabel htmlFor="season">Current Season</FormLabel>
+              <FormLabel >Season: </FormLabel>
               <FormControl>
-                <Input
-                  id="season"
-                  placeholder="" {...field}
-                  autoComplete="off"
-                  required={true}
-                />
+                <Select {...field} defaultValue=""
+                  onValueChange={(value) => field.onChange(value)}
+                  value={field.value}
+                >
+                  <SelectTrigger className="border border-slate-200 text-md shadow-md py-1.5 text-left pl-2 min-w-[150px] rounded-md">
+                    <SelectValue placeholder="Select Season" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup >
+                      {seasonTypes.map((type, index) => (
+                        <SelectItem key={index} value={type}>{type}</SelectItem>
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
               </FormControl>
-              <FormMessage>{form.formState.errors.season?.message}</FormMessage>
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -105,7 +110,7 @@ const NewGameForm = () => {
           name="currentGame"
           render={({ field }) => (
             <FormItem>
-              <FormLabel htmlFor="currentGame">Current Game</FormLabel>
+              <FormLabel htmlFor="currentGame">Current Game:</FormLabel>
               <FormControl>
                 <Input id="currentGame" type="number" className="dark:text-blue-500" placeholder="min 1 - max 110 games" {...field} />
               </FormControl>
@@ -202,19 +207,7 @@ const NewGameForm = () => {
           )}
         />
 
-        <FormField
-          control={control}
-          name="playoffGame"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel htmlFor="playoffGame">Playoff Game</FormLabel>
-              <FormControl>
-                <Input id="playoffGame" type="string" className="dark:text-blue-500" placeholder="" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+
         <FormField
           control={form.control}
           name="team2"
@@ -249,6 +242,20 @@ const NewGameForm = () => {
                 />
               </FormControl>
               <FormMessage>{form.formState.errors.season?.message}</FormMessage>
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={control}
+          name="playoffGame"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel htmlFor="playoffGame">Playoff Game</FormLabel>
+              <FormControl>
+                <Input id="playoffGame" type="string" className="dark:text-blue-500" placeholder="" {...field} />
+              </FormControl>
+              <FormMessage />
             </FormItem>
           )}
         />
