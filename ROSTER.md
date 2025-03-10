@@ -12,7 +12,7 @@
 | 40  | Luke Kornet      | C   | 7-2 | 250 | July 15, 1995     | US    | 7   | Vanderbilt                                   |
 | 50  | Svi Mykhailiuk   | SF  | 6-7 | 205 | June 10, 1997     | UA    | 5   | Kansas                                       |
 | 13  | Drew Peterson    | PF  | 6-9 | 205 | November 9, 1999  | US    | R   | Rice University, USC                         |
-| 8   | Kristaps Porziņģis | C   | 7-2 | 240 | August 2, 1995    | LV    | 7   | -                                            |
+| 8   | Kristaps Porziņģis | C   | 7-2 | 240 | August 2, 1995  | LV    | 7   | -                                            |
 | 11  | Payton Pritchard | PG  | 6-1 | 195 | January 28, 1998  | US    | 4   | Oregon                                       |
 | 88  | Neemias Queta    | C   | 7-0 | 245 | July 13, 1999     | PT    | 2   | Utah State University                        |
 | 44  | Jaden Springer   | PG  | 6-4 | 204 | September 25, 2002| US    | 2   | Tennessee                                    |
@@ -68,27 +68,29 @@
 | 36  | Marcus Smart           | PG  | 6-3 | 220 | March 6, 1994      | US 🇺🇸   | 7   | Oklahoma State                            |
 | 13  | Nik Stauskas           | SG  | 6-6 | 205 | October 7, 1993    | CA 🇨🇦   | 7   | Michigan                                  |
 | 0   | Jayson Tatum           | SF  | 6-8 | 210 | March 3, 1998      | US 🇺🇸   | 4   | Duke                                      |
-| 27  | Daniel Theis           | C   | 6-8 | 245 | April 4, 1992      | DE 🇩🇪   | 5   |                                           |
+| 27  | Daniel Theis           | C   | 6-8 | 245 | April 4, 1992      | DE 🇩🇪   | 5   | -                                         |
 | 97  | Brodric Thomas         | SG  | 6-5 | 185 | January 28, 1997   | US 🇺🇸   | 2   | Truman State University                   |
 | 9   | Derrick White          | SG  | 6-4 | 190 | July 2, 1994       | US 🇺🇸   | 4   | Colorado-Colorado Springs, Colorado       |
 | 12  | Grant Williams         | PF  | 6-6 | 236 | November 30, 1998  | US 🇺🇸   | 3   | Tennessee                                 |
 | 44  | Robert Williams        | C   | 6-9 | 237 | October 17, 1997   | US 🇺🇸   | 3   | Texas A&M                                 |
 
-| Name           | Pos  | GS  | GP  | MIN  | PTS  | REB | AST | STL | BLK | TO  | FLS | FG%  | FGM  | FGA  | 3P%  | 3PM | 3PA | FT%  | FTM | FTA | PA   | oFGM | oFGA | +/-  |
-|----------------|------|-----|-----|------|------|-----|-----|-----|-----|-----|-----|------|------|------|------|-----|-----|------|-----|-----|------|------|------|------|
-| J. Tatum       | SF   | 75  | 75  | 37.7 | 26.9 | 8.7 | 4.4 | 0.8 | 0.4 | 1.2 | 1.8 | .516 | 9.7  | 18.8 | .420 | 3.1 | 7.4 | .843 | 4.4 | 5.2 | 15.6 | 6.6  | 14.3 | 3.8  |
-| J. Brown       | SF   | 74  | 74  | 36.3 | 24.4 | 5.6 | 3.9 | 0.4 | 0.3 | 1.3 | 1.6 | .508 | 9.2  | 18.1 | .394 | 2.4 | 6.1 | .726 | 3.6 | 5.0 | 13.9 | 5.7  | 11.2 | 0.3  |
-| K. Porzingis   | C    | 62  | 62  | 32.0 | 18.4 | 10.5| 2.9 | 0.5 | 1.9 | 1.2 | 2.3 | .505 | 7.0  | 13.8 | .383 | 1.7 | 4.4 | .752 | 2.7 | 3.6 | 15.2 | 6.7  | 15.0 | 1.9  |
-| J. Holiday     | PG   | 70  | 70  | 31.2 | 12.8 | 3.9 | 4.9 | 1.0 | 0.1 | 0.9 | 1.8 | .450 | 4.4  | 9.8  | .424 | 1.8 | 4.3 | .694 | 2.1 | 3.1 | 11.4 | 4.7  | 10.7 | 1.5  |
-| D. White       | PG   | 80  | 80  | 33.1 | 12.6 | 3.4 | 6.2 | 0.9 | 0.6 | 0.6 | 2.5 | .463 | 4.2  | 9.1  | .452 | 2.4 | 5.3 | .839 | 1.8 | 2.2 | 11.8 | 4.8  | 11.3 | 2.1  |
-| S. Hauser      | SF   | 19  | 80  | 20.1 | 8.1  | 3.2 | 1.2 | 0.3 | 0.1 | 0.3 | 1.2 | .417 | 2.7  | 6.5  | .420 | 2.3 | 5.6 | .692 | 0.3 | 0.5 | 8.6  | 3.5  | 7.3  | 0.8  |
-| P. Pritchard   | PG   | 4   | 81  | 20.1 | 7.8  | 1.9 | 4.2 | 0.3 | 0.0 | 0.8 | 1.5 | .409 | 2.6  | 6.4  | .382 | 1.7 | 4.4 | .721 | 0.9 | 1.3 | 7.9  | 3.4  | 6.7  | -0.3 |
-| A. Horford     | C    | 17  | 54  | 24.1 | 7.1  | 6.6 | 1.8 | 0.6 | 0.5 | 0.5 | 2.0 | .409 | 2.4  | 6.5  | .333 | 1.0 | 2.9 | .710 | 1.2 | 1.7 | 12.0 | 5.2  | 10.0 | 0.2  |
-| D. Peterson    | PF   | 0   | 2   | 9.0  | 6.5  | 1.5 | 1.0 | 0.0 | 0.0 | 0.0 | 1.0 | .625 | 2.5  | 4.0  | .500 | 1.5 | 3.0 | .000 | 0.0 | 0.0 | 3.0  | 1.5  | 4.0  | 9.0  |
-| J. Davison     | PG   | 0   | 7   | 15.1 | 5.7  | 1.0 | 2.1 | 0.3 | 0.0 | 0.4 | 1.4 | .357 | 1.4  | 4.0  | .357 | 0.7 | 2.0 | .789 | 2.1 | 2.7 | 8.0  | 3.4  | 6.4  | -0.9 |
-| X. Tillman Sr. | PF   | 23  | 60  | 21.0 | 5.4  | 5.4 | 0.8 | 0.8 | 0.6 | 1.1 | 2.6 | .566 | 2.4  | 4.2  | .250 | 0.0 | 0.1 | .506 | 0.7 | 1.4 | 7.2  | 3.2  | 6.9  | 0.1  |
-| J. Springer    | SG   | 0   | 9   | 10.4 | 4.0  | 0.9 | 1.2 | 0.3 | 0.1 | 0.7 | 1.2 | .344 | 1.2  | 3.6  | .250 | 0.3 | 1.3 | .733 | 1.2 | 1.7 | 5.2  | 2.0  | 4.6  | -3.8 |
-| L. Kornet      | C    | 0   | 7   | 14.0 | 3.3  | 5.3 | 0.5 | 0.3 | 0.3 | 0.7 | 1.3 | .635 | 1.4  | 2.2  | .000 | 0.0 | 0.0 | .742 | 0.4 | 0.6 | 5.4  | 2.5  | 6.3  | -3.8 |
-| N. Queta       | C    | 0   | 28  | 11.3 | 2.8  | 4.9 | 0.6 | 0.1 | 0.7 | 0.2 | 1.3 | .725 | 1.3  | 1.8  | .000 | 0.0 | 0.0 | .667 | 0.4 | 0.7 | 5.4  | 2.5  | 4.9  | -3.8 |
-| O. Brissett    | PF   | 2   | 50  | 13.3 | 2.6  | 2.6 | 0.8 | 0.2 | 0.1 | 0.4 | 1.2 | .435 | 0.9  | 2.2  | .306 | 0.3 | 1.0 | .606 | 0.4 | 0.7 | 5.4  | 2.1  | 4.9  | -0.7 |
-| S. Mykhailiuk  | SG   | 0   | 24  | 7.6  | 2.2  | 0.8 | 0.4 | 0.1 | 0.0 | 0.3 | 1.2 | .478 | 0.9  | 1.7  | .438 | 0.6 | 1.4 | .722 | 0.3 | 0.4 | 5.0  | 2.4  | 5.4  | -3.4 |
+| No. | Player           | Pos | Ht  | Wt  | Birth Date        | Birth | Exp | College                                      |
+|-----|------------------|-----|-----|-----|-------------------|-------|-----|----------------------------------------------|
+| 7   | Jaylen Brown     | SF  | 6-6 | 223 | October 24, 1996  | US    | 8   | California                                   |
+| 12  | Torrey Craig     | SF  | 6-7 | 221 | December 19, 1990 | US    | 7   | USC Upstate                                  |
+| 20  | JD Davison       | SG  | 6-1 | 195 | October 3, 2002   | US    | 2   | Alabama                                      |
+| 30  | Sam Hauser       | SF  | 6-8 | 215 | December 8, 1997  | US    | 3   | Marquette, Virginia                          |
+| 4   | Jrue Holiday     | PG  | 6-4 | 205 | June 12, 1990     | US    | 15  | UCLA                                         |
+| 42  | Al Horford       | C   | 6-9 | 240 | June 3, 1986      | DO    | 17  | Florida                                      |
+| 40  | Luke Kornet      | C   | 7-2 | 250 | July 15, 1995     | US    | 7   | Vanderbilt                                   |
+| 13  | Drew Peterson    | PF  | 6-9 | 205 | November 9, 1999  | US    | 1   | Rice University, USC                         |
+| 8   | Kristaps Porziņģis | C | 7-2 | 240 | August 2, 1995    | LV    | 8   | -                                            |
+| 11  | Payton Pritchard | PG  | 6-1 | 195 | January 28, 1998  | US    | 4   | Oregon                                       |
+| 88  | Neemias Queta    | C   | 7-0 | 245 | July 13, 1999     | PT    | 3   | Utah State University                        |
+| 55  | Baylor Scheierman| SG  | 6-6 | 205 | September 26, 2000| CA    | R   | South Dakota State, Creighton                |
+| 44  | Jaden Springer   | PG  | 6-4 | 204 | September 25, 2002| US    | 3   | Tennessee                                    |
+| 0   | Jayson Tatum     | PF  | 6-8 | 210 | March 3, 1998     | US    | 7   | Duke                                         |
+| 26  | Xavier Tillman Sr.| PF  | 6-8 | 245 | January 12, 1999 | US    | 4   | Michigan State                               |
+| 27  | Jordan Walsh     | SF  | 6-7 | 205 | March 3, 2004     | US    | 1   | Arkansas                                     |
+| 28  | Anton Watson     | SF  | 6-8 | 225 | October 6, 2000   | US    | R   | Gonzaga                                      |
+| 9   | Derrick White    | SG  | 6-4 | 190 | July 2, 1994      | US    | 7   | Colorado-Colorado Springs, Colorado          |

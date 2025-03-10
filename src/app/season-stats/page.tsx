@@ -14,6 +14,7 @@ import VisitorsCounter from '@/components/custom/season-stats/VisitorsCounter'
 import ChooseStatsDesktop from '@/components/custom/season-stats/ChooseStatsDesktop'
 import ChooseStatsMobile from '@/components/custom/season-stats/ChooseStatsMobile'
 import VideoPlayer from '@/components/reutilizable/VideoPlayer'
+import CookieBanner from '@/components/reutilizable/CookieBanner'
 
 
 const SeasonStatsPage = async ({ searchParams: { opt, round } }: { searchParams: { opt: string, round?: string } }) => {
@@ -98,6 +99,7 @@ const SeasonStatsPage = async ({ searchParams: { opt, round } }: { searchParams:
         <br /><br /><br /><br />
         <p className='text-muted-foreground text-xs'>** Full Data Center stats are displayed since season 2024-25</p>
       </MaxWidthWrapper>
+
     </>
   )
 }

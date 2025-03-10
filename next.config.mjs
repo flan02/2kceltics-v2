@@ -15,6 +15,18 @@ const nextConfig = {
         protocol: "https",
         hostname: "res.cloudinary.com",
       },
+      {
+        protocol: "https",
+        hostname: "lh3.googleusercontent.com",
+      },
+      {
+        protocol: "https",
+        hostname: "avatars.githubusercontent.com",
+      },
+      {
+        protocol: "https",
+        hostname: "instagram.fepa8-1.fna.fbcdn.net",
+      },
     ],
   },
   // Configure `pageExtensions` to include markdown and MDX files

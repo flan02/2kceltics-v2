@@ -44,7 +44,7 @@ const FilterForm = ({ filteredGames }: Props) => {
   const [isLoaded, setIsLoaded] = useState(false)
 
   const [filterValues, setFilterValues] = useState([{
-    season: undefined as "NBA2K22" | "NBA2K23" | "NBA2K24" | undefined,
+    season: undefined as "NBA2K22" | "NBA2K23" | "NBA2K24" | "NBA2K25" | undefined,
     type: undefined as "RS" | "PO" | undefined,
     stage: undefined as "RS" | "CUP_GP" | "CUP_QF" | "CUP_SF" | "CUP_THEFINAL" | "FIRST_ROUND" | "ESCF" | "ECF" | "FINALS" | undefined,
     atHome: undefined as "HOME" | "AWAY" | undefined,
@@ -98,10 +98,12 @@ const FilterForm = ({ filteredGames }: Props) => {
     }
   }, [page])
 
+
+  const current_season = "NBA2K25"  // * We need pass this value as String hence I don't use the $Enums.Season type
   useEffect(() => {
     if (isSubmitted) {
       form.reset({
-        season: 'NBA2K24',
+        season: current_season,
         type: 'RS',
         stage: undefined,
         atHome: undefined,
@@ -120,7 +122,7 @@ const FilterForm = ({ filteredGames }: Props) => {
 
         <Form {...form} >
           <form noValidate onSubmit={form.handleSubmit(handleFormSubmit)} className='flex justify-center sm:justify-between gap-2' >
-            <div className='flex flex-col md:flex-row gap-4 space-y-4 md:space-y-0'>
+            <div className='flex flex-col md:flex-row gap-4 space-y-4 md:space-y-0 text-muted-foreground'>
               <div className='block lg:flex lg:gap-2 space-y-4 md:space-y-0 '>
 
                 <FormField
@@ -274,7 +276,7 @@ const FilterForm = ({ filteredGames }: Props) => {
 
 
                 <div className="self-end">
-                  <LoadingButton type="submit" loading={isSubmitting} className='min-w-[300px] md:min-w-fit dark:bg-celtics dark:text-green-50'>
+                  <LoadingButton type="submit" loading={isSubmitting} className='min-w-[300px] md:min-w-fit dark:bg-celtics hover:dark:bg-celtics/80 dark:text-green-50'>
                     <Search size={18} /> <span className='mt-1'>Search</span>
                   </LoadingButton>
                 </div>

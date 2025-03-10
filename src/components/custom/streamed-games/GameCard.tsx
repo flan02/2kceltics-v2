@@ -23,7 +23,7 @@ type Props = {
 
 const GameCard = ({ filteredGames }: Props) => {
 
-  console.log(filteredGames)
+  //console.log(filteredGames)
   const video_url: any = []
   filteredGames?.map((game: any) => game.video_url !== null && video_url.push(game))
   // console.log("ARRAY VIDEO URL", video_url);

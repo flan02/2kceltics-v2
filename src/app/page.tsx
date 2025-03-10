@@ -15,6 +15,8 @@ import { AnimatedNumber } from "@/components/core/animated-number";
 import { AnimatedNumberBasic } from "@/components/reutilizable/AnimatedNumberBasic";
 import Roster from "@/components/custom/Roster";
 import VideoPlayer from "@/components/reutilizable/VideoPlayer";
+import CookieBanner from "@/components/reutilizable/CookieBanner";
+
 
 
 
@@ -78,7 +80,8 @@ export default async function Home({ searchParams: { page = 0 } }: { searchParam
       <MaxWidthWrapper className="mt-36 py-6 max-w-screen-3xl bg-zinc-200/70 dark:bg-night-80/50">
         <VisitorsCounter />
       </MaxWidthWrapper>
+
     </>
-  );
+  )
 }
 

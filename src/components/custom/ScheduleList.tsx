@@ -30,7 +30,7 @@ export default async function ScheduleList({ searchParams: { page } }: { searchP
     if (game.scoreTeam1! > 0) total_pages.push(game.scoreTeam1 as number)
   })
 
-  let W = schedule.filter(game => game.scoreTeam1! > game.scoreTeam2!).length + 1
+  let W = schedule.filter(game => game.scoreTeam1! > game.scoreTeam2!).length
   let L = schedule.filter(game => game.scoreTeam1! < game.scoreTeam2!).length
 
   const currentSchedule = schedule.slice(page * limit, (page + 1) * limit)

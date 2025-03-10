@@ -25,7 +25,7 @@ const Navbar = async (props: Props) => {
           */}
           <div className='space-x-2'>
             <TextShimmer className="font-bold text-xl [--base-color:theme(colors.green.600)] [--base-gradient-color:theme(colors.green.200)] dark:[--base-color:theme(colors.green.700)] dark:[--base-gradient-color:theme(colors.green.400)]">2KCELTICS</TextShimmer>
-            <TextShimmer className="text-md font-medium [--base-color:theme(colors.green.600)] [--base-gradient-color:theme(colors.green.200)] dark:[--base-color:theme(colors.green.700)] dark:[--base-gradient-color:theme(colors.green.400)]">v2</TextShimmer>
+            <TextShimmer className="text-md font-medium [--base-color:theme(colors.green.600)] [--base-gradient-color:theme(colors.green.200)] dark:[--base-color:theme(colors.green.700)] dark:[--base-gradient-color:theme(colors.green.400)]">v2.1</TextShimmer>
           </div>
         </Link>
       </div>

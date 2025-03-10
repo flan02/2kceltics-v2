@@ -6,5 +6,5 @@ declare module 'types' {
     image: string
   }
 
-
 }
+

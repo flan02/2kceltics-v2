@@ -1,4 +1,16 @@
+export const LimitPoints = {
+  NOT_RANKED: 1,
+  ROOKIE: 100,
+  BENCHER: 200,
+  SIXTH_MAN: 500,
+  STARTER: 1000,
+  ALL_STAR: 3500,
+  HALL_OF_FAME: 5000
+} as const
 
+export type LimitPoints = typeof LimitPoints
+export type TierNames = keyof typeof LimitPoints // Esto te devuelve los nombres 'rookie' | 'bencher' | ...
+export type LimitPointsType = typeof LimitPoints[TierNames] // Esto devuelve los valores 100 | 200 | 500...
 
 export const gameTypes = ["RS", "PO"]
 
@@ -10,7 +22,7 @@ export const statTypes = ["TOTAL", "AVG"]
 
 export const atHomeTypes = ["HOME", "AWAY"]
 
-export const seasonTypes = ["NBA2K22", "NBA2K23", "NBA2K24", "NBA2K25", "NBA2K26", "NBA2K27", "NBA2K28"]
+export const seasonTypes = ["NBA2K22", "NBA2K23", "NBA2K24", "NBA2K25"]
 
 export const resultTypes = ["WIN", "LOSS"]
 
@@ -31,4 +43,20 @@ export enum Round {
   ECF = "ECF",
   WCF = "WCF",
   FINALS = "FINALS"
+}
+
+export type UserSession = {
+  id?: string
+  email?: string
+  name?: string
+  nickname?: string
+  totalPoints?: number
+  tier?: TierNames
+  image?: string
+  createdAt: Date
+  premium?: boolean
+  twitchUser?: string
+  youtubeUser?: string
+  twitterUser?: string
+  newsletter?: boolean
 }

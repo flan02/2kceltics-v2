@@ -275,9 +275,10 @@ export async function createScheduleGame(values: Omit<Schedule, "id" | "createdA
 
 
 export async function getCurrentGame() {
+  const currentSeason = process.env.CURRENT_SEASON as Season
   const response = await db.schedule.findMany({
     where: {
-      season: "NBA2K24",
+      season: currentSeason,
       currentGame: { gt: 0 }
     },
     select: {
@@ -285,6 +286,7 @@ export async function getCurrentGame() {
       stage: true,
       type: true,
       playoffGame: true,
+      team2: true,
     }
   })
 

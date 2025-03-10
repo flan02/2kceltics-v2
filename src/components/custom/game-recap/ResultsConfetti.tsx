@@ -36,11 +36,11 @@ const ResultsConfetti = ({ game }: Props) => {
     return () => isMounted = false
   }, [showResults])
 
-  console.log("width", width)
-  console.log("height", height)
+  //console.log("width", width)
+  //console.log("height", height)
 
   return (
-    <div className="text-center p-8 space-y-6 w-full" >
+    <div className="text-center -mt-6 md:mt-0 p-8 space-y-6 w-full" >
       <Button className="dark:text-white dark:bg-celtics dark:hover:bg-celtics/90" onClick={() => setShowResults(!showResults)}>
         View Results
       </Button>

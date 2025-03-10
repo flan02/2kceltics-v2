@@ -15,7 +15,7 @@ const NotFound = () => {
     title: 'xl:text-7xl md:text-5xl lg:text-6xl text-5xl text-celtics leading-tight md:leading-tight lg:leading-tight xl:leading-tight'
   }
   return (
-    <MaxWidthWrapper className='min-h-[calc(100vh-150px)] place-content-center'>
+    <MaxWidthWrapper className='min-h-[calc(100vh)] place-content-center'>
       <DefaultPage title={'THE PAGE YOU ARE LOOKING FOR DOES NOT EXIST RIGHT NOW'} image_url={'/rajon-rondo-pity.png'} className={className} photo_dimension={photo_dimension} />
     </MaxWidthWrapper>
 

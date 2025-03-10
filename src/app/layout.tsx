@@ -5,6 +5,11 @@ import Navbar from "@/components/custom/Navbar";
 import Footer from "@/components/custom/Footer";
 import { Toaster } from "@/components/ui/toaster";
 import { ThemeProvider } from "@/components/reutilizable/theme-provider"
+import UserPanel from "@/components/reutilizable/UserPanel";
+import TopContributors from "@/components/custom/TopContributors";
+// import CookieBanner from "@/components/reutilizable/CookieBanner";
+import dynamic from 'next/dynamic';
+
 const recursive = Recursive({ subsets: ["latin"] });
 const inter = Inter({ subsets: ["latin"] });
 
@@ -29,6 +34,11 @@ export const metadata: Metadata = {
     ]
   }
 };
+
+const CookieBanner = dynamic(() => import('@/components/reutilizable/CookieBanner'), {
+  ssr: false, // Deshabilita la renderización del lado del servidor
+});
+
 
 export default function RootLayout({
   children,
@@ -64,7 +74,10 @@ export default function RootLayout({
         >
           <Navbar />
           {children}
+          <TopContributors />
+          <UserPanel />
           <Toaster />
+          <CookieBanner />
           <Footer />
         </ThemeProvider>
       </body>
