@@ -3,7 +3,6 @@ import MaxWidthWrapper from "@/components/reutilizable/MaxWidthWrapper"
 import { getStreamedGames } from "./action"
 import { Button } from "@/components/ui/button"
 import { $Enums } from "@prisma/client"
-import { SeasonType } from "@/lib/types"
 
 type Props = {
   searchParams: {
