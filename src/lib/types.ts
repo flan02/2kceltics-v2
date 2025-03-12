@@ -10,7 +10,7 @@ export const statTypes = ["TOTAL", "AVG"]
 
 export const atHomeTypes = ["HOME", "AWAY"]
 
-export const seasonTypes = ["NBA2K22", "NBA2K23", "NBA2K24", "NBA2K25", "NBA2K26", "NBA2K27", "NBA2K28"]
+export const seasonTypes = ["NBA2K22", "NBA2K23", "NBA2K24", "NBA2K25"]
 
 export const resultTypes = ["WIN", "LOSS"]
 

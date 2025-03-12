@@ -16,7 +16,14 @@ import Link from "next/link"
 import { notFound } from "next/navigation"
 import { cache } from "react"
 import MarkdownRenderer from "@/components/markdown/MarkdownRenderer"
-import NoStats from "@/components/reutilizable/NoStats"
+import YoutubePlayerClient from "@/components/reutilizable/YoutubePlayerClient"
+
+
+import { Share2, Tickets } from "lucide-react"
+import ShareModal from "@/components/reutilizable/ShareModal"
+
+
+
 
 
 type PageProps = {
@@ -44,119 +51,116 @@ const getGame = cache(async (gameId: string) => {
   }
 })
 
-/*
-const getGames = cache(async () => {
-  const games = await db.schedule.findMany({
-    select: {
-      id: true
-    }
-  })
-  //console.log("ALL GAMES OBTAINED", games)
-  return games
-})
-*/
-
-// * This is how I generate static paths. After this fc the slugs will be generated immediately and the page will be created faster
-/*
-export async function generateStaticParams() {
-  const games = await getGames()
-  return games.map(({ id }) => ({ params: { gameId: id } }))
-}
-*/
-
-// * Asynchronous function to generate metadata for the page
-/* 
-export async function generateMetadata() {
-  const game = await getGame(add id here)
-  const metadata = {
-    title: `Update Game ${game.id}`,
-    description: `Update the game ${game.id} with the form below`
-  }
-}
-*/
-
 
 export default async function GameIdPage({ params: { gameId }, searchParams: { stats } }: PageProps) {
 
   const game = await getGame(gameId)
 
-
   const BOS = stats === game?.team_code1
   const OPP = stats === game?.team_code2
   const TOTAL = stats === "TOTAL"
   return (
-    <MaxWidthWrapper className='min-h-screen max-w-5xl'>
-      <section className='mt-16 space-y-4'>
-        <h1 className='text-celtics text-3xl text-center'>GAME RECAP</h1>
-        <div className="grid grid-cols-1 md:grid-cols-1 gap-2 min-h-[330px]">
+    <>
 
-          <Card className="md:flex md:justify-center py-4 block md:py-0 dark:bg-night-80/60 bg-white/20">
-            <div className="w-full flex justify-center md:block dark:bg-night-90/50">
-              <CardHeader>
-                <CardTitle className="text-midnight dark:text-zinc-700 font-bold uppercase -mt-5 sm:mt-0 leading-[24px] sm:leading-none">{`Season ${game?.season} Game #${game?.currentGame}`}</CardTitle>
-              </CardHeader>
-              <CardContent>
+      <MaxWidthWrapper className='min-h-screen max-w-5xl'>
+        <section className='mt-16 space-y-4 '>
+          <h1 className='text-celtics text-3xl text-center'>GAME RECAP</h1>
+          <div className="grid grid-cols-1 md:grid-cols-1 gap-2 min-h-[330px]">
 
-                <CardDescription className="flex items-center">
-                  <span className="text-slate-700 dark:text-zinc-700 text-lg font-bold mr-2">VS</span>
-                  <Image src={`/logos/${game?.team_code2}.png`} width={100} height={100} className='mr-2 w-16 h-16' alt={`${game?.team_code2}-logo`} />
+            <Card className="md:flex md:justify-center py-4 block md:py-0 dark:bg-night-80/60 bg-white/20">
+              <div className="w-full flex flex-col justify-center md:block dark:bg-night-90/50">
+                <CardHeader>
+                  <CardTitle className="text-midnight dark:text-zinc-700 font-bold uppercase -mt-5 sm:mt-0 leading-[24px] sm:leading-none">{`Season ${game?.season} Game #${game?.playoffGame == undefined || game?.playoffGame == "" ? game?.currentGame : game?.playoffGame}`}</CardTitle>
+                </CardHeader>
+                <CardContent>
+
+                  <CardDescription className="flex items-center justify-center md:justify-start">
+                    <span className="text-slate-700 dark:text-zinc-700 text-xl mt-2 font-bold mr-2">VS</span>
+                    <Image src={`/logos/${game?.team_code2}.png`} width={100} height={100} className='mr-2 w-16 h-16' alt={`${game?.team_code2}-logo`} />
+                  </CardDescription>
+
+
+                  <CardDescription className="flex flex-col space-y-1 mt-4 min-w-[150px]">
+                    <span className="text-base dark:text-zinc-700 text-slate-800 font-bold">Type: {game?.type === "RS" ? "Regular Season" : "Playoffs"}</span>
+                    <span className="text-base dark:text-zinc-700 text-slate-800 font-bold">Rival: {game?.team2}</span>
+                    <span className="text-base dark:text-zinc-700 text-slate-800 font-bold">at {game?.atHome}</span>
+                  </CardDescription>
+
+                </CardContent>
+                <CardFooter>
+                </CardFooter>
+              </div>
+
+              <ResultsConfetti game={game!} />
+            </Card>
+          </div>
+          <Card className="dark:bg-night-80/60 bg-white/10">
+            <CardContent className="flex flex-col justify-between items-start">
+              <div className="flex justify-between w-full items-center space-x-2 mr-2">
+                <CardDescription className="py-8 flex justify-between items-center w-full">
+                  <span className="text-midnight dark:text-zinc-700 font-bold text-xl">Game Video</span>
+
+
                 </CardDescription>
+                <ShareModal />
+                <Button className="dark:bg-celtics dark:hover:bg-celtics/90 dark:text-white" disabled>
+                  <Tickets className="mr-2" size={20} />
+                  <span className="text-xs">BUY TICKET</span>
+                </Button>
+              </div>
+              <div className="w-full grid place-content-center min-h-[300px]">
+                <YoutubePlayerClient video_url={game!.video_url!} />
+              </div>
 
-
-                <CardDescription className="flex flex-col space-y-1 mt-4 min-w-[150px]">
-                  <span className="text-base dark:text-zinc-700 text-slate-800 font-bold">Type: {game?.type === "RS" ? "Regular Season" : "Playoffs"}</span>
-                  <span className="text-base dark:text-zinc-700 text-slate-800 font-bold">Rival: {game?.team2}</span>
-                  <span className="text-base dark:text-zinc-700 text-slate-800 font-bold">at {game?.atHome}</span>
-                </CardDescription>
-
-              </CardContent>
-              <CardFooter>
-              </CardFooter>
-            </div>
-
-            <ResultsConfetti game={game!} />
+            </CardContent>
           </Card>
-        </div>
+
+          <Card className="dark:bg-night-80/60 bg-white/10">
+            <CardContent className="">
+              <CardDescription className="py-8 flex justify-between items-end ">
+                <span className="text-midnight dark:text-zinc-700 font-bold text-xl" >Game details</span>
+                <span className="space-x-1">
+                  <Button asChild className="text-xs px-2 md:text-base dark:bg-celtics dark:hover:bg-celtics/90 dark:text-white">
+                    <Link href={`./${game?.id}?stats=${game?.team_code1}`}>{game?.team_code1}</Link>
+                  </Button>
+                  <Button asChild className="text-xs px-2 md:text-base dark:bg-celtics dark:hover:bg-celtics/90 dark:text-white">
+                    <Link href={`./${game?.id}?stats=${game?.team_code2}`}>{game?.team_code2}</Link>
+                  </Button><Button asChild className="text-xs px-2 md:text-base dark:bg-celtics dark:hover:bg-celtics/90 dark:text-white">
+                    <Link href={`./${game?.id}?stats=TOTAL`}>TOTAL</Link>
+                  </Button>
+                </span>
+              </CardDescription>
+            </CardContent>
+            <CardContent className="px-0 grid place-content-center">
+              {stats === undefined && <MarkdownRenderer markdown={game?.boxscoreTeam1!} />}
+              {BOS ? <MarkdownRenderer markdown={game?.boxscoreTeam1!} /> : null}
+              {OPP ? <MarkdownRenderer markdown={game?.boxscoreTeam2!} /> : null}
+              {TOTAL ? <MarkdownRenderer markdown={game?.gameStats!} /> : null}
+
+            </CardContent>
+          </Card>
+
+          <Card className="dark:bg-night-80/60 bg-white/10">
+            <CardContent className="flex flex-col justify-between items-start">
+              <CardDescription className="pt-8 pb-2 flex justify-start items-center">
+                <span className="text-midnight dark:text-zinc-700 font-bold text-xl">Comments</span>
+              </CardDescription>
 
 
-        <Card className="dark:bg-night-80/60 bg-white/10">
-          <CardContent className="">
-            <CardDescription className="py-8 flex justify-between items-end ">
-              <span className="text-midnight dark:text-zinc-700 font-bold text-xl" >Game details</span>
-              <span className="space-x-1">
-                <Button asChild className="text-xs px-2 md:text-base dark:bg-celtics dark:hover:bg-celtics/90 dark:text-white">
-                  <Link href={`./${game?.id}?stats=${game?.team_code1}`}>{game?.team_code1}</Link>
-                </Button>
-                <Button asChild className="text-xs px-2 md:text-base dark:bg-celtics dark:hover:bg-celtics/90 dark:text-white">
-                  <Link href={`./${game?.id}?stats=${game?.team_code2}`}>{game?.team_code2}</Link>
-                </Button><Button asChild className="text-xs px-2 md:text-base dark:bg-celtics dark:hover:bg-celtics/90 dark:text-white">
-                  <Link href={`./${game?.id}?stats=TOTAL`}>TOTAL</Link>
-                </Button>
-              </span>
-            </CardDescription>
-
-            {/* MARKDOWN CONTENT SERVER SIDE */}
+            </CardContent>
+          </Card>
+          <br /><br /><br />
+          <div className="text-center pb-24">
+            <Button asChild className="dark:bg-celtics dark:text-white">
+              <Link href="/streamed-games">BACK</Link>
+            </Button>
+          </div>
+        </section>
 
 
-          </CardContent>
-          <CardContent className="px-0 grid place-content-center">
-            {stats === undefined && <MarkdownRenderer markdown={game?.boxscoreTeam1!} />}
-            {BOS ? <MarkdownRenderer markdown={game?.boxscoreTeam1!} /> : null}
-            {OPP ? <MarkdownRenderer markdown={game?.boxscoreTeam2!} /> : null}
-            {TOTAL ? <MarkdownRenderer markdown={game?.gameStats!} /> : null}
+      </MaxWidthWrapper>
 
-          </CardContent>
-
-        </Card>
-        <div className="text-center pb-16">
-          <Button asChild className="dark:bg-celtics dark:text-white">
-            <Link href="/streamed-games">BACK</Link>
-          </Button>
-        </div>
-      </section>
-
-
-    </MaxWidthWrapper>
+    </>
   )
 }
 

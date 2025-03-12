@@ -3,6 +3,7 @@ import MaxWidthWrapper from "@/components/reutilizable/MaxWidthWrapper"
 import { getStreamedGames } from "./action"
 import { Button } from "@/components/ui/button"
 import { $Enums } from "@prisma/client"
+import { SeasonType } from "@/lib/types"
 
 type Props = {
   searchParams: {
@@ -11,13 +12,18 @@ type Props = {
 }
 
 export default async function StreamedGamesPage({ searchParams: { page = 0 } }: Props) {
+  const CURRENT_SEASON = process.env.CURRENT_SEASON! as $Enums.Season
   let request = await getStreamedGames({
-    season: process.env.CURRENT_SEASON as $Enums.Season,
+    season: CURRENT_SEASON,
     type: ["RS", "PO"],
     stage: undefined,
     atHome: undefined,
     result: undefined
   })
+
+  if (!CURRENT_SEASON || !Object.values($Enums.Season).includes(CURRENT_SEASON as $Enums.Season)) {
+    throw new Error(`CURRENT_SEASON isn't valid: ${CURRENT_SEASON}`);
+  }
 
   let filteredGames = request!
     .filter((game: any) => game.video_url !== null)
