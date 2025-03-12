@@ -1,3 +1,5 @@
+
+import { TokenStore } from '@/store/store'
 import ky from 'ky'
 
 export enum Method {
@@ -35,6 +37,7 @@ export async function KY<T>(method: Method, url: string, data?: any): Promise<T>
 
 
 export async function CheckFollowersAndSubcriptions<T>(platform: string, userId: string) {
+
   try {
     const response = await KY<T>(Method.POST, '/api/v1/third-party-api', { platform, action: 'followers', userId })
     return response
@@ -44,30 +47,37 @@ export async function CheckFollowersAndSubcriptions<T>(platform: string, userId:
 }
 
 
-/* 
-
-export enum Method {
-  GET = 'get',
-  POST = 'post',
-  UPDATE = 'update',
-  PATCH = 'patch',
-  DELETE = 'delete',
-}
-
-export async function KY(method: Method, url: string, data?: any) {
+export async function CheckLocalToken({ tokens, setToken, checkTokens }: TokenStore, userId: string) {
   try {
-    if (method === Method.GET) {
-      const response = await (ky as any)[method](url).json()
-      return response
-    } else if (method === Method.POST) {
-      const response = await (ky as any)[method](url, data)
-      return response
+    const localToken = localStorage.getItem("twitch_access_token");
+    const expiresAt = localStorage.getItem("twitch_expires_at");
+
+    if (localToken && expiresAt && new Date().getTime() < Number(expiresAt)) {
+      setToken("twitch", localToken, Number(expiresAt));
+      return;
     }
-    return null
+    // Si no hay token en localStorage o está vencido, consultar a la BD
+    // const res = await fetch(`/api/twitch/token?userId=${userId}`);
+    const url = `/api/v1/tokens?userId=${encodeURIComponent(userId)}`
+    //console.log('URL generada:', url);
+
+    const res = await KY<{ isValid: boolean; accessToken: string; expiresAt: string }>(
+      Method.GET,
+      url
+    );
+
+    const data = res
+
+    if (data.isValid) {
+
+      console.log('Token is valid:', data);
+      localStorage.setItem("twitch_access_token", data.accessToken);
+      localStorage.setItem("twitch_expires_at", String(new Date(data.expiresAt).getTime()));
+      setToken("twitch", data.accessToken, new Date(data.expiresAt).getTime());
+    }
   } catch (error) {
-    console.log(error);
-    return error
+    console.error('Error retrieving local token:', error);
+
   }
 
-}
-*/
+};

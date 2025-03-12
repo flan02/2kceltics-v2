@@ -1,12 +1,15 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 
 import { Button } from '@/components/ui/button'
-import { CheckFollowersAndSubcriptions, KY } from '@/services/api'
+import { CheckFollowersAndSubcriptions, CheckLocalToken, KY } from '@/services/api'
 import { Mails } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FaTwitch, FaXTwitter, FaYoutube } from 'react-icons/fa6'
+import { TwitchConnectButton } from './TwitchConnectButton'
+import { TokenStore, useTokenStore } from '@/store/store'
 
 type SocialMedia = {
   socialMedia: string
@@ -16,8 +19,15 @@ type SocialMedia = {
 }
 
 
+type UserProps = {
+  userId: string // ? Remember userId is session.user.email from authjs
+}
 
-const SocialSubscriptionChecker = () => {
+
+const SocialSubscriptionChecker = ({ userId }: UserProps) => {
+  const { tokens, setToken, checkTokens } = useTokenStore();
+
+  const [isValidToken, setIsValidToken] = useState<boolean>(true);
 
   const socialMedia: SocialMedia[] = [
     {
@@ -46,53 +56,11 @@ const SocialSubscriptionChecker = () => {
     }
   ]
 
+  useEffect(() => {
 
-
-  const TwitchConnectButton = () => {
-
-    const connectTwitch = () => {
-      const clientId = 'jksx0vwvspp3rbrk00m3i9suf5d2gj'; // Reemplázalo con tu Client ID de Twitch
-      const redirectUri = 'http://localhost:3000/api/v1/callback/twitch'; // Debe coincidir con el registrado en Twitch Dev
-      const scopes = 'user:read:follows'
-
-      // Generamos un estado aleatorio para evitar ataques CSRF
-      const state = Math.random().toString(36).substring(7);
-      localStorage.setItem('twitch_auth_state', state)
-
-      const authUrl = `https://id.twitch.tv/oauth2/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=${scopes}`;
-      window.location.href = authUrl
-    }
-
-    return <Button onClick={connectTwitch} className=''>Conectar con Twitch</Button>
-  }
-
-
-  const TwitchCallback = () => {
-    const router = useRouter()
-
-    useEffect(() => {
-      const fetchData = async () => {
-        const urlParams = new URLSearchParams(window.location.search);
-        const code = urlParams.get('code');
-        const state = urlParams.get('state');
-        const storedState = localStorage.getItem('twitch_auth_state');
-
-        if (!code || state !== storedState) {
-          console.error('Error de autenticación');
-          return;
-        }
-
-        const response = CheckFollowersAndSubcriptions('twitch', 'flano2')
-        console.log('Data received', response)
-      }
-
-      fetchData()
-    }, [])
-
-    return <p>Authenticating with Twitch...</p>
-  }
-
-
+    // const tokenData = { tokens, setToken, checkTokens }
+    CheckLocalToken({ tokens, setToken, checkTokens }, userId); // ? Remember userId is session.user.email from authjs
+  }, [userId]);
 
   return (
     <div className='text-white flex flex-col col-span-2 border rounded-lg mx-1'>
@@ -116,24 +84,12 @@ const SocialSubscriptionChecker = () => {
           ))
         }
 
-
       </div>
-      <TwitchConnectButton />
+      <TwitchConnectButton disabled={isValidToken} />
+
     </div>
   )
 }
 
 export default SocialSubscriptionChecker
 
-/* 
-  const fetchSocialMedia = async (socialMedia: string) => {
-    try {
-      type TwitchResponse = { success: boolean, followers: number }
-      const data = await CheckFollowersAndSubcriptions<TwitchResponse>('twitch', 'flano2')
-      console.log('Data received', data)
-    } catch (error) {
-      console.error('Current API has any problem...', error)
-
-    }
-  }
-*/

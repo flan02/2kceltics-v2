@@ -144,6 +144,12 @@ export const createPlayoffsSchema = z.object({
   seed_east_8: z.enum([...teamEastTypes] as [string, ...string[]], { message: "Insert a valid team" }),
 })
 
+export const TokenSetSchema = z.object({
+  accessToken: z.string().min(1, "accessToken is required"),
+  refreshToken: z.string().min(1, "refreshToken is required"),
+  expires_in: z.date(),
+});
+
 /*
 export const generatePlayoffsSchema = async (): Promise<z.ZodObject<any>> => {
   return z.object({

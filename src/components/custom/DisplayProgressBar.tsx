@@ -24,7 +24,7 @@ const DisplayProgressBar = ({ id }: Props) => {
 
 
   return (
-    <div className='flex flex-col space-x-2 pt-2 px-2'>
+    <div className='flex flex-col dark:bg-stone-900 space-x-2 pt-2 px-2'>
       <div className='text-sm text-celtics flex space-x-1 items-end'>
         <p className='text-sm text-celtics pl-2'>Next: </p>
         <p className='text-orange-500 dark:text-bubble-gum animate-pulse'>{points || '...'}</p>/{limitPoints}

@@ -27,7 +27,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
   try {
     const session = await auth()
     const userPointsAndTier = await getPointsAndTier(session?.user?.email!)
-    console.log('api server data', userPointsAndTier);
+    //console.log('api server data', userPointsAndTier);
     return NextResponse.json({ userData: userPointsAndTier })
 
   } catch (error) {

@@ -1,7 +1,6 @@
 import NextAuth from 'next-auth'
 import GitHub from 'next-auth/providers/github'
 import Google from 'next-auth/providers/google'
-
 import { createUser, loggedAsAdmin } from './app/dashboard/actions'
 
 import { User } from 'types'
@@ -11,7 +10,7 @@ import { db } from './db'
 // $ http://localhost:3000/api/auth/providers  
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
-  providers: [GitHub, Google], // * Twitch
+  providers: [GitHub, Google],
   session: {
     maxAge: 86400,
     updateAge: 3600 // 43200

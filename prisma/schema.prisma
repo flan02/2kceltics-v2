@@ -97,6 +97,7 @@ model User {
   id                String        @id @default(auto()) @map("_id") @db.ObjectId
   email             String        @unique
   name              String
+  nickname          String?       @unique
   image             String?
   role              Role          @default(USER)
   actions           UserActions[]
@@ -104,12 +105,8 @@ model User {
   limitPoints       Int           @default(100)
   tier              Tier          @default(NOT_RANKED)
   sharedSocialMedia SocialMedia[] @default([])
-  nickname          String?       @unique
-  twitchUser        String?       @unique
-  youtubeUser       String?       @unique
-  twitterUser       String?       @unique
   newsletter        Boolean       @default(false)
-  premium           Boolean       @default(false) // I could add a premium model to store stripe info
+  premium           Boolean       @default(false) // I could add a premium model to store stripe info. (create a new collection)
   createdAt         DateTime      @default(now())
   updatedAt         DateTime      @updatedAt
   //country         String        @default("not specified") //country
@@ -224,4 +221,14 @@ model Seed {
   eliminated Boolean    @default(false) // eliminated from playoffs
   createdAt  DateTime   @default(now()) // game created
   updatedAt  DateTime   @updatedAt // last update
+}
+
+model Tokens {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  email     String   @unique
+  twitch    Json?
+  youtube   Json?
+  twitter   Json?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

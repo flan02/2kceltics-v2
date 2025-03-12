@@ -2,15 +2,15 @@ import MaxWidthWrapper from '@/components/reutilizable/MaxWidthWrapper'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardHeader, CardContent } from '@/components/ui/card'
-import { db } from '@/db'
+
 import { formatDateShort, formatTierName } from '@/lib/utils'
-import { Mails, Pencil, Tickets, TrophyIcon, X } from 'lucide-react'
+import { Pencil, Tickets, TrophyIcon, X } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { cache } from 'react'
+
 import { FaHashtag } from "react-icons/fa6";
-import { getUserRanking } from './action'
+import { countUsers, getUser, getUserRanking } from './action'
 import { auth } from '@/auth'
 import SocialSubscriptionChecker from '@/components/custom/user/SocialSubscriptionChecker'
 import { UserSession } from '@/lib/types'
@@ -23,46 +23,13 @@ type UserProps = {
 
 }
 
-const getUser = cache(async (userId: string) => {
-  try {
-    const user = await db.user.findUnique({
-      where: {
-        id: userId
-      },
-      select: {
-        email: true,
-        name: true,
-        nickname: true,
-        image: true,
-        totalPoints: true,
-        tier: true,
-        premium: true,
-        twitchUser: true,
-        youtubeUser: true,
-        twitterUser: true,
-        newsletter: true,
-        sharedSocialMedia: true,
-        createdAt: true
-      }
-    })
 
-    if (!user) return notFound()
-
-    return user
-  } catch (error) {
-    console.error(error);
-  }
-})
-
-const countUsers = cache(async () => {
-  const count = await db.user.count()
-  return count
-})
 
 
 export default async function UserPage({ params: { userId } }: UserProps) {
+
   const session = await auth()
-  const user = await getUser(userId)
+  const user = await getUser(userId) as UserSession
   const totalUsers = await countUsers()
   const userPosition = await getUserRanking(userId)
   let formattedTier: string = formatTierName(user?.tier || 'NOT_RANKED')
@@ -76,6 +43,7 @@ export default async function UserPage({ params: { userId } }: UserProps) {
   }
 
   const UserStats = ({ user }: UserProps) => {
+
     return (
       <Card className='col-span-1 h-[600px] flex flex-col space-y-8 shadow-gray-200 shadow-xl dark:shadow-black/50 dark:bg-night-80/60 bg-white/20'>
         <CardHeader className='flex space-y-4 p-0'>
@@ -106,7 +74,6 @@ export default async function UserPage({ params: { userId } }: UserProps) {
               }
 
             </div>
-
           </div>
           <div className='flex pl-2 space-x-2'>
             <p className='text-muted-foreground'>Total points: </p>
@@ -140,14 +107,11 @@ export default async function UserPage({ params: { userId } }: UserProps) {
 
 
   return (
-
     <MaxWidthWrapper className='min-h-[calc(100vh-60px)] max-w-6xl'>
       {
         session && session.user &&
         <section className='mt-16 space-y-4 text-muted-foreground'>
-
           <h1 className='text-celtics text-3xl text-center uppercase'>User&apos;s Locker Room</h1>
-
           {
             user && <div className='grid grid-cols-3 space-x-2 px-2'>
 
@@ -163,18 +127,11 @@ export default async function UserPage({ params: { userId } }: UserProps) {
                       width={400} height={400} alt="locker room banner" />
                   </div>
                 </div>
-
-                <SocialSubscriptionChecker />
-
-
-
+                <SocialSubscriptionChecker userId={session && session?.user.email!} />
               </Card>
-
               <UserStats user={user as UserSession} />
-
             </div>
           }
-
           <br /><br /><br />
           <div className="text-center pb-24">
             <Button asChild className="dark:bg-celtics dark:text-white">

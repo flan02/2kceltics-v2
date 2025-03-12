@@ -1,4 +1,4 @@
-import { TierNames } from '@/lib/types'
+import { Platform, TierNames } from '@/lib/types'
 import { create } from 'zustand'
 import { persist, PersistOptions } from 'zustand/middleware'
 import Cookies from 'js-cookie'
@@ -109,3 +109,50 @@ export const useUserPanelStore = create<Omit<OpenPanelState, "isOpenRankingTier"
     name: 'userPanel-store', skipHydration: true
   })
 )
+
+
+export interface TokenStore {
+  tokens: Record<Platform, { accessToken: string; expiresAt: number } | null>;
+  setToken: (platform: Platform, accessToken: string, expiresAt: number) => void;
+  checkTokens: () => void;
+}
+
+export const useTokenStore = create<TokenStore>((set) => ({
+  tokens: {
+    twitch: null,
+    twitter: null,
+    youtube: null,
+  },
+
+  // Función para guardar tokens en el store y en localStorage
+  setToken: (platform, accessToken, expiresAt) => {
+    set((state) => ({
+      tokens: { ...state.tokens, [platform]: { accessToken, expiresAt } },
+    }));
+
+    // Guardamos en localStorage para persistencia
+    localStorage.setItem(`${platform}_access_token`, accessToken);
+    localStorage.setItem(`${platform}_expires_at`, String(expiresAt));
+  },
+
+  // Función para verificar si los tokens en localStorage son válidos
+  checkTokens: () => {
+    const platforms: Platform[] = ["twitch", "twitter", "youtube"];
+    const newTokens: Record<Platform, { accessToken: string; expiresAt: number } | null> = {
+      twitch: null,
+      twitter: null,
+      youtube: null,
+    };
+
+    platforms.forEach((platform) => {
+      const accessToken = localStorage.getItem(`${platform}_access_token`);
+      const expiresAt = localStorage.getItem(`${platform}_expires_at`);
+
+      if (accessToken && expiresAt && new Date().getTime() < Number(expiresAt)) {
+        newTokens[platform] = { accessToken, expiresAt: Number(expiresAt) };
+      }
+    });
+
+    set({ tokens: newTokens });
+  },
+}))
