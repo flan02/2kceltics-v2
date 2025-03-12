@@ -1,17 +1,17 @@
 import { db } from "@/db"
 import { $Enums } from "@prisma/client"
 
+const CURRENT_SEASON = process.env.CURRENT_SEASON as $Enums.Season
 
 export async function getScheduleGames() {
   const response = await db.schedule.findMany({
     where: {
-      season: "NBA2K24"  // * We should automate this for the current season
+      season: CURRENT_SEASON
     }
   })
   return response
 }
 
-const CURRENT_SEASON = process.env.CURRENT_SEASON as $Enums.Season
 
 export async function getNextGame() {
   const response = await db.schedule.findMany({
