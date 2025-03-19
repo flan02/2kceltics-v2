@@ -23,9 +23,6 @@ type UserProps = {
 
 }
 
-
-
-
 export default async function UserPage({ params: { userId } }: UserProps) {
 
   const session = await auth()

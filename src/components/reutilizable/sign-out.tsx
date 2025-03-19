@@ -1,6 +1,6 @@
 //"use client"
 
-import { handleGoogleSignOut } from "@/server-functions"
+import { handleGoogleSignOut } from "@/services/server-functions"
 import { LogOut } from "lucide-react"
 
 type Props = {}

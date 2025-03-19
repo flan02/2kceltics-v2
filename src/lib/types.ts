@@ -61,10 +61,11 @@ export type UserSession = {
   newsletter?: boolean
 }
 
-export type Platform = "twitch" | "youtube" | "twitter"
+export type SOCIAL_MEDIA = "twitch" | "youtube" | "twitter"
 
-export type Token = {
-  accessToken: string
-  refreshToken: string
+export type TokenBody = {
+  access_token: string
+  refresh_token: string
   expires_in: number
+  generatedAt: number
 }

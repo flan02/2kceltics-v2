@@ -3,11 +3,14 @@
 import { useCookieStore } from "@/store/store";
 import { AnimatePresence, motion } from "framer-motion";
 
-
 const CookieBanner = () => {
 
   const { acceptedCookies, setAcceptedCookies } = useCookieStore()
-  const handleAcceptCookies = () => setAcceptedCookies(!acceptedCookies)
+
+  const cookieValue = useCookieStore.getState().acceptedCookies
+  // console.log(acceptedCookies);
+  //console.log(cookieValue);
+  const handleAcceptCookies = () => setAcceptedCookies(!cookieValue)
 
   // useEffect(() => {
   //   console.log(acceptedCookies);

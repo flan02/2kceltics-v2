@@ -2,7 +2,7 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
-import { CheckFollowersAndSubcriptions, CheckLocalToken, KY } from '@/services/api'
+import { CheckFollowersAndSubcriptions, KY } from '@/services/api'
 import { Mails } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -10,6 +10,8 @@ import React, { useEffect, useState } from 'react'
 import { FaTwitch, FaXTwitter, FaYoutube } from 'react-icons/fa6'
 import { TwitchConnectButton } from './TwitchConnectButton'
 import { TokenStore, useTokenStore } from '@/store/store'
+import ky from 'ky'
+import { TokenBody } from '@/lib/types'
 
 type SocialMedia = {
   socialMedia: string
@@ -25,9 +27,6 @@ type UserProps = {
 
 
 const SocialSubscriptionChecker = ({ userId }: UserProps) => {
-  const { tokens, setToken, checkTokens } = useTokenStore();
-
-  const [isValidToken, setIsValidToken] = useState<boolean>(true);
 
   const socialMedia: SocialMedia[] = [
     {
@@ -56,11 +55,40 @@ const SocialSubscriptionChecker = ({ userId }: UserProps) => {
     }
   ]
 
-  useEffect(() => {
 
-    // const tokenData = { tokens, setToken, checkTokens }
-    CheckLocalToken({ tokens, setToken, checkTokens }, userId); // ? Remember userId is session.user.email from authjs
-  }, [userId]);
+
+
+  const fetchTwitchData = async () => {
+
+    try {
+      const accessToken = localStorage.getItem("twitch_token");
+      if (!accessToken) {
+        console.error("No Twitch token found in localStorage");
+
+        return;
+      }
+
+      const parsedToken = JSON.parse(accessToken) as TokenBody; // *🚀 Parse the token data
+
+      const response = await ky.post("http://localhost:3000/api/v1/thirdparty-userdata", {
+        headers: {
+          Authorization: `Bearer ${parsedToken.access_token}`,
+          "Content-Type": "application/json",
+        },
+        json: { provider: "twitch" }
+      });
+      const data = await response.json();
+      console.log('Twitch user data:', data);
+
+
+    } catch (error) {
+      console.error("Error fetching Twitch data:", error);
+    } finally {
+
+    }
+  }
+
+
 
   return (
     <div className='text-white flex flex-col col-span-2 border rounded-lg mx-1'>
@@ -85,11 +113,14 @@ const SocialSubscriptionChecker = ({ userId }: UserProps) => {
         }
 
       </div>
-      <TwitchConnectButton disabled={isValidToken} />
+      <TwitchConnectButton />
+      <Button
+        onClick={fetchTwitchData}
+      >Try retrieve twitch data</Button>
 
     </div>
   )
 }
 
-export default SocialSubscriptionChecker
 
+export default SocialSubscriptionChecker
