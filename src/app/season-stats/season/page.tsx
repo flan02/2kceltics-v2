@@ -16,6 +16,8 @@ const SeasonsStatPage = async () => {
   const type = 'RS'
   const average = await getPlayerStats(type, current, 'AVG', 'RS') as GameStatProps // 3rd param ... span
   const total = await getPlayerStats(type, current, 'TOTAL', 'RS') as GameStatProps
+
+  console.log(average);
   const opt = undefined
 
   return (
