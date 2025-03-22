@@ -7,7 +7,7 @@ import { $Enums } from '@prisma/client'
 
 type SeasonProps = {
   average: GameStatProps
-  total: GameStatProps
+  total?: GameStatProps
   stage?: string
   span?: string
   opt?: $Enums.Stage
@@ -33,6 +33,8 @@ const SeasonStats = async ({ average, total, opt, span, label }: SeasonProps) =>
       label
   }
 
+  // console.log('current span', span);
+
   return (
     <section className='mt-4 flex flex-col space-y-20'>
       <div>
@@ -53,9 +55,9 @@ const SeasonStats = async ({ average, total, opt, span, label }: SeasonProps) =>
         </div>
         <aside className='flex justify-center'>
           {
-            total
-              ? <MarkdownRenderer markdown={total.gamestat} />
-              : <NoStats />
+            total || span == "82"
+              ? <MarkdownRenderer markdown={total!.gamestat} />
+              : null //<NoStats />
           }
         </aside>
       </div>

@@ -482,7 +482,7 @@ export async function createPlayerStats(values: GameStatProps) {
 }
 
 
-export async function getPlayerStats(type: Tournament, season: Season, statType: StatType, stage: Stage, span?: string) {
+export async function getCurrentPlayerStats(type: Tournament, season: Season, statType: StatType, stage: Stage, span?: string) {
 
   try {
     const response = db.playerStat.findFirst({
