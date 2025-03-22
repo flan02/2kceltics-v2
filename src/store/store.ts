@@ -46,7 +46,7 @@ export type Actions = {
 export const usePointsStore = create<State & Actions>()(
   persist(
     (set) => ({
-      points: 0,
+      points: 1,
       percentaje: 0,
       limitPoints: 100,
       setPoints: (points: number) => set((state) => ({ points })),

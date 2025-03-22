@@ -30,7 +30,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
         if (!userFound) {
           await createUser(name, email, image)
-          return false
+          return true
 
         }
         // if (userFound.role == "ADMIN") return true
@@ -66,6 +66,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       }
       return session
     },
+    async authorized({ request }) {
+      const session = await auth()
+      return !!session?.user
+      // return !!auth?.user
+    }
   },
   pages: {
     signIn: '/',

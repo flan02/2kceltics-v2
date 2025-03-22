@@ -15,7 +15,7 @@ export async function POST(req: Request) {
         email
       },
       select: {
-        twitch: true,
+        twitch: true
       },
     });
 
@@ -68,16 +68,18 @@ export async function POST(req: Request) {
           refresh_token, // The refresh_token remains the same maybe
           expires_in: newExpiresIn,
           generatedAt: Date.now(), // Update the generatedAt timestamp
-        },
-      },
-    });
-
-
-
+        }
+      }
+    })
 
     return NextResponse.json({
-      twitch: { access_token: newAccessToken, refresh_token, expires_in: newExpiresIn, generatedAt: Date.now() },
-    });
+      twitch: {
+        access_token: newAccessToken,
+        refresh_token,
+        expires_in: newExpiresIn,
+        generatedAt: Date.now()
+      }
+    })
 
   } catch (error) {
     return NextResponse.json({ error: "Error fetching tokens" }, { status: 500 });

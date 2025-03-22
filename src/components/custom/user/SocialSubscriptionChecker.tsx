@@ -6,7 +6,7 @@ import { CheckFollowersAndSubcriptions, KY } from '@/services/api'
 import { Mails } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import React, { useEffect, useState } from 'react'
+import React, { use, useEffect, useState } from 'react'
 import { FaTwitch, FaXTwitter, FaYoutube } from 'react-icons/fa6'
 import { TwitchConnectButton } from './TwitchConnectButton'
 import { TokenStore, useTokenStore } from '@/store/store'
@@ -70,13 +70,16 @@ const SocialSubscriptionChecker = ({ userId }: UserProps) => {
 
       const parsedToken = JSON.parse(accessToken) as TokenBody; // *🚀 Parse the token data
 
+      console.log('Access token sent from clientside', accessToken);
       const response = await ky.post("http://localhost:3000/api/v1/thirdparty-userdata", {
-        headers: {
-          Authorization: `Bearer ${parsedToken.access_token}`,
-          "Content-Type": "application/json",
-        },
-        json: { provider: "twitch" }
-      });
+        // headers: {
+        //   Authorization: `Bearer ${parsedToken.access_token}`,
+        //   "Content-Type": "application/json",
+        // },
+        //body: JSON.stringify({ provider: "twitch" })
+        json: { provider: "twitch", user_id: parsedToken.user_id }
+      })
+
       const data = await response.json();
       console.log('Twitch user data:', data);
 

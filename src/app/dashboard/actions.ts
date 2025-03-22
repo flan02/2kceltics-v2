@@ -26,7 +26,7 @@ export async function loggedAsAdmin(email: string) {
     })
 
     //console.log('isAdmin', isAdmin);
-    if (!isAdmin) return null
+    //if (!isAdmin) return null
 
     return isAdmin
   } catch (error) {
@@ -41,7 +41,8 @@ export async function createUser(name: string, email: string, image: string) {
       data: {
         name,
         email,
-        image
+        image,
+        totalPoints: 1
       }
 
     })

@@ -28,8 +28,14 @@ const usePointsAndTier = () => {
     let currentIndex = tiers.indexOf(tier)
 
     const percentaje = calculatePercentage(points, LimitPoints[tiers[currentIndex + 1]], LimitPoints[tiers[currentIndex]])
+    let fixedPercentaje
+    if (points === 1) {
+      fixedPercentaje = percentaje + 1
+    } else {
+      fixedPercentaje = percentaje
+    }
 
-    setPercentaje(percentaje)
+    setPercentaje(fixedPercentaje)
 
   }
 

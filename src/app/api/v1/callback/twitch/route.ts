@@ -3,7 +3,7 @@ import ky from 'ky';
 import { auth } from '@/auth';
 import { db } from '@/db';
 import { TokenBody } from '@/lib/types';
-import { KY, Method } from '@/services/api';
+
 
 export async function GET(req: NextRequest) {
   let userId
@@ -39,10 +39,22 @@ export async function GET(req: NextRequest) {
     })
 
     const data = await response.json() as TokenBody
-
-    //console.log('Twitch authorization response', data);
-
     const { access_token, refresh_token, expires_in } = data
+
+    const userResponse = await ky.get("https://api.twitch.tv/helix/users", {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+        "Client-Id": clientId,
+      },
+    });
+
+    const userData = await userResponse.json() as any;
+    if (!userData || !userData.data || userData.data.length === 0) {
+      return NextResponse.json({ error: "Failed to fetch Twitch user data" }, { status: 500 });
+    }
+
+    const twitchUser = userData.data[0];
+    const twitchUserId = twitchUser.id; // Aquí obtenemos el `user_id` de Twitch
 
     const tokenResponse = await db.tokens.upsert({
       where: {
@@ -53,7 +65,8 @@ export async function GET(req: NextRequest) {
           access_token,
           refresh_token,
           expires_in,
-          generatedAt: Date.now()
+          generatedAt: Date.now(),
+          user_id: twitchUserId
         }
       },
       create: {
@@ -62,14 +75,12 @@ export async function GET(req: NextRequest) {
           access_token,
           refresh_token,
           expires_in,
-          generatedAt: Date.now()
-        }
-      },
-    });
+          generatedAt: Date.now(),
+          user_id: twitchUserId
 
-    if (!response.ok) {
-      return NextResponse.json({ error: 'Authentication error', details: data }, { status: 500 });
-    }
+        }
+      }
+    })
 
     if (tokenResponse) {
       userId = await db.user.findUnique({
@@ -84,23 +95,6 @@ export async function GET(req: NextRequest) {
     if (!userId) {
       return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
-    //console.log('userId retrived from API calling db', userId);
-
-    const userInfoResponse = await KY(Method.POST, 'http://localhost:3000/api/v1/thirdparty-userdata', {
-      headers: {
-        Authorization: `Bearer ${access_token}`
-      },
-      body: {
-        provider: 'twitch'
-      }
-    })
-
-    console.log('userInfoResponse', userInfoResponse);
-    // await fetch(`${process.env.BASE_URL}`, {
-    //   headers: { Authorization: `Bearer ${access_token}` },
-    // });
-
-
 
     return NextResponse.redirect(`http://localhost:3000/user/${userId.id}`)
   } catch (error) {
@@ -109,3 +103,17 @@ export async function GET(req: NextRequest) {
 }
 
 
+
+//console.log('userId retrived from API calling db', userId);
+
+// console.log("Access Token for Twitch before calling thirdparty data API:", access_token);
+// const userInfoResponse = await KY(Method.POST, 'http://localhost:3000/api/v1/thirdparty-userdata', {
+//   headers: {
+//     authorization: `Bearer ${access_token}`,
+//   },
+//   json: {
+//     provider: 'twitch'
+//   }
+// })
+
+//console.log('userInfoResponse', userInfoResponse);

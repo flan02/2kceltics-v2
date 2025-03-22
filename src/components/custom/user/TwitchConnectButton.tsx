@@ -19,7 +19,7 @@ export const TwitchConnectButton = () => {
   let redirectUri = encodeURIComponent(redirect);
 
   connectTwitch = () => {
-    const scopes = encodeURIComponent("user:read:follows user:read:subscriptions");
+    const scopes = encodeURIComponent("user:read:follows user:read:subscriptions channel:read:subscriptions moderator:read:followers"); // moderator:read:followers
     const authUrl = `https://id.twitch.tv/oauth2/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=${scopes}`
 
     console.log(authUrl);
@@ -41,9 +41,6 @@ export const TwitchConnectButton = () => {
 
         if (currentTime > tokenExpirationTime) {
           console.log("Token has expired, refreshing token...");
-
-          // !Llamar a la función para renovar el token
-          // ! await refreshToken(tokenData[0].refresh_token);
           const data: any = await CheckTokens(userEmail);
           console.log('twitch token refresh completed...', data);
           return;
@@ -55,15 +52,17 @@ export const TwitchConnectButton = () => {
         }
       }
 
-      console.log("There is not token in localStorage, checking in the db...");
+      console.log("There is not token in localStorage, checking in the db... If storedToken was created previously");
 
       try {
+        // if (storedToken) {
         const data: any = await CheckTokens(userEmail); // ? userId is session.user.email from authjs
         console.log('twitch token data received from db', data);
         if (data.twitch) {
           localStorage.setItem("twitch_token", JSON.stringify(data.twitch));
           setToken("twitch", data.twitch);
           setDisabled(true);
+          // }
         }
       } catch (error) {
         console.error("Error verifying tokens", error);

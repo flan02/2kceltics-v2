@@ -68,4 +68,34 @@ export type TokenBody = {
   refresh_token: string
   expires_in: number
   generatedAt: number
+  user_id: string
 }
+
+export type TwitchChannelFollowers = {
+  total: number
+  data: {
+    user_id: string
+    user_name: string
+    user_login: string
+    followed_at: string
+  }[]
+  pagination: {
+    cursor: string
+  }
+}
+
+// BROADCASTER INFO
+// data: [
+//   {
+//     id: '1284419660',
+//     login: 'xbox_dan',
+//     display_name: 'xbox_dan',
+//     type: '',
+//     broadcaster_type: '',
+//     description: '',
+//     profile_image_url: 'https://static-cdn.jtvnw.net/user-default-pictures-uv/41780b5a-def8-11e9-94d9-784f43822e80-profile_image-300x300.png',
+//     offline_image_url: '',
+//     view_count: 0,
+//     created_at: '2025-03-20T14:12:38Z'
+//   }
+// ]
