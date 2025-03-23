@@ -48,6 +48,8 @@ const GameCard = ({ filteredGames }: Props) => {
                     aspectWidth={16}
                     aspectHeight={9}
                   />
+                  {/* Overlay that block user's handle */}
+                  <div className="absolute inset-0 bg-transparent h-[200px]"></div>
                   <h5 className='absolute top-0 left-0 z-10 w-full py-2 pl-1 bg-[rgba(0,0,0,0.3)] text-sm text-zinc-200 truncate'>{`RS ${game.season} #${game.playoffGame == null || game.playoffGame == '' ? game.currentGame : game.playoffGame} ${game.atHome == "HOME" ? game.team_code2 : "BOS"} vs ${game.atHome == "HOME" ? "BOS" : game.team_code2} Full Game`}</h5>
                   <div className={`px-4 pb-4 pt-2 flex justify-between ${game.stage == "CUP_GP" ? "bg-orange-200/40 dark:bg-night-70" : ""} ${game.type == "PO" ? "dark:bg-[#241825] bg-[#d9e6da]" : ""}`}>
                     <div className='flex items-center'>
@@ -57,7 +59,7 @@ const GameCard = ({ filteredGames }: Props) => {
                     </div>
                     <div className='flex flex-col justify-end'>
                       <span className='uppercase text-midnight dark:text-green-50 font-bold text-xs pb-2'>{game.stage == "CUP_GP" ? "tournament" : game.type == "PO" ? "playoffs" : ""}</span>
-                      <Button className='text-xs px-1 self-end dark:bg-midnight dark:text-green-50' asChild>
+                      <Button className='text-xs px-1 self-end dark:bg-midnight dark:hover:bg-midnight/80 dark:hover:border border dark:text-green-50' asChild>
                         <Link href={`/game-recap/${game.id}`}>Game recap</Link>
                       </Button>
                     </div>

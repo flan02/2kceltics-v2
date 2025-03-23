@@ -1,10 +1,10 @@
-import { Season, Stage } from "@prisma/client";
+import { Season, Stage, Tournament } from "@prisma/client";
 
 import SeasonStats from '../../../components/custom/season-stats/SeasonStats'
 import MaxWidthWrapper from '@/components/reutilizable/MaxWidthWrapper'
 import Link from 'next/link'
 import { Button, buttonVariants } from '@/components/ui/button'
-import { getPlayerStats, getPlayerStatsTotals } from '@/app/dashboard/actions'
+import { getCurrentPlayerStats, getPlayerStatsTotals } from '@/app/dashboard/actions'
 import { GameStatProps } from '@/components/custom/dashboard/AddPlayerStatsForm'
 import NavbarFilter from "@/components/custom/season-stats/NavbarFilter";
 import CookieBanner from "@/components/reutilizable/CookieBanner";
@@ -13,7 +13,15 @@ import CookieBanner from "@/components/reutilizable/CookieBanner";
 
 const PlayoffsStatPage = async ({ searchParams: { opt } }: { searchParams: { opt: Stage } }) => {
   const current = process.env.CURRENT_SEASON as Season
-  const type = 'PO'
+  //const type = 'PO'
+  const PLAYOFFS = process.env.NEXT_PUBLIC_PLAYOFFS!
+  let type: Tournament
+  if (PLAYOFFS == 'true') {
+    type = 'PO'
+  } else {
+    type = 'RS'
+  }
+
   // TODO: possible stage change -> FIRST_ROUND, ESCF, ECF, FINALS, ALL_GAMES
   const stage = opt
 
@@ -26,8 +34,8 @@ const PlayoffsStatPage = async ({ searchParams: { opt } }: { searchParams: { opt
   }
   else {
     span = undefined
-    average = await getPlayerStats(type, current, 'AVG', stage) as GameStatProps
-    total = await getPlayerStats(type, current, 'TOTAL', stage) as GameStatProps
+    average = await getCurrentPlayerStats(type, current, 'AVG', stage) as GameStatProps
+    total = await getCurrentPlayerStats(type, current, 'TOTAL', stage) as GameStatProps
   }
 
   return (

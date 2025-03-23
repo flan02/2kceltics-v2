@@ -29,7 +29,7 @@ const SeasonStatsPage = async ({ searchParams: { opt, round } }: { searchParams:
               <Basketball className="animate-roll ml-4 size-24" />
             </div>
             <div className='flex items-end'>
-              <h1 className="relative w-fit tracking-tight text-balance mt-0 lg:mt-16 font-bold !leading-tight text-gray-500 text-5xl md:text-6xl lg:text-7xl">Track every stats on our <span className="bg-[#ddd] dark:bg-[#222] text-celtics px-2">Data Center</span> </h1>
+              <h1 className="relative w-fit tracking-tight text-balance mt-0 lg:mt-16 font-bold !leading-tight text-gray-500 text-5xl md:text-6xl lg:text-7xl">Track every stat in our <span className="bg-[#ddd] dark:bg-[#222] text-celtics px-2">Data Center</span> </h1>
               <Dots className='xl:block hidden' />
             </div>
 
