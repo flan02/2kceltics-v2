@@ -17,12 +17,11 @@ const YoutubePlayerClient = ({ video_url, video_title }: Props) => {
 
   return (
     <LiteYouTubeEmbed
-      wrapperClass={`w-full max-w-[560px] min-w-[320px] object:cover aspect-[16/9] md:mx-auto sm:mx-auto xs:mx-auto mb-4 -ml-5`}
-      iframeClass={`w-full max-w-[560px] min-w-[320px] aspect-[16/9] h-auto mx-auto`}
+      wrapperClass={`w-full max-w-[480px] min-w-[315px] aspect-[16/9] md:mx-auto sm:mx-auto xs:mx-auto mb-4 -ml-5`}
+      iframeClass={`w-full max-w-[480px] min-w-[315px] aspect-[16/9] h-auto mx-auto -mt-6`}
       cookie={false}
       id={video_url!}
       title={video_title}
-      poster="hqdefault"
       aspectWidth={16}
       aspectHeight={9}
     />

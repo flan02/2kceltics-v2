@@ -110,8 +110,6 @@ export default async function GameIdPage({ params: { gameId }, searchParams: { s
 
               {/* Client side component */}
               <YoutubePlayerClient video_url={game!.video_url!} video_title={`${game?.team1} vs ${game?.team2}`} />
-
-
             </CardContent>
           </Card>
 
