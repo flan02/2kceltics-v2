@@ -58,7 +58,7 @@ const GameCard = ({ filteredGames }: Props) => {
                     </div>
                     <div className='flex flex-col justify-end'>
                       <span className='uppercase text-midnight dark:text-green-50 font-bold text-xs pb-2'>{game.stage == "CUP_GP" ? "tournament" : game.type == "PO" ? "playoffs" : ""}</span>
-                      <Button className='text-xs px-1 self-end dark:bg-midnight dark:hover:bg-midnight/80 dark:hover:border dark:text-green-50' asChild>
+                      <Button className='text-xs px-1 self-end dark:bg-midnight dark:hover:bg-midnight/80 border dark:hover:border dark:text-green-50' asChild>
                         <Link href={`/game-recap/${game.id}`}>Game recap</Link>
                       </Button>
                     </div>

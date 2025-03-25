@@ -108,9 +108,9 @@ export default async function GameIdPage({ params: { gameId }, searchParams: { s
                   <span className="text-xs">BUY TICKET</span>
                 </Button>
               </div>
-              <div className="w-full grid place-content-center min-h-[300px]">
-                <YoutubePlayerClient video_url={game!.video_url!} />
-              </div>
+
+              {/* Client side component */}
+              <YoutubePlayerClient video_url={game!.video_url!} video_title={`${game?.team1} vs ${game?.team2}`} />
 
             </CardContent>
           </Card>
