@@ -1,6 +1,7 @@
 import { getCurrentGame } from "@/app/dashboard/actions"
 import CreateScheduleGame from "./CreateScheduleGame"
 import UpdateScheduleGame from "./UpdateScheduleGame"
+import ShareOnX from "./ShareOnX"
 
 // w-full border rounded-lg border-slate-200 mb-16 p-16 space-y-8
 type Props = {}
@@ -31,7 +32,9 @@ export async function Schedule() {
           <CreateScheduleGame />
         </article>
       </div>
-
+      <article className="p-16 border border-slate-200 w-full rounded-lg space-y-4">
+        <ShareOnX /> {/* Client side component */}
+      </article>
     </section>
   )
 }

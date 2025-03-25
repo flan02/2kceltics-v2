@@ -78,17 +78,10 @@ const Dashboard = async ({ opt, photo, given_name }: Props) => {
               <div className='space-y-4'>
                 <div className='flex'>
                   <Image src={Yo} className='size-16 mx-auto rounded-full' width={100} height={100} alt="yo" />
-
-
-
-
                 </div>
                 <h1 className='text-center text-3xl text-celtics'>Welcome back admin {given_name} (flan02)!</h1>
-
               </div>
-
               <article className='border border-slate-200 p-2'>
-
                 {
                   (tasks as any).map((task: any) => (
                     <div key={task.id} className='flex justify-between space-y-2 items-center'>
@@ -102,11 +95,7 @@ const Dashboard = async ({ opt, photo, given_name }: Props) => {
                         </span>
                         <span className={`${task.done ? "line-through" : "text-primary"} text-muted-foreground lg:text-base text-xs`}>{task.task}</span>
                       </div>
-
-
                       <DoneTask task={task} />
-
-
                     </div>
                   ))
                 }
@@ -120,9 +109,7 @@ const Dashboard = async ({ opt, photo, given_name }: Props) => {
         {addStats ? <AddStats /> : null}
         {addSeason ? <AddSeason /> : null}
         {addPlayoffs ? <AddPlayoffs /> : null}
-
       </section>
-
     </div>
   )
 }

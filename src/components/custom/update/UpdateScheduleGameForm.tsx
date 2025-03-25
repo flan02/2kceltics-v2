@@ -27,10 +27,7 @@ interface Props {
 
 async function onSubmit(values: z.infer<typeof updateGameSchema>) {
 
-  //console.log("VALUES ON FORM", values)
   const update = await updateScheduleGame(values)
-
-
 
   toast({
     title: `Game id: ${values.id} updated successfully`,

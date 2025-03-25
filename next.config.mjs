@@ -25,7 +25,7 @@ const nextConfig = {
       },
       {
         protocol: "https",
-        hostname: "instagram.fepa8-1.fna.fbcdn.net",
+        hostname: "img.youtube.com",
       },
     ],
   },

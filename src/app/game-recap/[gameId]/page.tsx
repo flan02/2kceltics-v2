@@ -100,8 +100,6 @@ export default async function GameIdPage({ params: { gameId }, searchParams: { s
               <div className="flex justify-between w-full items-center space-x-2 mr-2">
                 <CardDescription className="py-8 flex justify-between items-center w-full">
                   <span className="text-midnight dark:text-zinc-700 font-bold text-xl">Game Video</span>
-
-
                 </CardDescription>
                 <ShareModal />
                 <Button className="dark:bg-celtics dark:hover:bg-celtics/90 dark:text-white">
@@ -109,9 +107,10 @@ export default async function GameIdPage({ params: { gameId }, searchParams: { s
                   <span className="text-xs">BUY TICKET</span>
                 </Button>
               </div>
-              <div className="w-full grid place-content-center min-h-[300px]">
-                <YoutubePlayerClient video_url={game!.video_url!} />
-              </div>
+
+              {/* Client side component */}
+              <YoutubePlayerClient video_url={game!.video_url!} video_title={`${game?.team1} vs ${game?.team2}`} />
+
 
             </CardContent>
           </Card>

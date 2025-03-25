@@ -55,7 +55,7 @@ const SeasonStats = async ({ average, total, opt, span, label }: SeasonProps) =>
           {
             total || span == "82"
               ? <MarkdownRenderer markdown={total!.gamestat} />
-              : <NoStats />
+              : null // <NoStats />
           }
         </aside>
       </div>
