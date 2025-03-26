@@ -285,6 +285,7 @@ export async function getCurrentGame() {
       stage: true,
       type: true,
       playoffGame: true,
+      team2: true
     }
   })
 

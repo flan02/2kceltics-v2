@@ -32,3 +32,16 @@ export enum Round {
   WCF = "WCF",
   FINALS = "FINALS"
 }
+
+export type TwitchChannelFollowers = {
+  total: number
+  data: {
+    user_id: string
+    user_name: string
+    user_login: string
+    followed_at: string
+  }[]
+  pagination: {
+    cursor: string
+  }
+}
