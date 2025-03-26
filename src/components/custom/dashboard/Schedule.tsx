@@ -34,6 +34,7 @@ export async function Schedule() {
       </div>
       <article className="p-16 border border-slate-200 w-full rounded-lg space-y-4">
         <ShareOnX /> {/* Client side component */}
+
       </article>
     </section>
   )

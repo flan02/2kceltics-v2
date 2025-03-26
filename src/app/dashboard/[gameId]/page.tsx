@@ -9,6 +9,7 @@ import UpdateScheduleGameForm from '@/components/custom/update/UpdateScheduleGam
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { FaXTwitter } from 'react-icons/fa6';
+import StreamingLive from '@/components/custom/dashboard/StreamingLive';
 
 
 interface PageProps {
@@ -54,9 +55,12 @@ export default async function UpdateGamePage({ params: { gameId } }: PageProps) 
     <MaxWidthWrapper className='min-h-screen'>
       <section className='mt-16 space-y-4'>
         <h1 className='text-celtics text-3xl text-center'>UPDATE GAME PANEL</h1>
-        <div className='flex justify-end items-center space-x-1'>
-          <span className='text-lg text-muted-foreground'>Share on: </span>
-          <ShareOnX />
+        <div className='flex justify-between items-center space-x-1'>
+          <StreamingLive game={game} /> {/* Client side component */}
+          <div className='flex space-x-1 items-center'>
+            <span className='text-lg text-muted-foreground'>Share on: </span>
+            <ShareOnX />
+          </div>
         </div>
         <UpdateScheduleGameForm game={game} />
         <br />

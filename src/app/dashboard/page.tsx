@@ -23,7 +23,7 @@ const DashboardPage = async ({ searchParams: { opt } }: { searchParams: { opt: s
             {
               session && session?.user ? (
                 <section className='flex flex-col space-y-4'>
-                  <p className='text-3xl text-celtics font-bold'>Welcome back {session.user.name}</p>
+                  <p className='text-md md:text-3xl text-celtics font-bold'>Welcome back {session.user.name}</p>
                   <Link href='/dashboard' className='font-bold text-sm text-center hover:underline'>
                     Go to Admin Panel
                   </Link>
