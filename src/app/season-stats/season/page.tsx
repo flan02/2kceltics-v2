@@ -29,7 +29,7 @@ const SeasonsStatPage = async () => {
     <MaxWidthWrapper className='mt-8 md:mt-12 lg:mt-24 space-y-8'>
       <h1 className='uppercase text-celtics text-2xl lg:text-4xl font-bold'>Season {current}</h1>
       <div className="flex space-x-2">
-        <h2 className="text-muted-foreground text-lg">Games Played: <span className="text-celtics font-bold">5</span></h2>
+        <h2 className="text-muted-foreground text-lg">Games Played: <span className="text-celtics font-bold">{span}</span></h2>
       </div>
       <SeasonStats average={average} total={total} span={parsedSpan} label="Regular Season" />
       <br /><br /><br />
