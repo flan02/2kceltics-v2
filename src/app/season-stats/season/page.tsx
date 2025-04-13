@@ -10,7 +10,7 @@ import { getNextGame } from "@/app/actions"
 //import SelectRSGames from "@/components/custom/season-stats/SelectRSGames";
 {/* <SelectRSGames /> */ } {/* FILTER WITH SELECT-OPTION BY SPAN 5,10,15,20,25,30...*/ }
 
-
+export const dynamic = 'force-dynamic'; // * force static generation to be dynamic
 
 const SeasonsStatPage = async () => {
   const current = process.env.CURRENT_SEASON as Season
