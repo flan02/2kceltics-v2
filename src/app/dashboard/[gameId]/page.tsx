@@ -40,7 +40,7 @@ export default async function UpdateGamePage({ params: { gameId } }: PageProps) 
   if (!game) notFound();
 
   const ShareOnX = () => {
-    const hashTags = '#NBA2K25 #BackToBack #Celtics #NBA #Basketball'
+    const hashTags = '#NBA2K25 #BackToBack #Celtics #NBA #Basketball #DifferentHere'
     const tweetText = encodeURIComponent(`Check out this NBA2K25 game! ☘✨\nRegular Season - Game #${game.currentGame} ${game.team1} vs ${game.team2}\nWatch game stats: https://www.2kceltics.xyz/game-recap/${gameId}\n${hashTags}`)
     const tweetUrl = encodeURIComponent(`https://youtu.be/${game.video_url}`); // https://youtu.be/  || // https://www.youtube.com/watch?v=
 

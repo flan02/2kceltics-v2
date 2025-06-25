@@ -11,6 +11,10 @@ export const statTypes = ["TOTAL", "AVG"]
 export const atHomeTypes = ["HOME", "AWAY"]
 
 export const seasonTypes = ["NBA2K22", "NBA2K23", "NBA2K24", "NBA2K25"]
+const omitSeasons = new Set(["NBA2K22", "NBA2K23", "NBA2K24"])
+export const graphicSeasons = seasonTypes.filter((season) => !omitSeasons.has(season))
+
+export const seasonReadOnly = ["NBA2K22", "NBA2K23", "NBA2K24", "NBA2K25"] as const
 
 export const resultTypes = ["WIN", "LOSS"]
 
@@ -23,6 +27,25 @@ export const teamEastTypes = ["ATL", "BRO", "BOS", "CHI", "CHA", "CLE", "DET", "
 export type TeamType = typeof teamWestTypes | typeof teamEastTypes;
 
 export type SeasonType = typeof seasonTypes
+export type SeasonReadOnlyType = typeof seasonReadOnly
+
+export const graphTypes = [
+  { name: 'STATS', href: 'stats', disabled: false },
+  { name: '???', href: '???', disabled: true }, // COMPARE
+  { name: '???', href: '???', disabled: true }, // TWO DIMENSIONS
+  { name: '???', href: '???', disabled: true } // DISTRIBUTION
+  // { name: 'SCATTER PLOT', href: 'scatter-plot', disabled: true },
+  // { name: 'PROJECTIONS', href: 'projections', disabled: true },
+]
+
+export type StatsResponse = {
+  response: PlayerStatsType[];
+};
+
+export type GameSpan = {
+  value: number | null;
+  label: string;
+}
 
 export enum Round {
   FIRST_ROUND = "FIRST_ROUND",
@@ -45,3 +68,102 @@ export type TwitchChannelFollowers = {
     cursor: string
   }
 }
+
+
+export const playerImages2K25: Record<string, string> = {
+  "J. Tatum": "/jt-profile.png",
+  "J. Brown": "/jb-profile.png",
+  "D. White": "/dw-profile.png",
+  "K. Porzingis": "/kp-profile.png",
+  "J. Holiday": "/jrue-profile.png",
+  "A. Horford": "/al-profile.png",
+  "P. Pritchard": "/pp-profile.png",
+  "S. Hauser": "/sam-profile.png",
+  "L. Kornet": "/kornet-profile.png",
+  "N. Queta": "/queta-profile.png",
+  "J. Walsh": "/walsh-profile.png",
+  "X. Tillman Sr.": "/til-profile.png",
+  "B. Scheierman": "/scheierman-profile.png",
+  "J. Davison": "/jd-profile.png",
+  "D. Peterson": "/peterson-profile.png",
+  "T. Craig": "/craig-profile.png"
+}
+
+export type PlayerStatsType = {
+  id: string;
+  name: string;
+  pos: string;
+  season: string;
+  gamespan: number;
+  gp: number;
+  gs: number;
+  min: number;
+  pts: number;
+  reb: number;
+  ast: number;
+  stl: number;
+  blk: number;
+  to: number;
+  fls: number;
+  fgPct: number;
+  fgm: number;
+  fga: number;
+  tpPct: number;
+  tpm: number;
+  tpa: number;
+  ftPct: number;
+  ftm: number;
+  fta: number;
+  pa: number;
+  ofgm: number;
+  ofga: number;
+  plusMinus: number;
+}
+
+
+export const fieldsToExclude = ["id", "season", "gamespan", "gp", "gs", "pos", "name"] // "ofgm", "ofga", "pa", "plusMinus"
+export const percentageKeys: (keyof PlayerStatsType)[] = ['fgPct', 'tpPct', 'ftPct'];
+
+export const fieldsMap: Record<string, string> = {
+  "min": "Minutes",
+  "pts": "Points",
+  "reb": "Rebounds",
+  "ast": "Assists",
+  "stl": "Steals",
+  "blk": "Blocks",
+  "to": "Turnovers",
+  "fls": "Fouls",
+  "fgPct": "Field Goal %",
+  "fgm": "Field Goals Made",
+  "fga": "Field Goals Attempted",
+  "tpPct": "3-Point %",
+  "tpm": "3-Point Made",
+  "tpa": "3-Point Attempted",
+  "ftPct": "Free Throws %",
+  "ftm": "Free Throws Made",
+  "fta": "Free Throws Att",
+  "pa": "Points Against",
+  "ofgm": "Opp. FG Made",
+  "ofga": "Opp. FG Att",
+  "plusMinus": "+/-",
+  // Add more mappings as needed
+}
+
+
+export const multiplierMap: Record<string, string> = {
+  "per game": "PER GAME",
+  "total": "TOTAL"
+}
+
+export const gamespanMap: Record<number, string> = {
+  10: "FIRST 10 GAMES",
+  20: "FIRST 20 GAMES",
+  30: "FIRST 30 GAMES",
+  40: "FIRST 40 GAMES",
+  50: "FIRST 50 GAMES",
+  60: "FIRST 60 GAMES",
+  70: "FIRST 70 GAMES",
+  82: "FIRST 82 GAMES"
+};
+
+export const SeasonSpans: number[] = [10, 20, 30, 40, 50, 60, 70, 82]
