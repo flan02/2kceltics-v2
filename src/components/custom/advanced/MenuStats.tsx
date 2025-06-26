@@ -18,11 +18,11 @@ const MenuStats = (props: Props) => {
   const { filters, setFilters } = useFilterStore()
   const { spans, isLoading } = useAvailableSpans(filters.season)
 
-  //console.log('Available spans:', spans);
+
 
   const handleGenerate = () => {
 
-    //console.log('Generating stats with filter:', filter);
+
     getStats(filters.gamespan, filters.season)
     if (setIsOpen) {
       setIsOpen(!isOpen)

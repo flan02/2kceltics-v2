@@ -29,18 +29,21 @@ export const FaceTooltip = ({ active, payload, label }: TooltipProps) => {
 
   return (
     <div className="py-1">
-      <p className="text-sm text-yellow-300 font-semibold bg-black py-1 pl-2">{label}</p>
-      <aside className='px-4 bg-gray-900'>
+      <p className="text-xs md:text-sm text-yellow-300 font-semibold bg-black py-1 pl-2">{label}</p>
+      <aside className='px-4 bg-gray-900 block md:hidden'>
+        <Image src={getImagePath(label as string)} width={60} height={60} alt={label ? label as string : "loading-image"} className="w-auto h-auto" />
+      </aside>
+      <aside className='px-4 bg-gray-900 hidden md:block'>
         <Image src={getImagePath(label as string)} width={100} height={100} alt={label ? label as string : "loading-image"} className="w-auto h-auto" />
       </aside>
       <div className='flex text-sm space-x-2 px-4 py-1 bg-gray-800/90'>
         <div className=" w-[50%] text-center">
-          <h6 className="text-gray-400 text-center">{selectedKey?.toUpperCase()}</h6>
-          <span className='text-gray-100 font-bold text-center'>  {parsedValue}</span>
+          <h6 className="text-gray-400 text-center text-xs md:text-base">{selectedKey == 'plusMinus' ? "+/-" : selectedKey?.toUpperCase()}</h6>
+          <span className='text-gray-100 font-bold text-center text-xs md:text-base'>{parsedValue}</span>
         </div>
         <div className="w-[50%] text-center">
-          <h6 className="text-center text-gray-400">GP</h6>
-          <span className="text-white text-center">{player.gp}</span>
+          <h6 className="text-center text-gray-400 text-xs md:text-base">GP</h6>
+          <span className="text-white font-bold text-center text-xs md:text-base">{player.gp}</span>
         </div>
       </div>
       <hr className='h-[4px] bg-white' />

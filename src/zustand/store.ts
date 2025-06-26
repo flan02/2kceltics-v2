@@ -7,7 +7,7 @@ interface StatsState {
   data: StatsResponse | null
   isLoading: boolean
   error: unknown
-  selectedKey?: Exclude<keyof PlayerStatsType, "id" | "season" | "gamespan" | "gp" | "gs" | "pos" | "name" | "plusMinus">
+  selectedKey?: Exclude<keyof PlayerStatsType, "id" | "season" | "gamespan" | "gp" | "gs" | "pos" | "name"> // "plusMinus"
   setData: (data: StatsResponse) => void
   setIsLoading: (state: boolean) => void
   setError: (err: unknown) => void

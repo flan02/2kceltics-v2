@@ -28,7 +28,7 @@ type Props = {
 const Dashboard = async ({ opt, photo, given_name }: Props) => {
   const session = await auth()
   const tasks = await getTasks() // server function
-  //console.log(tasks);
+
 
   const addTeam = opt === 'addteam'
   const schedule = opt === 'schedule'

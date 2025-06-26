@@ -62,85 +62,89 @@ const TypeGraphPage = ({ params: { type } }: PageProps) => {
       {
         type === 'stats'
           ? <>
-            <aside className='hidden md:flex items-end space-x-2 rounded-md text-white'>
-              <section className='flex w-[90%] xl:w-[80%] bg-black px-2 py-2 rounded-md space-x-4 lg:text-2xl'>
-                {
-                  !showFilters ? <h2 className='dark:text-muted-foreground py-1 md:py-0'>GRAPHIC STATS</h2> : null
-                }
-                {
-                  showFilters
-                    ? <div className='flex space-x-2 items-center'>
-                      <ArrowBigRightDash color='#aaa' size={32} />
-                      <div className='flex space-x-2 text-sm xl:text-lg'>
-                        <h3 className='dark:text-muted-foreground'> ORDER BY: </h3>
-                        <select
-                          className='rounded-md text-md text-center px-1 bg-gray-800 h-min py-1'
-                          defaultValue={selectedKey || 'pts'}
-                          onChange={(e) => {
-                            const value = e.target.value as Exclude<keyof PlayerStatsType, typeof fieldsToExclude[number]>;
-                            if (setSelectedKey) {
-                              setSelectedKey(value);
-                            }
-
-                            if (data && data.response) {
-                              const sorted = [...data.response].sort((a, b) => {
-                                const aValue = a[value]
-                                const bValue = b[value]
-                                if (typeof aValue === 'number' && typeof bValue === 'number') {
-                                  return aValue - bValue; // Sort in descending order
+            <div className=''>
+              <aside className='flex items-start md:items-end space-x-2 rounded-md text-white'>
+                <section className='w-[335px] pl-2 md:pl-0 md:flex md:w-[90%] xl:w-[80%] bg-black px-0 md:px-2 py-2 rounded-md space-x-4 lg:text-2xl'>
+                  {
+                    !showFilters ? <h2 className='dark:text-muted-foreground py-1 md:py-0'>GRAPHIC STATS</h2> : null
+                  }
+                  {
+                    showFilters
+                      ? <div className='flex space-x-0 md:space-x-2 items-center'>
+                        <ArrowBigRightDash color='#aaa' size={32} className='hidden md:block' />
+                        <div className='flex w-full space-y-2 md:space-y-0 flex-col md:flex-row space-x-0 md:space-x-2 text-sm xl:text-lg'>
+                          <div className='flex items-center space-x-1'>
+                            <h3 className='dark:text-muted-foreground text-xs md:text-base'> ORDER BY: </h3>
+                            <select
+                              className='rounded-md text-xs md:text-md text-center px-1 bg-gray-800 h-min py-1'
+                              defaultValue={selectedKey || 'pts'}
+                              onChange={(e) => {
+                                const value = e.target.value as Exclude<keyof PlayerStatsType, typeof fieldsToExclude[number]>;
+                                if (setSelectedKey) {
+                                  setSelectedKey(value);
                                 }
-                                return 0; // If not a number, do not sort
-                              });
-                              setData({ ...data, response: sorted });
-                            }
-                          }}
-                        >
-                          {
-                            statKeys.map((key) => (
-                              <option
-                                key={key}
-                                value={key}
-                              >
-                                {key.toUpperCase()}
-                              </option>
-                            ))
-                          }
-                        </select>
+
+                                if (data && data.response) {
+                                  const sorted = [...data.response].sort((a, b) => {
+                                    const aValue = a[value]
+                                    const bValue = b[value]
+                                    if (typeof aValue === 'number' && typeof bValue === 'number') {
+                                      return aValue - bValue; // Sort in descending order
+                                    }
+                                    return 0; // If not a number, do not sort
+                                  });
+                                  setData({ ...data, response: sorted });
+                                }
+                              }}
+                            >
+                              {
+                                statKeys.map((key) => (
+                                  <option
+                                    key={key}
+                                    value={key}
+                                  >
+                                    {key.toUpperCase()}
+                                  </option>
+                                ))
+                              }
+                            </select>
+                          </div>
 
 
-                        <div className='flex space-x-2'>
+                          <div className='flex items-center space-x-2'>
+                            <p className='text-white pl-0 md:pl-4 dark:text-muted-foreground text-xs md:text-base'>{gamespanMap[filters.gamespan]}</p>
+                            <p>|</p>
+                            <select
+                              className='rounded-md text-xs md:text-md text-center px-1 bg-gray-800 h-min py-1'
+                              value={multiplier}
+                              onChange={(e) => {
+                                const value = e.target.value
+                                setMultiplier(value as "per game" | "total")
+                              }}
+                            >
+                              <option value="per game">PER GAME</option>
+                              <option value="total">TOTAL</option>
 
-                          <p className='text-white pl-4 dark:text-muted-foreground'>{gamespanMap[filters.gamespan]}</p>
-                          <p>|</p>
-                          <select
-                            className='rounded-md text-md text-center px-1 bg-gray-800 h-min py-1'
-                            value={multiplier}
-                            onChange={(e) => {
-                              const value = e.target.value
-                              setMultiplier(value as "per game" | "total")
-                            }}
-                          >
-                            <option value="per game">PER GAME</option>
-                            <option value="total">TOTAL</option>
+                            </select>
+                          </div>
+                          <p className='hidden md:block md:mt-1'>|</p>
+                          <h4 className='bg-gray-300 text-midnight font-bold dark:text-yellow-400 rounded-md dark:bg-celtics px-2 h-min py-1 md:py-0 w-max md:w-auto'>
+                            {filters.season}
+                          </h4>
 
-                          </select>
+
                         </div>
-                        <p>|</p>
-                        <h4 className='bg-gray-300 text-midnight font-bold dark:text-yellow-400 rounded-md dark:bg-celtics px-2 h-min py-1'>
-                          {filters.season}
-                        </h4>
-
-
                       </div>
-                    </div>
-                    : null
-                }
-              </section>
+                      : null
+                  }
+                </section>
 
-              <div onClick={openSearchHandler} className={`cursor-pointer hover:bg-celtics/90 dark:hover:bg-celtics/90 px-2 py-2 rounded-md ${isDark ? 'bg-celtics' : 'bg-celtics'}`}>
-                <Search size={32} color='#ddd' />
-              </div>
-            </aside>
+                <div onClick={openSearchHandler} className={`cursor-pointer hover:bg-celtics/90 dark:hover:bg-celtics/90 px-2 py-2 rounded-md ${isDark ? 'bg-celtics' : 'bg-celtics'}`}>
+                  <Search size={32} color='#ddd' />
+                </div>
+              </aside>
+            </div>
+
             <AdvancedLayout />
           </>
           : NotFound()

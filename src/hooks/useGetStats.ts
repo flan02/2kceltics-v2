@@ -24,7 +24,7 @@ const useGetStats = () => {
         })
         .json<StatsResponse>()
 
-      console.log('Fetched stats:', response)
+
       setData(response)
     } catch (err) {
       console.error('Error fetching stats:', err)

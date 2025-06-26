@@ -21,7 +21,7 @@ export async function GET(req: NextRequest) {
 
     const uniqueSpans: typeof SeasonSpans = Array.from(new Set(data.map((item) => item.gamespan))).sort((a, b) => a - b);
 
-    //console.log("Current spans", uniqueSpans);
+
     return NextResponse.json({ spans: uniqueSpans }, { status: 200 });
   } catch (error) {
     console.error(error);

@@ -22,8 +22,6 @@ const AdvancedLayout = () => {
   const isDark = theme === 'dark';
 
 
-
-
   const players = useMemo(() => {
     if (!data?.response || !selectedKey) return [];
     const forcePerGame = percentageKeys.includes(selectedKey);
@@ -37,8 +35,6 @@ const AdvancedLayout = () => {
       }))
       .sort((a, b) => a.value - b.value); // o b.value - a.value si querés de mayor a menor
   }, [data, multiplier, selectedKey]);
-
-
 
 
   const maxValue = Math.max(
@@ -57,21 +53,22 @@ const AdvancedLayout = () => {
   if (isLoading) return <Skeleton className="h-[672px] max-w-screen-xl" />
 
 
-
   return (
     <>
       {
         !isLoading ? (
           <>
-            <div className='grid md:grid-cols-[6%_1%_93%] xl:grid-cols-[5%_3%_92%] grid-rows-1'>
-              <aside className='flex justify-center rounded-md my-auto xl:w-[90%] h-[60%] dark:bg-celtics bg-celtics text-white items-center border'>
-                {/* must be dynamic */}
+            <aside className='md:hidden flex justify-center w-max px-2 py-1 rounded-md my-auto xl:w-[90%] h-[60%] dark:bg-celtics bg-celtics text-white items-center border'>
+              <span className='text-base py-0.5 md:py-0 md:text-xl flex'>{data ? capitalize(fieldsMap[selectedKey!]) + ' per game' : 'Stat type'}</span>
+            </aside>
+            <div className='overflow-x-auto grid grid-cols-[200%] md:grid-cols-[6%_1%_93%] xl:grid-cols-[5%_3%_92%] grid-rows-1'>
+              <aside className='hidden md:flex justify-center rounded-md my-auto xl:w-[90%] h-[60%] dark:bg-celtics bg-celtics text-white items-center border'>
                 <span className='inline-block rotate-180 [writing-mode:vertical-rl] text-xl'>{data ? capitalize(fieldsMap[selectedKey!]) + ' per game' : ''}</span>
               </aside>
-              <div />
+              <div className='hidden md:block' />
               {
                 players.length > 0
-                  ? <ResponsiveContainer width="100%" height={600}>
+                  ? <ResponsiveContainer width="100%" height={600} className="-ml-4 md:ml-0">
                     <BarChart data={players}> {/* data={sortedByPoints} */}
                       <CartesianGrid stroke={isDark ? "#222" : "#ddd"} />
                       <XAxis dataKey="name" angle={-75} tick={{ fontWeight: 'bold', fontSize: 14 }} tickMargin={50} height={100} />
@@ -102,7 +99,7 @@ const AdvancedLayout = () => {
                       </Bar>
                     </BarChart>
                   </ResponsiveContainer>
-                  : <div className='w-full h-[600px] grid place-content-center border rounded-md'>
+                  : <div className='w-full h-[600px] flex justify-start items-center pl-[12%] md:pl-0 md:grid md:place-content-center border rounded-md'>
                     <Image src="/celtics-logo.png" priority alt="celtics-logo" className='w-auto h-auto' width={150} height={150} />
                   </div>
               }
@@ -110,7 +107,7 @@ const AdvancedLayout = () => {
             </div>
             <section className='w-[40%] rounded-md mx-auto row-span-2 text-center dark:bg-celtics bg-celtics text-white'>
               {/* must be dynamic */}
-              <span className='flex justify-center py-2 text-xl'>Player Name</span>
+              <span className='flex justify-center py-1 md:py-2 text-base md:text-xl'>Player Name</span>
             </section>
           </>
         ) : null
