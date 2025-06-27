@@ -93,6 +93,14 @@ enum Tier {
   HALL_OF_FAME
 }
 
+enum Pos {
+  PG
+  SG
+  SF
+  PF
+  C
+}
+
 model User {
   id                String        @id @default(auto()) @map("_id") @db.ObjectId
   email             String        @unique
@@ -231,4 +239,37 @@ model Tokens {
   twitter   Json?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model SeasonPlayerSpan {
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  season    Season
+  gamespan  Int
+  pos       Pos
+  name      String
+  gs        Int // Games Started
+  gp        Int // Games Played
+  min       Float
+  pts       Float
+  reb       Float
+  ast       Float
+  stl       Float
+  blk       Float
+  to        Float
+  fls       Float
+  fgPct     Float  @map("fg%") // ".519"
+  fgm       Float
+  fga       Float
+  tpPct     Float  @map("3p%") // ".581"
+  tpm       Float
+  tpa       Float
+  ftPct     Float  @map("ft%") // ".806"
+  ftm       Float
+  fta       Float
+  pa        Float
+  ofgm      Float
+  ofga      Float
+  plusMinus Float  @map("+/-") // en lugar de "+/-"
+
+  @@unique([name, season, gamespan])
 }

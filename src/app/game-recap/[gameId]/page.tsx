@@ -18,8 +18,7 @@ import { cache } from "react"
 import MarkdownRenderer from "@/components/markdown/MarkdownRenderer"
 import YoutubePlayerClient from "@/components/reutilizable/YoutubePlayerClient"
 
-import CookieBanner from "@/components/reutilizable/CookieBanner"
-import PostComments from "@/components/custom/game-recap/PostComments"
+
 import { Share2, Tickets } from "lucide-react"
 import ShareModal from "@/components/reutilizable/ShareModal"
 
@@ -62,7 +61,6 @@ export default async function GameIdPage({ params: { gameId }, searchParams: { s
   const TOTAL = stats === "TOTAL"
   return (
     <>
-
       <MaxWidthWrapper className='min-h-screen max-w-5xl'>
         <section className='mt-16 space-y-4 '>
           <h1 className='text-celtics text-3xl text-center'>GAME RECAP</h1>
@@ -74,19 +72,39 @@ export default async function GameIdPage({ params: { gameId }, searchParams: { s
                   <CardTitle className="text-midnight dark:text-zinc-700 font-bold uppercase -mt-5 sm:mt-0 leading-[24px] sm:leading-none">{`Season ${game?.season} Game #${game?.playoffGame == undefined || game?.playoffGame == "" ? game?.currentGame : game?.playoffGame}`}</CardTitle>
                 </CardHeader>
                 <CardContent>
+                  <Card className="md:flex md:justify-center py-4 block md:py-0 dark:bg-night-80/60 bg-white/20">
+                    <div className="w-full flex flex-col justify-center md:block dark:bg-night-90/50">
+                      <CardHeader>
+                        <CardTitle className="text-midnight dark:text-zinc-700 font-bold uppercase -mt-5 sm:mt-0 leading-[24px] sm:leading-none">{`Season ${game?.season} Game #${game?.playoffGame == undefined || game?.playoffGame == "" ? game?.currentGame : game?.playoffGame}`}</CardTitle>
+                      </CardHeader>
+                      <CardContent>
 
-                  <CardDescription className="flex items-center justify-center md:justify-start">
-                    <span className="text-slate-700 dark:text-zinc-700 text-xl mt-2 font-bold mr-2">VS</span>
-                    <Image src={`/logos/${game?.team_code2}.png`} width={100} height={100} className='mr-2 w-16 h-16' alt={`${game?.team_code2}-logo`} />
-                  </CardDescription>
+                        <CardDescription className="flex items-center justify-center md:justify-start">
+                          <span className="text-slate-700 dark:text-zinc-700 text-xl mt-2 font-bold mr-2">VS</span>
+                          <Image src={`/logos/${game?.team_code2}.png`} width={100} height={100} className='mr-2 w-16 h-16' alt={`${game?.team_code2}-logo`} />
+                        </CardDescription>
+                        <CardDescription className="flex items-center justify-center md:justify-start">
+                          <span className="text-slate-700 dark:text-zinc-700 text-xl mt-2 font-bold mr-2">VS</span>
+                          <Image src={`/logos/${game?.team_code2}.png`} width={100} height={100} className='mr-2 w-16 h-16' alt={`${game?.team_code2}-logo`} />
+                        </CardDescription>
 
 
-                  <CardDescription className="flex flex-col space-y-1 mt-4 min-w-[150px]">
-                    <span className="text-base dark:text-zinc-700 text-slate-800 font-bold">Type: {game?.type === "RS" ? "Regular Season" : "Playoffs"}</span>
-                    <span className="text-base dark:text-zinc-700 text-slate-800 font-bold">Rival: {game?.team2}</span>
-                    <span className="text-base dark:text-zinc-700 text-slate-800 font-bold">at {game?.atHome}</span>
-                  </CardDescription>
+                        <CardDescription className="flex flex-col space-y-1 mt-4 min-w-[150px]">
+                          <span className="text-base dark:text-zinc-700 text-slate-800 font-bold">Type: {game?.type === "RS" ? "Regular Season" : "Playoffs"}</span>
+                          <span className="text-base dark:text-zinc-700 text-slate-800 font-bold">Rival: {game?.team2}</span>
+                          <span className="text-base dark:text-zinc-700 text-slate-800 font-bold">at {game?.atHome}</span>
+                        </CardDescription>
+                        <CardDescription className="flex flex-col space-y-1 mt-4 min-w-[150px]">
+                          <span className="text-base dark:text-zinc-700 text-slate-800 font-bold">Type: {game?.type === "RS" ? "Regular Season" : "Playoffs"}</span>
+                          <span className="text-base dark:text-zinc-700 text-slate-800 font-bold">Rival: {game?.team2}</span>
+                          <span className="text-base dark:text-zinc-700 text-slate-800 font-bold">at {game?.atHome}</span>
+                        </CardDescription>
 
+                      </CardContent>
+                      <CardFooter>
+                      </CardFooter>
+                    </div>
+                  </Card>
                 </CardContent>
                 <CardFooter>
                 </CardFooter>
@@ -144,7 +162,7 @@ export default async function GameIdPage({ params: { gameId }, searchParams: { s
                 <span className="text-midnight dark:text-zinc-700 font-bold text-xl">Comments</span>
               </CardDescription>
 
-              <PostComments />
+
             </CardContent>
           </Card>
           <br /><br /><br />
@@ -157,7 +175,7 @@ export default async function GameIdPage({ params: { gameId }, searchParams: { s
 
 
       </MaxWidthWrapper>
-      <CookieBanner />
+      {/* <CookieBanner /> */}
     </>
   )
 }

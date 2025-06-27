@@ -32,7 +32,7 @@ const ShareOnX = (props: Props) => {
         placeholder="What are the good news today..."
         className="w-full h-40 text-celtics caret-celtics"
         value={message}
-        onChange={(e) => setMessage(e.target.value)}
+        onChange={(e: any) => setMessage(e.target.value)}
       />
       <Link onClick={messageCleaner} href={shareUrl} target="_blank" rel="noopener noreferrer" className="dark:bg-celtics bg-black hover:bg-black/90 text-white px-4 text-center py-2 rounded">Post</Link>
     </div>

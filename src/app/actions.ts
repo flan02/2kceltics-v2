@@ -5,18 +5,18 @@ import { LimitPoints, TierNames } from "@/lib/types"
 import { $Enums } from "@prisma/client"
 import { revalidatePath } from "next/cache"
 
+const CURRENT_SEASON = process.env.CURRENT_SEASON as $Enums.Season
 
 export async function getScheduleGames() {
-  const current_season = process.env.CURRENT_SEASON as $Enums.Season
+  //const current_season = process.env.CURRENT_SEASON as $Enums.Season
   const response = await db.schedule.findMany({
     where: {
-      season: current_season
+      season: CURRENT_SEASON
     }
   })
   return response
 }
 
-const CURRENT_SEASON = process.env.CURRENT_SEASON as $Enums.Season
 
 export async function getNextGame() {
   const response = await db.schedule.findMany({

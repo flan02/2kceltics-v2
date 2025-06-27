@@ -11,7 +11,10 @@ import { GameStatProps } from '@/components/custom/dashboard/AddPlayerStatsForm'
 import CookieBanner from "@/components/reutilizable/CookieBanner";
 import { getNextGame } from "@/app/actions";
 
+//import SelectRSGames from "@/components/custom/season-stats/SelectRSGames";
+{/* <SelectRSGames /> */ } {/* FILTER WITH SELECT-OPTION BY SPAN 5,10,15,20,25,30...*/ }
 
+export const dynamic = 'force-dynamic'; // * force static generation to be dynamic
 
 const SeasonsStatPage = async () => {
   const current = process.env.CURRENT_SEASON as Season
@@ -24,27 +27,23 @@ const SeasonsStatPage = async () => {
 
   let parsedSpan: string = span.toString()
   // console.log('parsedSpan', parsedSpan);
-  const average = await getCurrentPlayerStats(type, current, 'AVG', 'RS') as GameStatProps // 3rd param ... span
-  const total = await getCurrentPlayerStats(type, current, 'TOTAL', 'RS') as GameStatProps
-  const opt = undefined
+  const average = await getCurrentPlayerStats(type, current, 'AVG', 'RS', parsedSpan) as GameStatProps
+  const total = await getCurrentPlayerStats(type, current, 'TOTAL', 'RS', '82') as GameStatProps
 
   return (
-    <>
-      <MaxWidthWrapper className='mt-8 md:mt-12 lg:mt-24 space-y-8'>
-        <h1 className='uppercase text-celtics text-2xl lg:text-4xl font-bold'>Season {current}</h1>
-        <div className="flex space-x-2">
-          <h2 className="text-muted-foreground text-lg">Games Played: <span className="text-celtics font-bold">5</span></h2>
-        </div>
-        <SeasonStats average={average} total={total} span={parsedSpan} label="Regular Season" />
-        <br /><br /><br />
-        <div className='md:pb-16 lg:pb-24 flex justify-center'>
-          <Button asChild className='px-2 py-0 dark:bg-celtics dark:hover:bg-celtics/90 dark:text-black '>
-            <Link href="/season-stats" className='text-xs'>BACK</Link>
-          </Button>
-        </div>
-      </MaxWidthWrapper>
-
-    </>
+    <MaxWidthWrapper className='mt-8 md:mt-12 lg:mt-24 space-y-8'>
+      <h1 className='uppercase text-celtics text-2xl lg:text-4xl font-bold'>Season {current}</h1>
+      <div className="flex space-x-2">
+        <h2 className="text-muted-foreground text-lg">Games Played: <span className="text-celtics font-bold">{span}</span></h2>
+      </div>
+      <SeasonStats average={average} total={total} span={parsedSpan} label="Regular Season" />
+      <br /><br /><br />
+      <div className='md:pb-16 lg:pb-24 flex justify-center'>
+        <Button asChild className='px-2 py-0 dark:bg-celtics dark:hover:bg-celtics/90 dark:text-black '>
+          <Link href="/season-stats" className='text-xs'>BACK</Link>
+        </Button>
+      </div>
+    </MaxWidthWrapper>
 
   )
 }

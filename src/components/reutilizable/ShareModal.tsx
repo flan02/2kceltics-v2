@@ -18,27 +18,28 @@ type Props = {}
 
 const ShareModal = (props: Props) => {
   const [isOpen, setIsOpen] = useState(false)
-  // const pageUrl = encodeURIComponent(window.location.href);
+  const pageUrl = encodeURIComponent(window.location.href);
   const message = encodeURIComponent("Mirá este partido de los Celtics! 🍀🏀")
 
-  // const shareOptions = [
-  //   {
-  //     name: "Twitter",
-  //     url: `https://twitter.com/intent/tweet?url=${pageUrl}&text=${message}`,
-  //   },
-  //   {
-  //     name: "Facebook",
-  //     url: `https://www.facebook.com/sharer/sharer.php?u=${pageUrl}`,
-  //   },
-  //   {
-  //     name: "WhatsApp",
-  //     url: `https://wa.me/?text=${message}%20${pageUrl}`,
-  //   },
-  // ]
+  const shareOptions = [
+    {
+      name: "Twitter",
+      url: `https://twitter.com/intent/tweet?url=${pageUrl}&text=${message}`,
+    },
+    {
+      name: "Facebook",
+      url: `https://www.facebook.com/sharer/sharer.php?u=${pageUrl}`,
+    },
+    {
+      name: "WhatsApp",
+      url: `https://wa.me/?text=${message}%20${pageUrl}`,
+    },
+  ]
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         <Button
+          disabled
           className="text-xs dark:bg-celtics dark:hover:bg-celtics/90 text-white rounded-lg flex items-center gap-2">
           <Share2 size={18} /> SHARE
         </Button>
@@ -50,7 +51,7 @@ const ShareModal = (props: Props) => {
           <DialogDescription>Boost your rank! The more you share, the higher you climb</DialogDescription>
         </DialogHeader>
 
-        {/* <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-3">
           {shareOptions.map((option) => (
             <a
               key={option.name}
@@ -62,7 +63,7 @@ const ShareModal = (props: Props) => {
               Share on {option.name}
             </a>
           ))}
-        </div> */}
+        </div>
       </DialogContent>
 
     </Dialog>

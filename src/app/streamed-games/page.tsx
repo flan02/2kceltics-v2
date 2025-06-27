@@ -25,6 +25,10 @@ export default async function StreamedGamesPage({ searchParams: { page = 0 } }: 
     result: undefined
   })
 
+  if (!CURRENT_SEASON || !Object.values($Enums.Season).includes(CURRENT_SEASON as $Enums.Season)) {
+    throw new Error(`CURRENT_SEASON isn't valid: ${CURRENT_SEASON}`);
+  }
+
   let filteredGames = request!
     .filter((game: any) => game.video_url !== null)
     .sort((a: any, b: any) => parseInt(b.currentGame) - parseInt(a.currentGame))
@@ -49,4 +53,5 @@ export default async function StreamedGamesPage({ searchParams: { page = 0 } }: 
     </>
   )
 }
+
 

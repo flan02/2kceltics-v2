@@ -1,12 +1,8 @@
-
 import React from 'react'
-
-
 import DesktopMenu from './home/DesktopMenu';
 import MobileMenu from './home/MobileMenu';
-type Props = {
 
-}
+type Props = {}
 
 const MainMenu = (props: Props) => {
   // * Validate from db if playoffs are on querying the current season has more than 82 games
