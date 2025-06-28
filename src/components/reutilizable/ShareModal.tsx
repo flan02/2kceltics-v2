@@ -19,17 +19,17 @@ type Props = {}
 const ShareModal = (props: Props) => {
   const [isOpen, setIsOpen] = useState(false)
   const pageUrl = encodeURIComponent(window.location.href);
-  const message = encodeURIComponent("Mirá este partido de los Celtics! 🍀🏀")
+  const message = encodeURIComponent("This game was incredible! I'm glad to share it with you all! Let's go Celtics 🍀🏀 \n")
 
   const shareOptions = [
     {
       name: "Twitter",
       url: `https://twitter.com/intent/tweet?url=${pageUrl}&text=${message}`,
     },
-    {
-      name: "Facebook",
-      url: `https://www.facebook.com/sharer/sharer.php?u=${pageUrl}`,
-    },
+    // {
+    //   name: "Facebook",
+    //   url: `https://www.facebook.com/sharer/sharer.php?u=${pageUrl}`,
+    // },
     {
       name: "WhatsApp",
       url: `https://wa.me/?text=${message}%20${pageUrl}`,
@@ -39,7 +39,7 @@ const ShareModal = (props: Props) => {
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         <Button
-          disabled
+          // disabled
           className="text-xs dark:bg-celtics dark:hover:bg-celtics/90 text-white rounded-lg flex items-center gap-2">
           <Share2 size={18} /> SHARE
         </Button>

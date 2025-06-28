@@ -49,8 +49,8 @@ const AdvancedPage = (props: Props) => {
         </aside>
       </section>
       <div className='flex justify-center'>
-        <Button asChild className='px-2 py-0 dark:bg-celtics dark:hover:bg-celtics/90 dark:text-black'>
-          <Link href="/" className='text-xs dark:text-white'>BACK</Link>
+        <Button asChild className='px-2 py-0 dark:hover:bg-celtics/90 dark:bg-white dark:hover:bg-gray-200 dark:text-black'>
+          <Link href="/" className='text-xs '>BACK</Link>
         </Button>
       </div>
       <div className='block xl:hidden'>

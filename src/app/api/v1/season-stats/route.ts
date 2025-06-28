@@ -37,8 +37,8 @@ export async function POST(request: Request) {
   try {
     const rawBody = await request.json();
 
-    const normalizedBody = rawBody.map(normalizeSeasonPlayerInput);
-
+    const normalizedBody = await Promise.all(rawBody.map(normalizeSeasonPlayerInput));
+    //console.log(normalizedBody);
     try {
 
       await db.seasonPlayerSpan.createMany({
@@ -57,7 +57,7 @@ export async function POST(request: Request) {
 
   } catch (error) {
     return NextResponse.json(
-      { error: "Error interno del servidor" },
+      { error: "Internal server error" },
       { status: 500 }
     );
   }

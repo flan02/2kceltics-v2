@@ -1,4 +1,4 @@
-
+export const current_season = process.env.CURRENT_SEASON as currentSeason
 
 export const gameTypes = ["RS", "PO"]
 
@@ -10,9 +10,11 @@ export const statTypes = ["TOTAL", "AVG"]
 
 export const atHomeTypes = ["HOME", "AWAY"]
 
-export const seasonTypes = ["NBA2K22", "NBA2K23", "NBA2K24", "NBA2K25"]
+export const seasonTypes = ["NBA2K22", "NBA2K23", "NBA2K24", "NBA2K25"] as const // ! IN CASE OF ERRORS REMOVE (AS CONST)
 const omitSeasons = new Set(["NBA2K22", "NBA2K23", "NBA2K24"])
 export const graphicSeasons = seasonTypes.filter((season) => !omitSeasons.has(season))
+
+export type currentSeason = typeof seasonTypes[number];
 
 export const seasonReadOnly = ["NBA2K22", "NBA2K23", "NBA2K24", "NBA2K25"] as const
 
@@ -135,16 +137,16 @@ export const fieldsMap: Record<string, string> = {
   "fls": "Fouls",
   "fgPct": "Field Goal %",
   "fgm": "Field Goals Made",
-  "fga": "Field Goals Attempted",
+  "fga": "Field Goals Atte", // Attempted
   "tpPct": "3-Point %",
   "tpm": "3-Point Made",
-  "tpa": "3-Point Attempted",
+  "tpa": "3-Point Atte",
   "ftPct": "Free Throws %",
   "ftm": "Free Throws Made",
-  "fta": "Free Throws Att",
+  "fta": "Free Throws Atte",
   "pa": "Points Against",
   "ofgm": "Opp. FG Made",
-  "ofga": "Opp. FG Att",
+  "ofga": "Opp. FG Atte",
   "plusMinus": "+/-",
   // Add more mappings as needed
 }

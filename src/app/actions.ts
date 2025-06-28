@@ -1,5 +1,6 @@
 import { db } from "@/db"
 import { $Enums } from "@prisma/client"
+import { NextResponse } from "next/server"
 
 const CURRENT_SEASON = process.env.CURRENT_SEASON as $Enums.Season
 
@@ -59,4 +60,22 @@ export async function getCurrentRoster() {
   } catch (error) {
     console.error(error)
   }
+}
+
+
+export async function getCurrentSpan() {
+  const response = await db.schedule.findMany({
+    where: {
+      season: CURRENT_SEASON,
+      scoreTeam1: { gt: 0 }
+    },
+    select: {
+      scoreTeam1: true,
+      team_code2: true,
+    }
+  })
+
+  const span: number = response.length
+  return span
+
 }

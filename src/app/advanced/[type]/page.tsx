@@ -66,7 +66,7 @@ const TypeGraphPage = ({ params: { type } }: PageProps) => {
               <aside className='flex items-start md:items-end space-x-2 rounded-md text-white'>
                 <section className='w-[335px] pl-2 md:pl-0 md:flex md:w-[90%] xl:w-[80%] bg-black px-0 md:px-2 py-2 rounded-md space-x-4 lg:text-2xl'>
                   {
-                    !showFilters ? <h2 className='dark:text-muted-foreground py-1 md:py-0'>GRAPHIC STATS</h2> : null
+                    !showFilters ? <h2 className='dark:text-muted-foreground py-1 md:py-0 pl-2'>GRAPHIC STATS</h2> : null
                   }
                   {
                     showFilters
@@ -103,7 +103,8 @@ const TypeGraphPage = ({ params: { type } }: PageProps) => {
                                     key={key}
                                     value={key}
                                   >
-                                    {key.toUpperCase()}
+                                    {/* {key.toUpperCase()} */}
+                                    {fieldsMap[key!] || 'Points'}
                                   </option>
                                 ))
                               }
@@ -157,8 +158,8 @@ const TypeGraphPage = ({ params: { type } }: PageProps) => {
       }
 
       <div className='flex justify-center'>
-        <Button asChild className='px-2 py-0 dark:bg-celtics dark:hover:bg-celtics/90 dark:text-black'>
-          <Link href="/advanced" className='text-xs dark:text-white'>BACK</Link>
+        <Button asChild className='px-2 py-0 dark:bg-white dark:hover:bg-gray-200 hover:bg-black/80 dark:text-black'>
+          <Link href="/advanced" className='text-xs'>BACK</Link>
         </Button>
       </div>
       <br /><br /><br />

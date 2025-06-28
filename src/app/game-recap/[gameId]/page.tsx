@@ -19,7 +19,7 @@ import MarkdownRenderer from "@/components/markdown/MarkdownRenderer"
 import YoutubePlayerClient from "@/components/reutilizable/YoutubePlayerClient"
 
 
-import { Share2, Tickets } from "lucide-react"
+import { Tickets } from "lucide-react"
 import ShareModal from "@/components/reutilizable/ShareModal"
 
 
@@ -103,10 +103,12 @@ export default async function GameIdPage({ params: { gameId }, searchParams: { s
 
                 </CardDescription>
                 <ShareModal />
+                {/* 
                 <Button className="dark:bg-celtics dark:hover:bg-celtics/90 dark:text-white" disabled>
                   <Tickets className="mr-2" size={20} />
                   <span className="text-xs">BUY TICKET</span>
-                </Button>
+                </Button> 
+                */}
               </div>
 
               {/* Client side component */}
@@ -140,7 +142,7 @@ export default async function GameIdPage({ params: { gameId }, searchParams: { s
             </CardContent>
           </Card>
 
-          <Card className="dark:bg-night-80/60 bg-white/10">
+          {/* <Card className="dark:bg-night-80/60 bg-white/10">
             <CardContent className="flex flex-col justify-between items-start">
               <CardDescription className="pt-8 pb-2 flex justify-start items-center">
                 <span className="text-midnight dark:text-zinc-700 font-bold text-xl">Comments</span>
@@ -148,7 +150,7 @@ export default async function GameIdPage({ params: { gameId }, searchParams: { s
 
 
             </CardContent>
-          </Card>
+          </Card> */}
           <br /><br /><br />
           <div className="text-center pb-24">
             <Button asChild className="dark:bg-celtics dark:text-white">

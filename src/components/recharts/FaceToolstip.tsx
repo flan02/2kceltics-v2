@@ -17,13 +17,38 @@ export const FaceTooltip = ({ active, payload, label }: TooltipProps) => {
 
   const player = payload[0].payload as PlayerStatsType;
   const value = selectedKey ? player[selectedKey as keyof PlayerStatsType] : undefined;
-  let parsedValue
-  if (multiplier === "per game") {
-    parsedValue = typeof value === 'number' ? value.toFixed(2) : '—'
+  // let parsedValue
+  // if (multiplier === "per game") {
+  //   parsedValue = typeof value === 'number' ? value.toFixed(2) : '—'
+  // }
+  // if (multiplier === "total") {
+  //   parsedValue = typeof value === 'number' ? (Number(value) * Number(player.gp)).toFixed(0) : '—'
+  // }
+  const isPercentageField = (key: string) =>
+    ['fgPct', 'tpPct', 'ftPct'].includes(key);
+
+  const key = selectedKey as keyof PlayerStatsType;
+  const forcePerGame = isPercentageField(key);
+
+  let parsedValue: string;
+
+  if (typeof value === 'number') {
+    if (multiplier === 'total') {
+      if (forcePerGame) {
+        // Si es %, lo mostramos igual con .toFixed(2), NO lo multiplicamos por GP
+        parsedValue = value.toFixed(2);
+      } else {
+        // Total normal: multiplicamos por GP y redondeamos
+        parsedValue = (value * Number(player.gp)).toFixed(0);
+      }
+    } else {
+      // Per game: porcentaje o promedio
+      parsedValue = forcePerGame ? value.toFixed(2) : value.toFixed(1);
+    }
+  } else {
+    parsedValue = '—';
   }
-  if (multiplier === "total") {
-    parsedValue = typeof value === 'number' ? (Number(value) * Number(player.gp)).toFixed(0) : '—'
-  }
+
 
 
 

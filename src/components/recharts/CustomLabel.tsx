@@ -8,12 +8,21 @@ export const CustomLabel = ({ x, y, value }: any) => {
   const { theme } = useTheme();
   const isDark = theme === 'dark';
   const forcePerGame = percentageKeys.includes(selectedKey as keyof PlayerStatsType);
-  const display = typeof value === 'number'
-    ? multiplier === 'total' && !forcePerGame
-      ? value.toFixed(0)
-      : value.toFixed(2)
-    : '—';
-
+  // const display = typeof value === 'number'
+  //   ? multiplier === 'total' && !forcePerGame
+  //     ? value.toFixed(0)
+  //     : value.toFixed(2)
+  //   : '—';
+  const isPercentageField = (key: string) =>
+    ['fgPct', 'tpPct', 'ftPct'].includes(key);
+  const display =
+    typeof value === 'number'
+      ? multiplier === 'total' && !forcePerGame
+        ? value.toFixed(0)
+        : isPercentageField(selectedKey as string)
+          ? value.toFixed(2)
+          : value.toFixed(1)
+      : '—';
   return (<text
     x={x + 5}
     y={y - 10}

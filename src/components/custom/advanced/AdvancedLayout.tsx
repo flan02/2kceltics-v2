@@ -106,7 +106,6 @@ const AdvancedLayout = () => {
 
             </div>
             <section className='w-[40%] rounded-md mx-auto row-span-2 text-center dark:bg-celtics bg-celtics text-white'>
-              {/* must be dynamic */}
               <span className='flex justify-center py-1 md:py-2 text-base md:text-xl'>Player Name</span>
             </section>
           </>

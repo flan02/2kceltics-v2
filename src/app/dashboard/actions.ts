@@ -3,7 +3,7 @@
 import { GameStatProps } from "@/components/custom/dashboard/AddPlayerStatsForm"
 import { updateProps } from "@/components/custom/dashboard/UpdateScheduleGame"
 import { db } from "@/db"
-import { SeasonType, seasonTypes } from "@/lib/types"
+import { current_season } from "@/lib/types"
 import { Conference, Schedule, Season, Season2k, StatType, Tournament, Stage } from "@prisma/client"
 import { revalidatePath } from "next/cache"
 
@@ -275,9 +275,10 @@ export async function createScheduleGame(values: Omit<Schedule, "id" | "createdA
 
 
 export async function getCurrentGame() {
+  //console.log("CURRENT SEASON", current_season);
   const response = await db.schedule.findMany({
     where: {
-      season: "NBA2K24",
+      season: current_season,
       currentGame: { gt: 0 }
     },
     select: {

@@ -1,6 +1,7 @@
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
-import { playerImages2K25 } from "./types";
+import { current_season, playerImages2K25, SeasonSpans } from "./types";
+import { getCurrentSpan } from "@/app/actions";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -13,13 +14,28 @@ export function keysToLowerCase(obj: Record<string, any>): Record<string, any> {
 }
 
 
-export function normalizeSeasonPlayerInput(raw: Record<string, any>): Record<string, any> {
+export async function normalizeSeasonPlayerInput(raw: Record<string, any>): Promise<Record<string, any>> {
+
+  const nextGamespan = async (): Promise<number> => {
+    // This function should retrieve the next gamespan from the database.}
+    const span = await getCurrentSpan()
+
+    const index = SeasonSpans.indexOf(span);
+    if (index === -1) {
+      throw new Error(`Invalid currentGame value: ${span}`);
+    }
+
+    return SeasonSpans[index]
+  }
+
+  const nextSpan = await nextGamespan();
+
 
   return {
     name: raw["Name"],
     pos: raw["POS"],
-    season: "NBA2K25", // si querés forzarla o pasala dinámica
-    gamespan: 40, // raw["gamespan"],
+    season: current_season,
+    gamespan: nextSpan, // raw["gamespan"]
     gs: parseInt(raw["GS"]),
     gp: parseInt(raw["GP"]),
     min: parseFloat(raw["MIN"]),
