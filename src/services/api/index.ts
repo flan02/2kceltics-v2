@@ -8,19 +8,35 @@ export enum Method {
   DELETE = 'delete',
 }
 
+// export async function KY(method: Method, url: string, data?: any) {
+//   try {
+//     if (method === Method.GET) {
+//       const response = await (ky as any)[method](url).json()
+//       return response
+//     } else if (method === Method.POST) {
+//       const response = await (ky as any)[method](url, data)
+//       return response
+//     }
+//     return null
+//   } catch (error) {
+//     console.log(error);
+//     return error
+//   }
+
+// }
+
 export async function KY(method: Method, url: string, data?: any) {
   try {
-    if (method === Method.GET) {
-      const response = await (ky as any)[method](url).json()
-      return response
-    } else if (method === Method.POST) {
-      const response = await (ky as any)[method](url, data)
-      return response
-    }
-    return null
+    const options = data ? { json: data } : {}
+
+    const response = await ky(url, {
+      method,
+      ...options,
+    }).json()
+
+    return response
   } catch (error) {
-    console.log(error);
+    console.error('[KY ERROR]', error)
     return error
   }
-
 }

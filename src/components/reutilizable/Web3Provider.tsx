@@ -3,11 +3,11 @@
 'use client'
 
 import '@rainbow-me/rainbowkit/styles.css'
-import { RainbowKitProvider, darkTheme, getDefaultConfig, connectorsForWallets, getDefaultWallets } from '@rainbow-me/rainbowkit'
-import { WagmiProvider, createConfig, http } from 'wagmi'
+import { RainbowKitProvider, darkTheme, getDefaultConfig } from '@rainbow-me/rainbowkit'
+import { WagmiProvider } from 'wagmi'
 import { mainnet } from 'wagmi/chains'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { ReactNode, useEffect, useState } from 'react'
+import { ReactNode } from 'react'
 import {
   metaMaskWallet,
   walletConnectWallet,
@@ -25,10 +25,6 @@ const config = getDefaultConfig({
   chains: [mainnet],
   ssr: true,
 })
-
-
-
-
 
 
 interface Props {

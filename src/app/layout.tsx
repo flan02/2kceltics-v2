@@ -68,9 +68,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Web3Provider>
-            <Navbar />
-          </Web3Provider>
+          <Navbar />
           <CardCrypto />
           {children}
           <Toaster />

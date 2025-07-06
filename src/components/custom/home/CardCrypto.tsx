@@ -19,7 +19,7 @@ const CardCrypto = (props: Props) => {
       </section>
       <p className='text-xs font-mono'>We want to offer the better experience as possible. To do that we are looking for some funds.</p>
       <div className="text-center">
-        <Link href='/crypto' className="text-blue-500 text-xs hover:underline">Learn more</Link>
+        <Link href='/crypto' className="bg-black hover:bg-black/80 dark:hover:bg-black/80 px-2 py-1 rounded-md text-white dark:text-gray-500 text-xs hover:underline">Learn more</Link>
       </div>
     </div>
   )

@@ -224,3 +224,16 @@ model SeasonPlayerSpan {
 
   @@unique([name, season, gamespan])
 }
+
+/**
+ * ¿Qué guardar en la base de datos tras la firma con SIWE?
+ * Cuando un usuario firma tu mensaje SIWE, básicamente confirma la propiedad de su wallet Ethereum. Esto te sirve para autenticar al usuario sin contraseña.
+ * Lo que podrías guardar:
+ * Dirección Ethereum (address): el identificador único del usuario.
+ * Nonce utilizado (para evitar replay attacks).
+ * Fecha/hora de la última firma o sesión.
+ * Estado de sesión: si está activo o expirado.
+ * Opcionalmente, información de perfil que quieras asociar (ejemplo: username, email, etc.).
+ * Tokens ERC-20 que posee (si haces consultas on-chain o con algún API).
+ * Lo importante es que con la dirección ya tienes al usuario autenticado y puedes personalizar la experiencia.
+ */

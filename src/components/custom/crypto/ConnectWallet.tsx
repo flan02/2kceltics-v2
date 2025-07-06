@@ -5,6 +5,8 @@ import { useEffect, useState } from 'react';
 import AutoConnectModal from './AutoConnectModal'
 import dynamic from 'next/dynamic';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
+import { useAccount, useSignMessage } from 'wagmi';
+import { KY, Method } from '@/services/api';
 type Props = {}
 
 const ConnectButton = dynamic(
@@ -12,13 +14,13 @@ const ConnectButton = dynamic(
   { ssr: false } // para evitar que se cargue en SSR
 );
 
-
-
-
 const ConnectWallet = (props: Props) => {
   const { openConnectModal } = useConnectModal();
   const [loaded, setLoaded] = useState(false);
 
+  const { address, isConnected, chain } = useAccount()
+  const { signMessageAsync } = useSignMessage()
+  const [hasSignedIn, setHasSignedIn] = useState(false)
 
   const handleClick = async () => {
     if (!loaded) {
@@ -38,6 +40,7 @@ const ConnectWallet = (props: Props) => {
   }, [loaded, openConnectModal]);
 
 
+  // ? This useEffect is used to remove duplicate wallet options in the connect modal 
   useEffect(() => {
     const interval = setInterval(() => {
       const nodes = document.querySelectorAll('[data-testid="rk-wallet-option-io.rabby"]')
@@ -77,18 +80,58 @@ const ConnectWallet = (props: Props) => {
     return () => clearInterval(interval)
   }, [])
 
+  useEffect(() => {
+    const signInWithEthereum = async () => {
+      if (!isConnected || !address || hasSignedIn) return
+
+      try {
+
+        const res = await KY(Method.POST, '/api/v1/siwe/message', {
+          address,
+          chainId: chain?.id
+        }) as { message: string };
+
+        const message = res.message
+
+        console.log(message);
+        console.log(message.length);
+
+        const signature = await signMessageAsync({ message })
+
+        // await axios.post('/api/siwe/verify', {
+        //   message,
+        //   signature
+        // })
+
+        await KY(Method.POST, '/api/v1/siwe/verify', {
+          message,
+          signature
+        })
+
+        setHasSignedIn(true)
+      } catch (err) {
+        console.error('Error during SIWE login:', err)
+      }
+    }
+
+    signInWithEthereum()
+  }, [isConnected, address, chain, hasSignedIn, signMessageAsync])
+
 
   return (
     <section className=''>
       <h1 className='text-2xl'>Image here</h1>
       {/* <AutoConnectModal /> Automatically opens the connect modal on page load */}
       {/* <ConnectButton showBalance={true} />  component from rainbowkit */}
-      {loaded
+      {loaded && !isConnected
         ? <>
 
           <ConnectButton />
         </>
         : <button onClick={handleClick} className='text-white bg-celtics px-2.5 py-2.5 rounded-md font-bold'>Connect Wallet</button>
+      }
+      {
+        isConnected ? <p>WALLET CONNECTED</p> : <p>WALLET NOT CONNECTED</p>
       }
 
     </section>
