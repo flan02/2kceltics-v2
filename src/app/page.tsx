@@ -8,13 +8,12 @@ import H2underline from "@/components/reutilizable/H2underline";
 import Schedule from "@/components/custom/Schedule";
 import Marquee from "@/components/reutilizable/Marquee";
 import VisitorsCounter from "@/components/custom/VisitorsCounter";
-import CelticsLogo from "../../public/celtics-logo.png";
 import TheJays from "../../public/the_jays_trophy-no-bg.png";
 import React from "react";
-import { AnimatedNumber } from "@/components/core/animated-number";
 import { AnimatedNumberBasic } from "@/components/reutilizable/AnimatedNumberBasic";
 import Roster from "@/components/custom/Roster";
 import VideoPlayer from "@/components/reutilizable/VideoPlayer";
+
 
 
 
@@ -46,6 +45,8 @@ export default async function Home({ searchParams: { page = 0 } }: { searchParam
               <Image src={CelticsHero} alt="CelticsStarting5 Hero Image" className="px-0 md:px-10 lg:py-4 lg:px-8 xl:p-0" />
             </section>
           </div>
+
+
 
           <div className="flex items-center justify-center ">
             {/* <span className="text-celtics text-shadow text-5xl mr-2 font-bold">x 18</span>*/}

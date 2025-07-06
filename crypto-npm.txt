@@ -1,0 +1,5 @@
+wagmi
+viem
+@rainbow-me/rainbowkit
+
+pino-pretty

@@ -9,3 +9,7 @@ New 2kceltics website built with Nextjs
 ## Charts
 
 [website](https://recharts.org/en-US)
+
+## Dapp testing
+
+Lighthouse o WebPageTest

@@ -1,16 +1,14 @@
-import React from 'react'
+'use client'
 import Upload from './dashboard/Upload'
-import { CloverIcon } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { ModeToggle } from '../reutilizable/ModeToggle'
-
 import { TextShimmer } from '../core/text-shimmer'
 
 
 type Props = {}
 
-const Navbar = async (props: Props) => {
+const Navbar = (props: Props) => {
 
   let isAdmin = false
 

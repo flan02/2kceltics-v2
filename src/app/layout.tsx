@@ -5,6 +5,10 @@ import Navbar from "@/components/custom/Navbar";
 import Footer from "@/components/custom/Footer";
 import { Toaster } from "@/components/ui/toaster";
 import { ThemeProvider } from "@/components/reutilizable/theme-provider"
+import CardCrypto from "@/components/custom/home/CardCrypto";
+import dynamic from "next/dynamic";
+//import Web3Provider from "@/components/reutilizable/Web3Provider";
+
 const recursive = Recursive({ subsets: ["latin"] });
 const inter = Inter({ subsets: ["latin"] });
 
@@ -29,6 +33,8 @@ export const metadata: Metadata = {
     ]
   }
 };
+
+const Web3Provider = dynamic(() => import('@/components/reutilizable/Web3Provider'), { ssr: false })
 
 export default function RootLayout({
   children,
@@ -62,12 +68,15 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Navbar />
+          <Web3Provider>
+            <Navbar />
+          </Web3Provider>
+          <CardCrypto />
           {children}
           <Toaster />
           <Footer />
         </ThemeProvider>
       </body>
     </html>
-  );
+  )
 }
