@@ -42,8 +42,8 @@ interface FilterState {
 }
 
 interface WalletState {
-  isConnected: boolean
-  setIsConnected: (state: boolean) => void
+  status: boolean
+  setStatus: (state: boolean) => void
 }
 
 export const useStatsStore = create<StatsState>((set) => ({
@@ -88,6 +88,6 @@ export const useFilterStore = create<FilterState>((set) => ({
 }))
 
 export const useWalletStore = create<WalletState>((set) => ({
-  isConnected: false,
-  setIsConnected: (state) => set({ isConnected: state }),
+  status: false,
+  setStatus: (state) => set({ status: state }),
 }));

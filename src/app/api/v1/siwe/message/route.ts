@@ -31,7 +31,7 @@ export async function POST(req: Request) {
     // * secure: false, // true if using HTTPS
     cookies().set('siwe-nonce', nonce, {
       httpOnly: true,
-      secure: false,
+      secure: process.env.NODE_ENV === 'production', //true,
       path: '/',
       sameSite: 'lax',
       maxAge: 300 // 5 minutos

@@ -25,9 +25,17 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Invalid signature' }, { status: 401 })
     }
 
+    cookies().set('siwe-session', 'true', {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production', // true,
+      path: '/',
+      sameSite: 'lax',
+      maxAge: 3600 // 60 * 60 * 24 * 7 -> 1 week
+    })
+
     cookies().delete('siwe-nonce');
 
-    return NextResponse.json({ success: true, data: siweMessage })
+    return NextResponse.json({ success: true, data: siweMessage }, { status: 200 })
   } catch (err) {
     console.error('SIWE verify error:', err)
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
