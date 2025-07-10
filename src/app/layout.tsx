@@ -13,7 +13,7 @@ const recursive = Recursive({ subsets: ["latin"] });
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "2kceltics | Home",
+  title: "2kceltics | Dapp",
   description: "2kceltics v2",
   metadataBase: new URL("https://www.2kceltics.xyz"),
   authors: {

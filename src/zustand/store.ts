@@ -41,6 +41,11 @@ interface FilterState {
   setFilters: (updates: Partial<FilterState['filters']>) => void
 }
 
+interface WalletState {
+  isConnected: boolean
+  setIsConnected: (state: boolean) => void
+}
+
 export const useStatsStore = create<StatsState>((set) => ({
   data: null,
   isLoading: false,
@@ -80,4 +85,9 @@ export const useFilterStore = create<FilterState>((set) => ({
       gamespan: 10
     }
   })
+}))
+
+export const useWalletStore = create<WalletState>((set) => ({
+  isConnected: false,
+  setIsConnected: (state) => set({ isConnected: state }),
 }));

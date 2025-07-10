@@ -7,6 +7,8 @@ import dynamic from 'next/dynamic';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
 import { useAccount, useSignMessage } from 'wagmi';
 import { KY, Method } from '@/services/api';
+import { Wallet2 } from 'lucide-react';
+import { useWalletStore } from '@/zustand/store';
 type Props = {}
 
 const ConnectButton = dynamic(
@@ -17,11 +19,11 @@ const ConnectButton = dynamic(
 const ConnectWallet = (props: Props) => {
   const { openConnectModal } = useConnectModal();
   const [loaded, setLoaded] = useState(false);
-
+  const { setIsConnected } = useWalletStore()
   const { address, isConnected, chain } = useAccount()
   const { signMessageAsync } = useSignMessage()
   const [hasSignedIn, setHasSignedIn] = useState(false)
-
+  const [readyToSign, setReadyToSign] = useState(false)
   const handleClick = async () => {
     if (!loaded) {
       setLoaded(true);
@@ -93,15 +95,10 @@ const ConnectWallet = (props: Props) => {
 
         const message = res.message
 
-        console.log(message);
-        console.log(message.length);
+        //console.log(message);
+        //console.log(message.length);
 
         const signature = await signMessageAsync({ message })
-
-        // await axios.post('/api/siwe/verify', {
-        //   message,
-        //   signature
-        // })
 
         await KY(Method.POST, '/api/v1/siwe/verify', {
           message,
@@ -113,26 +110,31 @@ const ConnectWallet = (props: Props) => {
         console.error('Error during SIWE login:', err)
       }
     }
+    // setIsConnected(isConnected)
+    if (isConnected) {
+      signInWithEthereum()
+    }
 
-    signInWithEthereum()
   }, [isConnected, address, chain, hasSignedIn, signMessageAsync])
 
 
   return (
     <section className=''>
-      <h1 className='text-2xl'>Image here</h1>
+
       {/* <AutoConnectModal /> Automatically opens the connect modal on page load */}
       {/* <ConnectButton showBalance={true} />  component from rainbowkit */}
       {loaded && !isConnected
-        ? <>
-
-          <ConnectButton />
-        </>
-        : <button onClick={handleClick} className='text-white bg-celtics px-2.5 py-2.5 rounded-md font-bold'>Connect Wallet</button>
+        ? <div className='flex justify-center'>
+          <ConnectButton showBalance={true} />
+        </div>
+        : <button onClick={handleClick} className='flex space-x-2 mx-auto items-end text-yellow-200 bg-celtics hover:bg-celtics/90 px-2.5 py-2.5 rounded-md font-bold'>
+          <Wallet2 />
+          <span>Connect Wallet</span>
+        </button>
       }
-      {
+      {/* {
         isConnected ? <p>WALLET CONNECTED</p> : <p>WALLET NOT CONNECTED</p>
-      }
+      } */}
 
     </section>
   )

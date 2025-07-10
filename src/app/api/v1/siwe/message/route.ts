@@ -10,23 +10,23 @@ export async function POST(req: Request) {
 
     const nonce = randomBytes(16).toString('hex')
 
-    console.log('Random nonce generated:', nonce);
+    //console.log('Random nonce generated:', nonce);
 
     const message = new SiweMessage({
       domain: 'localhost:3000',
       address: address,
-      statement: 'Sign in to 2KCeltics',
+      statement: 'Sign in to 2KCeltics Dapp',
       uri: 'http://localhost:3000',
       version: '1',
       chainId,
       nonce
     })
 
-    console.log('Generated message:', message);
+    //console.log('Generated message:', message);
 
     const signingMessage = message.prepareMessage()
 
-    console.log('Signed message:', signingMessage);
+    //console.log('Signed message:', signingMessage);
 
     // * secure: false, // true if using HTTPS
     cookies().set('siwe-nonce', nonce, {

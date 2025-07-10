@@ -1,10 +1,21 @@
+'use client'
+import { usePathname } from 'next/navigation'
 import Link from "next/link";
 import { SiBitcoin, SiEthereum, SiSolana, SiTether } from "react-icons/si";
+import { useEffect } from 'react';
+import path from 'path';
 
 
 type Props = {}
 // usdc: '#2775CA'
-const CardCrypto = (props: Props) => {
+const CardCrypto = () => {
+  const pathname = usePathname()
+
+
+  if (pathname === '/crypto') {
+    return null; // Don't render the card on the crypto page
+  }
+
   return (
     <div className='fixed space-y-4 left-4 top-[120px] w-[260px] p-4 rounded-lg dark:text-muted-foreground dark:bg-stone-900 bg-zinc-100/90 shadow-xl z-40 border border-gray-200 dark:border dark:border-gray-800'>
       <h1 className='text-center text-base font-mono font-bold underline'>SUPPORT US!!!</h1>
