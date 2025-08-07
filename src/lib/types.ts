@@ -169,3 +169,95 @@ export const gamespanMap: Record<number, string> = {
 };
 
 export const SeasonSpans: number[] = [10, 20, 30, 40, 50, 60, 70, 82]
+
+export const tokenSymbolToId: Record<string, string> = {
+  ETH: 'ethereum',
+  USDT: 'tether',
+  USDC: 'usd-coin',
+  AAVE: 'aave',
+  UNI: 'uniswap',
+  DAI: 'dai',
+  LINK: 'chainlink',
+  MATIC: 'matic-network',
+  ARB: 'arbitrum',
+  OP: 'optimism',
+  // agregá más según tu app...
+};
+
+export interface AlchemyToken {
+  network: string
+  contractAddress: string;
+  tokenBalance: number;
+  tokenSymbol: string;
+  tokenName?: string;
+  tokenLogo: string;
+  isMultichain: boolean;
+}
+
+export interface AggregatedToken extends Omit<AlchemyToken, "network" | "contractAddress"> {
+  networks: string[];
+};
+
+
+export const ALCHEMY_RPC_URLS = {
+  ethereum: "https://eth-mainnet.g.alchemy.com/v2/",
+  polygon: "https://polygon-mainnet.g.alchemy.com/v2/",
+  arbitrum: "https://arb-mainnet.g.alchemy.com/v2/",
+  optimism: "https://opt-mainnet.g.alchemy.com/v2/",
+  base: "https://base-mainnet.g.alchemy.com/v2/",
+  zksync: "https://zksync-mainnet.g.alchemy.com/v2/"
+};
+
+
+export const NETWORK_LOGOS = {
+  ethereum: "/crypto/eth-logo.png",
+  polygon: "/crypto/polygon-logo.png",
+  arbitrum: "/crypto/arbitrum-logo.png",
+  optimism: "/crypto/optimism-logo.png",
+  base: "/crypto/base-logo.png",
+  zksync: "/crypto/zksync-logo.png"
+}
+
+
+export const AVAILABLE_NETWORKS = {
+  ethereum: {
+    rpc: "https://eth-mainnet.g.alchemy.com/v2/" + process.env.ALCHEMY_API_KEY!,
+    chainId: 1,
+  },
+  polygon: {
+    rpc: "https://polygon-rpc.com",
+    chainId: 137,
+  },
+  arbitrum: {
+    rpc: "https://arb1.arbitrum.io/rpc",
+    chainId: 42161,
+  },
+  optimism: {
+    rpc: "https://mainnet.optimism.io",
+    chainId: 10,
+  },
+  base: {
+    rpc: "https://mainnet.base.org",
+    chainId: 8453,
+  },
+  zksync: {
+    rpc: "https://mainnet.era.zksync.io",
+    chainId: 324,
+  },
+};
+
+
+// $ Multichain props should be generated in our backend
+export const HOME_TOKENS = {
+  "tokenBalances":
+    [
+      { "network": "ethereum", "contractAddress": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE", "tokenBalance": 0.00000303, "tokenSymbol": "ETH", "tokenLogo": "/crypto/eth-logo.png", "isMultichain": true },
+      { "network": "base", "contractAddress": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE", "tokenBalance": 0.01000000, "tokenSymbol": "ETH", "tokenLogo": "/crypto/eth-logo.png", "isMultichain": true },
+      { "network": "base", "contractAddress": "0x07865c6e87b9f70255377e024ace6630c1eaa37f", "tokenBalance": 100.00, "tokenSymbol": "USDC", "tokenLogo": "/crypto/usdc-logo.png", "isMultichain": false },
+      { "network": "optimism", "contractAddress": "0x94b008aA00579c1307B0EF2c499aD98a8ce58e58", "tokenBalance": 55.5, "tokenSymbol": "USDT", "tokenLogo": "https://static.alchemyapi.io/images/assets/825.png", "isMultichain": true },
+      { "network": "arbitrum", "contractAddress": "0xFd086bC7CD5C481DCC9C85ebE5ea9C8952Ab963", "tokenBalance": 305, "tokenSymbol": "USDT", "tokenLogo": "https://static.alchemyapi.io/images/assets/825.png", "isMultichain": true },
+      { "network": "arbitrum", "contractAddress": "0x912CE59144191C1204E64559FE8253a0e49E6548", "tokenBalance": 32.44, "tokenSymbol": "ARB", "tokenLogo": "/crypto/arbitrum-logo.png", "isMultichain": false },
+      { "network": "ethereum", "contractAddress": "0xdac17f958d2ee523a2206206994597c13d831ec7", "tokenBalance": 1.34, "tokenSymbol": "USDT", "tokenLogo": "https://static.alchemyapi.io/images/assets/825.png", "isMultichain": true }
+    ]
+}
+

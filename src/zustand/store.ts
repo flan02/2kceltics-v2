@@ -25,12 +25,6 @@ interface MultiplierState {
   setMultiplier: (state: "per game" | "total") => void
 }
 
-// interface FilterState {
-//   season: string
-//   gamespan: number
-//   setSeason: (state: string) => void
-//   setGamespan: (state: number) => void
-// }
 
 interface FilterState {
   filters: {
@@ -41,10 +35,6 @@ interface FilterState {
   setFilters: (updates: Partial<FilterState['filters']>) => void
 }
 
-interface WalletState {
-  status: boolean
-  setStatus: (state: boolean) => void
-}
 
 export const useStatsStore = create<StatsState>((set) => ({
   data: null,
@@ -87,7 +77,3 @@ export const useFilterStore = create<FilterState>((set) => ({
   })
 }))
 
-export const useWalletStore = create<WalletState>((set) => ({
-  status: false,
-  setStatus: (state) => set({ status: state }),
-}));

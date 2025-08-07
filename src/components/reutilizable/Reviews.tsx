@@ -1,12 +1,14 @@
 /* eslint-disable @next/next/no-img-element */
 'use client'
 import React, { HTMLAttributes, useEffect, useRef, useState } from "react"
-import MaxWidthWrapper from "../reutilizable/MaxWidthWrapper"
 import { useInView } from "framer-motion"
 import { cn } from "@/lib/utils"
 import FadeBorder from "../reutilizable/FadeBorder"
 import { Skeleton } from "../ui/skeleton"
 
+type Props = {
+  isMounted: boolean
+}
 
 type Review = {
   reviews: string[]
@@ -31,13 +33,7 @@ const PHONES = [
 ]
 
 
-const Reviews = () => {
-
-  const [isMounted, setIsMounted] = useState(false)
-
-  useEffect(() => {
-    setIsMounted(true)
-  }, [])
+const Reviews = ({ isMounted }: Props) => {
 
   return (
     <>
@@ -46,7 +42,9 @@ const Reviews = () => {
           ?
           <ReviewGrid />
           :
-          <Skeleton className="h-[80vh] mt-20" />
+          <div className="relative h-screen w-full">
+            <Skeleton className="h-[70vh] w-full absolute bottom-44 mb-1.5" />
+          </div>
       }
     </>
   )

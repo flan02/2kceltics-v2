@@ -1,18 +1,17 @@
 
 'use client'
 import { useEffect, useState } from 'react';
-//import { ConnectButton } from '@rainbow-me/rainbowkit'
-import AutoConnectModal from './AutoConnectModal'
 import dynamic from 'next/dynamic';
 import { useConnectModal } from '@rainbow-me/rainbowkit';
-import { useAccount, useDisconnect, useSignMessage } from 'wagmi';
+import { useAccount, useSignMessage } from 'wagmi';
 import { KY, Method } from '@/services/api';
 import { Star, Wallet2 } from 'lucide-react';
-import { useWalletStore } from '@/zustand/store';
-import { set } from 'react-hook-form';
-import { verify } from 'crypto';
 import { TextShimmer } from '@/components/core/text-shimmer';
+import { Skeleton } from '@/components/ui/skeleton';
+import WalletConnected from './WalletConnected';
 import { Button } from '@/components/ui/button';
+import { FaPaypal } from 'react-icons/fa6';
+
 
 
 
@@ -21,15 +20,17 @@ const ConnectButton = dynamic(
   { ssr: false } // para evitar que se cargue en SSR
 );
 
+type Props = {
+  isMounted: boolean;
+}
 
 
-const ConnectWallet = () => { // { onSignedIn }: { onSignedIn: () => void }
+const ConnectWallet = ({ isMounted }: Props) => {
   const { openConnectModal } = useConnectModal();
   const [loaded, setLoaded] = useState(false);
   const { address, isConnected, chain, status } = useAccount()
   const { signMessageAsync } = useSignMessage()
-  const { disconnect } = useDisconnect()
-  // const { status, setStatus } = useWalletStore()
+  const [authenticated, setAuthenticated] = useState(false)
 
   const text = [
     'Integrate several performance charts each season to monitor and analyze Boston Celtics player stats throughout the year.',
@@ -104,7 +105,6 @@ const ConnectWallet = () => { // { onSignedIn }: { onSignedIn: () => void }
   }, [])
 
 
-
   useEffect(() => {
     const signInWithEthereum = async () => {
       if (!isConnected || !address) return
@@ -113,7 +113,8 @@ const ConnectWallet = () => { // { onSignedIn }: { onSignedIn: () => void }
         const { authenticated } = await isAuth.json()
 
         if (authenticated) {
-          console.log('🔐 Authenticated with SIWE')
+          //console.log('🔐 Authenticated with SIWE')
+          setAuthenticated(true)
           return
         }
         const res = await KY(Method.POST, '/api/v1/siwe/message', {
@@ -131,23 +132,15 @@ const ConnectWallet = () => { // { onSignedIn }: { onSignedIn: () => void }
           signature,
         })
 
-
+        setAuthenticated(true)
       } catch (err) {
         console.error('Error during SIWE login:', err)
       }
     }
     signInWithEthereum()
-    // setLoaded(true)
-  }, [isConnected, status, address, chain, signMessageAsync]) // isConnected, signMessageAsync
 
+  }, [isConnected, status, address, chain, signMessageAsync])
 
-  // if (!loaded && !isConnected) {
-  //   return <div>...Loading</div>
-  // }
-
-  console.log('isConnected value', isConnected);
-  console.log('loaded value', loaded);
-  console.log('status value', status);
 
   return (
     <section className=''>
@@ -156,14 +149,11 @@ const ConnectWallet = () => { // { onSignedIn }: { onSignedIn: () => void }
       {/* <ConnectButton showBalance={true} />  component from rainbowkit */}
 
       {
-        isConnected
+        isConnected && authenticated
           ?
-          <div>
-            <p>WALLET CONNECTED</p>
-            {/* <Button onClick={() => disconnect()} className='bg-celtics text-yellow-200'>Disconnect Wallet</Button> */}
-          </div>
+          <WalletConnected address={address ?? ''} />
           :
-          !isConnected && status === 'disconnected'
+          !isConnected && status === 'disconnected' && isMounted
             ?
             <div className='text-center mx-auto space-y-8 mb-8'>
               <h1 className='uppercase text-celtics text-2xl lg:text-4xl font-bold'>Shape the next gen of 2kCeltics features</h1>
@@ -182,21 +172,18 @@ const ConnectWallet = () => { // { onSignedIn }: { onSignedIn: () => void }
               </article>
             </div>
             :
-            <p className='text-4xl'>...Loading</p>
+            <Skeleton className="h-[calc(100vh-280px)] w-full" />
 
       }
 
-      {loaded && !isConnected
+      {loaded && !isConnected && isMounted
         ? <div className='flex justify-center'>
           <ConnectButton showBalance={true} />
         </div>
         :
-        !isConnected && status === 'disconnected'
+        !isConnected && status === 'disconnected' && isMounted
           ?
-          (<button onClick={handleClick} className='flex space-x-2 mx-auto items-end text-yellow-200 bg-celtics hover:bg-celtics/90 px-2.5 py-2.5 rounded-md font-bold'>
-            <Wallet2 />
-            <span>Connect Wallet</span>
-          </button>)
+          <DonateSection handleClick={handleClick} />
           : null
       }
 
@@ -208,4 +195,24 @@ export default ConnectWallet
 
 
 
+type Props1 = {
+  handleClick: () => void;
+}
 
+const DonateSection = ({ handleClick }: Props1) => {
+  return (
+    <div className='flex w-full space-x-4 justify-center items-center'>
+      <h3 className='font-bold'>BE CRYPTO</h3>
+      <Button onClick={handleClick} className='flex space-x-2 items-end text-white bg-celtics hover:bg-celtics/90 font-bold'>
+        <Wallet2 />
+        <span>Connect Wallet</span>
+      </Button>
+      <span className='font-bold'>OR</span>
+      {/* <h3 className='font-bold'>VIA</h3> */}
+      <Button className='bg-blue-500 hover:bg-blue-500/90 text-white font-bold space-x-2'>
+        <FaPaypal size={20} />
+        <span>Paypal</span>
+      </Button>
+    </div>
+  )
+} 

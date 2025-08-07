@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/db"
 
+// console.log("Running Node.js version:", process.version);
+
+
 export async function POST(req: NextRequest, res: NextResponse) {
   try {
     const { count } = await req.json()

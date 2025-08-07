@@ -135,6 +135,7 @@ export async function isTwitchFollower(user_id: string) {
 }
 
 
+
   // https://api.twitch.tv/helix/streams?first=10
   // https://api.twitch.tv/helix/eventsub/subscriptions
   // https://api.twitch.tv/helix/videos?user_id=135655222
@@ -144,3 +145,5 @@ export async function isTwitchFollower(user_id: string) {
 
   // const url = cursor 
   // https://api.twitch.tv/helix/channels/followers?broadcaster_id=${broadcaster_id}&after=${cursor}
+
+

@@ -1,3 +1,4 @@
+import { ALCHEMY_RPC_URLS } from '@/lib/types'
 import ky from 'ky'
 
 export enum Method {
@@ -40,3 +41,4 @@ export async function KY(method: Method, url: string, data?: any) {
     return error
   }
 }
+

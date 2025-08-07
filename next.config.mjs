@@ -15,6 +15,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "res.cloudinary.com",
       },
+      {
+        protocol: "https",
+        hostname: "static.alchemyapi.io",
+      },
     ],
   },
   // Configure `pageExtensions` to include markdown and MDX files

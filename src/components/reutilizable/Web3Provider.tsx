@@ -5,31 +5,26 @@
 import '@rainbow-me/rainbowkit/styles.css'
 import { RainbowKitProvider, darkTheme, getDefaultConfig } from '@rainbow-me/rainbowkit'
 import { WagmiProvider } from 'wagmi'
-import { mainnet } from 'wagmi/chains'
+import { arbitrum, base, mainnet, optimism, polygon, zkSync, sepolia } from 'wagmi/chains'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactNode } from 'react'
-import {
-  metaMaskWallet,
-  walletConnectWallet,
-  okxWallet,
-  rabbyWallet
-} from '@rainbow-me/rainbowkit/wallets'
-
 
 const queryClient = new QueryClient() // wagmi v2 needs a react-query client
-
 
 const config = getDefaultConfig({
   appName: '2kceltics-Dapp',
   projectId: process.env.NEXT_PUBLIC_REOWN_PROJECT_ID!, // your project id from https://reown.network/
-  chains: [mainnet],
-  ssr: true,
+  chains: [mainnet, polygon, arbitrum, optimism, base, zkSync],
+  ssr: true
 })
 
 
 interface Props {
   children: ReactNode
 }
+
+
+//console.log("Current chain connected", config.chains.map(chain => `${chain.name} (${chain.id})`).join(', '));
 
 const Web3Provider = ({ children }: Props) => {
 

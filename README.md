@@ -13,3 +13,7 @@ New 2kceltics website built with Nextjs
 ## Dapp testing
 
 Lighthouse o WebPageTest
+
+## Standard ERC-20
+
+[official website](https://eips.ethereum.org/EIPS/eip-20)
