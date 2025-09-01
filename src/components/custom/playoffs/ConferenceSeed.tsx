@@ -2,7 +2,7 @@ import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/comp
 import { Checkbox } from "@/components/ui/checkbox"
 import { Input } from '@/components/ui/input'
 import Image from 'next/image'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Game } from './UpdatePlayoffsForm'
 import { Round } from '@/lib/types'
 
@@ -102,7 +102,7 @@ const ConferenceSeed = ({ seeds, conference, control, setValue, getValues }: Pro
         games
           .sort((a: any, b: any) => a.position - b.position)
           .map((seed: any, index) => (
-            <section key={seed.id} className={`p-2 rounded-md ${seed.eliminated ? "bg-zinc-300 opacity-50 dark:bg-black dark:opacity-40" : "border  dark:bg-zinc-900/50 dark:hover:bg-zinc-800/30 hover:bg-green-100/50 bg-zinc-200/30"}`}>
+            <section key={seed.id} className={`p-2 rounded-md ${seed.eliminated ? "bg-zinc-100 opacity-50 dark:bg-black dark:opacity-40" : "border  dark:bg-zinc-900/50 dark:hover:bg-zinc-800/30 hover:bg-zinc-100/50"}`}>
 
               <div className={`${seed.eliminated ? "line-through" : ""} flex items-end space-x-2 text-lg text-muted-foreground dark:text-zinc-600`}>
                 <Image className={`${seed.team_code == "MIA" ? "" : ""}`} src={`/logos/${seed.team_code}.png`} width={seed.team_code == "MIA" ? 28 : 34} height={seed.team_code == "MIA" ? 28 : 34} alt={seed.team_code} />

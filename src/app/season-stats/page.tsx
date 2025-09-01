@@ -3,7 +3,6 @@
 import MaxWidthWrapper from '@/components/reutilizable/MaxWidthWrapper'
 import { Button } from '@/components/ui/button'
 import React from 'react'
-import { $Enums } from '@prisma/client'
 import Link from 'next/link'
 import { Check } from 'lucide-react'
 import Basketball from '@/components/reutilizable/Basketball'

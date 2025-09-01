@@ -4,7 +4,8 @@ import BackToTop from "../reutilizable/BackToTop"
 import ScheduleList from "./ScheduleList"
 
 export default async function Schedule({ searchParams: { page } }: { searchParams: { page: number } }) {
-  const nextGame = await getNextGame()
+  let nextGame = await getNextGame()
+
   return (
     <section id="schedule" className="space-y-4 max-w-screen-lg flex flex-col mx-auto mt-24 lg:mt-0 pt-12">
       <div className="flex mx-auto">
@@ -16,9 +17,9 @@ export default async function Schedule({ searchParams: { page } }: { searchParam
       <div className="bg-celtics flex items-end justify-between text-white text-lg px-4 py-6">
         <h2 className="text-sm md:text-base dark:text-zinc-700">REGULAR SEASON 82 GAMES</h2>
         {
-          nextGame
+          nextGame && nextGame <= 82
             ? <h6 className="uppercase text-xs lg:text-sm text-muted underline">next game: {nextGame}</h6>
-            : <h6 className="uppercase text-sm text-muted underline">NOT YET</h6>
+            : <h6 className="uppercase text-sm text-muted underline"></h6>
 
         }
       </div>

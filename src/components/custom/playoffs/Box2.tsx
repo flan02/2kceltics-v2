@@ -1,4 +1,4 @@
-import React from 'react'
+import { memo } from 'react'
 import BracketSpace from './BracketSpace'
 import Image from 'next/image'
 
@@ -34,6 +34,7 @@ const Box2 = ({ bracket, order, empty, conferenceFinals }: PlayoffsBracketProps)
 
   const bracketMaker = [0]
 
+  //console.log("this is bracketOrdered", bracketOrdered);
   //console.log(order)
   //console.log(conferenceFinals)
 
@@ -79,7 +80,7 @@ const Box2 = ({ bracket, order, empty, conferenceFinals }: PlayoffsBracketProps)
   )
 }
 
-export default Box2
+export default memo(Box2)
 
 
 /*

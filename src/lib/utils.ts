@@ -76,3 +76,10 @@ export function capitalize(str: string): string {
   if (!str) return '';
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
+
+export function getCurrentPlayoffs() {
+  const actual_year = new Date().getFullYear();
+  const first_year = actual_year - 1;
+  const last_year = actual_year - 2000;
+  return `${first_year}/${last_year}`;
+}

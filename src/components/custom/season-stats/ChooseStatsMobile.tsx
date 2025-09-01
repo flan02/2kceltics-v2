@@ -1,7 +1,5 @@
 import CardPlayerLink from '@/components/reutilizable/CardPlayerLink'
 import { ChartSplineIcon, MonitorPlayIcon } from 'lucide-react'
-import Image from 'next/image'
-import Link from 'next/link'
 import React from 'react'
 //import CelticsOldDuo from "../../../../public/antoine-walker-paul-pierce.png";
 

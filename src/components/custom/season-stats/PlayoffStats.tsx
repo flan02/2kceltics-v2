@@ -1,6 +1,6 @@
-import { $Enums } from '@prisma/client'
+import type { $Enums } from '@prisma/client'
 import Link from 'next/link'
-import React from 'react'
+
 
 type PlayoffProps = {
   season: $Enums.Season

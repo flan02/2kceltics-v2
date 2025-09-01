@@ -5,9 +5,10 @@ export async function POST(req: NextRequest, res: NextResponse) {
   try {
     const { count } = await req.json()
     // console.log('new count', count);
+    const TEAM_CELTICS_ID = process.env.TEAM_CELTICS_ID!
     await db.visitCounter.update({
       where: {
-        id: '66b3b02747a37ebedad1f3ba'
+        id: TEAM_CELTICS_ID
       },
       data: {
         count
@@ -22,10 +23,11 @@ export async function POST(req: NextRequest, res: NextResponse) {
 }
 
 export async function GET(req: NextRequest, res: NextResponse) {
+  const TEAM_CELTICS_ID = process.env.TEAM_CELTICS_ID!
   try {
     const visitsCounter = await db.visitCounter.findFirst({
       where: {
-        id: '66b3b02747a37ebedad1f3ba'
+        id: TEAM_CELTICS_ID
       },
       select: {
         count: true

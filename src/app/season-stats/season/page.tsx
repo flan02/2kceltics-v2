@@ -1,4 +1,4 @@
-import { Season, Tournament } from "@prisma/client";
+import type { Season, Tournament } from "@prisma/client";
 import SeasonStats from '../../../components/custom/season-stats/SeasonStats'
 import MaxWidthWrapper from '@/components/reutilizable/MaxWidthWrapper'
 import Link from 'next/link'

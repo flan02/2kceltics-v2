@@ -8,9 +8,10 @@ import { getSeeds } from '../dashboard/actions'
 type Props = {}
 
 const PlayoffsPage = async (props: Props) => {
-  const response: any = await getSeeds("NBA2K24")
+  const CURRENT_SEASON = process.env.CURRENT_SEASON!
+  const response: any = await getSeeds(CURRENT_SEASON)
 
-  //console.log(response);
+
   return (
     <>
       <MarqueePO />

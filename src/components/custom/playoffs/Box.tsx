@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import React from 'react'
+import React, { memo } from 'react'
 
 type PlayoffsBracketProps = {
   bracket: any[]
@@ -44,4 +44,4 @@ wins: 0
   )
 }
 
-export default Box
+export default memo(Box)

@@ -1,8 +1,7 @@
-import React from 'react'
 import { GameStatProps } from '../dashboard/AddPlayerStatsForm'
 import MarkdownRenderer from '@/components/markdown/MarkdownRenderer'
 import NoStats from '@/components/reutilizable/NoStats'
-import { $Enums } from '@prisma/client'
+import type { $Enums } from '@prisma/client'
 
 
 type SeasonProps = {

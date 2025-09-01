@@ -1,17 +1,18 @@
 
 'use client'
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import Box from './Box';
 import Box2 from './Box2';
 import BoxTheFinals from './BoxTheFinals';
 import { Button } from '@/components/ui/button';
-import { Seed } from '@prisma/client';
 import Link from 'next/link';
+import { getCurrentPlayoffs } from '@/lib/utils';
+import type { Seed } from '@prisma/client';
+
 
 type SeedProps = {
   seeds: Omit<Seed, 'id' | 'playoffsId' | 'createAt' | 'updatedAt'>[]
 }
-
 
 
 const PlayoffsBracket = ({ seeds }: SeedProps) => {
@@ -34,46 +35,58 @@ const PlayoffsBracket = ({ seeds }: SeedProps) => {
     }
   }, []);
 
+
+  const PLAYOFFS = getCurrentPlayoffs()
+
+  const westQuarters = useMemo(() => { return seeds.filter(b => b.conference == "WEST") }, [seeds]);
+  const eastQuarters = useMemo(() => { return seeds.filter(b => b.conference == "EAST") }, [seeds]);
+  const westSemis = useMemo(() => { return seeds.filter(b => b.conference == "WEST" && b.wins > 3) }, [seeds]);
+  const eastSemis = useMemo(() => { return seeds.filter(b => b.conference == "EAST" && b.wins > 3) }, [seeds]);
+  const westFinals = useMemo(() => { return seeds.filter(b => b.conference == "WEST" && b.wins > 7) }, [seeds]);
+  const eastFinals = useMemo(() => { return seeds.filter(b => b.conference == "EAST" && b.wins > 7) }, [seeds]);
+  const theFinals = useMemo(() => { return seeds.filter(b => b.wins > 11) }, [seeds]);
+
   return (
-    <div className="flex flex-col items-center justify-center p-4 ">
-      <h1 className='text-3xl sm:text-5xl text-celtics mt-16 lg:mt-8 sm:mt-4 mb-4 lg:mb-8'>PLAYOFFS 2023/24</h1>
+    <div className="flex flex-col items-center justify-center p-4">
+      <br />
+      <h1 className='text-3xl sm:text-5xl text-celtics mt-16 lg:mt-8 sm:mt-4 mb-4 lg:mb-8'>PLAYOFFS {PLAYOFFS}</h1>
       <div className='w-full max-w-full overflow-x-auto overflow-y-hidden'>
 
         <div className={`min-w-[1024px] border shadow-xl rounded-xl p-4 grid grid-cols-7 gap-4 ${dimensions.width < 640 ? 'text-xs' : 'text-base'} text-white`}>
           {/* First Column - Western Conference */}
           <div className="">
-            <Box bracket={seeds.filter(b => b.conference == "WEST")} order={empty} />
+            <Box bracket={westQuarters} order={empty} />
           </div>
 
-          {/* Second Column - Western Conference - Next Round */}
+          {/* Second Column - Western Conference SemiFinals - Next Round */}
           <div className="place-content-center">
-            <Box2 conferenceFinals={false} bracket={seeds.filter(b => b.conference == "WEST" && b.wins > 3)} order={false} empty={empty} />
+            <Box2 conferenceFinals={false} bracket={westSemis} order={false} empty={empty} />
           </div>
 
           {/* Third Column - Western Conference Finals - Next Round */}
           <div className="space-y-4 place-content-center ">
-            <Box2 conferenceFinals={true} bracket={seeds.filter(b => b.conference == "WEST" && b.wins > 7)} order={false} empty={empty} />
+            <Box2 conferenceFinals={true} bracket={westFinals} order={false} empty={empty} />
           </div>
 
 
           <div className=''>
-            <BoxTheFinals bracket={seeds.filter(b => b.wins > 11)} empty={empty} />
+            <BoxTheFinals bracket={theFinals} empty={empty} />
           </div>
 
 
           {/* Fourth Column - Eastern Conference Finals - Next Round */}
           <div className=" space-y-4 place-content-center mt-6 ml-6">
-            <Box2 conferenceFinals={true} bracket={seeds.filter(b => b.conference == "EAST" && b.wins > 7)} order={true} empty={empty} />
+            <Box2 conferenceFinals={true} bracket={eastFinals} order={true} empty={empty} />
           </div>
 
           {/* Third Column - Eastern Conference */}
           <div className="place-content-center">
-            <Box2 conferenceFinals={false} bracket={seeds.filter(b => b.conference == "EAST" && b.wins > 3)} order={true} empty={empty} />
+            <Box2 conferenceFinals={false} bracket={eastSemis} order={true} empty={empty} />
           </div>
 
           {/* Fourth Column - Eastern Conference - Next Round */}
           <div className="">
-            <Box bracket={seeds.filter(b => b.conference == "EAST")} order={true} />
+            <Box bracket={eastQuarters} order={true} />
           </div>
 
 

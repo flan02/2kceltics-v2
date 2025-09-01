@@ -1,5 +1,4 @@
 import Image from 'next/image'
-import React from 'react'
 import DataCenterLogo from '/public/data-center-chatgpt.png'
 import { TextShimmer } from '@/components/core/text-shimmer'
 

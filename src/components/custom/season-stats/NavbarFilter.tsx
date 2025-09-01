@@ -1,5 +1,5 @@
 import { buttonVariants } from "@/components/ui/button"
-import { $Enums } from "@prisma/client"
+import type { $Enums } from "@prisma/client"
 import Link from "next/link"
 
 
