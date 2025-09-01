@@ -14,7 +14,7 @@ if (process.env.NODE_ENV === 'production') {
   if (!global.cachedPrisma) { // ? if the prisma client is not cached, we create a new instance and cache it.
     global.cachedPrisma = new PrismaClient()
     // middleware
-    import('../middleware/prisma')
+    // import('../middleware/prisma')
   }
   prisma = global.cachedPrisma // ? if the prisma client is cached, we use the cached instance.
 }
