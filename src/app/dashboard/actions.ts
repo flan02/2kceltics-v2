@@ -164,11 +164,12 @@ export async function updateTeam(values: Omit<Season2k, "id" | "teamId" | "creat
 }
 
 
-export async function createTask(task: string, done?: boolean) {
+export async function createTask(task: string, description: string, done?: boolean) {
   try {
     const response = db.task.create({
       data: {
-        task
+        task,
+        description
       }
     })
     revalidatePath('/dashboard')
@@ -183,6 +184,7 @@ export async function createTask(task: string, done?: boolean) {
 export async function getTasks() {
   try {
     const response = (await db.task.findMany({ take: -10 })).sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+    //console.log(response);
     return response
   } catch (error) {
     console.log(error);
@@ -210,7 +212,20 @@ export async function updateTask(id: string, done: boolean, task?: string) {
   }
 }
 
-
+export async function deleteTask(id: string) {
+  try {
+    const response = db.task.delete({
+      where: {
+        id
+      }
+    })
+    revalidatePath('/dashboard')
+    return response
+  } catch (error) {
+    console.log(error);
+    return error
+  }
+}
 
 export async function getSeasons2k(season: any) {
   try {
@@ -286,7 +301,8 @@ export async function getCurrentGame() {
       stage: true,
       type: true,
       playoffGame: true,
-      team2: true
+      team2: true,
+      atHome: true
     }
   })
 
@@ -517,6 +533,21 @@ export async function getPlayerStatsTotals(type: Tournament, season: Season, sta
         span: {
           not: null
         }
+      }
+    })
+    return response
+  } catch (error) {
+    console.log(error)
+    return error
+  }
+}
+
+
+export async function getCurrentSchedule(season: Season) {
+  try {
+    const response = await db.schedule.findMany({
+      where: {
+        season
       }
     })
     return response

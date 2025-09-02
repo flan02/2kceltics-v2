@@ -13,9 +13,9 @@ import { toast } from '../../ui/use-toast'
 
 type Props = {}
 
-async function onSubmit(values: { task: string }) {
+async function onSubmit(values: { task: string, description: string }) {
   //console.log(values.task);
-  await createTask(values.task)
+  await createTask(values.task, values.description)
   toast({
     title: "New Task Added:",
     description: (
@@ -30,7 +30,10 @@ async function onSubmit(values: { task: string }) {
 const TaskForm = (props: Props) => {
   const [isTaskOpen, setIsTaskOpen] = React.useState(false)
   const form = useForm({
-    defaultValues: { task: "" }
+    defaultValues: {
+      task: "",
+      description: ""
+    }
   })
   const { register, handleSubmit, formState, watch, trigger, control, setValue, setFocus, formState: { isSubmitting, isSubmitted } } = form
 
@@ -41,9 +44,7 @@ const TaskForm = (props: Props) => {
   }, [isSubmitted])
 
   return (
-    <article className='space-y-8 w-full'>
-
-
+    <article className='space-y-8 w-full min-h-[300px]'>
       <div className='flex items-center justify-center'>
         <span className='text-celtics shadow-sm font-bold mr-1'>TODO LIST</span>
         <ArrowBigRightDashIcon size={24} fill='green' color='green' className='mr-2' />
@@ -51,7 +52,6 @@ const TaskForm = (props: Props) => {
           onClick={() => setIsTaskOpen(!isTaskOpen)}
           disabled={isTaskOpen}
           variant='default' className='text-sm px-2'>NEW TASK</Button>
-
       </div>
 
       {
@@ -72,6 +72,22 @@ const TaskForm = (props: Props) => {
                       />
                     </FormControl>
                     <FormMessage>{form.formState.errors.task?.message}</FormMessage>
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="description"
+                render={({ field }) => (
+                  <FormItem >
+                    <FormLabel></FormLabel>
+                    <FormControl>
+                      <Input placeholder="Add your description (optional)" {...field}
+                        autoComplete='off'
+                        type='text'
+                      />
+                    </FormControl>
+                    <FormMessage>{form.formState.errors.description?.message}</FormMessage>
                   </FormItem>
                 )}
               />

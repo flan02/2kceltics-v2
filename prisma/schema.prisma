@@ -158,11 +158,12 @@ model VisitCounter {
 }
 
 model Task {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  task      String
-  done      Boolean  @default(false)
-  createdAt DateTime @default(now()) // game created
-  updatedAt DateTime @updatedAt // last update
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  task        String
+  description String   @default("No description provided")
+  done        Boolean  @default(false)
+  createdAt   DateTime @default(now()) // game created
+  updatedAt   DateTime @updatedAt // last update
 }
 
 // Playoffs logic and table structure to upload to MongoDB every season

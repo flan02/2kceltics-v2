@@ -83,3 +83,10 @@ export function getCurrentPlayoffs() {
   const last_year = actual_year - 2000;
   return `${first_year}/${last_year}`;
 }
+
+export function truncateWords(text: string, limit: number) {
+  const words = text.split(" ");
+  if (words.length <= limit) return text;
+
+  return words.slice(0, limit).join(" ") + "...";
+}

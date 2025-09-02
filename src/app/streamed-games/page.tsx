@@ -16,7 +16,7 @@ export default async function StreamedGamesPage({ searchParams: { page = 0 } }: 
   //console.log(CURRENT_SEASON);
 
   if (!CURRENT_SEASON || !Object.values($Enums.Season).includes(CURRENT_SEASON)) {
-    throw new Error(`🚨 CURRENT_SEASON no es válido: "${CURRENT_SEASON}"`);
+    throw new Error(`🚨 CURRENT_SEASON isn't valid: "${CURRENT_SEASON}"`);
   }
 
   let request = await getStreamedGames({

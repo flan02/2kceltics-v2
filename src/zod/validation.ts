@@ -51,6 +51,12 @@ export const updateTeamSchema = z.object({
 })
 
 
+export const searchSeasonSchema = z.object({
+  season: z.enum(["NBA2K22", "NBA2K23", "NBA2K24", "NBA2K25"])
+})
+
+
+
 export const createGameSchema = z.object({
   season: z.enum(["NBA2K22", "NBA2K23", "NBA2K24", "NBA2K25"]),
   type: z.enum(["RS", "PO"], {

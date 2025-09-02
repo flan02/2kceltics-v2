@@ -7,7 +7,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectGroup, SelectItem, SelectValue } from "@/components/ui/select"
 import { toast } from "@/components/ui/use-toast"
-import { atHomeTypes, gameTypes, seasonTypes, stageTypes } from "@/lib/types"
+import { atHomeTypes, gamesMode, gameTypes, seasonTypes } from "@/lib/types"
 import { createGameSchema } from "@/zod/validation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { AtHome, Season, Stage, Tournament } from "@prisma/client"
@@ -35,8 +35,9 @@ async function onSubmit(values: z.infer<typeof createGameSchema>) {
   // it goes to database
   //console.log('it goes to db', values)
   const response = await createScheduleGame(values)
-
   // console.log(response)
+
+
   toast({
     title: "New game has been created",
     description: (
@@ -82,8 +83,8 @@ const NewGameForm = () => {
           control={control}
           name="season"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel >Season: </FormLabel>
+            <FormItem className="dark:text-muted-foreground flex flex-col">
+              <FormLabel>Season: </FormLabel>
               <FormControl>
                 <Select {...field} defaultValue=""
                   onValueChange={(value) => field.onChange(value)}
@@ -109,7 +110,7 @@ const NewGameForm = () => {
           control={control}
           name="currentGame"
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="dark:text-muted-foreground">
               <FormLabel htmlFor="currentGame">Current Game:</FormLabel>
               <FormControl>
                 <Input id="currentGame" type="number" className="dark:text-blue-500" placeholder="min 1 - max 110 games" {...field} />
@@ -123,7 +124,7 @@ const NewGameForm = () => {
           control={control}
           name="type"
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="dark:text-muted-foreground flex flex-col">
               <FormLabel >Game type: </FormLabel>
               <FormControl>
                 <Select {...field} defaultValue=""
@@ -151,7 +152,7 @@ const NewGameForm = () => {
           control={control}
           name="stage"
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="dark:text-muted-foreground flex flex-col">
               <FormLabel >Stage: </FormLabel>
               <FormControl>
                 <Select {...field} defaultValue=""
@@ -163,7 +164,7 @@ const NewGameForm = () => {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectGroup >
-                      {stageTypes.map((stage, index) => (
+                      {gamesMode.map((stage, index) => (
                         <SelectItem key={index} value={stage}>{stage}</SelectItem>
                       ))}
                     </SelectGroup>
@@ -182,7 +183,7 @@ const NewGameForm = () => {
           control={control}
           name="atHome"
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="dark:text-muted-foreground flex flex-col">
               <FormLabel htmlFor="atHome">Place: </FormLabel>
               <FormControl>
                 <Select {...field} defaultValue=""
@@ -190,7 +191,7 @@ const NewGameForm = () => {
                   value={field.value}
                 >
                   <SelectTrigger className="border border-slate-200 text-md shadow-md py-1.5 text-left pl-2 min-w-[150px] rounded-md">
-                    <SelectValue placeholder="Select HOME or AWAY" />
+                    <SelectValue placeholder="HOME | AWAY" />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectGroup >
@@ -212,7 +213,7 @@ const NewGameForm = () => {
           control={form.control}
           name="team2"
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="dark:text-muted-foreground">
               <FormLabel htmlFor="team2">Rival Team</FormLabel>
               <FormControl>
                 <Input
@@ -231,7 +232,7 @@ const NewGameForm = () => {
           control={form.control}
           name="team_code2"
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="dark:text-muted-foreground">
               <FormLabel htmlFor="team_code2">Rival Code</FormLabel>
               <FormControl>
                 <Input
@@ -250,7 +251,7 @@ const NewGameForm = () => {
           control={control}
           name="playoffGame"
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="dark:text-muted-foreground">
               <FormLabel htmlFor="playoffGame">Playoff Game</FormLabel>
               <FormControl>
                 <Input id="playoffGame" type="string" className="dark:text-blue-500" placeholder="" {...field} />

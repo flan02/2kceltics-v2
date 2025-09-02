@@ -1,8 +1,18 @@
 export const current_season = process.env.CURRENT_SEASON as currentSeason
 
+export interface Task {
+  id: string
+  task: string
+  description: string
+  done: boolean
+  createdAt: Date
+  updatedAt: Date
+}
+
 export const gameTypes = ["RS", "PO"]
 
 export const stageTypes = ["RS", "CUP_GP", "CUP_QF", "CUP_SF", "CUP_THEFINAL", "FIRST_ROUND", "ESCF", "ECF", "FINALS"]
+export const gamesMode = stageTypes.filter((s) => !["CUP_QF", "CUP_SF", "CUP_THEFINAL"].includes(s))
 
 export const spanTypes = ["5", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55", "60", "65", "70", "75", "82"]
 

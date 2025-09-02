@@ -15,8 +15,10 @@ import AddSeason from './AddSeason'
 import AddPlayoffs from './AddPlayoffs'
 import { auth } from '@/auth'
 import SignOut from '@/components/reutilizable/sign-out'
-
-
+import ShareOnX from './ShareOnX'
+import ModalTask from './ModalTask'
+import { Task } from '@/lib/types'
+import { truncateWords } from '@/lib/utils'
 
 
 type Props = {
@@ -36,6 +38,15 @@ const Dashboard = async ({ opt, photo, given_name }: Props) => {
   const addSeason = opt === 'addseason'
   const addPlayoffs = opt === 'addplayoffs'
 
+  const OPTIONS = [
+    'addteam',
+    'schedule',
+    'addstats',
+    'addseason',
+    'addplayoffs'
+  ]
+
+
 
   return (
     <div className='mt-4 max-w-4xl mx-auto'>
@@ -44,35 +55,27 @@ const Dashboard = async ({ opt, photo, given_name }: Props) => {
           {
             session && session.user && <div className='flex justify-start items-end my-1 md:my-0'><SignOut /></div>
           }
-          <Link href="/dashboard?opt=addteam" className={buttonVariants({
-            variant: `${(opt === 'addteam') ? 'default' : 'outline'}`,
-            className: `transition-all duration-500 ease-in-out ${opt !== 'addteam' ? " hover:bg-zinc-200/60 dark:hover:bg-zinc-800/20" : ""}`
-          })}>TEAM</Link>
-          <Link href="/dashboard?opt=schedule" className={buttonVariants({
-            variant: `${(opt === 'schedule') ? 'default' : 'outline'}`,
-            className: `transition-all duration-500 ease-in-out ${opt !== 'schedule' ? " hover:bg-zinc-200/60 dark:hover:bg-zinc-800/20" : ""}`
-          })}>SCHEDULE</Link>
-          <Link href="/dashboard?opt=addstats" className={buttonVariants({
-            variant: `${(opt === 'addstats') ? 'default' : 'outline'}`,
-            className: `transition-all duration-500 ease-in-out ${opt !== 'addstats' ? " hover:bg-zinc-200/60 dark:hover:bg-zinc-800/20" : ""}`
-          })}>ADD STATS</Link>
-          <Link href="/dashboard?opt=addseason" className={buttonVariants({
-            variant: `${(opt === 'addseason') ? 'default' : 'outline'}`,
-            className: `transition-all duration-500 ease-in-out ${opt !== 'addseason' ? " hover:bg-zinc-200/60 dark:hover:bg-zinc-800/20" : ""}`
-          })}>ADD SEASON</Link>
-          <Link href="/dashboard?opt=addplayoffs" className={buttonVariants({
-            variant: `${(opt === 'addplayoffs') ? 'default' : 'outline'}`,
-            className: `transition-all duration-500 ease-in-out ${opt !== 'addplayoffs' ? " hover:bg-zinc-200/60 dark:hover:bg-zinc-800/20" : ""}`
-          })}>PLAYOFFS</Link>
+
+          {
+            OPTIONS.map((option) => (
+              <Link key={option} href={`/dashboard?opt=${option}`} className={buttonVariants({
+                variant: `${(opt === option) ? 'default' : 'outline'}`,
+                className: `transition-all duration-500 ease-in-out ${opt !== option ? " hover:bg-zinc-200/60 dark:hover:bg-zinc-800/20" : ""}`
+              })}>
+                {option.toUpperCase()}
+              </Link>
+            ))
+          }
+
+
+
           <Link href="/dashboard" className={buttonVariants({
             size: "sm", variant: `${(opt === '/') ? 'default' : 'outline'}`,
             className: `transition-all duration-500 ease-in-out ${opt !== '/' ? " hover:bg-zinc-200/60 dark:hover:bg-zinc-800/20" : ""}`
           })}>
             /
           </Link>
-
         </nav>
-
       </div>
 
       <section className='min-h-[calc(100vh-100px)] mt-4 border-t border-slate-200'>
@@ -86,9 +89,9 @@ const Dashboard = async ({ opt, photo, given_name }: Props) => {
                 </div>
                 <h1 className='text-center text-lg md:text-3xl text-celtics'>Welcome back admin {given_name} (flan02)!</h1>
               </div>
-              <article className='border border-slate-200 p-2'>
+              <article className='border border-slate-200 py-2 px-6'>
                 {
-                  (tasks as any).map((task: any) => (
+                  (tasks as Task[]).map((task: Task) => (
                     <div key={task.id} className='flex justify-between space-y-2 items-center'>
                       <div className='flex space-x-2 items-center'>
                         <span>
@@ -98,7 +101,7 @@ const Dashboard = async ({ opt, photo, given_name }: Props) => {
                               : <Cross1Icon fill='red' color='red' className='size-6' />
                           }
                         </span>
-                        <span className={`${task.done ? "line-through" : "text-primary"} text-muted-foreground lg:text-base text-xs`}>{task.task}</span>
+                        <ModalTask taskTitle={task.task} task={{ ...task, task: truncateWords(task.task, 15) }} />
                       </div>
                       <DoneTask task={task} />
                     </div>
@@ -106,6 +109,9 @@ const Dashboard = async ({ opt, photo, given_name }: Props) => {
                 }
               </article>
               <TaskForm />
+              <article className="p-16 border border-slate-200 w-full rounded-lg space-y-4">
+                <ShareOnX /> {/* Client side component */}
+              </article>
             </div>
             : null
         }
@@ -120,3 +126,7 @@ const Dashboard = async ({ opt, photo, given_name }: Props) => {
 }
 
 export default Dashboard
+
+
+
+

@@ -2,7 +2,7 @@
 'use client'
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { atHomeTypes, gameTypes, resultTypes, seasonTypes, stageTypes } from '@/lib/types';
+import { atHomeTypes, gamesMode, gameTypes, resultTypes, seasonTypes, stageTypes } from '@/lib/types';
 import { Search } from 'lucide-react';
 import LoadingButton from '@/components/reutilizable/LoadingButton';
 import { useForm } from 'react-hook-form';
@@ -13,6 +13,7 @@ import { getStreamedGames } from '@/app/streamed-games/action';
 import GameCard from './GameCard';
 import { useEffect, useState } from 'react';
 import SkeletonGameCard from '@/components/reutilizable/SkeletonGameCard';
+import { Season } from '@prisma/client';
 
 
 
@@ -44,7 +45,7 @@ const FilterForm = ({ filteredGames }: Props) => {
   const [isLoaded, setIsLoaded] = useState(false)
 
   const [filterValues, setFilterValues] = useState([{
-    season: undefined as "NBA2K22" | "NBA2K23" | "NBA2K24" | "NBA2K25" | undefined,
+    season: undefined as Season | undefined,
     type: undefined as "RS" | "PO" | undefined,
     stage: undefined as "RS" | "CUP_GP" | "CUP_QF" | "CUP_SF" | "CUP_THEFINAL" | "FIRST_ROUND" | "ESCF" | "ECF" | "FINALS" | undefined,
     atHome: undefined as "HOME" | "AWAY" | undefined,
@@ -99,11 +100,11 @@ const FilterForm = ({ filteredGames }: Props) => {
   }, [page])
 
 
-  const current_season = "NBA2K25"  // * We need pass this value as String hence I don't use the $Enums.Season type
+  const current_season = process.env.NEXT_PUBLIC_CURRENT_SEASON //"NBA2K25"  // * We need pass this value as String hence I don't use the $Enums.Season type
   useEffect(() => {
     if (isSubmitted) {
       form.reset({
-        season: current_season,
+        season: undefined,
         type: 'RS',
         stage: undefined,
         atHome: undefined,
@@ -202,7 +203,7 @@ const FilterForm = ({ filteredGames }: Props) => {
                           </SelectTrigger>
                           <SelectContent>
                             <SelectGroup >
-                              {stageTypes.map((stage, index) => (
+                              {gamesMode.map((stage, index) => (
                                 <SelectItem key={index} value={stage}>{stage}</SelectItem>
                               ))}
                             </SelectGroup>
