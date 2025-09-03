@@ -50,6 +50,7 @@ async function onSubmit(values: any) { // ! CHANGE THIS SCHEMA
 }
 
 const AddSeasonForm = (props: Props) => {
+  const CELTICS_ID = process.env.NEXT_PUBLIC_CELTICS_ID
   const [isLoaded, setIsLoaded] = useState(false)
 
   // * This is a common technique for managing state in functional React components when you need to know if a component is still mounted during an async operation.
@@ -58,7 +59,7 @@ const AddSeasonForm = (props: Props) => {
   const form = useForm<z.infer<typeof createNewSeasonSchema>>({
     resolver: zodResolver(createNewSeasonSchema),
     defaultValues: {
-      teamId: "66b4de0f0fa088d80a9b93d1",
+      teamId: CELTICS_ID,
       season: undefined,
       total_games: "0",
       players: "",
@@ -83,15 +84,14 @@ const AddSeasonForm = (props: Props) => {
 
   useEffect(() => {
     if (isSubmitted) {
-      form.reset({ teamId: "66b4de0f0fa088d80a9b93d1", season: undefined, total_games: "0", players: "" })
+      form.reset({ teamId: CELTICS_ID, season: undefined, total_games: "0", players: "" })
       document.getElementsByClassName("DraftEditor-editorContainer")[0].textContent = ""
     }
   }, [isSubmitted])
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full border border-slate-200 rounded-lg mb-16 px-4 py-16 lg:p-16 b-16 space-y-8">
-
+      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full text-muted-foreground border border-slate-200 rounded-lg mb-16 px-4 py-16 lg:p-16 b-16 space-y-8">
         <FormField
           control={form.control}
           name="teamId"
@@ -104,15 +104,13 @@ const AddSeasonForm = (props: Props) => {
                   placeholder=""
                   {...field}
                   autoComplete="off"
-                  value="66b4de0f0fa088d80a9b93d1"
+                  value={CELTICS_ID}
                 />
               </FormControl>
               <FormMessage>{ }</FormMessage>
             </FormItem>
           )}
         />
-
-
         <FormField
           control={control}
           name="season"
@@ -123,7 +121,6 @@ const AddSeasonForm = (props: Props) => {
                 <Select {...field} defaultValue=""
                   onValueChange={(value) => field.onChange(value)}
                   value={field.value}
-
                 >
                   <SelectTrigger className="border border-slate-200 text-md shadow-md py-1.5 text-left pl-2 min-w-[150px] rounded-md">
                     <SelectValue placeholder="choose next season" />
@@ -141,7 +138,6 @@ const AddSeasonForm = (props: Props) => {
             </FormItem>
           )}
         />
-
         {
           isLoaded
             ?
@@ -151,8 +147,6 @@ const AddSeasonForm = (props: Props) => {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel htmlFor="players" >{`Markdown Players table `}</FormLabel>
-
-
                   <Suspense fallback={<Skeleton className="h-[200px]" />}>
                     <FormControl>
                       <RichTextEditor
@@ -167,8 +161,6 @@ const AddSeasonForm = (props: Props) => {
             />
             : <Skeleton className="h-[200px]" />
         }
-
-
 
         <div className="text-center">
           <LoadingButton type="submit" loading={isSubmitting}>

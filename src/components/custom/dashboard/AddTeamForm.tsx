@@ -72,7 +72,7 @@ export default function AddTeamForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full border rounded-lg border-slate-200 mb-16 p-16 b-16 space-y-8">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full text-muted-foreground border rounded-lg border-slate-200 mb-16 p-16 b-16 space-y-8">
         <FormField
           control={form.control}
           name="name"

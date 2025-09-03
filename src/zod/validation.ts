@@ -4,7 +4,7 @@ import { z } from "zod";
 
 export const createNewSeasonSchema = z.object({
   teamId: z.string().min(24, { message: "Team ID must be 24 characters" }).max(24, { message: "Team ID must be 24 characters" }),
-  season: z.enum(["NBA2K21", "NBA2K22", "NBA2K23", "NBA2K24", "NBA2K25"]),
+  season: z.enum(["NBA2K22", "NBA2K23", "NBA2K24", "NBA2K25"]),
   total_games: z.string().optional(),
   players: z.string({ message: "Markdown table format" }).optional(),
   standings: z.string().optional(),
@@ -13,7 +13,7 @@ export const createNewSeasonSchema = z.object({
 })
 
 export const createNewGameStatSchema = z.object({
-  season: z.enum(["NBA2K21", "NBA2K22", "NBA2K23", "NBA2K24", "NBA2K25"]),
+  season: z.enum(["NBA2K22", "NBA2K23", "NBA2K24", "NBA2K25"]),
   type: z.enum(["RS", "PO"]),
   stage: z.enum(["RS", "CUP_GP", "CUP_QF", "CUP_SF", "CUP_THEFINAL", "FIRST_ROUND", "ESCF", "ECF", "FINALS"]),
   span: z.enum(["5", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55", "60", "65", "70", "75", "82"]).optional(),

@@ -8,7 +8,7 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
+//import { Input } from '@/components/ui/input';
 import {
   Select,
   SelectContent,
@@ -18,6 +18,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import {
+  gamesMode,
   gameTypes,
   seasonTypes,
   spanTypes,
@@ -34,7 +35,7 @@ import { toast } from '@/components/ui/use-toast';
 import { createNewGameStatSchema } from '@/zod/validation';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { $Enums } from '@prisma/client';
+import type { $Enums } from '@prisma/client';
 
 export type GameStatProps = {
   season: $Enums.Season;
@@ -46,6 +47,7 @@ export type GameStatProps = {
 };
 
 const AddPlayerStatsForm = () => {
+  const season = process.env.NEXT_PUBLIC_CURRENT_SEASON!
   const [isLoaded, setIsLoaded] = useState(false);
 
   // * This is a common technique for managing state in functional React components when you need to know if a component is still mounted during an async operation.
@@ -54,7 +56,7 @@ const AddPlayerStatsForm = () => {
   const form = useForm<z.infer<typeof createNewGameStatSchema>>({
     resolver: zodResolver(createNewGameStatSchema),
     defaultValues: {
-      season: 'NBA2K24',
+      season: season as $Enums.Season,
       type: undefined,
       stage: undefined,
       span: undefined,
@@ -62,6 +64,7 @@ const AddPlayerStatsForm = () => {
       gamestat: '',
     },
   });
+
   const {
     register,
     handleSubmit,
@@ -108,13 +111,13 @@ const AddPlayerStatsForm = () => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="w-full border border-slate-200 rounded-lg mb-16 px-4 py-16 lg:p-16 b-16 space-y-8"
+        className="w-full text-muted-foreground border border-slate-200 rounded-lg mb-16 px-4 py-16 lg:p-16 b-16 space-y-8"
       >
         <FormField
           control={control}
           name="season"
           render={({ field }) => (
-            <FormItem>
+            <FormItem >
               <FormLabel>Select season: </FormLabel>
               <FormControl>
                 <Select
@@ -194,7 +197,7 @@ const AddPlayerStatsForm = () => {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectGroup>
-                      {stageTypes.map((type, index) => (
+                      {gamesMode.map((type, index) => (
                         <SelectItem key={index} value={type}>
                           {type}
                         </SelectItem>
@@ -274,33 +277,35 @@ const AddPlayerStatsForm = () => {
           )}
         />
 
-        {isLoaded ? (
-          <FormField
-            control={form.control}
-            name="gamestat"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel htmlFor="players">{`Markdown Players table `}</FormLabel>
+        {
+          isLoaded
+            ?
+            <FormField
+              control={form.control}
+              name="gamestat"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel htmlFor="players">{`Markdown Players table `}</FormLabel>
+                  <Suspense fallback={<Skeleton className="h-[200px]" />}>
+                    <FormControl>
+                      <RichTextEditor
+                        ref={field.ref}
+                        onChange={(draft) =>
+                          field.onChange(draftToMarkdown(draft))
+                        }
+                      />
 
-                <Suspense fallback={<Skeleton className="h-[200px]" />}>
-                  <FormControl>
-                    <RichTextEditor
-                      ref={field.ref}
-                      onChange={(draft) =>
-                        field.onChange(draftToMarkdown(draft))
-                      }
-                    />
-                  </FormControl>
-                  <FormMessage>
-                    {/* form.formState.errors.players?.message  CHANGE PLAYERS FOR THIS COMPONENT PROP */}{' '}
-                  </FormMessage>
-                </Suspense>
-              </FormItem>
-            )}
-          />
-        ) : (
-          <Skeleton className="h-[200px]" />
-        )}
+                    </FormControl>
+                    <FormMessage>
+                      {/* form.formState.errors.players?.message  CHANGE PLAYERS FOR THIS COMPONENT PROP */}{' '}
+                    </FormMessage>
+                  </Suspense>
+                </FormItem>
+              )}
+            />
+            :
+            <Skeleton className="h-[200px]" />
+        }
 
         <div className="text-center">
           <LoadingButton type="submit" loading={isSubmitting}>

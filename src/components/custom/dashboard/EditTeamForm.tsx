@@ -113,7 +113,7 @@ export default function EditTeam({ season2k }: Props) {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full border border-slate-200 rounded-lg mb-16 px-4 py-16 lg:p-16 b-16 space-y-8">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full text-muted-foreground border border-slate-200 rounded-lg mb-16 px-4 py-16 lg:p-16 b-16 space-y-8">
         <FormField
           control={control}
           name="season"

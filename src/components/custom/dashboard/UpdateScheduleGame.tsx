@@ -72,7 +72,7 @@ const UpdateScheduleGame = () => {
     <>
       <h2 className="text-sm text-celtics font-bold uppercase flex"><Search className="mr-2" size={18} />  Search game to update</h2>
       <Form {...form} >
-        <form noValidate onSubmit={handleSubmit(onSubmit)} className="space-y-4" >
+        <form noValidate onSubmit={handleSubmit(onSubmit)} className="space-y-4 text-muted-foreground" >
           <FormField
             control={control}
             name="currentGame"

@@ -25,8 +25,8 @@ const SeasonsStatPage = async () => {
   let parsedSpan: string = span.toString()
   console.log('parsedSpan', parsedSpan);
   console.log(typeof parsedSpan);
-  const average = await getCurrentPlayerStats(type, current, 'AVG', 'RS', parsedSpan) as GameStatProps
-  const total = await getCurrentPlayerStats(type, current, 'TOTAL', 'RS', '82') as GameStatProps
+  const average = await getCurrentPlayerStats('RS', current, 'AVG', 'RS', parsedSpan) as GameStatProps
+  const total = await getCurrentPlayerStats('RS', current, 'TOTAL', 'RS', '82') as GameStatProps
 
   return (
     <MaxWidthWrapper className='mt-8 md:mt-12 lg:mt-24 space-y-8'>

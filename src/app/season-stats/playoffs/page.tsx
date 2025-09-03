@@ -12,15 +12,11 @@ import NavbarFilter from "@/components/custom/season-stats/NavbarFilter";
 
 const PlayoffsStatPage = async ({ searchParams: { opt } }: { searchParams: { opt: Stage } }) => {
   const current = process.env.CURRENT_SEASON as Season
+  const type = process.env.CURRENT_STAGE! as Tournament
 
+  //const PLAYOFFS = process.env.NEXT_PUBLIC_PLAYOFFS!
+  //let type: Tournament
 
-  const PLAYOFFS = process.env.NEXT_PUBLIC_PLAYOFFS!
-  let type: Tournament
-  if (PLAYOFFS == 'true') {
-    type = 'PO'
-  } else {
-    type = 'RS'
-  }
   // TODO: possible stage change -> FIRST_ROUND, ESCF, ECF, FINALS, ALL_GAMES
 
   const stage = opt
