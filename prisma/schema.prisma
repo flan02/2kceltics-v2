@@ -44,14 +44,17 @@ enum Role {
 enum Stage {
   RS
   CUP_GP
-  CUP_QF
-  CUP_SF
-  CUP_THEFINAL
   FIRST_ROUND
   ESCF
   ECF
   FINALS
 }
+
+/**
+ * CUP_QF
+ * CUP_SF
+ * CUP_THEFINAL
+ */
 
 enum Round {
   FIRST_ROUND
@@ -78,6 +81,14 @@ enum Pos {
   SF
   PF
   C
+}
+
+enum PlayoffsRound {
+  NOT
+  FIRST_ROUND
+  ESCF
+  ECF
+  FINALS
 }
 
 model User {
@@ -194,8 +205,9 @@ model Seed {
 }
 
 model SeasonPlayerSpan {
-  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  id        String     @id @default(auto()) @map("_id") @db.ObjectId
   season    Season
+  stage     Tournament
   gamespan  Int
   pos       Pos
   name      String
@@ -209,19 +221,19 @@ model SeasonPlayerSpan {
   blk       Float
   to        Float
   fls       Float
-  fgPct     Float  @map("fg%") // ".519"
+  fgPct     Float      @map("fg%") // ".519"
   fgm       Float
   fga       Float
-  tpPct     Float  @map("3p%") // ".581"
+  tpPct     Float      @map("3p%") // ".581"
   tpm       Float
   tpa       Float
-  ftPct     Float  @map("ft%") // ".806"
+  ftPct     Float      @map("ft%") // ".806"
   ftm       Float
   fta       Float
   pa        Float
   ofgm      Float
   ofga      Float
-  plusMinus Float  @map("+/-") // en lugar de "+/-"
+  plusMinus Float      @map("+/-") // en lugar de "+/-"
 
   @@unique([name, season, gamespan])
 }

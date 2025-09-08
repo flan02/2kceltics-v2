@@ -7,8 +7,9 @@ import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import useGetStats from '@/hooks/useGetStats'
 import { fieldsMap, fieldsToExclude, GameSpan, gamespanMap, PlayerStatsType } from '@/lib/types'
+import { parsedSeasonTitle } from '@/lib/utils'
 import { useFilterStore, useMenuStore, useMultiplierStore, useStatsStore } from '@/zustand/store'
-import { AppWindow, ArrowBigRightDash, Search, SquareX } from 'lucide-react'
+import { ArrowBigRightDash, Search, SquareX } from 'lucide-react'
 import { useTheme } from 'next-themes'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
@@ -44,6 +45,7 @@ const TypeGraphPage = ({ params: { type } }: PageProps) => {
 
 
   const openSearchHandler = () => {
+    filters.isActivated = !filters.isActivated
     if (setIsOpen) {
       setIsOpen(!isOpen);
     }
@@ -103,8 +105,7 @@ const TypeGraphPage = ({ params: { type } }: PageProps) => {
                                     key={key}
                                     value={key}
                                   >
-                                    {/* {key.toUpperCase()} */}
-                                    {fieldsMap[key!] || 'Points'}
+                                    {fieldsMap[key!]} {/* || 'Points' */}
                                   </option>
                                 ))
                               }
@@ -132,6 +133,10 @@ const TypeGraphPage = ({ params: { type } }: PageProps) => {
                           <h4 className='bg-gray-300 text-midnight font-bold dark:text-yellow-400 rounded-md dark:bg-celtics px-2 h-min py-1 md:py-0 w-max md:w-auto'>
                             {filters.season}
                           </h4>
+                          <p className='hidden md:block md:mt-1'>|</p>
+                          <h4 className='pt-12 border border-yellow-300 font-bold text-yellow-400 rounded-md px-2 h-min py-1 md:py-0 w-max md:w-auto'>
+                            {parsedSeasonTitle(filters.stage)}
+                          </h4>
 
 
                         </div>
@@ -158,7 +163,7 @@ const TypeGraphPage = ({ params: { type } }: PageProps) => {
       }
 
       <div className='flex justify-center'>
-        <Button asChild className='px-2 py-0 dark:bg-white dark:hover:bg-gray-200 hover:bg-black/80 dark:text-black'>
+        <Button asChild className='px-2 py-0 dark:bg-[#666] dark:hover:bg-[#777] dark:text-black hover:bg-black/80'>
           <Link href="/advanced" className='text-xs'>BACK</Link>
         </Button>
       </div>
@@ -168,3 +173,4 @@ const TypeGraphPage = ({ params: { type } }: PageProps) => {
 }
 
 export default TypeGraphPage
+

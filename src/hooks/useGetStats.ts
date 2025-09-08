@@ -4,6 +4,7 @@ import ky from 'ky'
 import { useStatsStore } from '@/zustand/store'
 import { StatsResponse } from '@/lib/types'
 
+
 const useGetStats = () => {
   const data = useStatsStore((state) => state.data)
   const isLoading = useStatsStore((state) => state.isLoading)
@@ -13,13 +14,21 @@ const useGetStats = () => {
   // Usamos getState para funciones no reactivas (como setData)
   const { setData, setIsLoading, setError, setSelectedKey } = useStatsStore.getState()
 
-  const getStats = async (gamespan: number, season: string) => {
+  const getStats = async (stage: string, gamespan: number, season: string, roundspan: number) => {
+
     setIsLoading(true)
     setError(null)
 
+    let parsedGamespan
+    if (stage == 'PO') {
+      parsedGamespan = roundspan
+    }
+    else {
+      parsedGamespan = gamespan
+    }
     try {
       const response = await ky
-        .get(`/api/v1/season-stats?gamespan=${gamespan}&season=${season}`, {
+        .get(`/api/v1/season-stats?stage=${stage}&gamespan=${parsedGamespan}&season=${season}`, {
           timeout: 10000,
         })
         .json<StatsResponse>()

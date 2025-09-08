@@ -1,7 +1,7 @@
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
-import { current_season, playerImages2K25, SeasonSpans } from "./types";
-import { getCurrentSpan } from "@/app/actions";
+import { current_season, playerImages2K25, PlayoffSpans, SeasonSpans } from "./types";
+import { getCurrentRound, getCurrentSpan } from "@/app/actions";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -15,11 +15,13 @@ export function keysToLowerCase(obj: Record<string, any>): Record<string, any> {
 
 
 export async function normalizeSeasonPlayerInput(raw: Record<string, any>): Promise<Record<string, any>> {
-
+  let nextSpan: number;
+  let stage
+  const isPlayoffs = process.env.CURRENT_STAGE!
+  //let span = await getCurrentSpan()
   const nextGamespan = async (): Promise<number> => {
     // This function should retrieve the next gamespan from the database.}
     const span = await getCurrentSpan()
-
     const index = SeasonSpans.indexOf(span);
     if (index === -1) {
       throw new Error(`Invalid currentGame value: ${span}`);
@@ -28,13 +30,38 @@ export async function normalizeSeasonPlayerInput(raw: Record<string, any>): Prom
     return SeasonSpans[index]
   }
 
-  const nextSpan = await nextGamespan();
+  const nextPlayoffSpan = async (): Promise<number> => {
+    // This function should retrieve the next gamespan from the database.}
+    const span = await getCurrentRound()
+    const index = PlayoffSpans.indexOf(span as any);
+    if (index === -1) {
+      throw new Error(`Invalid currentGame value: ${span}`);
+    }
+
+    return PlayoffSpans[index]
+  }
+
+  if (isPlayoffs != 'PO') {
+    stage = 'RS'
+    nextSpan = await nextGamespan()
+  } else {
+    stage = 'PO'
+
+    // added manually
+    // nextSpan = 1 // ? Reset to 1 for playoffs
+    nextSpan = await nextPlayoffSpan()
+    // TODO: I should create a fc that checks into the db for: length of combination between (stage: 'PO' & gamespan) -> (ej: 1) and plus one (+1)
+    // ! Check unicity because there will be 15 fields with gamespan 1, we only need get this value one time.
+  }
+
+
 
 
   return {
     name: raw["Name"],
     pos: raw["POS"],
     season: current_season,
+    stage: stage,
     gamespan: nextSpan, // raw["gamespan"]
     gs: parseInt(raw["GS"]),
     gp: parseInt(raw["GP"]),
@@ -89,4 +116,13 @@ export function truncateWords(text: string, limit: number) {
   if (words.length <= limit) return text;
 
   return words.slice(0, limit).join(" ") + "...";
+}
+
+
+export function parsedSeasonTitle(title: string): string {
+  let parsedTitle: string = ''
+  if (title == 'RS') parsedTitle = 'Regular Season'
+  else if (title == 'PO') parsedTitle = 'Playoffs'
+
+  return parsedTitle
 }
