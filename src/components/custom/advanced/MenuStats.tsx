@@ -18,6 +18,7 @@ const MenuStats = (props: Props) => {
   const { filters, setFilters } = useFilterStore()
   const { spans, isLoading } = useAvailableSpans(filters.season, filters.stage)
 
+  const isPlayoffs = process.env.NEXT_PUBLIC_PLAYOFFS!
   // console.log("Actual Spans", spans);
   // console.log('Current spans:', filters.gamespan);
   // console.log('Current roundspan:', filters.roundspan);
@@ -54,15 +55,10 @@ const MenuStats = (props: Props) => {
                 value={filters.stage}
                 onChange={e => setFilters({
                   stage: e.target.value as Tournament,
-                })} // setSeason(e.target.value)
+                })}
               >
-                {
-                  gameTypes.map((stage, i) => (
-                    <option key={i} value={stage} >
-                      {stage}
-                    </option>
-                  ))
-                }
+                <option>RS</option>
+                {isPlayoffs ? <option>PO</option> : null}
               </select>
             </div>
 
@@ -148,7 +144,7 @@ const MenuStats = (props: Props) => {
             </div>
             <br />
             <div className='flex justify-center'>
-              <Button onClick={handleGenerate} className='bg-midnight dark:bg-celtics dark:hover:bg-celtics/90 dark:text-gray-300'>GENERATE</Button>
+              <Button onClick={handleGenerate} disabled={spans.length == 0} className='bg-midnight dark:bg-celtics dark:hover:bg-celtics/90 dark:text-gray-300'>GENERATE</Button>
             </div>
           </section>
         </div>

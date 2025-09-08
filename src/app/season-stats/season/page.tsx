@@ -21,7 +21,7 @@ const SeasonsStatPage = async () => {
   span = Math.floor(span / 5) * 5 // 5,10,15,20,25,30...
 
   console.log(typeof span);
-  if (span == 80) span = 82 // If season is complete, show total stats
+  if (span == 80 || span > 82) span = 82 // If season is complete, show total stats
   let parsedSpan: string = span.toString()
   console.log('parsedSpan', parsedSpan);
   console.log(typeof parsedSpan);

@@ -20,13 +20,13 @@ type Props = {}
 
 
 const AdvancedPage = (props: Props) => {
-  const photo_dimension = {
-    width: 400,
-    height: 400
-  }
-  const className = {
-    title: 'text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-celtics leading-tight md:leading-tight lg:leading-tight xl:leading-tight'
-  }
+  // const photo_dimension = {
+  //   width: 400,
+  //   height: 400
+  // }
+  // const className = {
+  //   title: 'text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-celtics leading-tight md:leading-tight lg:leading-tight xl:leading-tight'
+  // }
   return (
     <MaxWidthWrapper className='min-h-screen mt-8 md:mt-12 lg:mt-24 space-y-8'>
       <h1 className='uppercase text-celtics text-2xl lg:text-4xl font-bold'>Analytics Tool</h1>

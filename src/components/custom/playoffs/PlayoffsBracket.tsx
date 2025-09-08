@@ -60,28 +60,28 @@ const PlayoffsBracket = ({ seeds }: SeedProps) => {
 
           {/* Second Column - Western Conference SemiFinals - Next Round */}
           <div className="place-content-center">
-            <Box2 conferenceFinals={false} bracket={westSemis} order={false} empty={empty} />
+            <Box2 conferenceFinals={false} bracket={westSemis.length == 3 ? westSemis : []} order={false} empty={empty} />
           </div>
 
           {/* Third Column - Western Conference Finals - Next Round */}
           <div className="space-y-4 place-content-center ">
-            <Box2 conferenceFinals={true} bracket={westFinals} order={false} empty={empty} />
+            <Box2 conferenceFinals={true} bracket={westFinals.length == 1 ? westFinals : []} order={false} empty={empty} />
           </div>
 
 
           <div className=''>
-            <BoxTheFinals bracket={theFinals} empty={empty} />
+            <BoxTheFinals bracket={theFinals.length == 1 ? theFinals : []} empty={empty} />
           </div>
 
 
           {/* Fourth Column - Eastern Conference Finals - Next Round */}
           <div className=" space-y-4 place-content-center mt-6 ml-6">
-            <Box2 conferenceFinals={true} bracket={eastFinals} order={true} empty={empty} />
+            <Box2 conferenceFinals={true} bracket={eastFinals.length == 1 ? eastFinals : []} order={true} empty={empty} />
           </div>
 
           {/* Third Column - Eastern Conference */}
           <div className="place-content-center">
-            <Box2 conferenceFinals={false} bracket={eastSemis} order={true} empty={empty} />
+            <Box2 conferenceFinals={false} bracket={eastSemis.length == 3 ? eastSemis : []} order={true} empty={empty} />
           </div>
 
           {/* Fourth Column - Eastern Conference - Next Round */}
