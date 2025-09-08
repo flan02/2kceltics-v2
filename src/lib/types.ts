@@ -10,6 +10,7 @@ export interface Task {
 }
 
 export const gameTypes = ["RS", "PO"]
+export const roundPlayoffs = ["First round", "Semi Finals", "Conf. Finals", "The Finals"]
 
 export const stageTypes = ["RS", "CUP_GP", "CUP_QF", "CUP_SF", "CUP_THEFINAL", "FIRST_ROUND", "ESCF", "ECF", "FINALS"]
 export const gamesMode = stageTypes.filter((s) => !["CUP_QF", "CUP_SF", "CUP_THEFINAL"].includes(s))
@@ -105,6 +106,7 @@ export type PlayerStatsType = {
   id: string;
   name: string;
   pos: string;
+  stage: string;
   season: string;
   gamespan: number;
   gp: number;
@@ -133,7 +135,7 @@ export type PlayerStatsType = {
 }
 
 
-export const fieldsToExclude = ["id", "season", "gamespan", "gp", "gs", "pos", "name"] // "ofgm", "ofga", "pa", "plusMinus"
+export const fieldsToExclude = ["id", "season", "gamespan", "gp", "gs", "pos", "name", "stage"] // "ofgm", "ofga", "pa", "plusMinus"
 export const percentageKeys: (keyof PlayerStatsType)[] = ['fgPct', 'tpPct', 'ftPct'];
 
 export const fieldsMap: Record<string, string> = {
@@ -175,7 +177,20 @@ export const gamespanMap: Record<number, string> = {
   50: "FIRST 50 GAMES",
   60: "FIRST 60 GAMES",
   70: "FIRST 70 GAMES",
-  82: "FIRST 82 GAMES"
+  82: "FIRST 82 GAMES",
+  1: "FIRST ROUND",
+  2: "SEMI FINALS",
+  3: "CONF. FINALS",
+  4: "THE FINALS"
 };
 
 export const SeasonSpans: number[] = [10, 20, 30, 40, 50, 60, 70, 82]
+export const PlayoffSpans: number[] = [1, 2, 3, 4]
+
+export const roundLabels: Record<number, string> = {
+  1: "FIRST ROUND",
+  2: "SEMI FINALS",
+  3: "CONF. FINALS",
+  4: "THE FINALS",
+};
+

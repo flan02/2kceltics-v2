@@ -2,6 +2,7 @@
 import { PlayerStatsType, StatsResponse } from '@/lib/types'
 import { create } from 'zustand'
 
+const CURRENT_SEASON = process.env.NEXT_PUBLIC_CURRENT_SEASON!
 
 interface StatsState {
   data: StatsResponse | null
@@ -34,8 +35,11 @@ interface MultiplierState {
 
 interface FilterState {
   filters: {
+    isActivated: boolean
+    stage: string
     season: string
     gamespan: number
+    roundspan: number // ? For playoffs
     // ? Add more filter fields as needed
   }
   setFilters: (updates: Partial<FilterState['filters']>) => void
@@ -65,8 +69,11 @@ export const useMultiplierStore = create<MultiplierState>((set) => ({
 
 export const useFilterStore = create<FilterState>((set) => ({
   filters: {
-    season: 'NBA2K25',
-    gamespan: 10
+    isActivated: false,
+    stage: "RS",
+    season: CURRENT_SEASON,
+    gamespan: 10,
+    roundspan: 1, // ? For playoffs
   },
   setFilters: (updates) => set((state) => ({
     filters: {
@@ -76,8 +83,11 @@ export const useFilterStore = create<FilterState>((set) => ({
   })),
   resetFilters: () => set({
     filters: {
-      season: 'NBA2K25',
-      gamespan: 10
+      isActivated: false,
+      stage: "RS",
+      season: CURRENT_SEASON,
+      gamespan: 10,
+      roundspan: 1, // ? For playoffs
     }
   })
 }));

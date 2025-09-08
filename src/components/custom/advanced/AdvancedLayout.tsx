@@ -12,14 +12,16 @@ import { useTheme } from 'next-themes';
 import { Skeleton } from '@/components/ui/skeleton';
 import { capitalize } from '@/lib/utils';
 import { CustomLabel } from '@/components/recharts/CustomLabel';
-import { useMultiplierStore } from '@/zustand/store';
+import { useFilterStore, useMenuStore, useMultiplierStore } from '@/zustand/store';
 import Image from 'next/image';
 
 const AdvancedLayout = () => {
   const { data, isLoading, error, selectedKey } = useGetStats();
+
   const { multiplier } = useMultiplierStore();
   const { theme } = useTheme();
   const isDark = theme === 'dark';
+  const { filters } = useFilterStore()
 
 
   const players = useMemo(() => {
@@ -53,6 +55,7 @@ const AdvancedLayout = () => {
   if (isLoading) return <Skeleton className="h-[672px] max-w-screen-xl" />
 
 
+  //const isActivated = true
   return (
     <>
       {
@@ -67,7 +70,7 @@ const AdvancedLayout = () => {
               </aside>
               <div className='hidden md:block' />
               {
-                players.length > 0
+                players.length > 0 && filters.isActivated
                   ? <ResponsiveContainer width="100%" height={600} className="-ml-4 md:ml-0">
                     <BarChart data={players}> {/* data={sortedByPoints} */}
                       <CartesianGrid stroke={isDark ? "#222" : "#ddd"} />
@@ -85,9 +88,9 @@ const AdvancedLayout = () => {
                       <Bar
                         dataKey="value"
                         // label={<CustomLabel />} {/* doesn't receive {index, payload}. Instead use comp LabelList */}
-                        fill={isDark ? "#555" : "#007a33 "}
+                        fill={isDark ? filters.stage == 'RS' ? "#555" : "#BA9653" : filters.stage == 'RS' ? "#007A33" : "#BA9653"}
                         radius={[6, 6, 0, 0]}
-                        activeBar={isDark ? { fill: "#666" } : { fill: "#006a33" }}
+                        activeBar={isDark ? filters.stage == 'RS' ? { fill: "#666" } : { fill: "#BA9040" } : filters.stage == 'RS' ? { fill: "#008F39" } : { fill: "#BA9040" }}
                       >
                         <LabelList
                           dataKey="value"

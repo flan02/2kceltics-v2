@@ -64,6 +64,7 @@ export async function getCurrentRoster() {
 
 
 export async function getCurrentSpan() {
+
   const response = await db.schedule.findMany({
     where: {
       season: CURRENT_SEASON,
@@ -77,5 +78,25 @@ export async function getCurrentSpan() {
 
   const span: number = response.length
   return span
+
+}
+
+
+export async function getCurrentRound() {
+  const response = await db.schedule.findMany({
+    where: {
+      season: CURRENT_SEASON,
+      scoreTeam1: { gt: 0 },
+      type: 'PO'
+    },
+    select: {
+      scoreTeam1: true,
+      team_code2: true,
+    }
+  })
+
+  const round: number = response.length
+  console.log(round);
+  return round
 
 }
