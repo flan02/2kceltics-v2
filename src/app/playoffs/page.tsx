@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import PlayoffsBracket from '@/components/custom/playoffs/PlayoffsBracket'
 import MarqueePO from '@/components/reutilizable/MarqueePO'
 
