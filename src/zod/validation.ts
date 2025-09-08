@@ -62,7 +62,7 @@ export const createGameSchema = z.object({
   type: z.enum(["RS", "PO"], {
     errorMap: () => ({ message: "Selecciona una opción válida: RS o PO" }),
   }),
-  stage: z.enum(["RS", "CUP_GP", "CUP_QF", "CUP_SF", "CUP_THEFINAL", "FIRST_ROUND", "ESCF", "ECF", "FINALS"], { message: "Stage must be RS, CUP_GP, CUP_QF, CUP_SF, CUP_THEFINAL, FIRST_ROUND, ESCF, ECF, FINALS" }),
+  stage: z.enum(["RS", "CUP_GP", "FIRST_ROUND", "ESCF", "ECF", "FINALS"], { message: "Stage must be RS, CUP_GP, FIRST_ROUND, ESCF, ECF, FINALS" }),
   currentGame: z
     .string()
     .transform((value) => parseInt(value))
@@ -79,7 +79,7 @@ export const createGameSchema = z.object({
 export const updateGameSchema = z.object({
   id: z.string(),
   type: z.enum(["RS", "PO"]),
-  stage: z.enum(["RS", "CUP_GP", "CUP_QF", "CUP_SF", "CUP_THEFINAL", "FIRST_ROUND", "ESCF", "ECF", "FINALS"], { message: "Stage must be RS, CUP_GP, CUP_QF, CUP_SF, CUP_THEFINAL, FIRST_ROUND, ESCF, ECF, FINALS" }),
+  stage: z.enum(["RS", "CUP_GP", "FIRST_ROUND", "ESCF", "ECF", "FINALS"], { message: "Stage must be RS, CUP_GP, FIRST_ROUND, ESCF, ECF, FINALS" }),
   video_url: z.string().min(11, { message: "This field must contain only 11 characters" }).max(11, { message: "This field must contain only 11 characters" }),
   atHome: z.enum(["HOME", "AWAY"], { message: "This field must be HOME, AWAY" }),
   currentGame: z.number().int().min(1, { message: "Current game must be between 1 a 100" }).max(110, { message: "Current game must be between 1 a 100" }),
@@ -110,7 +110,7 @@ const unionType = z.union([
 export const filterGamesSchema = z.object({
   season: z.enum(["NBA2K22", "NBA2K23", "NBA2K24", "NBA2K25"]),
   type: unionType,
-  stage: z.enum(["RS", "CUP_GP", "CUP_QF", "CUP_SF", "CUP_THEFINAL", "FIRST_ROUND", "ESCF", "ECF", "FINALS"]).optional(),
+  stage: z.enum(["RS", "CUP_GP", "FIRST_ROUND", "ESCF", "ECF", "FINALS"]).optional(),
   atHome: z.enum(["HOME", "AWAY"]).optional(),
   result: z.enum(["WIN", "LOSS"]).optional(),
 })
