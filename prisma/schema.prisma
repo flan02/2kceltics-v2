@@ -50,12 +50,6 @@ enum Stage {
   FINALS
 }
 
-/**
- * CUP_QF
- * CUP_SF
- * CUP_THEFINAL
- */
-
 enum Round {
   FIRST_ROUND
   ECSF
