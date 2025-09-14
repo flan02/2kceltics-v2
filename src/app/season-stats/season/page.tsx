@@ -20,13 +20,13 @@ const SeasonsStatPage = async () => {
   span = Number(span) - 1 // Obtains current game
   span = Math.floor(span / 5) * 5 // 5,10,15,20,25,30...
 
-  console.log(typeof span);
+
   if (span == 80 || span > 82) span = 82 // If season is complete, show total stats
   let parsedSpan: string = span.toString()
-  console.log('parsedSpan', parsedSpan);
-  console.log(typeof parsedSpan);
+
   const average = await getCurrentPlayerStats('RS', current, 'AVG', 'RS', parsedSpan) as GameStatProps
   const total = await getCurrentPlayerStats('RS', current, 'TOTAL', 'RS', '82') as GameStatProps
+
 
   return (
     <MaxWidthWrapper className='mt-8 md:mt-12 lg:mt-24 space-y-8'>

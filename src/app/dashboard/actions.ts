@@ -536,7 +536,7 @@ export async function getPlayerStatsTotals(type: Tournament, season: Season, sta
       }
     })
 
-    console.log("response", response)
+
     return response
   } catch (error) {
     console.log(error)

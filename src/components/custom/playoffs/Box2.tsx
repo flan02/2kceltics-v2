@@ -77,7 +77,7 @@ const Box2 = ({ bracket, order, empty, conferenceFinals }: PlayoffsBracketProps)
                   </div>
 
                   {
-                    (index == 0 || index == 2) && <div className='text-center dark:text-zinc-700 text-gray-300 py-2 flex justify-center'><div className='w-[1px] h-[30px] border border-gray-200'></div></div>
+                    (index == 0 || index == 2) && <div className='text-center dark:text-zinc-700 text-gray-300 py-2 flex justify-center'><div className='w-[1px] h-[30px] border border-gray-200 dark:border dark:border-zinc-700'></div></div>
                   }
                   {
                     (index == 1 && !conferenceFinals) && <BracketSpace />

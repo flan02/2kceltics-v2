@@ -13,7 +13,6 @@ const PlayoffsPage = async (props: Props) => {
   const response: any = await getSeeds(CURRENT_SEASON)
 
 
-  console.log("Playoffs Seeds:", response);
 
   return (
     <>

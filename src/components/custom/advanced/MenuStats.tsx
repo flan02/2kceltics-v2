@@ -19,9 +19,7 @@ const MenuStats = (props: Props) => {
   const { spans, isLoading } = useAvailableSpans(filters.season, filters.stage)
 
   const isPlayoffs = process.env.NEXT_PUBLIC_PLAYOFFS!
-  // console.log("Actual Spans", spans);
-  // console.log('Current spans:', filters.gamespan);
-  // console.log('Current roundspan:', filters.roundspan);
+
 
   const handleGenerate = () => {
     filters.isActivated = true
@@ -38,7 +36,7 @@ const MenuStats = (props: Props) => {
     }
   }
 
-  console.log(filters.roundspan);
+
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm transition-opacity duration-300">

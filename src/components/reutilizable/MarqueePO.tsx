@@ -10,7 +10,7 @@ const MarqueePO = async (props: Props) => {
   return (
     <div className="absolute whitespace-nowrap overflow-hidden w-[100%] top-[50px] left-0 dark:bg-nighty bg-zinc-200/70 py-2 md:py-4 uppercase font-bold">
       <div className='min-w-full animate-marquee-x text-celtics dark:text-green-50'>
-        <h6 className="inline-block uppercase ml-48 mr-48 text-xs md:text-base">First Round: #2 Boston Celtics vs #7 Orlando Magic</h6>
+        <h6 className="inline-block uppercase ml-48 mr-48 text-xs md:text-base">Eastern Conf SemiFinals: #2 Boston Celtics vs #3 New York Knicks</h6>
         <h6 className="inline-block uppercase ml-48 mr-48 text-xs md:text-base">Playoffs NBA2K25 will start on September 3, 2025</h6>
         <h6 className="inline-block uppercase ml-48 mr-48 text-xs md:text-base">Let&apos;s get a back-to-back</h6>
       </div>
