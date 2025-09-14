@@ -35,6 +35,8 @@ const SeasonStats = async ({ average, total, opt, span, label }: SeasonProps) =>
   //console.log('current span', span);
   //  console.log('total', total);
 
+
+
   return (
     <section className='mt-4 flex flex-col space-y-20'>
       <div>

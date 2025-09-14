@@ -45,7 +45,7 @@ export async function POST(request: Request) {
     const rawBody = await request.json();
 
     const normalizedBody = await Promise.all(rawBody.map(normalizeSeasonPlayerInput));
-    //console.log("normalized body", normalizedBody);
+    console.log("normalized body", normalizedBody);
     try {
 
       await db.seasonPlayerSpan.createMany({

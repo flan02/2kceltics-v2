@@ -23,9 +23,13 @@ const PlayoffsStatPage = async ({ searchParams: { opt } }: { searchParams: { opt
 
   let average, total, span
 
+
   if (!opt) {
     span = '30' // ! CHECK THIS LINE WHEN PLAYOFFS START
-    average = await getPlayerStatsTotals(type, current, 'AVG', stage, span) as GameStatProps
+
+
+    average = await getPlayerStatsTotals(type, current, 'AVG', stage) as GameStatProps
+
     total = await getPlayerStatsTotals(type, current, 'TOTAL', stage, span) as GameStatProps
   }
   else {

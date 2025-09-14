@@ -92,11 +92,19 @@ export async function getCurrentRound() {
     select: {
       scoreTeam1: true,
       team_code2: true,
+      stage: true,
     }
   })
 
-  const round: number = response.length
-  console.log(round);
+  let round
+  //const round: number = response.length
+  //console.log("current round", round);
+  //console.log("stage", response[0]?.stage);
+  if (response[0]?.stage == 'FIRST_ROUND') round = 1
+  if (response[0]?.stage == 'ESCF') round = 2
+  if (response[0]?.stage == 'ECF') round = 3
+  if (response[0]?.stage == 'FINALS') round = 4
+
   return round
 
 }

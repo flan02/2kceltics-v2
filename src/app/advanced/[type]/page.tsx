@@ -32,6 +32,7 @@ const TypeGraphPage = ({ params: { type } }: PageProps) => {
   const { theme, resolvedTheme } = useTheme()
   const [mounted, setMounted] = useState(false);
   const [showFilters, setShowFilters] = useState(false)
+  //const [switcher, setSwitcher] = useState<any>()
 
 
   useEffect(() => {
@@ -54,6 +55,7 @@ const TypeGraphPage = ({ params: { type } }: PageProps) => {
   const statKeys = data && data.response && data.response.length > 0
     ? Object.keys(data.response[0]).filter(key => !fieldsToExclude.includes(key))
     : [];
+
 
 
 
@@ -114,7 +116,7 @@ const TypeGraphPage = ({ params: { type } }: PageProps) => {
 
 
                           <div className='flex items-center space-x-2'>
-                            <p className='text-white pl-0 md:pl-4 dark:text-muted-foreground text-xs md:text-base'>{gamespanMap[filters.gamespan]}</p>
+                            <p className='text-white pl-0 md:pl-4 dark:text-muted-foreground text-xs md:text-base'>{filters.stage == 'RS' ? gamespanMap[filters.gamespan] : gamespanMap[filters.roundspan]}</p>
                             <p>|</p>
                             <select
                               className='rounded-md text-xs md:text-md text-center px-1 bg-gray-800 h-min py-1'

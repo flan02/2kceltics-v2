@@ -18,7 +18,7 @@ type SeedProps = {
 const PlayoffsBracket = ({ seeds }: SeedProps) => {
 
 
-  const [empty, setEmpty] = useState(true); // During RS, in playoffs this value turns into false
+  const [empty, setEmpty] = useState(true); // * During RS, in playoffs this value turns into false
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
 
   useEffect(() => {
@@ -46,6 +46,8 @@ const PlayoffsBracket = ({ seeds }: SeedProps) => {
   const eastFinals = useMemo(() => { return seeds.filter(b => b.conference == "EAST" && b.wins > 7) }, [seeds]);
   const theFinals = useMemo(() => { return seeds.filter(b => b.wins > 11) }, [seeds]);
 
+  // console.log("WEST SEMI FINALS", westSemis);
+  // console.log("west semis length", westSemis.length);
   return (
     <div className="flex flex-col items-center justify-center p-4">
       <br />
@@ -60,39 +62,35 @@ const PlayoffsBracket = ({ seeds }: SeedProps) => {
 
           {/* Second Column - Western Conference SemiFinals - Next Round */}
           <div className="place-content-center">
-            <Box2 conferenceFinals={false} bracket={westSemis.length == 3 ? westSemis : []} order={false} empty={empty} />
+            <Box2 conferenceFinals={false} bracket={westSemis} order={false} empty={empty} /> {/* westSemis.length == 4 ? westSemis : [] */}
           </div>
 
           {/* Third Column - Western Conference Finals - Next Round */}
           <div className="space-y-4 place-content-center ">
-            <Box2 conferenceFinals={true} bracket={westFinals.length == 1 ? westFinals : []} order={false} empty={empty} />
+            <Box2 conferenceFinals={true} bracket={westFinals} order={false} empty={empty} /> {/* westFinals.length == 2 ? westFinals : [] */}
           </div>
 
 
           <div className=''>
-            <BoxTheFinals bracket={theFinals.length == 1 ? theFinals : []} empty={empty} />
+            <BoxTheFinals bracket={theFinals} empty={empty} /> {/* theFinals.length == 2 ? theFinals : [] */}
           </div>
 
 
           {/* Fourth Column - Eastern Conference Finals - Next Round */}
           <div className=" space-y-4 place-content-center mt-6 ml-6">
-            <Box2 conferenceFinals={true} bracket={eastFinals.length == 1 ? eastFinals : []} order={true} empty={empty} />
+            <Box2 conferenceFinals={true} bracket={eastFinals} order={true} empty={empty} /> {/* eastFinals.length == 4 ? eastSemis : [] */}
           </div>
 
-          {/* Third Column - Eastern Conference */}
+          {/* Third Column - Eastern Conference SemiFinals */}
           <div className="place-content-center">
-            <Box2 conferenceFinals={false} bracket={eastSemis.length == 3 ? eastSemis : []} order={true} empty={empty} />
+            <Box2 conferenceFinals={false} bracket={eastSemis} order={true} empty={empty} /> {/* eastSemis.length == 4 ? eastSemis : [] */}
           </div>
 
           {/* Fourth Column - Eastern Conference - Next Round */}
           <div className="">
             <Box bracket={eastQuarters} order={true} />
           </div>
-
-
         </div>
-
-
       </div>
 
       {/* Placeholder for Finals */}

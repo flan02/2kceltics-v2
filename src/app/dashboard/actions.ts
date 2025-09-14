@@ -530,11 +530,13 @@ export async function getPlayerStatsTotals(type: Tournament, season: Season, sta
         type,
         stage,
         statType,
-        span: {
-          not: null
-        }
+        // span: {
+        //   not: null
+        // }
       }
     })
+
+    console.log("response", response)
     return response
   } catch (error) {
     console.log(error)

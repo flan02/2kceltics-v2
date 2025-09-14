@@ -55,7 +55,7 @@ const AdvancedLayout = () => {
   if (isLoading) return <Skeleton className="h-[672px] max-w-screen-xl" />
 
 
-  //const isActivated = true
+
   return (
     <>
       {
@@ -88,7 +88,7 @@ const AdvancedLayout = () => {
                       <Bar
                         dataKey="value"
                         // label={<CustomLabel />} {/* doesn't receive {index, payload}. Instead use comp LabelList */}
-                        fill={isDark ? filters.stage == 'RS' ? "#555" : "#BA9653" : filters.stage == 'RS' ? "#007A33" : "#BA9653"}
+                        fill={isDark ? filters.stage == 'RS' ? "#555" : "#BA9053" : filters.stage == 'RS' ? "#007A33" : "#BA9653"}
                         radius={[6, 6, 0, 0]}
                         activeBar={isDark ? filters.stage == 'RS' ? { fill: "#666" } : { fill: "#BA9040" } : filters.stage == 'RS' ? { fill: "#008F39" } : { fill: "#BA9040" }}
                       >

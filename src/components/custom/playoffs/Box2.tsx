@@ -2,18 +2,31 @@ import { memo } from 'react'
 import BracketSpace from './BracketSpace'
 import Image from 'next/image'
 
+interface teamProps {
+  conference: "WEST" | "EAST";
+  eliminated: boolean;
+  losses: number;
+  position: string;
+  round: string;
+  team_code: string;
+  wins: number;
+}
+
+
 type PlayoffsBracketProps = {
-  bracket: any[],
+  bracket: teamProps[],
   order: boolean
   empty?: boolean
   conferenceFinals?: boolean
 }
-const Box2 = ({ bracket, order, empty, conferenceFinals }: PlayoffsBracketProps) => {
 
+const Box2 = ({ bracket, order, empty, conferenceFinals }: PlayoffsBracketProps) => {
+  // console.log("BOX2 TEAMS", bracket);
   let bracketOrdered
   let matchup: any[] = [];
   bracketOrdered = bracket
-  if (conferenceFinals == undefined) {
+  // if (conferenceFinals == undefined) {
+  if (!conferenceFinals) {
     const positionPairs = [
       [1, 8],
       [4, 5],
@@ -21,7 +34,7 @@ const Box2 = ({ bracket, order, empty, conferenceFinals }: PlayoffsBracketProps)
       [2, 7]
     ];
     positionPairs.forEach((pair, index) => {
-      const matched = bracket.find(b => b.position == pair[0] || b.position == pair[1]);
+      const matched = bracket.find(b => Number(b.position) == pair[0] || Number(b.position) == pair[1]);
       if (matched) {
         matchup.push(matched);
       }
@@ -34,9 +47,7 @@ const Box2 = ({ bracket, order, empty, conferenceFinals }: PlayoffsBracketProps)
 
   const bracketMaker = [0]
 
-  //console.log("this is bracketOrdered", bracketOrdered);
-  //console.log(order)
-  //console.log(conferenceFinals)
+  // console.log("Bracket data in Box2 component:", bracketOrdered);
 
   return (
     <div className={`${order && conferenceFinals ? "-mt-6" : ""} `}>
@@ -66,7 +77,7 @@ const Box2 = ({ bracket, order, empty, conferenceFinals }: PlayoffsBracketProps)
                   </div>
 
                   {
-                    (index == 0 || index == 2) && <div className='text-center dark:text-zinc-700 text-gray-300'>|</div>
+                    (index == 0 || index == 2) && <div className='text-center dark:text-zinc-700 text-gray-300 py-2 flex justify-center'><div className='w-[1px] h-[30px] border border-gray-200'></div></div>
                   }
                   {
                     (index == 1 && !conferenceFinals) && <BracketSpace />

@@ -49,9 +49,6 @@ export interface Game {
 
 const UpdatePlayoffsForm = ({ seeds, gamesPlayed, playoffsId }: Props) => {
 
-
-
-
   const dflt: any = seeds.map((seed: any) => ({
     id: seed.id,
     wins: seed.wins,

@@ -9,17 +9,12 @@ type PlayoffsBracketProps = {
 
 
 const Box = ({ bracket, order }: PlayoffsBracketProps) => {
-  /* 
-0: 
-conference: "WEST"
-losses: 0
-position: "1"
-round: "FIRST_ROUND"
-team_code: "OKC"
-wins: 0
-*/
-  const matchups = [0, 7, 3, 4, 2, 5, 1, 6];
-  const bracketOrdered = matchups.map(index => bracket[index]);
+
+  // console.log("Bracket data in Box component:", bracket);
+
+  //const matchups = [0, 7, 3, 4, 2, 5, 1, 6];
+  const matchups = [1, 8, 4, 5, 3, 6, 2, 7];
+  const bracketOrdered = matchups.map(pos => bracket.find(t => t.position == pos)).filter(Boolean);
   // console.log(bracket)
   return (
     bracketOrdered
@@ -45,3 +40,15 @@ wins: 0
 }
 
 export default memo(Box)
+
+
+
+/*
+0: 
+conference: "WEST"
+losses: 0
+position: "1"
+round: "FIRST_ROUND"
+team_code: "OKC"
+wins: 0
+*/
