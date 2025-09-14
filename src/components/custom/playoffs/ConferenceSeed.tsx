@@ -140,11 +140,12 @@ const ConferenceSeed = ({ seeds, conference, control, setValue, getValues }: Pro
                         <FormMessage> </FormMessage>
                       </FormItem>
 
+                      {/* checked= {field.value && !seed.eliminated ? field.value.eliminated : seed.eliminated} */}
                       <FormItem className="flex items-end p-1 mr-2 w-full justify-end">
                         <FormControl className='order-1 ml-1.5'>
                           <Checkbox
                             id="eliminated"
-                            checked={field.value && !seed.eliminated ? field.value.eliminated : seed.eliminated}
+                            checked={seed.eliminated}
                             onCheckedChange={(value) => {
                               // Obtener todos los valores actuales del formulario
                               const currentValues = getValues();
