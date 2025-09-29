@@ -523,6 +523,7 @@ export async function getCurrentPlayerStats(type: Tournament, season: Season, st
 
 export async function getPlayerStatsTotals(type: Tournament, season: Season, statType: StatType, stage: Stage, span?: string) {
 
+  console.log("type, season, statType, stage, span", type, season, statType, stage, span);
   try {
     const response = db.playerStat.findFirst({
       where: {
@@ -530,9 +531,9 @@ export async function getPlayerStatsTotals(type: Tournament, season: Season, sta
         type,
         stage,
         statType,
-        // span: {
-        //   not: null
-        // }
+        span: {
+          not: null
+        }
       }
     })
 

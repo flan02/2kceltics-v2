@@ -19,18 +19,27 @@ const PlayoffsStatPage = async ({ searchParams: { opt } }: { searchParams: { opt
 
   // TODO: possible stage change -> FIRST_ROUND, ESCF, ECF, FINALS, ALL_GAMES
 
-  const stage = opt
+  let stage = opt
 
   let average, total, span
 
 
   if (!opt) {
     span = '30' // ! CHECK THIS LINE WHEN PLAYOFFS START
+    stage = 'ESCF'
+
+    // console.log("no opt playoffs, set to 30", span);
+    // console.log("current stage", stage);
 
 
-    average = await getPlayerStatsTotals(type, current, 'AVG', stage) as GameStatProps
+    average = await getPlayerStatsTotals(type, current, 'AVG', stage, '30') as GameStatProps
+
+    // console.log("average playoffs", average);
 
     total = await getPlayerStatsTotals(type, current, 'TOTAL', stage, span) as GameStatProps
+
+    // console.log("total playoffs", total);
+
   }
   else {
     span = undefined

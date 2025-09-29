@@ -49,9 +49,12 @@ export async function normalizeSeasonPlayerInput(raw: Record<string, any>): Prom
 
     // added manually
     // nextSpan = 1 // ? Reset to 1 for playoffs
+    // * In NBA 2K25 Playoffs only uploaded gamespan = 1, I couldn't find a way to get the following gamespan automatically. Fix it for NBA2K26 Playoffs
     nextSpan = await nextPlayoffSpan()
+    console.log("next playoff span", nextSpan);
     // TODO: I should create a fc that checks into the db for: length of combination between (stage: 'PO' & gamespan) -> (ej: 1) and plus one (+1)
     // ! Check unicity because there will be 15 fields with gamespan 1, we only need get this value one time.
+
   }
 
 
