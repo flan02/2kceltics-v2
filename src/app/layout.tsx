@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Recursive } from "next/font/google";
+// @ts-ignore: allow side-effect CSS import without type declarations
 import "./globals.css";
 import Navbar from "@/components/custom/Navbar";
 import Footer from "@/components/custom/Footer";
