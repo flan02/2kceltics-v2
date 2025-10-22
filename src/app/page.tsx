@@ -9,10 +9,10 @@ import H2underline from "@/components/reutilizable/H2underline";
 import Schedule from "@/components/custom/Schedule";
 import Marquee from "@/components/reutilizable/Marquee";
 import VisitorsCounter from "@/components/custom/VisitorsCounter";
-import CelticsLogo from "../../public/celtics-logo.png";
+
 import TheJays from "../../public/the_jays_trophy-no-bg.png";
 import React from "react";
-import { AnimatedNumber } from "@/components/core/animated-number";
+
 import { AnimatedNumberBasic } from "@/components/reutilizable/AnimatedNumberBasic";
 import Roster from "@/components/custom/Roster";
 import VideoPlayer from "@/components/reutilizable/VideoPlayer";

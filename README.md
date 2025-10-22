@@ -9,3 +9,7 @@ New 2kceltics website built with Nextjs
 ## Charts
 
 [website](https://recharts.org/en-US)
+
+## Open Graph Image Generator
+
+[website](https://www.opengraph.xyz/)
