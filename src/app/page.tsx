@@ -42,10 +42,10 @@ export default async function Home({ searchParams: { page = 0 } }: { searchParam
             </article>
 
             <section className="place-self-end md:block hidden md:mx-auto md:mt-24 lg:mt-0 md:order-0 lg:order-1 xl:mx-0">
-              <VideoPlayer src="/gifs/twinkle-stars.webm" alt="Twinkle Stars" className="hidden lg:block lg:fixed top-[0.1] left-1/4 -ml-32 xl:-mt-4 lg:mt-4 transform -translate-x-1/2 -translate-y-1/2 lg:w-40 xl:w-56 h-auto z-10 rounded-md" />
+              <VideoPlayer src="/gifs/twinkle-stars.webm" alt="Twinkle Stars" className="hidden lg:block lg:fixed top-[0.1] left-1/4 -ml-32 xl:-mt-8 lg:mt-4 transform -translate-x-1/2 -translate-y-1/2 lg:w-40 xl:w-56 h-auto z-10 rounded-md" />
               <VideoPlayer src="/gifs/twinkle-stars.webm" alt="Twinkle Stars" className="hidden lg:block lg:fixed top-[0.1] left-1/2 lg:ml-[320px] lg:mt-8 xl:ml-[500px] transform -translate-x-1/2 -translate-y-1/2 w-24 h-auto z-10 rounded-md" />
               <VideoPlayer src="/gifs/twinkle-stars.webm" alt="Twinkle Stars" className="hidden lg:block lg:fixed lg:top-[460px] xl:top-[500px] left-1/2 lg:ml-[180px] lg:mt-8 xl:ml-[320px] transform -translate-x-1/2 -translate-y-1/2 w-24 h-auto z-10 rounded-md" />
-              <Image src={CelticsHero} alt="CelticsStarting5 Hero Image" className="x-0 md:px-10 lg:py-4 lg:px-8 xl:p-0" />
+              <Image src={CelticsHero} alt="Celtics Big3 Hero Image" className="x-0 md:px-10 lg:py-4 lg:px-8 xl:p-0" />
             </section>
           </div>
 
