@@ -18,6 +18,7 @@ enum Season {
   NBA2K23
   NBA2K24
   NBA2K25
+  NBA2K26
 }
 
 enum AtHome {

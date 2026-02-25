@@ -12,18 +12,18 @@
 | 40  | Luke Kornet      | C   | 7-2 | 250 | July 15, 1995     | US    | 7   | Vanderbilt                                   |
 | 50  | Svi Mykhailiuk   | SF  | 6-7 | 205 | June 10, 1997     | UA    | 5   | Kansas                                       |
 | 13  | Drew Peterson    | PF  | 6-9 | 205 | November 9, 1999  | US    | R   | Rice University, USC                         |
-| 8   | Kristaps Porziņģis | C   | 7-2 | 240 | August 2, 1995    | LV    | 7   | -                                            |
+| 8   | Krista Porziņģis | C   | 7-2 | 240 | August 2, 1995    | LV    | 7   | -                                            |
 | 11  | Payton Pritchard | PG  | 6-1 | 195 | January 28, 1998  | US    | 4   | Oregon                                       |
 | 88  | Neemias Queta    | C   | 7-0 | 245 | July 13, 1999     | PT    | 2   | Utah State University                        |
 | 44  | Jaden Springer   | PG  | 6-4 | 204 | September 25, 2002| US    | 2   | Tennessee                                    |
 | 77  | Lamar Stevens    | PF  | 6-6 | 230 | July 9, 1997      | US    | 4   | Penn State                                   |
 | 0   | Jayson Tatum     | PF  | 6-8 | 210 | March 3, 1998     | US    | 7   | Duke                                         |
-| 26  | Xavier Tillman Sr.| PF  | 6-8 | 245 | January 12, 1999 | US    | 4   | Michigan State                               |
+| 26  | Xavier Tillman Sr| PF  | 6-8 | 245 | January 12, 1999  | US    | 4   | Michigan State                               |
 | 27  | Jordan Walsh     | SF  | 6-7 | 205 | March 3, 2004     | US    | R   | Arkansas                                     |
 | 9   | Derrick White    | SG  | 6-4 | 190 | July 2, 1994      | US    | 6   | Colorado-Colorado Springs, Colorado          |
 
-| No. | Player              | Pos | Ht  | Wt  | Birth Date         | Birth   | Exp | College                                       |
-|-----|---------------------|-----|-----|-----|--------------------|---------|-----|-----------------------------------------------|
+| No. | Player               | Pos | Ht  | Wt  | Birth Date         | Birth   | Exp | College                                       |
+|-----|----------------------|-----|-----|-----|--------------------|---------|-----|-----------------------------------------------|
 | 13  | Malcolm Brogdon      | PG  | 6-4 | 229 | December 11, 1992  | US 🇺🇸   | 6   | Virginia                                      |
 | 7   | Jaylen Brown         | SF  | 6-6 | 223 | October 24, 1996   | US 🇺🇸   | 6   | California                                    |
 | 99  | Justin Champagnie    | SF  | 6-6 | 200 | June 29, 2001      | US 🇺🇸   | 1   | Pitt                                          |
@@ -43,8 +43,8 @@
 | 12  | Grant Williams       | PF  | 6-6 | 236 | November 30, 1998  | US 🇺🇸   | 3   | Tennessee                                     |
 | 44  | Robert Williams      | C   | 6-9 | 237 | October 17, 1997   | US 🇺🇸   | 4   | Texas A&M                                     |
 
-| No. | Player                | Pos | Ht  | Wt  | Birth Date         | Birth   | Exp | College                                   |
-|-----|-----------------------|-----|-----|-----|--------------------|---------|-----|-------------------------------------------|
+| No. | Player                 | Pos | Ht  | Wt  | Birth Date         | Birth   | Exp | College                                   |
+|-----|------------------------|-----|-----|-----|--------------------|---------|-----|-------------------------------------------|
 | 7   | Jaylen Brown           | SF  | 6-6 | 223 | October 24, 1996   | US 🇺🇸   | 5   | California                                |
 | 28  | Bruno Fernando         | C   | 6-9 | 240 | August 15, 1998    | AO 🇦🇴   | 2   | Maryland                                  |
 | 8   | Malik Fitts            | PF  | 6-5 | 230 | July 4, 1997       | US 🇺🇸   | 1   | South Florida, Saint Mary's               |
@@ -73,6 +73,28 @@
 | 9   | Derrick White          | SG  | 6-4 | 190 | July 2, 1994       | US 🇺🇸   | 4   | Colorado-Colorado Springs, Colorado       |
 | 12  | Grant Williams         | PF  | 6-6 | 236 | November 30, 1998  | US 🇺🇸   | 3   | Tennessee                                 |
 | 44  | Robert Williams        | C   | 6-9 | 237 | October 17, 1997   | US 🇺🇸   | 3   | Texas A&M                                 |
+
+|No.|Player|Pos|Ht|Wt|Birth Date|Birth|Exp|College|
+|:---|:---|:---|:---|:---|:---|:---|:---|:---|
+|0|Jayson Tatum|PF|6-8|210|March 3, 1998|US|8|Duke|
+|7|Jaylen Brown|SF|6-6|223|October 24, 1996|US|9|California|
+|11|Payton Pritchard|PG|6-1|195|January 28, 1998|US|5|Oregon|
+|9|Derrick White|SG|6-4|190|July 2, 1994|US|8|Colorado-CS|
+|30|Sam Hauser|PF|6-7|217|December 8, 1997|US|4|Marquette|
+|88|Neemias Queta|C|7-0|248|July 13, 1999|PT|4|Utah State|
+|55|Baylor Scheierman|SG|6-6|205|September 26, 2000|US|1|SD State, Creighton|
+|28|Hugo González|SF|6-6|200|February 5, 2006|ES|R|—|
+|27|Jordan Walsh|PF|6-6|205|March 3, 2004|US|2|Arkansas|
+|52|Luka Garza|C|6-10|243|December 27, 1998|US|4|Iowa|
+|77|Amari Williams|PF|6-11|250|January 28, 2002|GB|R|Drexel, Kentucky|
+|13|Ron Harper Jr. (TW)|SF|6-5|233|April 12, 2000|US|3|Rutgers|
+|4|Nikola Vučević|C|6-9|260|October 24, 1990|CH|14|USC|
+|44|Max Shulga (TW)|SG|6-4|210|June 25, 2002|UA|R|Utah State, VCU|
+|8|John Tonje|SG|6-4|218|April 23, 2001|US|R|Colorado State|
+|45|Dalano Banton|PG|6-8|203|November 7, 1999|CA|4|Nebraska|
+|26|Xavier Tillman Sr.|PF|6-8|245|January 12, 1999|US|4|Michigan State|
+|-|Josh Minott|SF|6-8|205|November 25, 2002|US|3|Memphis|
+|-|Anfernee Simons|SG|6-3|200|June 8, 1998|US|7|-|
 
 | Name           | Pos  | GS  | GP  | MIN  | PTS  | REB | AST | STL | BLK | TO  | FLS | FG%  | FGM  | FGA  | 3P%  | 3PM | 3PA | FT%  | FTM | FTA | PA   | oFGM | oFGA | +/-  |
 |----------------|------|-----|-----|------|------|-----|-----|-----|-----|-----|-----|------|------|------|------|-----|-----|------|-----|-----|------|------|------|------|

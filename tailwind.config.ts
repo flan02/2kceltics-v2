@@ -21,7 +21,6 @@ const config = {
 		},
 		extend: {
 			backgroundImage: {
-				//fissure: 'url('../../public/fissure.png')'
 				fissure: "url('../../public/fissure.png')"
 			},
 			lineHeight: {

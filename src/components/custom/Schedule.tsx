@@ -9,13 +9,13 @@ export default async function Schedule({ searchParams: { page } }: { searchParam
   return (
     <section id="schedule" className="space-y-4 max-w-screen-lg flex flex-col mx-auto mt-24 lg:mt-0 pt-12">
       <div className="flex mx-auto">
-        <h1 className="text-grad mx-auto w-max text-center text-4xl md:text-7xl text-shadow uppercase mt-8 lg:mt-24">2024/25 SCHEDULE</h1>
+        <h1 className="text-grad mx-auto w-max text-center text-4xl md:text-7xl text-shadow uppercase mt-8 lg:mt-24">2025/26 SCHEDULE</h1>
         <BackToTop />
       </div>
       <br />
       <br />
-      <div className="bg-celtics flex items-end justify-between text-white text-lg px-4 py-6">
-        <h2 className="text-sm md:text-base dark:text-zinc-700">REGULAR SEASON 82 GAMES</h2>
+      <div className="bg-celtics dark:bg-[#111] dark:opacity-50 flex items-end justify-between text-white text-lg px-4 py-6 rounded-md mx-1">
+        <h2 className="text-sm md:text-base dark:text-celtics">REGULAR SEASON 82 GAMES</h2>
         {
           nextGame && nextGame <= 82
             ? <h6 className="uppercase text-xs lg:text-sm text-muted underline">next game: {nextGame}</h6>

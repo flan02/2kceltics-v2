@@ -62,7 +62,12 @@ const MobileMenu = ({ playoffs }: Props) => {
           <CardPlayerLink cardTitle={player.title} key={index} isTag={player.isTag} link={player.link} icon={player.icon} />
         ))
       }
-      {playoffs && <CardPlayerLink cardTitle="PLAYOFFS" isTag={false} link="/playoffs" icon={<Trophy color="#888" />} />}
+      {
+        playoffs &&
+        <CardPlayerLink cardTitle="PLAYOFFS" isTag={false} link="/playoffs" icon={<Trophy color="#888" />
+        }
+        />
+      }
     </section>
   )
 }

@@ -30,7 +30,8 @@ const Navbar = async (props: Props) => {
         </Link>
       </div>
       <div className='flex items-end'>
-        <TextShimmer className="hidden lg:flex text-xl font-medium [--base-color:theme(colors.green.600)] [--base-gradient-color:theme(colors.green.200)] dark:[--base-color:theme(colors.green.700)] dark:[--base-gradient-color:theme(colors.green.400)]">2023/24 WORLD CHAMPIONS</TextShimmer>
+        {/* <TextShimmer className="hidden lg:flex text-xl font-medium [--base-color:theme(colors.green.600)] [--base-gradient-color:theme(colors.green.200)] dark:[--base-color:theme(colors.green.700)] dark:[--base-gradient-color:theme(colors.green.400)]">2023/24 WORLD CHAMPIONS</TextShimmer> */}
+        <TextShimmer className="hidden lg:flex text-xl font-medium [--base-color:theme(colors.green.600)] [--base-gradient-color:theme(colors.green.200)] dark:[--base-color:theme(colors.green.700)] dark:[--base-gradient-color:theme(colors.green.400)]">MOST NBA WINNING FRANCHISE</TextShimmer>
 
         <Image className="w-auto h-auto" src='/trophy.png' alt='celtics' width={30} height={30} />
       </div>

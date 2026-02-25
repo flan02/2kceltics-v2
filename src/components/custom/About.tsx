@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import React from 'react'
-import Yo from "../../../public/yo-unbackground.png";
+// import Yo from "../../../public/yo-unbackground.png";
+import Yo from "../../../public/yo-lacoste.png";
 import { Twitch, Youtube } from 'lucide-react';
 import Link from 'next/link';
 import { TextShimmer } from '../core/text-shimmer';
@@ -18,7 +19,7 @@ const About = (props: Props) => {
         </TextShimmer>
         <br />
         <TextShimmer className='font-mono text-base md:text-lg lg:text-xl' duration={1}>
-          This season 2023/24, we have prepared an exciting schedule with streamed games, advanced stats, and season stats. You can also check the standings and follow the games in real-time. Do not miss out on the fun!
+          This season 2025/26, we have prepared an exciting schedule with streamed games, advanced stats, and season stats. You can also check the standings and follow the games in real-time. Do not miss out on the fun!
         </TextShimmer>
         <br />
         <TextShimmer className='font-mono text-base md:text-lg lg:text-xl' duration={1}>
@@ -41,10 +42,10 @@ const About = (props: Props) => {
         </div>
         <div className='flex mt-8 items-center justify-end'>
           <Image src={Yo} alt='Profile photo' className='size-16 mt-1 rounded-full' />
-          <h6 className='text-muted-foreground text-sm md:text-base ml-4'>
+          <h6 className='text-muted-foreground text-xs md:text-sm ml-4'>
             <VideoPlayer src="/gifs/speed-lines.webm" alt="Speed Lines" className="fixed top-[1/2] left-[0.1] -ml-12 mt-8 transform -translate-x-1/2 -translate-y-1/2 w-72 h-auto z-10 rounded-md" />
             Best regards, <br />
-            Dan Chanivet. <br />
+            Dan Chanivet <br />
             Creator of 2kceltics.xyz
           </h6>
         </div>

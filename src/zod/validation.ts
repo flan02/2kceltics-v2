@@ -4,7 +4,7 @@ import { z } from "zod";
 
 export const createNewSeasonSchema = z.object({
   teamId: z.string().min(24, { message: "Team ID must be 24 characters" }).max(24, { message: "Team ID must be 24 characters" }),
-  season: z.enum(["NBA2K22", "NBA2K23", "NBA2K24", "NBA2K25"]),
+  season: z.enum(["NBA2K22", "NBA2K23", "NBA2K24", "NBA2K25", "NBA2K26"]),
   total_games: z.string().optional(),
   players: z.string({ message: "Markdown table format" }).optional(),
   standings: z.string().optional(),
@@ -13,7 +13,7 @@ export const createNewSeasonSchema = z.object({
 })
 
 export const createNewGameStatSchema = z.object({
-  season: z.enum(["NBA2K22", "NBA2K23", "NBA2K24", "NBA2K25"]),
+  season: z.enum(["NBA2K22", "NBA2K23", "NBA2K24", "NBA2K25", "NBA2K26"]),
   type: z.enum(["RS", "PO"]),
   stage: z.enum(["RS", "CUP_GP", "CUP_QF", "CUP_SF", "CUP_THEFINAL", "FIRST_ROUND", "ESCF", "ECF", "FINALS"]),
   span: z.enum(["5", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55", "60", "65", "70", "75", "82"]).optional(),
@@ -32,7 +32,7 @@ export const formSchema = z.object({
 })
 
 export const editTeamSchema = z.object({
-  season: z.enum(["NBA2K22", "NBA2K23", "NBA2K24", "NBA2K25"]),
+  season: z.enum(["NBA2K22", "NBA2K23", "NBA2K24", "NBA2K25", "NBA2K26"]),
   total_games: z.string().nullable(),
   players: z.string({ message: "Markdown table format" }).nullable(),
   standings: z.string().nullable(),
@@ -47,18 +47,18 @@ export const updateTeamSchema = z.object({
     .string()
     .transform((value) => parseInt(value))
     .refine((value) => !isNaN(value), { message: "This field must be a number" }),
-  season: z.enum(["NBA2K22", "NBA2K23", "NBA2K24", "NBA2K25"])
+  season: z.enum(["NBA2K22", "NBA2K23", "NBA2K24", "NBA2K25", "NBA2K26"])
 })
 
 
 export const searchSeasonSchema = z.object({
-  season: z.enum(["NBA2K22", "NBA2K23", "NBA2K24", "NBA2K25"])
+  season: z.enum(["NBA2K22", "NBA2K23", "NBA2K24", "NBA2K25", "NBA2K26"])
 })
 
 
 
 export const createGameSchema = z.object({
-  season: z.enum(["NBA2K22", "NBA2K23", "NBA2K24", "NBA2K25"]),
+  season: z.enum(["NBA2K22", "NBA2K23", "NBA2K24", "NBA2K25", "NBA2K26"]),
   type: z.enum(["RS", "PO"], {
     errorMap: () => ({ message: "Selecciona una opción válida: RS o PO" }),
   }),
@@ -108,7 +108,7 @@ const unionType = z.union([
 ])
 
 export const filterGamesSchema = z.object({
-  season: z.enum(["NBA2K22", "NBA2K23", "NBA2K24", "NBA2K25"]),
+  season: z.enum(["NBA2K22", "NBA2K23", "NBA2K24", "NBA2K25", "NBA2K26"]),
   type: unionType,
   stage: z.enum(["RS", "CUP_GP", "FIRST_ROUND", "ESCF", "ECF", "FINALS"]).optional(),
   atHome: z.enum(["HOME", "AWAY"]).optional(),
@@ -166,7 +166,7 @@ export const generatePlayoffsSchema = async (): Promise<z.ZodObject<any>> => {
 }
 */
 
-const seasons2k = ["NBA2K22", "NBA2K23", "NBA2K24", "NBA2K25"] as const;
+const seasons2k = ["NBA2K22", "NBA2K23", "NBA2K24", "NBA2K25", "NBA2K26"] as const;
 /* 
     id: seed.id,
     wins: seed.wins,

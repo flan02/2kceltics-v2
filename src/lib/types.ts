@@ -21,13 +21,13 @@ export const statTypes = ["TOTAL", "AVG"]
 
 export const atHomeTypes = ["HOME", "AWAY"]
 
-export const seasonTypes = ["NBA2K22", "NBA2K23", "NBA2K24", "NBA2K25"] as const // ! IN CASE OF ERRORS REMOVE (AS CONST)
+export const seasonTypes = ["NBA2K22", "NBA2K23", "NBA2K24", "NBA2K25", "NBA2K26"] as const // ! IN CASE OF ERRORS REMOVE (AS CONST)
 const omitSeasons = new Set(["NBA2K22", "NBA2K23", "NBA2K24"])
 export const graphicSeasons = seasonTypes.filter((season) => !omitSeasons.has(season))
 
 export type currentSeason = typeof seasonTypes[number];
 
-export const seasonReadOnly = ["NBA2K22", "NBA2K23", "NBA2K24", "NBA2K25"] as const
+export const seasonReadOnly = ["NBA2K22", "NBA2K23", "NBA2K24", "NBA2K25", "NBA2K26"] as const
 
 export const resultTypes = ["WIN", "LOSS"]
 

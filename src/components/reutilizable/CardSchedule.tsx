@@ -15,9 +15,9 @@ type Props = {
 
 export default async function CardSchedule({ currentGame, team_code2, atHome, scoreTeam1, scoreTeam2, stage }: Props) {
   return (
-    <article className={`${scoreTeam1 === 0 ? "bg-slate-200 opacity-40" : ""} min-w-[330px] xl:min-w-[500px] lg:min-w-[400px] hover:bg-zinc-200/50 dark:hover:bg-night-80 dark:hover:border-black hover:border-midnight border shadow-md rounded-xl`}>
+    <article className={`${scoreTeam1 === 0 ? "bg-slate-200 opacity-40" : ""} first:ml-1.5 first:mt-1.5 min-w-[330px] xl:min-w-[500px] lg:min-w-[400px] hover:bg-zinc-200/50 dark:hover:bg-night-80 dark:hover:border-black hover:border-midnight border shadow-md rounded-xl`}>
       <div className='grid grid-cols-4 min-h-[120px] items-center'>
-        <div className='place-content-center col-span-1 uppercase h-full bg-green-100/30 dark:bg-night-100'>
+        <div className='place-content-center col-span-1 uppercase h-full bg-green-100/30 dark:bg-night-100 rounded-xl'>
           <p className="italic text-center text-xl font-bold text-muted-foreground dark:text-zinc-700">GAME #</p>
           <p className="italic text-center text-3xl font-bold text-muted-foreground dark:text-zinc-700">{currentGame}</p>
         </div>
