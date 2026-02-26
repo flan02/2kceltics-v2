@@ -72,7 +72,7 @@ export default async function Home({ searchParams: { page = 0 } }: { searchParam
 
       </MaxWidthWrapper>
 
-      <MaxWidthWrapper className="max-w-screen-3xl dark:bg-night-80/50 bg-zinc-200/60 px-0 sm:px-10 md:px-24">
+      <MaxWidthWrapper className="max-w-screen-3xl dark:bg-night-80/50 bg-zinc-200/60 px-0 sm:px-10 md:px-24 -mt-8 md:mt-0 ">
         <MainMenu />
       </MaxWidthWrapper>
 

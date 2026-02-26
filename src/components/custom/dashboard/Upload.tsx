@@ -2,13 +2,15 @@ import Link from "next/link"
 import { buttonVariants } from "../../ui/button"
 
 import DropdownCustom from "@/components/reutilizable/DropdownCustom"
-import { ChartSpline, Map, MapPinMinusInsideIcon, MonitorPlay, NotebookPen, WholeWord } from "lucide-react"
+import { ChartSpline, Map, MapPinMinusInsideIcon, MonitorPlay, NotebookPen, Rss, WholeWord } from "lucide-react"
 
 
 
 type Props = {
   isAdmin: boolean
 }
+
+const MY_WEBSITE = process.env.MY_WEBSITE!
 
 const Upload = ({ isAdmin }: Props) => {
   const options = {
@@ -31,8 +33,8 @@ const Upload = ({ isAdmin }: Props) => {
       },
       {
         label: "My website",
-        href: "https://www.danchanivet.tech",
-        icon: <MapPinMinusInsideIcon size={16} />
+        href: MY_WEBSITE,
+        icon: <Rss size={16} />
       }
     ]
   }

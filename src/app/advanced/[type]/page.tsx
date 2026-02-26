@@ -76,7 +76,7 @@ const TypeGraphPage = ({ params: { type } }: PageProps) => {
                     showFilters
                       ? <div className='flex space-x-0 md:space-x-2 items-center'>
                         <ArrowBigRightDash color='#aaa' size={32} className='hidden md:block' />
-                        <div className='flex w-full space-y-2 md:space-y-0 flex-col md:flex-row space-x-0 md:space-x-2 text-sm xl:text-lg'>
+                        <div className='flex w-full space-y-3 md:space-y-0 flex-col md:flex-row space-x-0 md:space-x-2 text-sm xl:text-lg'>
                           <div className='flex items-center space-x-1'>
                             <h3 className='dark:text-muted-foreground text-xs md:text-base'> ORDER BY: </h3>
                             <select
@@ -132,22 +132,22 @@ const TypeGraphPage = ({ params: { type } }: PageProps) => {
                             </select>
                           </div>
                           <p className='hidden md:block md:mt-1'>|</p>
-                          <h4 className='bg-gray-300 text-midnight font-bold dark:text-yellow-400 rounded-md dark:bg-celtics px-2 h-min py-1 md:py-0 w-max md:w-auto'>
-                            {filters.season}
-                          </h4>
-                          <p className='hidden md:block md:mt-1'>|</p>
-                          <h4 className='pt-12 border border-yellow-300 font-bold text-yellow-400 rounded-md px-2 h-min py-1 md:py-0 w-max md:w-auto'>
-                            {parsedSeasonTitle(filters.stage)}
-                          </h4>
-
-
+                          <div className='flex space-x-1'>
+                            <h4 className='bg-gray-300 text-midnight font-bold dark:text-yellow-400 rounded-md dark:bg-celtics px-2 h-min py-1 md:py-0 w-max md:w-auto'>
+                              {filters.season}
+                            </h4>
+                            <p className='hidden md:block md:mt-1'>|</p>
+                            <h4 className='border border-yellow-300 font-bold text-yellow-400 rounded-md px-2 h-min py-1 md:py-0 w-max md:w-auto'>
+                              {parsedSeasonTitle(filters.stage)}
+                            </h4>
+                          </div>
                         </div>
                       </div>
                       : null
                   }
                 </section>
 
-                <div onClick={openSearchHandler} className={`cursor-pointer hover:bg-celtics/90 dark:hover:bg-celtics/90 px-2 py-2 rounded-md ${isDark ? 'bg-celtics' : 'bg-celtics'}`}>
+                <div onClick={openSearchHandler} className={`absolute right-3 lg:static cursor-pointer hover:bg-celtics/90 dark:hover:bg-celtics/90 px-2 py-2 rounded-md ${isDark ? 'bg-celtics' : 'bg-celtics'}`}>
                   <Search size={32} color='#ddd' />
                 </div>
               </aside>

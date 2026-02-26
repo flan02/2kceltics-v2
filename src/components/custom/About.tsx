@@ -14,27 +14,27 @@ const About = (props: Props) => {
     <section className="max-w-screen-xl mx-auto lg:pb-0 lg:pt-12">
       <h1 className="text-grad mx-auto w-max text-center text-5xl sm:text-6xl lg:text-7xl text-shadow uppercase mt-16 lg:mt-24">Our Mission</h1>
       <article className='max-w-screen-lg mt-16 h-max mx-auto px-3 md:px-0 space-y-4'>
-        <TextShimmer className='font-mono text-base md:text-lg lg:text-xl' duration={1}>
+        <TextShimmer className='font-mono text-sm md:text-lg lg:text-xl' duration={1}>
           As a Celtics fan, you can now experience the thrill of the game like never before. Our 2k simulation league is the perfect place to feel the Celtics spirit and enjoy the game in a new way. Join us and be part of the action!
         </TextShimmer>
         <br />
-        <TextShimmer className='font-mono text-base md:text-lg lg:text-xl' duration={1}>
+        <TextShimmer className='font-mono text-sm md:text-lg lg:text-xl' duration={1}>
           This season 2025/26, we have prepared an exciting schedule with streamed games, advanced stats, and season stats. You can also check the standings and follow the games in real-time. Do not miss out on the fun!
         </TextShimmer>
         <br />
-        <TextShimmer className='font-mono text-base md:text-lg lg:text-xl' duration={1}>
+        <TextShimmer className='font-mono text-sm md:text-lg lg:text-xl' duration={1}>
           You can follow us on social media and share your thoughts with other fans. We are always looking for ways to improve our virtual league and make it more enjoyable for everyone. Let us know what you think and help us grow!
         </TextShimmer>
         <div className='mt-12 flex justify-end'>
           <div>
             <Link className='flex items-center'
               href="https://www.youtube.com/channel/UCz_FxdOU_XMhTKtZMuqwKNQ" target='_blank'>
-              <span className='hover:underline dark:text-zinc-500 text-xs mr-2 uppercase'>Follow us on Youtube </span>
+              <span className='hover:underline dark:text-zinc-500 text-[10px] mr-2 uppercase'>Follow us on Youtube </span>
               <Youtube size={32} color='red' />
             </Link>
             <Link className='flex items-center'
               href="https://www.twitch.tv/flano2" target='_blank'>
-              <span className='hover:underline dark:text-zinc-500 text-xs mr-3 uppercase'>Follow us on Twitch </span>
+              <span className='hover:underline dark:text-zinc-500 text-[10px] mr-3 uppercase'>Follow us on Twitch </span>
               <Twitch size={30} color='purple' />
 
             </Link>

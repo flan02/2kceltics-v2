@@ -32,8 +32,8 @@ const CardPlayerLink = ({ player, cardTitle, className, isTag, link, dim, icon }
         <CardTitle className="text-muted-foreground dark:text-zinc-700 hover:underline ml-4 text-xl w-full">
           {
             isTag
-              ? <LinkClient to={link} smooth="true" duration={1000} className='uppercase text-muted-foreground dark:text-zinc-400'>{cardTitle}</LinkClient>
-              : <Link href={link} className="uppercase text-muted-foreground dark:text-zinc-400">{cardTitle}</Link>
+              ? <LinkClient to={link} smooth="true" duration={1000} className='uppercase text-sm text-muted-foreground dark:text-zinc-400'>{cardTitle}</LinkClient>
+              : <Link href={link} className="uppercase text-sm text-muted-foreground dark:text-zinc-400">{cardTitle}</Link>
           }
         </CardTitle>
         <CardContent className="w-fit flex justify-center mr-4">

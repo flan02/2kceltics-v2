@@ -62,16 +62,16 @@ const AdvancedLayout = () => {
         !isLoading ? (
           <>
             <aside className='md:hidden flex justify-center w-max px-2 py-1 rounded-md my-auto xl:w-[90%] h-[60%] dark:bg-celtics bg-celtics text-white items-center border'>
-              <span className='text-base py-0.5 md:py-0 md:text-xl flex'>{data ? capitalize(fieldsMap[selectedKey!]) + ' per game' : 'Stat type'}</span>
+              <span className='text-sm lg:text-base py-0.5 md:py-0 md:text-xl flex'>{data ? capitalize(fieldsMap[selectedKey!]) + ' per game' : 'Stat type'}</span>
             </aside>
             <div className='overflow-x-auto grid grid-cols-[200%] md:grid-cols-[6%_1%_93%] xl:grid-cols-[5%_3%_92%] grid-rows-1'>
               <aside className='hidden md:flex justify-center rounded-md my-auto xl:w-[90%] h-[60%] dark:bg-celtics bg-celtics text-white items-center border'>
-                <span className='inline-block rotate-180 [writing-mode:vertical-rl] text-xl'>{data ? capitalize(fieldsMap[selectedKey!]) + ' per game' : ''}</span>
+                <span className='inline-block rotate-180 [writing-mode:vertical-rl] text-sm lg:text-base'>{data ? capitalize(fieldsMap[selectedKey!]) + ' per game' : ''}</span>
               </aside>
               <div className='hidden md:block' />
               {
                 players.length > 0 && filters.isActivated
-                  ? <ResponsiveContainer width="100%" height={600} className="-ml-4 md:ml-0">
+                  ? <ResponsiveContainer width="100%" height={600} className="-ml-1.5 lg:-ml-4">
                     <BarChart data={players}> {/* data={sortedByPoints} */}
                       <CartesianGrid stroke={isDark ? "#222" : "#ddd"} />
                       <XAxis dataKey="name" angle={-75} tick={{ fontWeight: 'bold', fontSize: 14 }} tickMargin={50} height={100} />
@@ -109,7 +109,7 @@ const AdvancedLayout = () => {
 
             </div>
             <section className='w-[40%] rounded-md mx-auto row-span-2 text-center dark:bg-celtics bg-celtics text-white'>
-              <span className='flex justify-center py-1 md:py-2 text-base md:text-xl'>Player Name</span>
+              <span className='flex justify-center py-1 md:py-2 text-sm lg:text-base'>Player Name</span>
             </section>
           </>
         ) : null

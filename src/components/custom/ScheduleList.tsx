@@ -35,7 +35,7 @@ export default async function ScheduleList({ searchParams: { page } }: { searchP
 
   const currentSchedule = schedule.slice(page * limit, (page + 1) * limit)
   return (
-    <article className="pb-24 space-y-8 min-w-[350px]">
+    <article className="pb-24 space-y-8 min-w-[350px] px-1">
       <div className="space-y-2 grid grid-cols-1 lg:grid-rows-10 lg:grid-flow-col lg:px-0 lg:space-x-2">
         {
           currentSchedule
@@ -59,7 +59,7 @@ export default async function ScheduleList({ searchParams: { page } }: { searchP
           Array.from({ length: amount_pages }).map((_, index) => (
             <Link
               key={index}
-              className="text-2xl text-celtics hover:font-bold hover:underline"
+              className="text-base lg:text-2xl text-celtics hover:font-bold hover:underline"
               href={`/?page=${index}&skip=${index * limit}#schedule`}
             >
               {index + 1}

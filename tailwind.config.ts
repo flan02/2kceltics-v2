@@ -113,6 +113,14 @@ const config = {
 						transform: 'translateX(-100%)'
 					}
 				},
+				'marquee-xs': {
+					'0%': {
+						transform: 'translateX(100%)'
+					},
+					'100%': {
+						transform: 'translateX(-200%)'
+					}
+				},
 				'accordion-down': {
 					from: {
 						height: '0'
@@ -182,7 +190,7 @@ const config = {
 				'accordion-up': 'accordion-up 0.2s ease-out',
 				'flashing': 'flashing 1.4s infinite linear',
 				'marquee-x': 'marquee-x 30s linear infinite',
-				'marquee-xs': 'marquee-x 20s linear infinite',
+				'marquee-xs': 'marquee-xs 20s linear infinite',
 				'roll': 'roll 2s infinite alternate',
 				'dotsFade': 'dotsFade 2s infinite',
 				slide: 'slide 2s infinite alternate'

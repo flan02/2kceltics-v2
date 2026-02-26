@@ -30,7 +30,7 @@ const AdvancedPage = (props: Props) => {
   return (
     <MaxWidthWrapper className='min-h-screen mt-8 md:mt-12 lg:mt-24 space-y-8'>
       <h1 className='uppercase text-celtics text-2xl lg:text-4xl font-bold'>Analytics Tool</h1>
-      <p className='dark:text-muted-foreground'>You can interact with our graph system and analize in real-time the performance of our players.</p>
+      <p className='dark:text-muted-foreground text-sm md:text-base'>You can interact with our graph system and analize in real-time the performance of our players.</p>
 
       <section className='grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-1'>
         <Card className='bg-[rgba(255,255,255,0.015)] backdrop-blur-md text-gray-700 dark:text-muted-foreground border border-black/10'>
