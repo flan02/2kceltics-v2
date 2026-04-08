@@ -25,7 +25,8 @@ const SeasonsStatPage = async () => {
   let parsedSpan: string = span.toString()
 
   const average = await getCurrentPlayerStats('RS', current, 'AVG', 'RS', parsedSpan) as GameStatProps
-  const total = await getCurrentPlayerStats('RS', current, 'TOTAL', 'RS', '82') as GameStatProps
+  // const total = await getCurrentPlayerStats('RS', current, 'TOTAL', 'RS', '82') as GameStatProps
+  const total = await getCurrentPlayerStats('RS', current, 'TOTAL', 'RS', parsedSpan) as GameStatProps
 
 
   return (

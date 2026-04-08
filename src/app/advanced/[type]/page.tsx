@@ -147,7 +147,7 @@ const TypeGraphPage = ({ params: { type } }: PageProps) => {
                   }
                 </section>
 
-                <div onClick={openSearchHandler} className={`absolute right-3 lg:static cursor-pointer hover:bg-celtics/90 dark:hover:bg-celtics/90 px-2 py-2 rounded-md ${isDark ? 'bg-celtics' : 'bg-celtics'}`}>
+                <div onClick={openSearchHandler} className={`absolute right-4 lg:static cursor-pointer hover:bg-celtics/90 dark:hover:bg-celtics/90 px-2 py-2 rounded-md ${isDark ? 'bg-celtics' : 'bg-celtics'}`}>
                   <Search size={32} color='#ddd' />
                 </div>
               </aside>
