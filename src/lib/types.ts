@@ -99,7 +99,15 @@ export const playerImages2K25: Record<string, string> = {
   "B. Scheierman": "/scheierman-profile.png",
   "J. Davison": "/jd-profile.png",
   "D. Peterson": "/peterson-profile.png",
-  "T. Craig": "/craig-profile.png"
+  "T. Craig": "/craig-profile.png",
+  "J. Minott": "/minott-profile.png",
+  "L. Garza": "/garza-profile.png",
+  "A. Simons": "/simons-profile.png",
+  "C. Boucher": "/boucher-profile.png",
+  "A. Williams": "/amari-profile.png",
+  "H. Gonzalez": "/hugo-profile.png",
+  "M. Shulga": "/schulga-profile.png",
+  "R. Harper Jr.": "/ron-profile.png"
 }
 
 export type PlayerStatsType = {
