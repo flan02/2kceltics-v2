@@ -13,6 +13,8 @@ const DashboardPage = async ({ searchParams: { opt } }: { searchParams: { opt: s
 
   const session = await auth()
 
+  console.log('Session obtained', { session });
+
   return (
     <MaxWidthWrapper className='min-h-[calc(100vh-60px)] mb-16'>
       {

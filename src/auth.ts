@@ -6,7 +6,13 @@ import { User } from 'types'
 
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
-  providers: [GitHub],
+  providers: [GitHub(
+    {
+      clientId: process.env.AUTH_GITHUB_ID!,
+      clientSecret: process.env.AUTH_GITHUB_SECRET!,
+      checks: ['none']
+    }
+  )],
   callbacks: {
     async signIn({ user, account, profile }) {
 
