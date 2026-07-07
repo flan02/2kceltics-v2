@@ -1,64 +1,69 @@
-import { clsx, type ClassValue } from "clsx"
-import { twMerge } from "tailwind-merge"
-import { current_season, playerImages2K25, PlayoffSpans, SeasonSpans } from "./types";
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
+import {
+  current_season,
+  playerImages2K25,
+  PlayoffSpans,
+  SeasonSpans,
+} from "./types";
 import { getCurrentRound, getCurrentSpan } from "@/app/actions";
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
+  return twMerge(clsx(inputs));
 }
 
 export function keysToLowerCase(obj: Record<string, any>): Record<string, any> {
   return Object.fromEntries(
-    Object.entries(obj).map(([key, value]) => [key.toLowerCase(), value])
+    Object.entries(obj).map(([key, value]) => [key.toLowerCase(), value]),
   );
 }
 
+export async function normalizeSeasonPlayerInput(
+  raw: Record<string, any>,
+): Promise<Record<string, any>> {
+  console.log("adding new data...");
 
-export async function normalizeSeasonPlayerInput(raw: Record<string, any>): Promise<Record<string, any>> {
   let nextSpan: number;
-  let stage
-  const isPlayoffs = process.env.CURRENT_STAGE!
+  let stage;
+  const isPlayoffs = process.env.CURRENT_STAGE!;
   //let span = await getCurrentSpan()
   const nextGamespan = async (): Promise<number> => {
     // This function should retrieve the next gamespan from the database.}
-    const span = await getCurrentSpan()
+    const span = await getCurrentSpan();
     const index = SeasonSpans.indexOf(span);
     if (index === -1) {
       throw new Error(`Invalid currentGame value: ${span}`);
     }
 
-    return SeasonSpans[index]
-  }
+    return SeasonSpans[index];
+  };
 
   const nextPlayoffSpan = async (): Promise<number> => {
     // This function should retrieve the next gamespan from the database.}
-    const span = await getCurrentRound()
+    const span = await getCurrentRound();
     const index = PlayoffSpans.indexOf(span as any);
     if (index === -1) {
       throw new Error(`Invalid currentGame value: ${span}`);
     }
 
-    return PlayoffSpans[index]
-  }
+    return PlayoffSpans[index];
+  };
 
-  if (isPlayoffs != 'PO') {
-    stage = 'RS'
-    nextSpan = await nextGamespan()
+  if (isPlayoffs != "PO") {
+    stage = "RS";
+    // nextSpan = await nextGamespan();
+    nextSpan = 30;
   } else {
-    stage = 'PO'
+    stage = "PO";
 
     // added manually
     // nextSpan = 1 // ? Reset to 1 for playoffs
     // * In NBA 2K25 Playoffs only uploaded gamespan = 1, I couldn't find a way to get the following gamespan automatically. Fix it for NBA2K26 Playoffs
-    nextSpan = await nextPlayoffSpan()
+    nextSpan = await nextPlayoffSpan();
     console.log("next playoff span", nextSpan);
     // TODO: I should create a fc that checks into the db for: length of combination between (stage: 'PO' & gamespan) -> (ej: 1) and plus one (+1)
     // ! Check unicity because there will be 15 fields with gamespan 1, we only need get this value one time.
-
   }
-
-
-
 
   return {
     name: raw["Name"],
@@ -88,22 +93,20 @@ export async function normalizeSeasonPlayerInput(raw: Record<string, any>): Prom
     pa: parseFloat(raw["PA"]),
     ofgm: parseFloat(raw["oFGM"]),
     ofga: parseFloat(raw["oFGA"]),
-    plusMinus: parseFloat(raw["+/-"])
+    plusMinus: parseFloat(raw["+/-"]),
   };
 }
 
-
 export function getImagePath(name: string): string {
-  if (!name) return '/default.png';
+  if (!name) return "/default.png";
   return (
     playerImages2K25[name] ||
-    '/' + name.replace('.', '').replace(' ', '').toLowerCase() + '.png'
+    "/" + name.replace(".", "").replace(" ", "").toLowerCase() + ".png"
   );
 }
 
-
 export function capitalize(str: string): string {
-  if (!str) return '';
+  if (!str) return "";
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
@@ -121,11 +124,10 @@ export function truncateWords(text: string, limit: number) {
   return words.slice(0, limit).join(" ") + "...";
 }
 
-
 export function parsedSeasonTitle(title: string): string {
-  let parsedTitle: string = ''
-  if (title == 'RS') parsedTitle = 'Regular Season'
-  else if (title == 'PO') parsedTitle = 'Playoffs'
+  let parsedTitle: string = "";
+  if (title == "RS") parsedTitle = "Regular Season";
+  else if (title == "PO") parsedTitle = "Playoffs";
 
-  return parsedTitle
+  return parsedTitle;
 }
