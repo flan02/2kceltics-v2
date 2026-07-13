@@ -51,8 +51,7 @@ export async function normalizeSeasonPlayerInput(
 
   if (isPlayoffs != "PO") {
     stage = "RS";
-    // nextSpan = await nextGamespan();
-    nextSpan = 30;
+    nextSpan = await nextGamespan();
   } else {
     stage = "PO";
 
