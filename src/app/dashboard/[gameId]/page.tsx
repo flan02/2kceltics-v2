@@ -41,7 +41,7 @@ export default async function UpdateGamePage({ params: { gameId } }: PageProps) 
 
   const ShareOnX = () => {
     const hashTags = '#NBA2K26 #2kceltics #bleedgreen #twitch #Celtics #NBA #Basketball #DifferentHere'
-    const tweetText = encodeURIComponent(`Check out this NBA2K26 game! ☘✨\nRegular Season - Game #${game.currentGame} ${game.team1} vs ${game.team2}\n\nWatch game replay & game stats:\n👇https://www.2kceltics.xyz/game-recap/${gameId}\n\n${hashTags}`)
+    const tweetText = encodeURIComponent(`Check out this NBA2K26 game! ☘✨\nRegular Season - Game #${game.currentGame} ${game.team1} vs ${game.team2}\n\n👇 Watch game replay & game stats:\nhttps://www.2kceltics.xyz/game-recap/${gameId}\n\n${hashTags}`)
     //const tweetUrl = encodeURIComponent(`https://youtu.be/${game.video_url}`); // https://youtu.be/  || // https://www.youtube.com/watch?v=
 
     const shareUrl = `https://twitter.com/intent/tweet?text=${tweetText}`; // &url=${tweetUrl}
