@@ -14,34 +14,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     }),
   ],
   callbacks: {
-    // async signIn({ user, account, profile }) {
-    //   try {
-    //     const { name, email, image } = user as User;
-    //     console.log("Intentando iniciar sesión con email:", email);
-
-    //     const userFound = await loggedAsAdmin(email);
-    //     console.log("Resultado de loggedAsAdmin:", userFound);
-
-    //     if (!userFound) {
-    //       console.log(
-    //         "Usuario no encontrado en base de datos. Intentando crear...",
-    //       );
-    //       await createUser(name, email, image);
-    //       return false;
-    //     }
-
-    //     if (userFound.role == "ADMIN") {
-    //       console.log("¡Usuario ADMIN verificado con éxito!");
-    //       return true;
-    //     }
-
-    //     console.log("El usuario no es ADMIN. Denegando acceso.");
-    //     return false;
-    //   } catch (error) {
-    //     console.error("❌ ERROR CRÍTICO EN EL SIGN_IN CALLBACK:", error);
-    //     return false;
-    //   }
-    // },
     async signIn({ user, account, profile }) {
       try {
         const { name, email, image } = user as User;
