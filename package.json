@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate",
+    "sync:nba": "node --experimental-strip-types scripts/sync-stats-from-nba.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
