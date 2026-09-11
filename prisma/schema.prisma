@@ -232,3 +232,69 @@ model SeasonPlayerSpan {
 
   @@unique([name, season, gamespan])
 }
+
+model Shot {
+  id               String   @id @default(auto()) @map("_id") @db.ObjectId
+  gameId           String // Guarda "0022600011"
+  playerId         Int
+  playerName       String
+  period           Int
+  minutesRemaining Int
+  secondsRemaining Int
+  eventType        String // "Made Shot" | "Missed Shot"
+  actionType       String // "Jump Shot", "Step Back", etc.
+  shotType         String // "2PT Field Goal" | "3PT Field Goal"
+  shotDistance     Int
+  locX             Int
+  locY             Int
+  createdAt        DateTime @default(now())
+
+  // Relación contra el gameId único de ScheduleNBAList
+  game ScheduleNBAList @relation(fields: [gameId], references: [gameId])
+
+  @@index([gameId])
+  @@index([playerId])
+}
+
+model PlayerGameStat {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  gameId     String
+  gameDate   DateTime
+  matchup    String // ej: "BOS vs NYK"
+  playerId   Int
+  playerName String
+  min        Float
+  pts        Int
+  reb        Int
+  ast        Int
+  stl        Int
+  blk        Int
+  tov        Int
+  fgm        Int
+  fga        Int
+  fg3m       Int
+  fg3a       Int
+  plusMinus  Int
+  createdAt  DateTime @default(now())
+
+  @@unique([gameId, playerId]) // Evita duplicar el registro si re-sincronizás
+  @@index([playerId]) // Clave para que la consulta por jugador sea instantánea
+}
+
+model ScheduleNBAList {
+  id       String   @id @default(auto()) @map("_id") @db.ObjectId
+  gameId   String   @unique // El ID de la NBA: "0022600011"
+  gameDate DateTime
+  homeTeam String
+  awayTeam String
+  matchup  String
+  status   String // "Final", "7:00 pm ET", etc.
+
+  shots Shot[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([gameDate])
+  @@map("ScheduleList")
+}

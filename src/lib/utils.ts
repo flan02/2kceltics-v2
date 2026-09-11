@@ -130,3 +130,11 @@ export function parsedSeasonTitle(title: string): string {
 
   return parsedTitle;
 }
+
+export function formatShortDate(date: Date | string) {
+  return new Intl.DateTimeFormat("en-US", {
+    month: "short",
+    day: "numeric",
+    timeZone: "UTC", // Evita desfases por zona horaria local
+  }).format(new Date(date));
+}

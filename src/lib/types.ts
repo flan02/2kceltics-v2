@@ -323,3 +323,26 @@ export const roundLabels: Record<number, string> = {
   3: "CONF. FINALS",
   4: "THE FINALS",
 };
+
+export const playersNBA_season2025_26: Record<string, string> = {
+  "Jayson Tatum": "/jt-profile.png",
+  "Jaylen Brown": "/jb-profile.png",
+  "Derrick White": "/dw-profile.png",
+  "Payton Pritchard": "/pp-profile.png",
+  "Sam Hauser": "/sam-profile.png",
+  "Neemias Queta": "/queta-profile.png",
+  "Jordan Walsh": "/walsh-profile.png",
+  "Xavier Tillman": "/til-profile.png",
+  "Baylor Scheierman": "/scheierman-profile.png",
+  "J.D. Davison": "/jd-profile.png",
+  "Josh Minott": "/minott-profile.png",
+  "Luka Garza": "/garza-profile.png",
+  "Anfernee Simons": "/simons-profile.png",
+  "Chris Boucher": "/boucher-profile.png",
+  "Amari Williams": "/amari-profile.png",
+  "Hugo González": "/hugo-profile.png",
+  "Max Shulga": "/schulga-profile.png",
+  "Ron Harper Jr.": "/ron-profile.png",
+  "Nikola Vucevic": "/vucevic-profile.png",
+  "Dalano Banton": "/banton-profile.png",
+};

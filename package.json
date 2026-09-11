@@ -8,7 +8,13 @@
     "start": "next start",
     "lint": "next lint",
     "postinstall": "prisma generate",
-    "sync:nba": "node --experimental-strip-types scripts/sync-stats-from-nba.ts"
+    "sync:nba": "node --experimental-strip-types scripts/sync-stats-from-nba.ts",
+    "sync:boxscore": "node --experimental-strip-types scripts/sync-game-boxscore.mts",
+    "sync:schedule": "node --experimental-strip-types scripts/get-gameId-schedule.mts",
+    "sync:shots": "node --experimental-strip-types scripts/sync-shots.mts",
+    "upload:shots": "node --env-file=.env.local --experimental-strip-types scripts/upload-shots.mts",
+    "upload:schedule": "node --env-file=.env.local --experimental-strip-types scripts/upload-seasonSchedule.mts",
+    "remove:shots": "node --experimental-strip-types scripts/remove-shotChartData.mts"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
