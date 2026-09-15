@@ -24,7 +24,7 @@ const GameSelector = ({ availableGames, activeGameId, shots }: Props) => {
       <select
         value={activeGameId}
         onChange={handleGameChange}
-        className="w-full bg-white dark:bg-neutral-800 pb-2 border border-gray-300 dark:border dark:border-neutral-700 text-orange-400 dark:text-orange-200 text-sm lg:text-base rounded-lg py-1.5 px-2.5 lg:p-2.5 focus:ring-orange-300 focus:border-orange-500 truncate"
+        className="w-full bg-white dark:bg-neutral-900/80 pb-2 border border-gray-300 dark:border dark:border-neutral-700 text-orange-400 dark:text-orange-200 text-sm lg:text-base rounded-lg py-1.5 px-2.5 lg:p-2.5 focus:ring-orange-300 focus:border-orange-500 truncate"
       >
         {availableGames.map((game, index) => {
           const gameNumber = availableGames.length - index;
@@ -33,7 +33,7 @@ const GameSelector = ({ availableGames, activeGameId, shots }: Props) => {
           const badge = result ? `(${result})` : '';
 
           return (
-            <option key={game.gameId} value={game.gameId} className="text-celtics dark:text-orange-200 text-sm lg:text-base">
+            <option key={game.gameId} value={game.gameId} className="text-celtics dark:text-orange-200 text-sm lg:text-base dark:bg-neutral-900">
               {`#${gameNumber} ${game.matchup} ${badge} · ${dateFormatted}`}
             </option>
           );

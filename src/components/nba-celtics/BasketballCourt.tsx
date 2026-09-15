@@ -10,16 +10,51 @@ type Props = {
 
 export const BasketballCourt = ({ shots: filteredShots }: Props) => {
   const [isMobile, setIsMobile] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
     checkMobile();
+    setIsMounted(true);
     window.addEventListener("resize", checkMobile);
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
+  if (!isMounted) {
+    return (
+      <div className="relative w-full mt-2 aspect-[510/590] md:aspect-[1020/590] rounded-2xl overflow-hidden border-none lg:border lg:border-neutral-800 bg-[#E8D3A7]/20 shadow-2xl animate-pulse flex flex-col justify-between p-4 sm:p-8">
+
+        {/* Marco superior / Logo simulado */}
+        <div className="w-full flex justify-center">
+          <div className="h-3 w-32 sm:w-48 bg-neutral-800/40 rounded-full" />
+        </div>
+
+        {/* Centro de la cancha: aro / semicírculo fantasma */}
+        <div className="w-full flex items-center justify-around">
+          {/* Zona pintada izquierda / aro mobile */}
+          <div className="size-28 sm:size-40 rounded-full border-2 sm:border-4 border-neutral-800/30 flex items-center justify-center">
+            <div className="size-10 sm:size-14 rounded-full border border-neutral-800/40" />
+          </div>
+
+          {/* Zona pintada derecha (solo visible en desktop) */}
+          <div className="size-40 rounded-full border-4 border-neutral-800/30 hidden md:flex items-center justify-center">
+            <div className="size-14 rounded-full border border-neutral-800/40" />
+          </div>
+        </div>
+
+        {/* Marco inferior simulado */}
+        <div className="w-full flex justify-center">
+          <div className="h-2.5 w-24 sm:w-36 bg-neutral-800/40 rounded-full" />
+        </div>
+
+        {/* Shimmer / Destello en diagonal */}
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full animate-[shimmer_1.8s_infinite]" />
+      </div>
+    );
+  }
+
   return (
-    <div className="relative w-full rounded-2xl overflow-hidden border-none lg:border lg:border-neutral-800 bg-[#E8D3A7] shadow-2xl transition-all duration-300">
+    <div className="relative w-full aspect-[510/590] md:aspect-[1020/590] rounded-2xl overflow-hidden border-none lg:border lg:border-neutral-800 bg-[#E8D3A7] shadow-2xl transition-all duration-300">
       <svg
         // viewBox="0 0 1020 590"
         viewBox={isMobile ? "0 0 510 590" : "0 0 1020 590"}

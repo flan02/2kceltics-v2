@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useRef } from "react";
 import BasketballCourt from "./BasketballCourt";
+import Link from "next/link";
 
 export interface ShotItem {
   id: string;
@@ -142,7 +143,7 @@ export default function ShotChart({ shots, onStatsChange }: ShotChartProps) {
             });
           }, 50);
         }}
-        className="lg:hidden flex items-center mx-auto border border-neutral-600 dark:border dark:border-white dark:bg-white justify-center gap-2 bg-emerald-500 text-celtics dark:text-neutral-950 font-black px-4 py-3 rounded-full shadow-2xl active:scale-95 cursor-pointer"
+        className="lg:hidden flex items-center mx-auto bg-violet-400 justify-center gap-2 text-white dark:text-neutral-950 font-black px-4 py-3 rounded-full shadow-2xl active:scale-95 cursor-pointer"
       >
         {/* Icono Trueno ⚡ */}
         <svg
@@ -151,7 +152,7 @@ export default function ShotChart({ shots, onStatsChange }: ShotChartProps) {
         >
           <path d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" />
         </svg>
-        <span className="text-xs uppercase tracking-wider text-celtics dark:text-black">Filters</span>
+        <span className="text-xs uppercase tracking-wider text-white dark:text-black">Filters</span>
       </button>
 
       {isFilterOpen && (
@@ -177,7 +178,7 @@ export default function ShotChart({ shots, onStatsChange }: ShotChartProps) {
           <button
             type="button"
             onClick={() => setIsFilterOpen(false)}
-            className="text-neutral-400 hover:text-white text-xs font-black uppercase px-2 py-1 rounded-md bg-neutral-800/60 hover:bg-neutral-800 transition-colors cursor-pointer"
+            className="text-neutral-400 hover:text-white text-xs font-black uppercase px-2 py-1 rounded-md transition-colors cursor-pointer"
           >
             ❌ Close
           </button>
@@ -313,6 +314,7 @@ export default function ShotChart({ shots, onStatsChange }: ShotChartProps) {
           Apply & View Court
         </button>
       </aside>
+
 
     </div>
   );

@@ -5,6 +5,7 @@ import GameSelector from './GameSelector';
 import { useState } from 'react';
 import Image from 'next/image';
 import { playersNBA_season2025_26 } from '@/lib/types';
+import Link from 'next/link';
 
 
 export interface GameOption {
@@ -171,92 +172,8 @@ export default function MainStatsMenu({ availableGames, activeGameId, shots: raw
       <div className="w-full">
         <ShotChart shots={rawShots} onStatsChange={setStats} />
       </div>
+      <br className="" />
+      <Link href='/' className="w-min mx-auto dark:bg-white dark:text-black bg-black text-white rounded-md px-4 py-2 uppercase text-xs font-bold">back</Link>
     </div>
   );
 }
-
-
-// <div className="dark relative overflow-hidden flex-1 w-full min-w-0 !bg-[#0a0a0a] border border-neutral-800 rounded-2xl p-3 sm:p-4 shadow-xl">
-//   {/* 1. Background video */}
-//   <video
-//     autoPlay
-//     loop
-//     muted
-//     playsInline
-//     preload="auto"
-//     className="absolute inset-0 w-full h-full object-cover pointer-events-none !opacity-60 z-0"
-//   >
-//     <source
-//       src="https://res.cloudinary.com/dhbig9jt8/video/upload/v1789435877/film-grain-background_ka1tdo.mp4"
-//       type="video/mp4"
-//     />
-//   </video>
-
-//   {/* 2. Overlay negro puro sin backdrop-blur para no difuminar en Light Theme */}
-//   <div className="absolute inset-0 !bg-black/40 z-0 pointer-events-none" />
-
-//   {/* 3. Contenido (Z-10 relativo para posicionarse sobre el video y el overlay) */}
-//   <div className="relative z-10 w-full flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4">
-//     {/* Perfil: Foto + Nombre */}
-//     <div className="flex items-center gap-3 sm:gap-4 w-full sm:w-auto min-w-0">
-//       <div className="size-12 sm:size-16 shrink-0 flex items-center justify-center">
-//         <Image
-//           src={playerImageSrc}
-//           alt={stats.selectedPlayer === "ALL" ? "Celtics Logo" : stats.selectedPlayer}
-//           width={80}
-//           height={80}
-//           className={`select-none transition-transform duration-200 ${stats.selectedPlayer === "ALL"
-//             ? "size-12 sm:size-16 object-contain"
-//             : "size-12 sm:size-16 object-cover object-top border-[0.5px] rounded-sm lg:border border-violet-300"
-//             }`}
-//         />
-//       </div>
-
-//       <div className="min-w-0">
-//         <span className="text-[9px] sm:text-xs font-bold uppercase tracking-widest text-celtics block">
-//           {stats.selectedPlayer === "ALL" ? "Team Shot Profile" : "Player Shot Profile"}
-//         </span>
-//         <h2 className="text-base sm:text-xl md:text-2xl font-black uppercase tracking-tight truncate bg-gradient-to-r from-zinc-200 via-neutral-400 to-zinc-100 bg-clip-text text-transparent drop-shadow-sm">
-//           {stats.selectedPlayer === "ALL" ? "Boston Celtics" : stats.selectedPlayer}
-//         </h2>
-//       </div>
-//     </div>
-
-//     {/* Métricas: Att / Made / Miss / Acc con fondo oscuro aislado */}
-//     <div className="w-full sm:w-auto grid grid-cols-4 gap-2 !bg-black/85 px-3 lg:px-6 py-2 rounded-xl border border-neutral-800 font-mono text-center shrink-0">
-//       <div>
-//         <span className="text-[9px] lg:text-sm !text-neutral-400 uppercase block font-sans">
-//           Att
-//         </span>
-//         <strong className="text-sm sm:text-base !text-white">
-//           {stats.totalCount}
-//         </strong>
-//       </div>
-//       <div className="border-l border-neutral-800 pl-2 sm:pl-3">
-//         <span className="text-[9px] lg:text-sm !text-neutral-400 uppercase block font-sans">
-//           Made
-//         </span>
-//         <strong className="text-sm sm:text-base !text-amber-400">
-//           {stats.madeCount}
-//         </strong>
-//       </div>
-//       <div className="border-l border-neutral-800 pl-2 sm:pl-3">
-//         <span className="text-[9px] lg:text-sm !text-neutral-400 uppercase block font-sans">
-//           Miss
-//         </span>
-//         <strong className="text-sm sm:text-base !text-rose-500">
-//           {stats.missedCount}
-//         </strong>
-//       </div>
-//       <div className="border-l border-neutral-800 pl-2 sm:pl-3">
-//         <span className="text-[9px] lg:text-sm !text-neutral-400 uppercase block font-sans">
-//           Acc
-//         </span>
-//         <strong className="text-sm sm:text-base !text-blue-400">
-//           {stats.pct}%
-//         </strong>
-//       </div>
-//     </div>
-//   </div>
-
-// </div>
