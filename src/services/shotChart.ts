@@ -7,7 +7,7 @@ export async function getAvailableGames() {
       status: { startsWith: "Final" }, // o status: "Final"
     },
     orderBy: {
-      gameDate: "asc",
+      gameDate: "desc",
     },
     select: {
       id: true,
@@ -30,6 +30,10 @@ export async function getShotsByGameId(gameId: string) {
       actionType: true,
       shotType: true,
       period: true,
+      shotDistance: true,
+      minutesRemaining: true,
+      secondsRemaining: true,
+      //playerId: true,
     },
   });
 }

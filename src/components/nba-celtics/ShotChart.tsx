@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import BasketballCourt from "./BasketballCourt";
 
 export interface ShotItem {
@@ -12,6 +12,9 @@ export interface ShotItem {
   actionType: string;
   shotType: string; // "2PT Field Goal" | "3PT Field Goal"
   period: number | "ALL";
+  shotDistance: number;
+  minutesRemaining: number;
+  secondsRemaining: number;
   playerId?: number; // Opcional por si viene desde la API
 }
 
@@ -37,6 +40,8 @@ export default function ShotChart({ shots, onStatsChange }: ShotChartProps) {
   const [selectedPeriod, setSelectedPeriod] = useState<PeriodFilter>("ALL");
   const [outcomeFilter, setOutcomeFilter] = useState<"ALL" | "MADE" | "MISSED">("ALL");
 
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+
   // Extraer nombres únicos ordenados
   const players = ["ALL", ...Array.from(new Set(shots.map((s) => s.playerName))).sort()];
 
@@ -55,6 +60,7 @@ export default function ShotChart({ shots, onStatsChange }: ShotChartProps) {
     return matchPlayer && matchType && matchPeriod && shotOutcome;
   });
 
+  const filterAsideRef = useRef<HTMLElement | null>(null);
 
   const madeCount = filteredShots.filter((s) => s.eventType === "Made Shot").length;
   const totalCount = filteredShots.length;
@@ -73,24 +79,137 @@ export default function ShotChart({ shots, onStatsChange }: ShotChartProps) {
   }, [totalCount, madeCount, missedCount, pct, selectedPlayer, onStatsChange]);
 
   return (
-    <div className="w-full max-w-[1600px] mx-auto px-4 flex flex-col xl:flex-row gap-6 items-start">
+    // <div className="w-full max-w-[1600px] mx-auto px-1 lg:px-4 flex flex-col xl:flex-row gap-6 items-start">
+    <div className="w-full max-w-[1600px] mx-auto px-1 lg:px-4 flex flex-col xl:flex-row gap-6 items-center xl:items-stretch">
       {/* COLUMNA DERECHA: Cancha a escala completa */}
       <main className="flex-1 w-full min-w-0">
         <BasketballCourt shots={filteredShots} />
       </main>
 
+      {/* Solo aparece si hay filtros distintos de ALL */}
+      {(shotTypeFilter !== "ALL" || selectedPeriod !== "ALL" || outcomeFilter !== "ALL") && (
+        <div className="visible lg:hidden flex items-center gap-1.5 px-2 py-1 mb-2 overflow-x-auto text-[10px] md:text-lg font-mono">
+          <span className="text-neutral-500 uppercase tracking-wider font-sans font-bold text-[9px] md:text-lg">
+            Filters:
+          </span>
+
+          {shotTypeFilter !== "ALL" && (
+            <span className="bg-neutral-800 text-neutral-200 px-2 py-0.5 rounded-full border border-neutral-700 flex items-center gap-1">
+              {shotTypeFilter}
+              <button onClick={() => setShotTypeFilter("ALL")} className="text-neutral-400 hover:text-white">✕</button>
+            </span>
+          )}
+
+          {selectedPeriod !== "ALL" && (
+            <span className="bg-emerald-950/80 text-emerald-300 border border-emerald-800 px-2 py-0.5 rounded-full flex items-center gap-1">
+              Q{selectedPeriod}
+              <button onClick={() => setSelectedPeriod("ALL")} className="text-emerald-400 hover:text-white">✕</button>
+            </span>
+          )}
+
+          {outcomeFilter !== "ALL" && (
+            <span className={`px-2 py-0.5 rounded-full border flex items-center gap-1 ${outcomeFilter === "MADE"
+              ? "bg-amber-950/80 text-amber-300 border-amber-800"
+              : "bg-rose-950/80 text-rose-300 border-rose-800"
+              }`}>
+              {outcomeFilter}
+              <button onClick={() => setOutcomeFilter("ALL")} className="hover:text-white">✕</button>
+            </span>
+          )}
+
+          {/* Reset rápido */}
+          <button
+            onClick={() => {
+              setShotTypeFilter("ALL");
+              setSelectedPeriod("ALL");
+              setOutcomeFilter("ALL");
+            }}
+            className="text-neutral-500 hover:text-neutral-300 underline text-[9px] md:text-xs underline-offset-2 ml-1 uppercase"
+          >
+            Clear
+          </button>
+        </div>
+      )}
+
+      <button
+        type="button"
+        onClick={() => {
+          setIsFilterOpen(true)
+          setTimeout(() => {
+            filterAsideRef.current?.scrollIntoView({
+              behavior: "smooth", // animación suave
+              block: "center",    // clava el componente exactamente al medio vertical de la pantalla
+            });
+          }, 50);
+        }}
+        className="lg:hidden flex items-center mx-auto border border-neutral-600 dark:border dark:border-white dark:bg-white justify-center gap-2 bg-emerald-500 text-celtics dark:text-neutral-950 font-black px-4 py-3 rounded-full shadow-2xl active:scale-95 cursor-pointer"
+      >
+        {/* Icono Trueno ⚡ */}
+        <svg
+          className="size-4 fill-current"
+          viewBox="0 0 20 20"
+        >
+          <path d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" />
+        </svg>
+        <span className="text-xs uppercase tracking-wider text-celtics dark:text-black">Filters</span>
+      </button>
+
+      {isFilterOpen && (
+        <div
+          onClick={() => setIsFilterOpen(false)}
+          className="xl:hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-10 transition-opacity"
+        />
+      )}
+
       {/* COLUMNA LATERAL: Filtros y Estadísticas */}
-      <aside className="w-full xl:w-80 shrink-0 flex flex-col gap-4 bg-neutral-900/90 border border-neutral-800 p-5 rounded-2xl shadow-xl">
+      <aside
+        ref={filterAsideRef}
+        className={`bg-white lg:bg-white/30 dark:bg-neutral-900/95 border border-slate-700 rounded-2xl shadow-2xl backdrop-blur-md fixed top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 z-30 w-[92%] max-w-sm max-h-[85vh] overflow-y-auto px-5 pb-8 py-5 lg:p-5 xl:static xl:w-80 xl:max-w-none xl:translate-x-0 xl:translate-y-0 xl:z-auto xl:max-h-none xl:overflow-visible xl:p-5 xl:shrink-0 ${isFilterOpen ? "flex flex-col gap-4" : "hidden xl:flex xl:flex-col xl:gap-4"}`}
+      >
+        {/* Header Mobile: Título + Botón ✕ Close */}
+        <div className="flex items-center justify-between pb-3 border-b border-neutral-800 xl:hidden">
+          <div className="flex items-center gap-2">
+            <span className="size-2 rounded-full bg-emerald-500 animate-pulse" />
+            <span className="text-xs font-black uppercase tracking-widest text-celtics">
+              Shot Filters
+            </span>
+          </div>
+          <button
+            type="button"
+            onClick={() => setIsFilterOpen(false)}
+            className="text-neutral-400 hover:text-white text-xs font-black uppercase px-2 py-1 rounded-md bg-neutral-800/60 hover:bg-neutral-800 transition-colors cursor-pointer"
+          >
+            ❌ Close
+          </button>
+        </div>
 
         {/* 1. Selector de Jugadores */}
         <div>
           <label className="block text-xs font-bold uppercase tracking-wider text-celtics mb-2">
             Players
           </label>
-          <div className="flex flex-wrap gap-1.5 max-h-48 overflow-y-auto pr-1">
+
+          {/* Vista Mobile: Select desplegable nativo */}
+          <div className="xl:hidden">
+            <select
+              value={selectedPlayer}
+              onChange={(e) => setSelectedPlayer(e.target.value)}
+              className="w-full bg-neutral-950 border border-neutral-800 rounded-xl px-3 py-2.5 text-xs text-white font-semibold outline-none focus:border-emerald-500 transition-colors"
+            >
+              {players.map((player) => (
+                <option key={player} value={player} className="bg-neutral-900 text-white">
+                  {player === "ALL" ? "All Players (Team)" : player}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Vista Desktop: Grilla de chips/botones */}
+          <div className="hidden xl:flex flex-wrap gap-1.5 max-h-48 overflow-y-auto pr-1">
             {players.map((player) => (
               <button
                 key={player}
+                type="button"
                 onClick={() => setSelectedPlayer(player)}
                 className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition-colors ${selectedPlayer === player
                   ? "bg-celtics text-white shadow-md shadow-emerald-900/40"
@@ -108,7 +227,7 @@ export default function ShotChart({ shots, onStatsChange }: ShotChartProps) {
         {/* 2. Tipo de Tiro: 2PT / 3PT */}
         <div>
           <label className="block text-xs font-bold uppercase tracking-wider text-neutral-400 mb-2">
-            Shot Type
+            Shot Range
           </label>
           <div className="grid grid-cols-3 gap-1 bg-neutral-950 p-1 rounded-xl border border-neutral-800">
             {[
@@ -118,8 +237,9 @@ export default function ShotChart({ shots, onStatsChange }: ShotChartProps) {
             ].map((tab) => (
               <button
                 key={tab.value}
+                type="button"
                 onClick={() => setShotTypeFilter(tab.value as "ALL" | "2PT" | "3PT")}
-                className={`py-1 text-xs font-semibold rounded-lg transition-all ${shotTypeFilter === tab.value
+                className={`py-1.5 text-xs font-semibold rounded-lg transition-all ${shotTypeFilter === tab.value
                   ? "bg-neutral-800 text-white shadow-sm"
                   : "text-neutral-400 hover:text-white"
                   }`}
@@ -145,8 +265,9 @@ export default function ShotChart({ shots, onStatsChange }: ShotChartProps) {
             ].map((tab) => (
               <button
                 key={tab.label}
+                type="button"
                 onClick={() => setSelectedPeriod(tab.value as any)}
-                className={`py-1 text-xs font-bold rounded-lg transition-all ${selectedPeriod === tab.value
+                className={`py-1.5 text-xs font-bold rounded-lg transition-all ${selectedPeriod === tab.value
                   ? "bg-emerald-600 text-white shadow-sm"
                   : "text-neutral-400 hover:text-white"
                   }`}
@@ -160,7 +281,7 @@ export default function ShotChart({ shots, onStatsChange }: ShotChartProps) {
         {/* 4. Selector de Resultado: All / Made / Missed */}
         <div>
           <label className="block text-xs font-bold uppercase tracking-wider text-neutral-400 mb-2">
-            Shot type
+            Outcome
           </label>
           <div className="grid grid-cols-3 gap-1 bg-neutral-950 p-1 rounded-xl border border-neutral-800">
             {[
@@ -170,8 +291,9 @@ export default function ShotChart({ shots, onStatsChange }: ShotChartProps) {
             ].map((tab) => (
               <button
                 key={tab.value}
+                type="button"
                 onClick={() => setOutcomeFilter(tab.value as "ALL" | "MADE" | "MISSED")}
-                className={`py-1 text-xs font-semibold rounded-lg transition-all ${outcomeFilter === tab.value
+                className={`py-1.5 text-xs font-semibold rounded-lg transition-all ${outcomeFilter === tab.value
                   ? `${tab.activeColor} shadow-sm`
                   : "text-neutral-400 hover:text-white"
                   }`}
@@ -182,9 +304,16 @@ export default function ShotChart({ shots, onStatsChange }: ShotChartProps) {
           </div>
         </div>
 
-        <hr className="border-white" />
-
+        {/* Botón Aplicar en Mobile */}
+        <button
+          type="button"
+          onClick={() => setIsFilterOpen(false)}
+          className="xl:hidden w-full mt-2 py-3 bg-teal-400 hover:bg-teal-500 text-neutral-950 font-black rounded-xl text-xs uppercase tracking-wider active:scale-95 transition-transform cursor-pointer"
+        >
+          Apply & View Court
+        </button>
       </aside>
+
     </div>
   );
 }

@@ -343,6 +343,6 @@ export const playersNBA_season2025_26: Record<string, string> = {
   "Hugo González": "/hugo-profile.png",
   "Max Shulga": "/schulga-profile.png",
   "Ron Harper Jr.": "/ron-profile.png",
-  "Nikola Vucevic": "/vucevic-profile.png",
+  "Nikola Vučević": "/vucevic-profile.png",
   "Dalano Banton": "/banton-profile.png",
 };

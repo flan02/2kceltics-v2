@@ -18,11 +18,12 @@ async function NbaCeltics({ searchParams }: Props) {
 
   return (
     <main className="min-h-screen py-8">
-      <h1 className="text-5xl font-bold text-center text-celtics mb-8">CELTICS SHOT CHART SEASON 2025-26</h1>
+      <h1 className="text-2xl tracking-tight leading-snug lg:tracking-normal lg:text-5xl font-bold text-center text-celtics mb-8">CELTICS SHOT CHART SEASON 2025-26</h1>
       <MainStatsMenu
         availableGames={games}
         activeGameId={activeGameId}
         shots={shots}
+        isLoading={true}
       />
     </main>
   );

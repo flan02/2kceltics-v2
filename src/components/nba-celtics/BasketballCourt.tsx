@@ -1,4 +1,5 @@
-import React from 'react'
+'use client'
+import { useEffect, useState } from 'react';
 import { ShotItem } from './ShotChart';
 
 type Props = {
@@ -8,11 +9,20 @@ type Props = {
 
 
 export const BasketballCourt = ({ shots: filteredShots }: Props) => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
   return (
-    // <div className="relative w-full max-w-xl md:max-w-2xl lg:max-w-4xl xl:max-w-5xl 2xl:max-w-6xl mx-auto rounded-2xl overflow-hidden border border-neutral-800 bg-[#E8D3A7] shadow-2xl transition-all duration-300">
-    <div className="relative w-full rounded-2xl overflow-hidden border border-neutral-800 bg-[#E8D3A7] shadow-2xl transition-all duration-300">
+    <div className="relative w-full rounded-2xl overflow-hidden border-none lg:border lg:border-neutral-800 bg-[#E8D3A7] shadow-2xl transition-all duration-300">
       <svg
-        viewBox="0 0 1020 590"
+        // viewBox="0 0 1020 590"
+        viewBox={isMobile ? "0 0 510 590" : "0 0 1020 590"}
         className="w-full h-auto rounded-2xl overflow-hidden select-none font-sans block"
       >
         <defs>
@@ -40,7 +50,7 @@ export const BasketballCourt = ({ shots: filteredShots }: Props) => {
 
         {/* 2. Textos perimetrales horizontales */}
         <text
-          x="510"
+          x={isMobile ? "260" : "510"}
           y="24"
           textAnchor="middle"
           dominantBaseline="middle"
@@ -53,7 +63,7 @@ export const BasketballCourt = ({ shots: filteredShots }: Props) => {
         </text>
 
         <text
-          x="510"
+          x={isMobile ? "260" : "510"}
           y="566"
           textAnchor="middle"
           dominantBaseline="middle"
@@ -239,9 +249,15 @@ export const BasketballCourt = ({ shots: filteredShots }: Props) => {
           // locY es la distancia al aro (hacia la derecha: eje X)
           // locX es el desplazamiento lateral (eje Y)
           const cx = shot.locY + 92.5;
-          const cy = shot.locX + 295;
+          // const cy = shot.locX + 295; // MIRRORED
+          const cy = 295 - shot.locX;
           const isMade = shot.eventType === "Made Shot";
-          const tooltip = `${shot.playerName} - ${shot.actionType} (${isMade ? "Made" : "Missed"})`;
+
+          // Formato MM:SS (ej: 08:04)
+          const timeFormatted = `${shot.minutesRemaining}:${String(shot.secondsRemaining).padStart(2, '0')}`;
+
+          // Ej: "Jaylen Brown · Step Back Jump Shot (19 ft) · Q1 8:14"
+          const tooltip = `${shot.playerName} · ${shot.actionType} (${shot.shotDistance} ft) · Q${shot.period} ${timeFormatted}`;
 
           if (isMade) {
             return (
