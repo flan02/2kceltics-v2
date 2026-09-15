@@ -23,7 +23,6 @@ async function NbaCeltics({ searchParams }: Props) {
         availableGames={games}
         activeGameId={activeGameId}
         shots={shots}
-        isLoading={true}
       />
     </main>
   );
