@@ -1,6 +1,7 @@
 'use client'
 import { useEffect, useState } from 'react';
 import { ShotItem } from './ShotChart';
+import { CelticsCourtLogo } from './CelticsCourtLogo';
 
 type Props = {
   shots: ShotItem[];
@@ -221,13 +222,22 @@ export const BasketballCourt = ({ shots: filteredShots }: Props) => {
         {/* 5. Mitad de cancha y círculo central */}
         <line x1="510" y1="45" x2="510" y2="545" stroke="#FFFFFF" strokeWidth="3" />
 
-        <image
-          href="https://cdn.nba.com/logos/nba/1610612738/primary/L/logo.svg"
+        {/* <image
+          // href="https://cdn.nba.com/logos/nba/1610612738/primary/L/logo.svg"
+          href="/celtics-logo.svg"
+          crossOrigin="anonymous"
           x={420}
           y={205}
           width="180"
           height="180"
           preserveAspectRatio="xMidYMid meet"
+          className="pointer-events-none select-none opacity-90"
+        /> */}
+        <CelticsCourtLogo
+          x={420}
+          y={205}
+          width={180}
+          height={180}
           className="pointer-events-none select-none opacity-90"
         />
 

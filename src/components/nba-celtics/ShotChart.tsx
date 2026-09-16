@@ -1,8 +1,7 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, forwardRef } from "react";
 import BasketballCourt from "./BasketballCourt";
-import Link from "next/link";
 
 export interface ShotItem {
   id: string;
@@ -30,11 +29,12 @@ export interface ShotStats {
 interface ShotChartProps {
   shots: ShotItem[];
   onStatsChange?: (stats: ShotStats) => void;
+  courtRef?: React.Ref<HTMLDivElement>;
 }
 
 type PeriodFilter = "ALL" | 1 | 2 | 3 | 4;
 
-export default function ShotChart({ shots, onStatsChange }: ShotChartProps) {
+export default function ShotChart({ shots, onStatsChange, courtRef }: ShotChartProps) {
 
   const [selectedPlayer, setSelectedPlayer] = useState<string>("ALL");
   const [shotTypeFilter, setShotTypeFilter] = useState<"ALL" | "2PT" | "3PT">("ALL");
@@ -84,7 +84,12 @@ export default function ShotChart({ shots, onStatsChange }: ShotChartProps) {
     <div className="w-full max-w-[1600px] mx-auto px-1 lg:px-4 flex flex-col xl:flex-row gap-6 items-center xl:items-stretch">
       {/* COLUMNA DERECHA: Cancha a escala completa */}
       <main className="flex-1 w-full min-w-0">
-        <BasketballCourt shots={filteredShots} />
+        <div
+          ref={courtRef} // <-- Enganchamos la ref acá
+          className="relative w-full aspect-[510/590] md:aspect-[1020/590] rounded-2xl overflow-hidden ..."
+        >
+          <BasketballCourt shots={filteredShots} />
+        </div>
       </main>
 
       {/* Solo aparece si hay filtros distintos de ALL */}

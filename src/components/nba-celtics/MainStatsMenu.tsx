@@ -2,10 +2,12 @@
 'use client'
 import ShotChart, { ShotItem, ShotStats } from '@/components/nba-celtics/ShotChart';
 import GameSelector from './GameSelector';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import Image from 'next/image';
 import { playersNBA_season2025_26 } from '@/lib/types';
 import Link from 'next/link';
+import { ExportCardButton } from './ExportCardButton';
+import { ExportShotChartCard } from "./ExportShotChartCard";
 
 
 export interface GameOption {
@@ -26,24 +28,46 @@ export default function MainStatsMenu({ availableGames, activeGameId, shots: raw
   const [stats, setStats] = useState<ShotStats | null>(null);
   const isLoading = !rawShots || rawShots.length === 0 || stats === null;
 
-  const isSpecificPlayer = Boolean(stats && stats.selectedPlayer !== "ALL");
-  const playerImageSrc =
-    isSpecificPlayer && stats?.selectedPlayer && playersNBA_season2025_26[stats.selectedPlayer]
-      ? playersNBA_season2025_26[stats.selectedPlayer]
-      : "/celtics-logo.png";
+  const courtContainerRef = useRef<HTMLDivElement>(null);
+  const exportCardRef = useRef<HTMLDivElement>(null);
 
+  const currentGame = availableGames.find((g) => g.gameId === activeGameId);
+  const matchupText = currentGame?.matchup || "Boston Celtics";
+
+  // 1. Identificamos si explícitamente se pidió ver todo el equipo
+  const isAll = !stats || stats.selectedPlayer === "ALL";
+
+  // 2. Buscamos la foto en tu diccionario de la temporada
+  const playerPhoto = stats?.selectedPlayer
+    ? playersNBA_season2025_26[stats.selectedPlayer]
+    : null;
+
+  // 3. Solo mostramos el logo si es "ALL" o si no encontramos foto para ese jugador
+  const playerImageSrc = isAll
+    ? "/celtics-logo.png"
+    : playerPhoto || "/celtics-logo.png";
 
   return (
     <div className="w-full max-w-[1500px] mx-auto px-2 lg:px-4 py-2 lg:py-4 flex flex-col gap-4">
       {/* FILA SUPERIOR: GameSelector a la izquierda + Banner de Stats a la derecha */}
       <div className="w-full flex flex-col xl:flex-row gap-4 items-stretch">
         {/* 1. Selector de Partido (Ancho fijo en XL) */}
-        <div className="w-full xl:w-80 shrink-0">
+        <div className="w-full xl:w-80 shrink-0 space-y-1">
           <GameSelector
             availableGames={availableGames}
             activeGameId={activeGameId}
             shots={rawShots}
           />
+
+          {/* Export and Share button */}
+          <div className="flex justify-end xl:justify-center">
+            <ExportCardButton
+              stats={stats}
+              gameMatchup={matchupText}
+              // courtRef={courtContainerRef}
+              courtRef={exportCardRef}
+            />
+          </div>
         </div>
 
         {/* 2. Banner de Estadísticas del Jugador (Ocupa todo el ancho restante) */}
@@ -96,8 +120,9 @@ export default function MainStatsMenu({ availableGames, activeGameId, shots: raw
             <div className="relative z-10 w-full flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 transition-opacity duration-300">
               {/* Perfil: Avatar + Nombre */}
               <div className="flex items-center gap-3 sm:gap-4 w-full sm:w-auto min-w-0">
-                <div className="size-12 sm:size-16 shrink-0 flex items-center justify-center">
+                <div className="size-12 sm:size-16 shrink-0 flex items-center justify-center bg-neutral-950 overflow-hidden">
                   <Image
+                    key={playerImageSrc}
                     src={playerImageSrc}
                     alt={
                       stats?.selectedPlayer === "ALL"
@@ -107,7 +132,7 @@ export default function MainStatsMenu({ availableGames, activeGameId, shots: raw
                     width={80}
                     height={80}
                     priority
-                    className={`select-none transition-transform duration-200 ${stats?.selectedPlayer === "ALL"
+                    className={`select-none transition-opacity duration-150 ${stats?.selectedPlayer === "ALL"
                       ? "size-12 sm:size-20 object-contain"
                       : "size-12 sm:size-16 rounded-sm object-cover object-top border-[0.5px] lg:border border-violet-300"
                       }`}
@@ -170,8 +195,24 @@ export default function MainStatsMenu({ availableGames, activeGameId, shots: raw
 
       {/* FILA INFERIOR: ShotChart (Cancha + Panel de Filtros) */}
       <div className="w-full">
-        <ShotChart shots={rawShots} onStatsChange={setStats} />
+        <ShotChart
+          shots={rawShots}
+          onStatsChange={setStats}
+        // courtRef={courtContainerRef}
+        />
       </div>
+
+      {/* TARJETA OCULTA PARA EXPORTAR: html-to-image le saca la foto a este nodo */}
+      <div className="fixed -left-[9999px] top-0 pointer-events-none">
+        <ExportShotChartCard
+          ref={exportCardRef}
+          shots={rawShots}
+          stats={stats}
+          gameMatchup={matchupText}
+          playerImageSrc={playerImageSrc}
+        />
+      </div>
+
       <br className="" />
       <Link href='/' className="w-min mx-auto dark:bg-white dark:text-black bg-black text-white rounded-md px-4 py-2 uppercase text-xs font-bold">back</Link>
     </div>
