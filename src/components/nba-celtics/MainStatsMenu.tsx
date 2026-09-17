@@ -1,6 +1,6 @@
 
 'use client'
-import ShotChart, { ShotItem, ShotStats } from '@/components/nba-celtics/ShotChart';
+import ShotChart, { CourtExportData, ShotItem, ShotStats } from '@/components/nba-celtics/ShotChart';
 import GameSelector from './GameSelector';
 import { useState, useRef } from 'react';
 import Image from 'next/image';
@@ -28,7 +28,7 @@ export default function MainStatsMenu({ availableGames, activeGameId, shots: raw
   const [stats, setStats] = useState<ShotStats | null>(null);
   const isLoading = !rawShots || rawShots.length === 0 || stats === null;
 
-  const courtContainerRef = useRef<HTMLDivElement>(null);
+  // const courtContainerRef = useRef<HTMLDivElement>(null);
   const exportCardRef = useRef<HTMLDivElement>(null);
 
   const currentGame = availableGames.find((g) => g.gameId === activeGameId);
@@ -46,6 +46,11 @@ export default function MainStatsMenu({ availableGames, activeGameId, shots: raw
   const playerImageSrc = isAll
     ? "/celtics-logo.png"
     : playerPhoto || "/celtics-logo.png";
+
+  const [exportData, setExportData] = useState<CourtExportData>({
+    filteredShots: rawShots,
+    filters: { player: "ALL", period: "ALL", shotType: "ALL", outcome: "ALL" },
+  });
 
   return (
     <div className="w-full max-w-[1500px] mx-auto px-2 lg:px-4 py-2 lg:py-4 flex flex-col gap-4">
@@ -198,6 +203,7 @@ export default function MainStatsMenu({ availableGames, activeGameId, shots: raw
         <ShotChart
           shots={rawShots}
           onStatsChange={setStats}
+          onExportDataFilter={setExportData}
         // courtRef={courtContainerRef}
         />
       </div>
@@ -206,7 +212,8 @@ export default function MainStatsMenu({ availableGames, activeGameId, shots: raw
       <div className="fixed -left-[9999px] top-0 pointer-events-none">
         <ExportShotChartCard
           ref={exportCardRef}
-          shots={rawShots}
+          shots={exportData.filteredShots}
+          filters={exportData.filters}
           stats={stats}
           gameMatchup={matchupText}
           playerImageSrc={playerImageSrc}
