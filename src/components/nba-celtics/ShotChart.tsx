@@ -61,7 +61,7 @@ export interface CourtExportData {
 type PeriodFilter = "ALL" | 1 | 2 | 3 | 4;
 
 export default function ShotChart({ shots, onStatsChange, onExportDataFilter, courtRef }: ShotChartProps) {
-  const [exportFilters, setExportFilters] = useState<CourtFilters>(INITIAL_FILTERS);
+  // const [exportFilters, setExportFilters] = useState<CourtFilters>(INITIAL_FILTERS);
 
   const [selectedPlayer, setSelectedPlayer] = useState<string>("ALL");
   const [shotTypeFilter, setShotTypeFilter] = useState<"ALL" | "2PT" | "3PT">("ALL");
@@ -72,21 +72,6 @@ export default function ShotChart({ shots, onStatsChange, onExportDataFilter, co
 
   // Extraer nombres únicos ordenados
   const players = ["ALL", ...Array.from(new Set(shots.map((s) => s.playerName))).sort()];
-
-  // const filteredShots = shots.filter((s) => {
-  //   const matchPlayer = selectedPlayer === "ALL" || s.playerName === selectedPlayer;
-  //   const matchType =
-  //     shotTypeFilter === "ALL" ||
-  //     (shotTypeFilter === "3PT" && s.shotType?.startsWith("3PT")) ||
-  //     (shotTypeFilter === "2PT" && s.shotType?.startsWith("2PT"));
-  //   const matchPeriod = selectedPeriod === "ALL" || String(s.period) === String(selectedPeriod);
-  //   const shotOutcome =
-  //     outcomeFilter === "ALL" ||
-  //     (outcomeFilter === "MADE" && s.eventType === "Made Shot") ||
-  //     (outcomeFilter === "MISSED" && s.eventType === "Missed Shot");
-
-  //   return matchPlayer && matchType && matchPeriod && shotOutcome;
-  // });
 
   const filteredShots = useMemo(() => {
     return shots.filter((s) => {
@@ -135,32 +120,6 @@ export default function ShotChart({ shots, onStatsChange, onExportDataFilter, co
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [shots, selectedPlayer, selectedPeriod, shotTypeFilter, outcomeFilter]);
-
-  // useEffect(() => {
-  //   if (onExportDataFilter) {
-  //     onExportDataFilter({
-  //       filteredShots,
-  //       filters: {
-  //         player: selectedPlayer,
-  //         period: String(selectedPeriod),
-  //         shotType: shotTypeFilter,
-  //         outcome: outcomeFilter,
-  //       },
-  //     });
-  //   }
-  // }, [filteredShots, selectedPlayer, selectedPeriod, shotTypeFilter, outcomeFilter, onExportDataFilter]);
-
-
-  // // Enviar métricas al componente padre
-  // useEffect(() => {
-  //   onStatsChange?.({
-  //     totalCount,
-  //     madeCount,
-  //     missedCount,
-  //     pct,
-  //     selectedPlayer,
-  //   });
-  // }, [totalCount, madeCount, missedCount, pct, selectedPlayer, onStatsChange]);
 
   return (
     // <div className="w-full max-w-[1600px] mx-auto px-1 lg:px-4 flex flex-col xl:flex-row gap-6 items-start">

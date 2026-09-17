@@ -1,6 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { forwardRef } from "react";
-import Image from "next/image";
 import { BasketballCourt } from "./BasketballCourt";
 import { ShotItem } from "./ShotChart";
 import { playersNBA_season2025_26 } from '@/lib/types';
@@ -8,7 +7,9 @@ import { playersNBA_season2025_26 } from '@/lib/types';
 interface Props {
   shots: any[];
   stats: any;
+  gameNumber: number;
   gameMatchup: string;
+  gameDate: string;
   playerImageSrc: string;
 }
 
@@ -37,8 +38,9 @@ export const ExportShotChartCard = forwardRef<HTMLDivElement, Props>(({
   shots,
   stats,
   filters,
+  gameNumber,
   gameMatchup,
-  playerImageSrc,
+  gameDate = "2025-26 Season"
 }, ref) => {
 
 
@@ -83,13 +85,15 @@ export const ExportShotChartCard = forwardRef<HTMLDivElement, Props>(({
         {/* 1. Header & Matchup */}
         <div className="flex flex-col gap-2">
           <div className="flex items-center justify-between">
-            <span className="text-emerald-400 font-black tracking-widest text-lg">2KCELTICS.XYZ</span>
-            {/* <span className="text-neutral-500 font-mono text-xs">{gameDate}</span> */}
+            <p className="text-celtics font-black tracking-widest text-lg">
+              <span className="text-celtics text-xs tracking-tight">created by &nbsp;</span>
+              2KCELTICS.XYZ</p>
+            <span className="text-white font-mono text-xs font-bold mt-1">{gameDate}</span>
           </div>
 
           <div className="bg-neutral-900/90 border border-neutral-800 rounded-xl px-3.5 py-1.5">
             <span className="text-[9px] uppercase font-bold text-neutral-400 block tracking-wider font-sans">
-              Matchup
+              Game {gameNumber ? `#${gameNumber} ` : ""}
             </span>
             <span className="text-sm font-black text-neutral-100 uppercase tracking-wide">
               {gameMatchup}
@@ -100,7 +104,7 @@ export const ExportShotChartCard = forwardRef<HTMLDivElement, Props>(({
         {/* 2. Perfil, Píldora de MOMENTUM y Badges de Filtros */}
         <div className="flex flex-col gap-2.5">
           <div className="flex items-center gap-4">
-            <div className="size-20 rounded-md overflow-hidden bg-neutral-950  flex items-center justify-center shrink-0 shadow-lg">
+            <div className="size-20 rounded-md overflow-hidden bg-neutral-950 flex items-center justify-center shrink-0 shadow-lg">
               <img
                 key={currentImageSrc}
                 src={currentImageSrc}
@@ -116,7 +120,8 @@ export const ExportShotChartCard = forwardRef<HTMLDivElement, Props>(({
               <span className="text-[10px] font-bold text-celtics uppercase tracking-widest block">
                 {isAll ? "Team Shot Profile" : "Player Shot Profile"}
               </span>
-              <h1 className="text-xl font-black uppercase tracking-tight text-white leading-tight truncate">
+              {/* <h1 className="text-xl font-black uppercase tracking-tight text-white leading-tight truncate"> */}
+              <h1 className="text-xl font-black uppercase tracking-tight truncate bg-gradient-to-r from-zinc-200 via-neutral-400 to-zinc-100 bg-clip-text text-transparent drop-shadow-sm">
                 {playerName}
               </h1>
             </div>
@@ -136,7 +141,7 @@ export const ExportShotChartCard = forwardRef<HTMLDivElement, Props>(({
               {periodLabel}
             </span>
             <span className="bg-neutral-900 text-neutral-200 text-[10px] font-mono font-bold px-2.5 py-0.5 rounded border border-neutral-700">
-              {shotTypeLabel === "ALL" ? "All Shots" : shotTypeLabel}
+              {shotTypeLabel === "ALL" ? "2PT/3PT" : shotTypeLabel}
             </span>
             <span className={`text-[10px] font-mono font-bold px-2.5 py-0.5 rounded border ${outcomeLabel === "MADE"
               ? "bg-amber-950/50 text-amber-400 border-amber-600/40"
@@ -144,7 +149,7 @@ export const ExportShotChartCard = forwardRef<HTMLDivElement, Props>(({
                 ? "bg-rose-950/50 text-rose-400 border-rose-600/40"
                 : "bg-neutral-900 text-neutral-200 border-neutral-700"
               }`}>
-              {outcomeLabel === "ALL" ? "All Shots" : outcomeLabel}
+              {outcomeLabel === "ALL" ? "Made/Missed" : outcomeLabel}
             </span>
           </div>
         </div>

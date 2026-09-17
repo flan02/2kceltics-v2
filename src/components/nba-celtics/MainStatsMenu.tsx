@@ -8,6 +8,7 @@ import { playersNBA_season2025_26 } from '@/lib/types';
 import Link from 'next/link';
 import { ExportCardButton } from './ExportCardButton';
 import { ExportShotChartCard } from "./ExportShotChartCard";
+import { formatShortDate } from '@/lib/utils';
 
 
 export interface GameOption {
@@ -31,9 +32,12 @@ export default function MainStatsMenu({ availableGames, activeGameId, shots: raw
   // const courtContainerRef = useRef<HTMLDivElement>(null);
   const exportCardRef = useRef<HTMLDivElement>(null);
 
-  const currentGame = availableGames.find((g) => g.gameId === activeGameId);
+  const activeGameIndex = availableGames.findIndex((g) => g.gameId === activeGameId);
+  // const currentGame = availableGames.find((g) => g.gameId === activeGameId);
+  const currentGame = activeGameIndex !== -1 ? availableGames[activeGameIndex] : availableGames[0];
+  const gameNumber = activeGameIndex !== -1 ? availableGames.length - activeGameIndex : 1;
+  const formattedDate = currentGame ? formatShortDate(currentGame.gameDate) : "2025-26 Season";
   const matchupText = currentGame?.matchup || "Boston Celtics";
-
   // 1. Identificamos si explícitamente se pidió ver todo el equipo
   const isAll = !stats || stats.selectedPlayer === "ALL";
 
@@ -204,7 +208,6 @@ export default function MainStatsMenu({ availableGames, activeGameId, shots: raw
           shots={rawShots}
           onStatsChange={setStats}
           onExportDataFilter={setExportData}
-        // courtRef={courtContainerRef}
         />
       </div>
 
@@ -215,7 +218,9 @@ export default function MainStatsMenu({ availableGames, activeGameId, shots: raw
           shots={exportData.filteredShots}
           filters={exportData.filters}
           stats={stats}
-          gameMatchup={matchupText}
+          gameNumber={gameNumber}           // 👈 Pasamos el número (ej: 82)
+          gameMatchup={matchupText}         // 👈 Matchup (ej: "BOS vs. PHI")
+          gameDate={formattedDate}
           playerImageSrc={playerImageSrc}
         />
       </div>
