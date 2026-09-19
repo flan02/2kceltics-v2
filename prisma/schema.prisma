@@ -298,3 +298,48 @@ model ScheduleNBAList {
   @@index([gameDate])
   @@map("ScheduleList")
 }
+
+model TeamSeasonTotals {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  teamId      String // "1610612738" (Boston Celtics)
+  season      String   @unique // "2025-26"
+  gamesPlayed Int // GP
+  wins        Int // WINS
+  losses      Int // LOSSES
+  winPct      Float // WIN_PCT
+  confRank    Int? // CONF_RANK
+  divRank     Int? // DIV_RANK
+  poWins      Int? // PO_WINS
+  poLosses    Int? // PO_LOSSES
+  // Puntos Totales
+  pts         Int // PTS
+  // Tiros de Campo Totales (FG)
+  fgm         Int // FGM
+  fga         Int // FGA
+  fgPct       Float // FG_PCT
+  // Dobles (2PT - Calculados: FG - FG3)
+  fg2m        Int // fgm - fg3m
+  fg2a        Int // fga - fg3a
+  fg2Pct      Float // (fg2m / fg2a) * 100
+  // Triples (3PT)
+  fg3m        Int // FG3M
+  fg3a        Int // FG3A
+  fg3Pct      Float // FG3_PCT
+  // Tiros Libres (FT)
+  ftm         Int // FTM
+  fta         Int // FTA
+  ftPct       Float // FT_PCT
+  // Rebotes
+  oreb        Int // OREB (Ofensivos)
+  dreb        Int // DREB (Defensivos)
+  reb         Int // REB (Totales)
+  // Creación y Defensa
+  ast         Int // AST (Asistencias)
+  stl         Int // STL (Robos)
+  blk         Int // BLK (Bloqueos)
+  tov         Int // TOV (Pérdidas)
+  pf          Int // PF (Faltas personales)
+  // Timestamps de control
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
