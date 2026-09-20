@@ -1,5 +1,5 @@
 import MainStatsMenu from '@/components/nba-celtics/MainStatsMenu';
-import { getAvailableGames, getShotsByGameId } from '@/services/shotChart';
+import { getAvailableGames, getShotsByGameId } from '@/services/db/shotChart';
 
 
 export const dynamic = "force-dynamic"; // Evita que se cachee mientras probás

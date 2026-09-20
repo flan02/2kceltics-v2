@@ -37,3 +37,27 @@ export async function getShotsByGameId(gameId: string) {
     },
   });
 }
+
+export async function saveTeamStatsToDB(statsData: any) {
+  console.log(
+    `💾 Guardando estadísticas de la temporada ${statsData.season} en la base de datos...`,
+  );
+
+  const { season, ...updateFields } = statsData;
+
+  const result = await db.teamSeasonTotals.upsert({
+    where: { season },
+    update: updateFields,
+    create: statsData,
+  });
+
+  console.log("✅ Registro actualizado con éxito:", {
+    id: result.id,
+    season: result.season,
+    record: `${result.wins}-${result.losses}`,
+    fg: `${result.fgm}/${result.fga} (${result.fgPct}%)`,
+    updatedAt: result.updatedAt,
+  });
+
+  return result;
+}

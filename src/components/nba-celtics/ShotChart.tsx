@@ -288,7 +288,7 @@ export default function ShotChart({ shots, onStatsChange, onExportDataFilter, co
                 type="button"
                 onClick={() => setShotTypeFilter(tab.value as "ALL" | "2PT" | "3PT")}
                 className={`py-1.5 text-xs font-semibold rounded-lg transition-all ${shotTypeFilter === tab.value
-                  ? "bg-neutral-800 text-white shadow-sm"
+                  ? "bg-neutral-800 text-violet-400 shadow-sm"
                   : "text-neutral-400 hover:text-white"
                   }`}
               >
@@ -316,7 +316,7 @@ export default function ShotChart({ shots, onStatsChange, onExportDataFilter, co
                 type="button"
                 onClick={() => setSelectedPeriod(tab.value as any)}
                 className={`py-1.5 text-xs font-bold rounded-lg transition-all ${selectedPeriod === tab.value
-                  ? "bg-emerald-600 text-white shadow-sm"
+                  ? "bg-neutral-800 text-violet-400 shadow-sm"
                   : "text-neutral-400 hover:text-white"
                   }`}
               >
@@ -333,7 +333,7 @@ export default function ShotChart({ shots, onStatsChange, onExportDataFilter, co
           </label>
           <div className="grid grid-cols-3 gap-1 bg-neutral-950 p-1 rounded-xl border border-neutral-800">
             {[
-              { label: "All", value: "ALL", activeColor: "bg-neutral-800 text-white" },
+              { label: "All", value: "ALL", activeColor: "bg-neutral-800 text-violet-400" },
               { label: "Made", value: "MADE", activeColor: "bg-amber-500 text-neutral-950 font-bold" },
               { label: "Missed", value: "MISSED", activeColor: "bg-rose-600 text-white font-bold" },
             ].map((tab) => (

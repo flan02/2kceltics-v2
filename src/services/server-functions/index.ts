@@ -1,6 +1,7 @@
 "use server";
 
 import { signOut } from "@/auth";
+import { db } from "@/db";
 import { TwitchChannelFollowers } from "@/lib/types";
 //import { Platform } from "@/lib/types";
 
@@ -135,6 +136,15 @@ export async function isTwitchFollower(user_id: string) {
     }
   });
   return isFollower;
+}
+
+export async function getTeamSeasonTotalsAction(season = "2025-26") {
+  const data = await db.teamSeasonTotals.findUnique({
+    where: { season },
+  });
+
+  // Serializamos para evitar líos con tipos nativos de Mongo/fechas
+  return JSON.parse(JSON.stringify(data));
 }
 
 // https://api.twitch.tv/helix/streams?first=10
