@@ -59,7 +59,7 @@ export const TeamSeasonComparison: React.FC<Props> = ({ seasonData, matchPctData
         {/* Encabezado: apilado en mobile, fila en desktop */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-neutral-800/60 pb-2.5 sm:pb-3 mb-3 sm:mb-4 gap-1 sm:gap-0">
           <span className="text-xs sm:text-base uppercase tracking-wider text-neutral-300 font-bold">
-            Field Goal Accuracy (FG%)
+            TEAM STATS
           </span>
           <span className="text-[11px] sm:text-sm font-mono text-neutral-500">
             Current Game vs Regular Season
