@@ -35,7 +35,8 @@ interface Props {
 export default function MainStatsMenu({ availableGames, activeGameId, shots: rawShots }: Props) {
 
   const [stats, setStats] = useState<ShotStats | null>(null);
-  const isLoading = !rawShots || rawShots.length === 0 || stats === null;
+  // const isLoading = !rawShots || rawShots.length === 0 || stats === null;
+  const isLoading = !rawShots || rawShots.length === 0;
 
   // const courtContainerRef = useRef<HTMLDivElement>(null);
   const exportCardRef = useRef<HTMLDivElement>(null);
@@ -75,7 +76,7 @@ export default function MainStatsMenu({ availableGames, activeGameId, shots: raw
         const seasonData = await getTeamSeasonTotalsAction("2025-26");
 
         // 1. Verificá en la consola del navegador qué devuelve Prisma
-        console.log("🏀 [seasonData recibido]:", seasonData);
+        // console.log("🏀 [seasonData recibido]:", seasonData);
 
         setTeamStats({
           seasonFg: seasonData?.fgPct!,
@@ -243,6 +244,7 @@ export default function MainStatsMenu({ availableGames, activeGameId, shots: raw
       {/* FILA INFERIOR: ShotChart (Cancha + Panel de Filtros) */}
       <div className="w-full">
         <ShotChart
+          // key={activeGameId} // Forzamos re-render cuando cambia de partido
           shots={rawShots}
           onStatsChange={setStats}
           onExportDataFilter={setExportData}

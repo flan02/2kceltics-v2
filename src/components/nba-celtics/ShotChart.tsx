@@ -149,6 +149,14 @@ export default function ShotChart({ shots, onStatsChange, onExportDataFilter, co
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [shots, selectedPlayer, selectedPeriod, shotTypeFilter, outcomeFilter, distanceFilter]);
 
+  useEffect(() => {
+    setSelectedPlayer("ALL");
+    setShotTypeFilter("ALL");
+    setSelectedPeriod("ALL");
+    setOutcomeFilter("ALL");
+    setDistanceFilter("ALL");
+  }, [shots]);
+
   return (
     // <div className="w-full max-w-[1600px] mx-auto px-1 lg:px-4 flex flex-col xl:flex-row gap-6 items-start">
     <div className="w-full max-w-[1600px] mx-auto px-1 lg:px-4 flex flex-col xl:flex-row gap-6 items-center xl:items-stretch">
@@ -156,9 +164,17 @@ export default function ShotChart({ shots, onStatsChange, onExportDataFilter, co
       <main className="flex-1 w-full min-w-0">
         <div
           ref={courtRef} // <-- Enganchamos la ref acá
-          className="relative w-full aspect-[510/590] md:aspect-[1020/590] rounded-2xl overflow-hidden ..."
+          className="relative w-full aspect-[510/590] md:aspect-[1020/590] rounded-2xl overflow-hidden"
         >
           <BasketballCourt shots={filteredShots} />
+
+          {shots.length === 0 && (
+            <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px] flex items-center justify-center transition-opacity">
+              <span className="text-xs font-mono text-neutral-300 uppercase tracking-widest animate-pulse">
+                Loading game shots...
+              </span>
+            </div>
+          )}
         </div>
       </main>
 
