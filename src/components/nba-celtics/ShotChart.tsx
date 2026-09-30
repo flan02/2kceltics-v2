@@ -3,6 +3,8 @@
 import { useEffect, useState, useRef, useMemo } from "react";
 import BasketballCourt from "./BasketballCourt";
 import { ShotChartExportData } from "./ExportShotChartCard";
+import OutcomeComponent from "./OutcomeComponent";
+import ShotDistanceComponent from "./ShotDistanceComponent";
 
 export interface ShotItem {
   id: string;
@@ -37,8 +39,9 @@ interface ShotChartProps {
 export interface CourtFilters {
   player: string;   // "ALL" | nombre del jugador
   period: string;   // "ALL" | "Q1" | "Q2" | "Q3" | "Q4"
-  shotType: string;    // "ALL" | "2PT" | "3PT"
+  shotType: string; // "ALL" | "2PT" | "3PT"
   outcome: string;  // "ALL" | "Made" | "Missed"
+  distance: string; // "ALL" | "RIM" | "MID" | "THREE"
 }
 
 export const INITIAL_FILTERS: CourtFilters = {
@@ -46,6 +49,7 @@ export const INITIAL_FILTERS: CourtFilters = {
   period: "ALL",
   shotType: "ALL",
   outcome: "ALL",
+  distance: "ALL",
 };
 
 export interface CourtExportData {
@@ -55,19 +59,24 @@ export interface CourtExportData {
     period: string;
     shotType: string;
     outcome: string;
+    distance: string;
   };
 }
 
+type ShotTypeFilter = "ALL" | "2PT" | "3PT";
 type PeriodFilter = "ALL" | 1 | 2 | 3 | 4;
+export type DistanceRange = "ALL" | "RIM" | "MID" | "THREE";
+type OutcomeFilter = "ALL" | "MADE" | "MISSED"
+
 
 export default function ShotChart({ shots, onStatsChange, onExportDataFilter, courtRef }: ShotChartProps) {
-  // const [exportFilters, setExportFilters] = useState<CourtFilters>(INITIAL_FILTERS);
+
 
   const [selectedPlayer, setSelectedPlayer] = useState<string>("ALL");
-  const [shotTypeFilter, setShotTypeFilter] = useState<"ALL" | "2PT" | "3PT">("ALL");
+  const [shotTypeFilter, setShotTypeFilter] = useState<ShotTypeFilter>("ALL");
   const [selectedPeriod, setSelectedPeriod] = useState<PeriodFilter>("ALL");
-  const [outcomeFilter, setOutcomeFilter] = useState<"ALL" | "MADE" | "MISSED">("ALL");
-
+  const [outcomeFilter, setOutcomeFilter] = useState<OutcomeFilter>("ALL");
+  const [distanceFilter, setDistanceFilter] = useState<DistanceRange>("ALL");
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   // Extraer nombres únicos ordenados
@@ -86,9 +95,17 @@ export default function ShotChart({ shots, onStatsChange, onExportDataFilter, co
         (outcomeFilter === "MADE" && s.eventType === "Made Shot") ||
         (outcomeFilter === "MISSED" && s.eventType === "Missed Shot");
 
-      return matchPlayer && matchType && matchPeriod && shotOutcome;
+      // 🏀 Filtro de distancia por rangos analíticos
+      const dist = Number(s.shotDistance);
+      const matchDistance =
+        distanceFilter === "ALL" ||
+        (distanceFilter === "RIM" && dist < 8) ||
+        (distanceFilter === "MID" && dist >= 8 && dist < 22) ||
+        (distanceFilter === "THREE" && dist >= 22);
+
+      return matchPlayer && matchType && matchPeriod && shotOutcome && matchDistance;
     });
-  }, [shots, selectedPlayer, shotTypeFilter, selectedPeriod, outcomeFilter]);
+  }, [shots, selectedPlayer, shotTypeFilter, selectedPeriod, outcomeFilter, distanceFilter]);
 
   const filterAsideRef = useRef<HTMLElement | null>(null);
 
@@ -96,6 +113,16 @@ export default function ShotChart({ shots, onStatsChange, onExportDataFilter, co
   const totalCount = filteredShots.length;
   const pct = totalCount > 0 ? ((madeCount / totalCount) * 100).toFixed(1) : "0.0";
   const missedCount = totalCount - madeCount;
+
+  const handlePlayerChange = (player: string) => {
+    setSelectedPlayer(player);
+
+    // Resetea todos los filtros secundarios al cambiar de jugador
+    setShotTypeFilter("ALL");
+    setSelectedPeriod("ALL");
+    setOutcomeFilter("ALL");
+    setDistanceFilter("ALL");
+  };
 
   useEffect(() => {
     // 1. Enviar métricas al Banner
@@ -115,11 +142,12 @@ export default function ShotChart({ shots, onStatsChange, onExportDataFilter, co
         period: String(selectedPeriod),
         shotType: shotTypeFilter,
         outcome: outcomeFilter,
+        distance: distanceFilter,
       },
     });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [shots, selectedPlayer, selectedPeriod, shotTypeFilter, outcomeFilter]);
+  }, [shots, selectedPlayer, selectedPeriod, shotTypeFilter, outcomeFilter, distanceFilter]);
 
   return (
     // <div className="w-full max-w-[1600px] mx-auto px-1 lg:px-4 flex flex-col xl:flex-row gap-6 items-start">
@@ -135,7 +163,7 @@ export default function ShotChart({ shots, onStatsChange, onExportDataFilter, co
       </main>
 
       {/* Solo aparece si hay filtros distintos de ALL */}
-      {(shotTypeFilter !== "ALL" || selectedPeriod !== "ALL" || outcomeFilter !== "ALL") && (
+      {(shotTypeFilter !== "ALL" || selectedPeriod !== "ALL" || outcomeFilter !== "ALL" || distanceFilter !== "ALL") && (
         <div className="visible lg:hidden flex items-center gap-1.5 px-2 py-1 mb-2 overflow-x-auto text-[10px] md:text-lg font-mono">
           <span className="text-neutral-500 uppercase tracking-wider font-sans font-bold text-[9px] md:text-lg">
             Filters:
@@ -165,12 +193,23 @@ export default function ShotChart({ shots, onStatsChange, onExportDataFilter, co
             </span>
           )}
 
+          {distanceFilter !== "ALL" && (
+            <span className={`px-2 py-0.5 rounded-full border flex items-center gap-1 ${distanceFilter === "RIM"
+              ? "bg-cyan-950/80 text-cyan-300 border-cyan-800"
+              : "bg-violet-950/80 text-violet-300 border-violet-800"
+              }`}>
+              {distanceFilter === "RIM" ? "<8ft" : distanceFilter === "MID" ? "8-22ft" : "22ft+"}
+              <button onClick={() => setDistanceFilter("ALL")} className="hover:text-white">✕</button>
+            </span>
+          )}
+
           {/* Reset rápido */}
           <button
             onClick={() => {
               setShotTypeFilter("ALL");
               setSelectedPeriod("ALL");
               setOutcomeFilter("ALL");
+              setDistanceFilter("ALL");
             }}
             className="text-neutral-500 hover:text-neutral-300 underline text-[9px] md:text-xs underline-offset-2 ml-1 uppercase"
           >
@@ -241,7 +280,10 @@ export default function ShotChart({ shots, onStatsChange, onExportDataFilter, co
           <div className="xl:hidden">
             <select
               value={selectedPlayer}
-              onChange={(e) => setSelectedPlayer(e.target.value)}
+              onChange={(e) => {
+                handlePlayerChange(e.target.value);
+                //setIsFilterOpen(false); // Descomentá esta línea si querés que se cierre solo al elegir jugador
+              }}
               className="w-full bg-neutral-950 border border-neutral-800 rounded-xl px-3 py-2.5 text-xs text-white font-semibold outline-none focus:border-emerald-500 transition-colors"
             >
               {players.map((player) => (
@@ -258,7 +300,8 @@ export default function ShotChart({ shots, onStatsChange, onExportDataFilter, co
               <button
                 key={player}
                 type="button"
-                onClick={() => setSelectedPlayer(player)}
+                // onClick={() => setSelectedPlayer(player)}
+                onClick={() => handlePlayerChange(player)}
                 className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition-colors ${selectedPlayer === player
                   ? "bg-celtics text-white shadow-md shadow-emerald-900/40"
                   : "bg-neutral-800 text-neutral-400 hover:bg-neutral-700 hover:text-white"
@@ -327,30 +370,11 @@ export default function ShotChart({ shots, onStatsChange, onExportDataFilter, co
         </div>
 
         {/* 4. Selector de Resultado: All / Made / Missed */}
-        <div>
-          <label className="block text-xs font-bold uppercase tracking-wider text-neutral-400 mb-2">
-            Outcome
-          </label>
-          <div className="grid grid-cols-3 gap-1 bg-neutral-950 p-1 rounded-xl border border-neutral-800">
-            {[
-              { label: "All", value: "ALL", activeColor: "bg-neutral-800 text-violet-400" },
-              { label: "Made", value: "MADE", activeColor: "bg-amber-500 text-neutral-950 font-bold" },
-              { label: "Missed", value: "MISSED", activeColor: "bg-rose-600 text-white font-bold" },
-            ].map((tab) => (
-              <button
-                key={tab.value}
-                type="button"
-                onClick={() => setOutcomeFilter(tab.value as "ALL" | "MADE" | "MISSED")}
-                className={`py-1.5 text-xs font-semibold rounded-lg transition-all ${outcomeFilter === tab.value
-                  ? `${tab.activeColor} shadow-sm`
-                  : "text-neutral-400 hover:text-white"
-                  }`}
-              >
-                {tab.label}
-              </button>
-            ))}
-          </div>
-        </div>
+        <OutcomeComponent outcomeFilter={outcomeFilter} setOutcomeFilter={setOutcomeFilter} />
+        {/* 5. Selector de Distancia: All / RIM / MID / THREE */}
+        <ShotDistanceComponent distanceFilter={distanceFilter} setDistanceFilter={setDistanceFilter} />
+
+        {/* <span> shot minutes selector </span> */}
 
         {/* Botón Aplicar en Mobile */}
         <button

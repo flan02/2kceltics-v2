@@ -10,9 +10,7 @@ import { ExportCardButton } from './ExportCardButton';
 import { ExportShotChartCard } from "./ExportShotChartCard";
 import { formatShortDate } from '@/lib/utils';
 import { TeamSeasonComparison } from './TeamSeasonComparison';
-// import { getTeamSeasonTotals } from '@/services/api/handlers';
 import { getTeamSeasonTotalsAction } from "@/services/server-functions";
-import MetricsLabels from './ShotLabels';
 import ShotLabels from './ShotLabels';
 
 export interface GameOption {
@@ -65,7 +63,7 @@ export default function MainStatsMenu({ availableGames, activeGameId, shots: raw
 
   const [exportData, setExportData] = useState<CourtExportData>({
     filteredShots: rawShots,
-    filters: { player: "ALL", period: "ALL", shotType: "ALL", outcome: "ALL" },
+    filters: { player: "ALL", period: "ALL", shotType: "ALL", outcome: "ALL", distance: "ALL" },
   });
 
   useEffect(() => {
@@ -73,6 +71,7 @@ export default function MainStatsMenu({ availableGames, activeGameId, shots: raw
 
     const loadStats = async () => {
       try {
+        // TODO: Create a NEXT_PUBLIC var to store the current season, so we don't hardcode it here
         const seasonData = await getTeamSeasonTotalsAction("2025-26");
 
         // 1. Verificá en la consola del navegador qué devuelve Prisma

@@ -3,6 +3,7 @@ import React, { forwardRef } from "react";
 import { BasketballCourt } from "./BasketballCourt";
 import { ShotItem } from "./ShotChart";
 import { playersNBA_season2025_26 } from '@/lib/types';
+import BannerAttributes from "./BannerAttributes";
 
 interface Props {
   shots: any[];
@@ -18,6 +19,7 @@ export interface ActiveFilters {
   period: string;
   shotType: string;
   outcome: string;
+  distance: string;
 }
 
 export interface ShotChartExportData {
@@ -33,6 +35,9 @@ interface Props {
   playerImageSrc: string;
 }
 
+interface DistanceBadgeProps {
+  distance?: "ALL" | "RIM" | "MID" | "THREE" | string;
+}
 
 export const ExportShotChartCard = forwardRef<HTMLDivElement, Props>(({
   shots,
@@ -50,6 +55,29 @@ export const ExportShotChartCard = forwardRef<HTMLDivElement, Props>(({
     shotType: "ALL",
     range: "ALL",
     outcome: "ALL",
+    distance: "ALL",
+  };
+
+  const DISTANCE_CONFIG: Record<
+    string,
+    { label: string; styles: string }
+  > = {
+    RIM: {
+      label: "<8ft",
+      styles: "bg-emerald-950/60 text-emerald-400 border-emerald-600/50",
+    },
+    MID: {
+      label: "8-22ft",
+      styles: "bg-blue-950/60 text-blue-400 border-blue-600/50",
+    },
+    THREE: {
+      label: ">22ft",
+      styles: "bg-violet-950/60 text-violet-400 border-violet-600/50",
+    },
+    ALL: {
+      label: "All Distances",
+      styles: "bg-neutral-900 text-neutral-300 border-neutral-700/80",
+    },
   };
 
   const targetedPlayer = activeFilters.player || stats?.selectedPlayer || "ALL";
@@ -70,6 +98,9 @@ export const ExportShotChartCard = forwardRef<HTMLDivElement, Props>(({
 
   const shotTypeLabel = activeFilters?.shotType || "ALL";
   const outcomeLabel = activeFilters?.outcome || "ALL";
+
+  const currentDistance = activeFilters?.distance || "ALL";
+  const badge = DISTANCE_CONFIG[currentDistance] || DISTANCE_CONFIG.ALL;
 
   return (
     <div
@@ -151,28 +182,19 @@ export const ExportShotChartCard = forwardRef<HTMLDivElement, Props>(({
               }`}>
               {outcomeLabel === "ALL" ? "Made/Missed" : outcomeLabel}
             </span>
+
+            <span
+              className={`inline-flex items-center text-[10px] font-mono font-bold px-2 py-0.5 rounded border whitespace-nowrap ${badge.styles}`}
+            >
+              {badge.label}
+            </span>
+
           </div>
         </div>
 
+
         {/* 3. Métricas principales */}
-        <div className="bg-neutral-900/90 border border-neutral-800 rounded-2xl p-3 grid grid-cols-4 gap-1 text-center font-mono">
-          <div>
-            <span className="text-[9px] text-neutral-400 uppercase block font-sans">Att</span>
-            <strong className="text-lg text-white font-bold">{stats?.totalCount ?? 0}</strong>
-          </div>
-          <div className="border-l border-neutral-800">
-            <span className="text-[9px] text-neutral-400 uppercase block font-sans">Made</span>
-            <strong className="text-lg text-amber-400 font-bold">{stats?.madeCount ?? 0}</strong>
-          </div>
-          <div className="border-l border-neutral-800">
-            <span className="text-[9px] text-neutral-400 uppercase block font-sans">Miss</span>
-            <strong className="text-lg text-rose-500 font-bold">{stats?.missedCount ?? 0}</strong>
-          </div>
-          <div className="border-l border-neutral-800">
-            <span className="text-[9px] text-neutral-400 uppercase block font-sans">Acc</span>
-            <strong className="text-lg text-blue-400 font-bold">{stats?.pct ?? "0.0"}%</strong>
-          </div>
-        </div>
+        <BannerAttributes stats={stats} />
 
         {/* 4. Mini Shot Log (lista cronológica compacta) */}
         <div className="bg-neutral-900/60 border border-neutral-800/80 rounded-xl p-2.5 flex flex-col gap-1.5">

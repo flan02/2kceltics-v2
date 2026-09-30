@@ -3,6 +3,7 @@
 
 import { useRef, useState } from "react";
 import { toPng, toBlob } from "html-to-image";
+import BannerAttributes from "./BannerAttributes";
 
 interface Props {
   stats: any;
@@ -92,7 +93,7 @@ export const ExportCardButton = ({ stats, gameTitle }: { stats: any; gameTitle: 
               </h1>
             </div>
 
-            <div className="flex gap-4 font-mono text-center">
+            {/* <div className="flex gap-4 font-mono text-center">
               <div className="px-2">
                 <span className="text-[10px] text-neutral-400 uppercase block font-sans">Att</span>
                 <strong className="text-lg text-white">{stats?.totalCount ?? 0}</strong>
@@ -109,7 +110,8 @@ export const ExportCardButton = ({ stats, gameTitle }: { stats: any; gameTitle: 
                 <span className="text-[10px] text-neutral-400 uppercase block font-sans">Acc</span>
                 <strong className="text-lg text-blue-400">{stats?.pct ?? "0.0"}%</strong>
               </div>
-            </div>
+            </div> */}
+            <BannerAttributes stats={stats} />
           </div>
 
           {/* Cancha clonada o renderizada */}
