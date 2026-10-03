@@ -1,7 +1,8 @@
 'use client'
 import { useEffect, useState } from 'react';
-import { ShotItem } from './ShotChart';
+
 import { CelticsCourtLogo } from './CelticsCourtLogo';
+import { ShotItem } from '@/lib/types';
 
 type Props = {
   shots: ShotItem[];

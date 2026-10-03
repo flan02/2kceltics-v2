@@ -1,5 +1,5 @@
-import React from 'react'
-import { DistanceRange } from './ShotChart'
+import { DistanceRange } from '@/lib/types'
+
 
 type Props = {
   distanceFilter: DistanceRange
