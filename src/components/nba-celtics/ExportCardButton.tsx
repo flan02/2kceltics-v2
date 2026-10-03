@@ -2,6 +2,7 @@
 
 import { useState, RefObject } from "react";
 import { toPng } from "html-to-image";
+import { formatExportFileName } from "@/lib/utils";
 
 interface Props {
   stats: any;
@@ -31,8 +32,8 @@ export const ExportCardButton = ({ stats, gameMatchup, courtRef }: Props) => {
       });
 
       const playerName = stats?.selectedPlayer === "ALL" ? "Boston Celtics" : stats?.selectedPlayer || "Celtics";
-      const fileName = `${playerName.replace(/\s+/g, "-")}-shot-chart.png`;
-      // const file = new File([blob], fileName, { type: "image/png" });
+      // const fileName = `${playerName.replace(/\s+/g, "-")}-shot-chart.png`;
+      const fileName = formatExportFileName(gameMatchup, stats?.selectedPlayer);
 
       // 2. Detección real de dispositivo móvil
       const isMobileDevice = typeof window !== "undefined" && (

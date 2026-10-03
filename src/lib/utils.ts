@@ -2,6 +2,7 @@ import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import {
   current_season,
+  NBA_TEAMS_LOGOS,
   playerImages2K25,
   PlayoffSpans,
   SeasonSpans,
@@ -137,4 +138,73 @@ export function formatShortDate(date: Date | string) {
     day: "numeric",
     timeZone: "UTC", // Evita desfases por zona horaria local
   }).format(new Date(date));
+}
+
+/**
+ * Extrae el tricódigo del rival desde un string tipo "#82 BOS vs. ORL - Apr 12"
+ * o "BOS vs. CHI" y devuelve la ruta completa a la imagen del logo.
+ */
+export function formatLogoAwayImage(matchup: string): string {
+  if (!matchup) return "/logos/nba-logo.png"; // Fallback por defecto
+
+  // Busca 3 letras mayúsculas inmediatamente después de "vs." o "@"
+  // Ejemplo: "vs. ORL" -> captura "ORL" | "@ CHA" -> captura "CHA"
+  const match = matchup.match(/(?:vs\.?|@)\s*([A-Z]{3})/i);
+
+  if (!match || !match[1]) {
+    return "/logos/nba-logo.png";
+  }
+
+  const teamCode = match[1].toUpperCase();
+  const logoFileName = NBA_TEAMS_LOGOS[teamCode];
+
+  // Si existe en el diccionario devuelve la ruta, sino un fallback
+  return logoFileName ? `/logos/${logoFileName}` : "/logos/nba-logo.png";
+}
+
+/**
+ * Genera un nombre de archivo descriptivo, con fecha y en minúsculas.
+ * Ejemplo: "bos-vs-tor-apr-5-jaylen-brown-shot-chart.png"
+ */
+export function formatExportFileName(
+  matchup: string,
+  selectedPlayer?: string,
+  gameDate?: string,
+): string {
+  // 1. Limpiar matchup: quita el número de partido "#78 ", reemplaza "@" por "at", y "vs." por "vs"
+  let cleanMatchup = (matchup || "")
+    .replace(/^#\d+\s*/, "") // quita '#78 '
+    .replace(/@/g, "at") // '@' -> 'at' (ej: bos-at-cha)
+    .replace(/vs\.?/gi, "vs")
+    .replace(/[^a-zA-Z0-9\s-]/g, "") // quita puntos y caracteres especiales
+    .trim()
+    .replace(/\s*-\s*/g, "-") // normaliza espacios alrededor de guiones existentes
+    .replace(/\s+/g, "-"); // espacios restantes a guiones
+
+  // 2. Si el matchup no incluía la fecha pero la recibís por parámetro, la sumamos
+  if (
+    gameDate &&
+    !cleanMatchup
+      .toLowerCase()
+      .includes(gameDate.toLowerCase().replace(/\s+/g, "-"))
+  ) {
+    const cleanDate = gameDate
+      .replace(/[^a-zA-Z0-9\s-]/g, "")
+      .trim()
+      .replace(/\s+/g, "-");
+    cleanMatchup = cleanMatchup ? `${cleanMatchup}-${cleanDate}` : cleanDate;
+  }
+
+  // 3. Normalizar nombre del jugador / equipo
+  const playerSlug =
+    !selectedPlayer || selectedPlayer === "ALL"
+      ? "boston-celtics"
+      : selectedPlayer.trim().replace(/\s+/g, "-");
+
+  // 4. Armar el nombre completo y forzar toLowerCase()
+  const baseName = cleanMatchup
+    ? `${cleanMatchup}-${playerSlug}-shot-chart.png`
+    : `${playerSlug}-shot-chart.png`;
+
+  return baseName.toLowerCase();
 }

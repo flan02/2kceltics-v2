@@ -1,3 +1,5 @@
+// import { ShotChartExportData } from "@/components/nba-celtics/ExportShotChartCard";
+
 export const current_season = process.env.CURRENT_SEASON as currentSeason;
 
 export interface Task {
@@ -345,4 +347,142 @@ export const playersNBA_season2025_26: Record<string, string> = {
   "Ron Harper Jr.": "/ron-profile.png",
   "Nikola Vučević": "/vucevic-profile.png",
   "Dalano Banton": "/banton-profile.png",
+};
+
+export type ShotTypeFilter = "ALL" | "2PT" | "3PT";
+export type PeriodFilter = "ALL" | 1 | 2 | 3 | 4;
+export type DistanceRange = "ALL" | "RIM" | "MID" | "THREE";
+export type OutcomeFilter = "ALL" | "MADE" | "MISSED";
+export type ShotTimingFilter = "ALL" | "LAST_5" | "LAST_2";
+
+export interface ShotItem {
+  id: string;
+  locX: number;
+  locY: number;
+  eventType: string;
+  playerName: string;
+  actionType: string;
+  shotType: string; // "2PT Field Goal" | "3PT Field Goal"
+  period: number | "ALL";
+  shotDistance: number;
+  minutesRemaining: number;
+  secondsRemaining: number;
+  playerId?: number; // Opcional por si viene desde la API
+}
+
+export interface ShotStats {
+  totalCount: number;
+  madeCount: number;
+  missedCount: number;
+  pct: string;
+  selectedPlayer: string;
+}
+
+export interface ShotChartProps {
+  shots: ShotItem[];
+  onStatsChange?: (stats: ShotStats) => void;
+  onExportDataFilter?: (filters: ShotChartExportData) => void;
+  courtRef?: React.Ref<HTMLDivElement>;
+}
+
+export interface CourtFilters {
+  player: string; // "ALL" | nombre del jugador
+  period: string; // "ALL" | "Q1" | "Q2" | "Q3" | "Q4"
+  shotType: string; // "ALL" | "2PT" | "3PT"
+  outcome: string; // "ALL" | "Made" | "Missed"
+  distance: string; // "ALL" | "RIM" | "MID" | "THREE"
+  timing: string; // "ALL" | "LAST_5" | "LAST_2"
+}
+
+export interface GameOption {
+  gameId: string;
+  gameDate: string | Date;
+  matchup: string;
+  status?: string;
+}
+
+export interface TeamSeasonData {
+  seasonFg: number;
+  seasonFg2: number;
+  seasonFg3: number;
+}
+
+export interface GameStatsProps {
+  availableGames: GameOption[];
+  activeGameId: string;
+  shots: ShotItem[];
+}
+
+export const INITIAL_FILTERS: CourtFilters = {
+  player: "ALL",
+  period: "ALL",
+  shotType: "ALL",
+  outcome: "ALL",
+  distance: "ALL",
+  timing: "ALL",
+};
+
+export interface TeamComparisonProps {
+  seasonData: any | null;
+  matchPctData: {
+    fgPct: number;
+    fg2Pct: number;
+    fg3Pct: number;
+  };
+}
+
+export interface ActiveFilters {
+  player: string;
+  period: string;
+  shotType: string;
+  outcome: string;
+  distance: string;
+  timing: string;
+}
+
+export interface ShotChartExportData {
+  filteredShots: ShotItem[];
+  filters: ActiveFilters;
+}
+
+export interface ExportCardProps {
+  shots: ShotItem[]; // any
+  stats: any;
+  filters?: ActiveFilters;
+  gameNumber: number;
+  gameMatchup: string;
+  gameDate: string;
+  playerImageSrc: string;
+}
+
+export const NBA_TEAMS_LOGOS: Record<string, string> = {
+  ATL: "ATL.png",
+  BKN: "BRO.png",
+  CHA: "CHA.png",
+  CHI: "CHI.png",
+  CLE: "CLE.png",
+  DAL: "DAL.png",
+  DEN: "DEN.png",
+  DET: "DET.png",
+  GSW: "GSW.png",
+  HOU: "HOU.png",
+  IND: "IND.png",
+  LAC: "LAC.png",
+  LAL: "LAL.png",
+  MEM: "MEM.png",
+  MIA: "MIA.png",
+  MIL: "MIL.png",
+  MIN: "MIN.png",
+  NOP: "NOP.png",
+  NYK: "NYK.png",
+  OKC: "OKC.png",
+  ORL: "ORL.png",
+  PHI: "PHI.png",
+  PHX: "PHO.png",
+  POR: "POR.png",
+  SAC: "SAC.png",
+  SAS: "SAS.png",
+  TOR: "TOR.png",
+  UTA: "UTA.png",
+  WAS: "WAS.png",
 };

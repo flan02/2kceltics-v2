@@ -1,10 +1,10 @@
 
 'use client'
-import ShotChart, { CourtExportData, ShotItem, ShotStats } from '@/components/nba-celtics/ShotChart';
+import ShotChart from '@/components/nba-celtics/ShotChart';
 import GameSelector from './GameSelector';
 import { useState, useRef, useEffect, useMemo } from 'react';
 import Image from 'next/image';
-import { playersNBA_season2025_26 } from '@/lib/types';
+import { GameStatsProps, playersNBA_season2025_26, ShotChartExportData, ShotStats, TeamSeasonData } from '@/lib/types';
 import Link from 'next/link';
 import { ExportCardButton } from './ExportCardButton';
 import { ExportShotChartCard } from "./ExportShotChartCard";
@@ -13,36 +13,16 @@ import { TeamSeasonComparison } from './TeamSeasonComparison';
 import { getTeamSeasonTotalsAction } from "@/services/server-functions";
 import ShotLabels from './ShotLabels';
 
-export interface GameOption {
-  gameId: string;
-  gameDate: string | Date;
-  matchup: string;
-  status?: string;
-}
 
-interface TeamSeasonData {
-  seasonFg: number;
-  seasonFg2: number;
-  seasonFg3: number;
-}
 
-interface Props {
-  availableGames: GameOption[];
-  activeGameId: string;
-  shots: ShotItem[];
-}
+const CURRENT_SEASON = process.env.NEXT_PUBLIC_SCRIPTS_CURRENT_SEASON!
 
-export default function MainStatsMenu({ availableGames, activeGameId, shots: rawShots }: Props) {
-
+export default function MainStatsMenu({ availableGames, activeGameId, shots: rawShots }: GameStatsProps) {
   const [stats, setStats] = useState<ShotStats | null>(null);
-  // const isLoading = !rawShots || rawShots.length === 0 || stats === null;
   const isLoading = !rawShots || rawShots.length === 0;
-
-  // const courtContainerRef = useRef<HTMLDivElement>(null);
   const exportCardRef = useRef<HTMLDivElement>(null);
 
   const activeGameIndex = availableGames.findIndex((g) => g.gameId === activeGameId);
-  // const currentGame = availableGames.find((g) => g.gameId === activeGameId);
   const currentGame = activeGameIndex !== -1 ? availableGames[activeGameIndex] : availableGames[0];
   const gameNumber = activeGameIndex !== -1 ? availableGames.length - activeGameIndex : 1;
   const formattedDate = currentGame ? formatShortDate(currentGame.gameDate) : "2025-26 Season";
@@ -62,9 +42,9 @@ export default function MainStatsMenu({ availableGames, activeGameId, shots: raw
     ? "/celtics-logo.png"
     : playerPhoto || "/celtics-logo.png";
 
-  const [exportData, setExportData] = useState<CourtExportData>({
+  const [exportData, setExportData] = useState<ShotChartExportData>({
     filteredShots: rawShots,
-    filters: { player: "ALL", period: "ALL", shotType: "ALL", outcome: "ALL", distance: "ALL" },
+    filters: { player: "ALL", period: "ALL", shotType: "ALL", outcome: "ALL", distance: "ALL", timing: "ALL" },
   });
 
   useEffect(() => {
@@ -73,11 +53,8 @@ export default function MainStatsMenu({ availableGames, activeGameId, shots: raw
     const loadStats = async () => {
       try {
         // TODO: Create a NEXT_PUBLIC var to store the current season, so we don't hardcode it here
-        const seasonData = await getTeamSeasonTotalsAction("2025-26");
-
-        // 1. Verificá en la consola del navegador qué devuelve Prisma
+        const seasonData = await getTeamSeasonTotalsAction(CURRENT_SEASON);
         // console.log("🏀 [seasonData recibido]:", seasonData);
-
         setTeamStats({
           seasonFg: seasonData?.fgPct!,
           seasonFg2: seasonData?.fg2Pct!,

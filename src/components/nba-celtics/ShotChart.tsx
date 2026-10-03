@@ -2,81 +2,24 @@
 
 import { useEffect, useState, useRef, useMemo } from "react";
 import BasketballCourt from "./BasketballCourt";
-import { ShotChartExportData } from "./ExportShotChartCard";
 import OutcomeComponent from "./OutcomeComponent";
 import ShotDistanceComponent from "./ShotDistanceComponent";
+import { DistanceRange, OutcomeFilter, PeriodFilter, ShotChartProps, ShotTimingFilter, ShotTypeFilter } from "@/lib/types";
+import ShotTimingComponent from "./ShotTimingComponent";
+import QuarterComponent from "./QuarterComponent";
+import ShotRangeComponent from "./ShotRangeComponent";
 
-export interface ShotItem {
-  id: string;
-  locX: number;
-  locY: number;
-  eventType: string;
-  playerName: string;
-  actionType: string;
-  shotType: string; // "2PT Field Goal" | "3PT Field Goal"
-  period: number | "ALL";
-  shotDistance: number;
-  minutesRemaining: number;
-  secondsRemaining: number;
-  playerId?: number; // Opcional por si viene desde la API
-}
 
-export interface ShotStats {
-  totalCount: number;
-  madeCount: number;
-  missedCount: number;
-  pct: string;
-  selectedPlayer: string;
-}
-
-interface ShotChartProps {
-  shots: ShotItem[];
-  onStatsChange?: (stats: ShotStats) => void;
-  onExportDataFilter?: (filters: ShotChartExportData) => void;
-  courtRef?: React.Ref<HTMLDivElement>;
-}
-
-export interface CourtFilters {
-  player: string;   // "ALL" | nombre del jugador
-  period: string;   // "ALL" | "Q1" | "Q2" | "Q3" | "Q4"
-  shotType: string; // "ALL" | "2PT" | "3PT"
-  outcome: string;  // "ALL" | "Made" | "Missed"
-  distance: string; // "ALL" | "RIM" | "MID" | "THREE"
-}
-
-export const INITIAL_FILTERS: CourtFilters = {
-  player: "ALL",
-  period: "ALL",
-  shotType: "ALL",
-  outcome: "ALL",
-  distance: "ALL",
-};
-
-export interface CourtExportData {
-  filteredShots: ShotItem[];
-  filters: {
-    player: string;
-    period: string;
-    shotType: string;
-    outcome: string;
-    distance: string;
-  };
-}
-
-type ShotTypeFilter = "ALL" | "2PT" | "3PT";
-type PeriodFilter = "ALL" | 1 | 2 | 3 | 4;
-export type DistanceRange = "ALL" | "RIM" | "MID" | "THREE";
-type OutcomeFilter = "ALL" | "MADE" | "MISSED"
 
 
 export default function ShotChart({ shots, onStatsChange, onExportDataFilter, courtRef }: ShotChartProps) {
-
 
   const [selectedPlayer, setSelectedPlayer] = useState<string>("ALL");
   const [shotTypeFilter, setShotTypeFilter] = useState<ShotTypeFilter>("ALL");
   const [selectedPeriod, setSelectedPeriod] = useState<PeriodFilter>("ALL");
   const [outcomeFilter, setOutcomeFilter] = useState<OutcomeFilter>("ALL");
   const [distanceFilter, setDistanceFilter] = useState<DistanceRange>("ALL");
+  const [timingFilter, setTimingFilter] = useState<ShotTimingFilter>("ALL");
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   // Extraer nombres únicos ordenados
@@ -103,9 +46,16 @@ export default function ShotChart({ shots, onStatsChange, onExportDataFilter, co
         (distanceFilter === "MID" && dist >= 8 && dist < 22) ||
         (distanceFilter === "THREE" && dist >= 22);
 
-      return matchPlayer && matchType && matchPeriod && shotOutcome && matchDistance;
+      // ⏱️ Filtro de Timing (Minutos restantes en el reloj)
+      const mins = Number(s.minutesRemaining ?? 12);
+      const matchTiming =
+        timingFilter === "ALL" ||
+        (timingFilter === "LAST_5" && mins < 5) ||
+        (timingFilter === "LAST_2" && mins < 2);
+
+      return matchPlayer && matchType && matchPeriod && shotOutcome && matchDistance && matchTiming;
     });
-  }, [shots, selectedPlayer, shotTypeFilter, selectedPeriod, outcomeFilter, distanceFilter]);
+  }, [shots, selectedPlayer, shotTypeFilter, selectedPeriod, outcomeFilter, distanceFilter, timingFilter]);
 
   const filterAsideRef = useRef<HTMLElement | null>(null);
 
@@ -122,6 +72,7 @@ export default function ShotChart({ shots, onStatsChange, onExportDataFilter, co
     setSelectedPeriod("ALL");
     setOutcomeFilter("ALL");
     setDistanceFilter("ALL");
+    setTimingFilter("ALL");
   };
 
   useEffect(() => {
@@ -143,11 +94,12 @@ export default function ShotChart({ shots, onStatsChange, onExportDataFilter, co
         shotType: shotTypeFilter,
         outcome: outcomeFilter,
         distance: distanceFilter,
+        timing: timingFilter,
       },
     });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [shots, selectedPlayer, selectedPeriod, shotTypeFilter, outcomeFilter, distanceFilter]);
+  }, [shots, selectedPlayer, selectedPeriod, shotTypeFilter, outcomeFilter, distanceFilter, timingFilter]);
 
   useEffect(() => {
     setSelectedPlayer("ALL");
@@ -155,6 +107,7 @@ export default function ShotChart({ shots, onStatsChange, onExportDataFilter, co
     setSelectedPeriod("ALL");
     setOutcomeFilter("ALL");
     setDistanceFilter("ALL");
+    setTimingFilter("ALL");
   }, [shots]);
 
   return (
@@ -219,13 +172,22 @@ export default function ShotChart({ shots, onStatsChange, onExportDataFilter, co
             </span>
           )}
 
+          {timingFilter !== "ALL" && (
+            <span className="bg-amber-950/80 text-amber-300 border border-amber-800 px-2 py-0.5 rounded-full flex items-center gap-1">
+              {timingFilter === "LAST_5" ? "< 5 min" : "< 2 min"}
+              <button onClick={() => setTimingFilter("ALL")} className="hover:text-white">✕</button>
+            </span>
+          )}
+
           {/* Reset rápido */}
           <button
             onClick={() => {
+              // setSelectedPlayer("ALL");
               setShotTypeFilter("ALL");
               setSelectedPeriod("ALL");
               setOutcomeFilter("ALL");
               setDistanceFilter("ALL");
+              setTimingFilter("ALL");
             }}
             className="text-neutral-500 hover:text-neutral-300 underline text-[9px] md:text-xs underline-offset-2 ml-1 uppercase"
           >
@@ -332,65 +294,18 @@ export default function ShotChart({ shots, onStatsChange, onExportDataFilter, co
         <hr className="border-neutral-800" />
 
         {/* 2. Tipo de Tiro: 2PT / 3PT */}
-        <div>
-          <label className="block text-xs font-bold uppercase tracking-wider text-neutral-400 mb-2">
-            Shot Range
-          </label>
-          <div className="grid grid-cols-3 gap-1 bg-neutral-950 p-1 rounded-xl border border-neutral-800">
-            {[
-              { label: "All", value: "ALL" },
-              { label: "2PT", value: "2PT" },
-              { label: "3PT", value: "3PT" },
-            ].map((tab) => (
-              <button
-                key={tab.value}
-                type="button"
-                onClick={() => setShotTypeFilter(tab.value as "ALL" | "2PT" | "3PT")}
-                className={`py-1.5 text-xs font-semibold rounded-lg transition-all ${shotTypeFilter === tab.value
-                  ? "bg-neutral-800 text-violet-400 shadow-sm"
-                  : "text-neutral-400 hover:text-white"
-                  }`}
-              >
-                {tab.label}
-              </button>
-            ))}
-          </div>
-        </div>
+        <ShotRangeComponent shotTypeFilter={shotTypeFilter} setShotTypeFilter={setShotTypeFilter} />
 
         {/* 3. Selector de Cuartos */}
-        <div>
-          <label className="block text-xs font-bold uppercase tracking-wider text-neutral-400 mb-2">
-            Periods
-          </label>
-          <div className="grid grid-cols-5 gap-1 bg-neutral-950 p-1 rounded-xl border border-neutral-800">
-            {[
-              { label: "All", value: "ALL" },
-              { label: "Q1", value: 1 },
-              { label: "Q2", value: 2 },
-              { label: "Q3", value: 3 },
-              { label: "Q4", value: 4 },
-            ].map((tab) => (
-              <button
-                key={tab.label}
-                type="button"
-                onClick={() => setSelectedPeriod(tab.value as any)}
-                className={`py-1.5 text-xs font-bold rounded-lg transition-all ${selectedPeriod === tab.value
-                  ? "bg-neutral-800 text-violet-400 shadow-sm"
-                  : "text-neutral-400 hover:text-white"
-                  }`}
-              >
-                {tab.label}
-              </button>
-            ))}
-          </div>
-        </div>
+
+        <QuarterComponent selectedPeriod={selectedPeriod} setSelectedPeriod={setSelectedPeriod} />
 
         {/* 4. Selector de Resultado: All / Made / Missed */}
         <OutcomeComponent outcomeFilter={outcomeFilter} setOutcomeFilter={setOutcomeFilter} />
         {/* 5. Selector de Distancia: All / RIM / MID / THREE */}
         <ShotDistanceComponent distanceFilter={distanceFilter} setDistanceFilter={setDistanceFilter} />
-
-        {/* <span> shot minutes selector </span> */}
+        {/* 6. Selector de Tiempo: All / Last 5m / Last 2m */}
+        <ShotTimingComponent timingFilter={timingFilter} setTimingFilter={setTimingFilter} />
 
         {/* Botón Aplicar en Mobile */}
         <button

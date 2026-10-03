@@ -1,67 +1,25 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { forwardRef } from "react";
 import { BasketballCourt } from "./BasketballCourt";
-import { ShotItem } from "./ShotChart";
-import { playersNBA_season2025_26 } from '@/lib/types';
+import { ExportCardProps, INITIAL_FILTERS, playersNBA_season2025_26 } from '@/lib/types';
 import BannerAttributes from "./BannerAttributes";
+import { formatLogoAwayImage } from "@/lib/utils";
 
-interface Props {
-  shots: any[];
-  stats: any;
-  gameNumber: number;
-  gameMatchup: string;
-  gameDate: string;
-  playerImageSrc: string;
-}
 
-export interface ActiveFilters {
-  player: string;
-  period: string;
-  shotType: string;
-  outcome: string;
-  distance: string;
-}
-
-export interface ShotChartExportData {
-  filteredShots: ShotItem[];
-  filters: ActiveFilters;
-}
-
-interface Props {
-  shots: any[];
-  stats: any;
-  filters?: ActiveFilters;
-  gameMatchup: string;
-  playerImageSrc: string;
-}
-
-interface DistanceBadgeProps {
-  distance?: "ALL" | "RIM" | "MID" | "THREE" | string;
-}
-
-export const ExportShotChartCard = forwardRef<HTMLDivElement, Props>(({
+export const ExportShotChartCard = forwardRef<HTMLDivElement, ExportCardProps>(({
   shots,
   stats,
   filters,
   gameNumber,
   gameMatchup,
-  gameDate = "2025-26 Season"
+  gameDate
 }, ref) => {
 
+  const activeFilters = filters || INITIAL_FILTERS
 
-  const activeFilters = filters || {
-    player: "ALL",
-    period: "ALL",
-    shotType: "ALL",
-    range: "ALL",
-    outcome: "ALL",
-    distance: "ALL",
-  };
 
-  const DISTANCE_CONFIG: Record<
-    string,
-    { label: string; styles: string }
-  > = {
+
+  const DISTANCE_CONFIG: Record<string, { label: string; styles: string }> = {
     RIM: {
       label: "<8ft",
       styles: "bg-emerald-950/60 text-emerald-400 border-emerald-600/50",
@@ -98,6 +56,7 @@ export const ExportShotChartCard = forwardRef<HTMLDivElement, Props>(({
 
   const shotTypeLabel = activeFilters?.shotType || "ALL";
   const outcomeLabel = activeFilters?.outcome || "ALL";
+  const shotTimingLabel = activeFilters?.timing || "";
 
   const currentDistance = activeFilters?.distance || "ALL";
   const badge = DISTANCE_CONFIG[currentDistance] || DISTANCE_CONFIG.ALL;
@@ -126,9 +85,15 @@ export const ExportShotChartCard = forwardRef<HTMLDivElement, Props>(({
             <span className="text-[9px] uppercase font-bold text-neutral-400 block tracking-wider font-sans">
               Game {gameNumber ? `#${gameNumber} ` : ""}
             </span>
-            <span className="text-sm font-black text-neutral-100 uppercase tracking-wide">
-              {gameMatchup}
-            </span>
+
+            {/* ADD LOGO FOR BOTH TEAMS */}
+            <div className="flex items-center gap-2 mt-1">
+              <img src="/celtics-logo.png" alt="Celtics Logo" className="size-6" />
+              <span className="text-lg font-black text-neutral-100 uppercase tracking-wide">
+                {gameMatchup}
+              </span>
+              <img src={formatLogoAwayImage(gameMatchup)} alt="Away Team Logo" className="size-6" />
+            </div>
           </div>
         </div>
 
@@ -182,6 +147,16 @@ export const ExportShotChartCard = forwardRef<HTMLDivElement, Props>(({
               }`}>
               {outcomeLabel === "ALL" ? "Made/Missed" : outcomeLabel}
             </span>
+            {shotTimingLabel !== "ALL" && (
+              <span
+                className={`text-[10px] font-mono font-bold px-2.5 py-0.5 rounded border ${shotTimingLabel === "LAST_2"
+                  ? "bg-rose-950/50 text-rose-300 border-rose-600/40"
+                  : "bg-violet-950/50 text-violet-300 border-violet-600/40"
+                  }`}
+              >
+                {shotTimingLabel === "LAST_2" ? "<2 min" : "<5 min"}
+              </span>
+            )}
 
             <span
               className={`inline-flex items-center text-[10px] font-mono font-bold px-2 py-0.5 rounded border whitespace-nowrap ${badge.styles}`}

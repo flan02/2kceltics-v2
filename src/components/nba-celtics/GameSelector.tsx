@@ -1,8 +1,8 @@
 'use client'
-import { ShotItem } from './ShotChart';
-import { GameOption } from './MainStatsMenu';
+import { GameOption, ShotItem } from '@/lib/types';
 import { formatShortDate } from '@/lib/utils';
 import { useRouter } from 'next/navigation';
+
 type Props = {
   availableGames: GameOption[];
   activeGameId: string;
