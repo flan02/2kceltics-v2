@@ -22,7 +22,7 @@ export const ExportShotChartCard = forwardRef<HTMLDivElement, ExportCardProps>((
   const DISTANCE_CONFIG: Record<string, { label: string; styles: string }> = {
     RIM: {
       label: "<8ft",
-      styles: "bg-emerald-950/60 text-emerald-400 border-emerald-600/50",
+      styles: "bg-lime-950/60 text-lime-400 border-lime-600/50",
     },
     MID: {
       label: "8-22ft",
@@ -125,10 +125,7 @@ export const ExportShotChartCard = forwardRef<HTMLDivElement, ExportCardProps>((
 
           {/* Tag de Momentum */}
           <div className="inline-flex items-center gap-2 bg-orange-600 border-2 border-red-500 px-2 py-1 rounded-lg w-fit">
-            {/* <span className="size-2 rounded-full bg-emerald-400 animate-pulse" /> */}
-            <span className="text-[10px] font-black tracking-wider uppercase text-white font-mono">
-              MOMENTUM •
-            </span>
+            <span className="text-[10px] font-black tracking-wider uppercase text-white font-mono">MOMENTUM •</span>
           </div>
 
           {/* Badges de filtros protegidos contra null */}

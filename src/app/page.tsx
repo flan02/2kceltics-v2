@@ -1,6 +1,6 @@
 import Image from "next/image";
 import MaxWidthWrapper from "@/components/reutilizable/MaxWidthWrapper";
-import CelticsHero from "../../public/celtics-hero-2025-26.png";
+import CelticsHero from "../../public/celtics-hero-2026-27.png";
 import MainMenu from "@/components/custom/MainMenu";
 import About from "@/components/custom/About";
 import H2underline from "@/components/reutilizable/H2underline";
@@ -46,9 +46,9 @@ export default async function Home({ searchParams: { page = 0 } }: { searchParam
 
 
             <section className="relative place-self-end md:block hidden md:mx-auto md:mt-24 lg:mt-0 md:order-0 lg:order-1 xl:mx-0">
-              <VideoPlayer src="/gifs/twinkle-stars.webm" alt="Twinkle Stars" className="hidden lg:block lg:fixed top-[0.1] left-1/4 -ml-32 xl:-mt-8 lg:mt-4 transform -translate-x-1/2 -translate-y-1/2 lg:w-40 xl:w-56 h-auto z-10 rounded-md" />
-              <VideoPlayer src="/gifs/twinkle-stars.webm" alt="Twinkle Stars" className="hidden lg:block lg:fixed top-[0.1] left-1/2 lg:ml-[320px] lg:mt-8 xl:ml-[500px] transform -translate-x-1/2 -translate-y-1/2 w-24 h-auto z-10 rounded-md" />
-              <VideoPlayer src="/gifs/twinkle-stars.webm" alt="Twinkle Stars" className="hidden lg:block lg:fixed lg:top-[460px] xl:top-[500px] left-1/2 lg:ml-[180px] lg:mt-8 xl:ml-[320px] transform -translate-x-1/2 -translate-y-1/2 w-24 h-auto z-10 rounded-md" />
+              <VideoPlayer src="/gifs/twinkle-stars.webm" alt="Twinkle Stars" className="hidden lg:block lg:fixed top-[0.1] left-1/4 -ml-36 lg:mt-4 xl:-mt-4 transform -translate-x-1/2 -translate-y-1/2 lg:w-40 xl:w-56 h-auto z-10 rounded-md" />
+              <VideoPlayer src="/gifs/twinkle-stars.webm" alt="Twinkle Stars" className="hidden lg:block lg:fixed top-[0.1] left-1/2 lg:ml-[320px] lg:mt-8 xl:ml-[530px] transform -translate-x-1/2 -translate-y-1/2 w-24 h-auto z-10 rounded-md" />
+              <VideoPlayer src="/gifs/twinkle-stars.webm" alt="Twinkle Stars" className="hidden lg:block lg:fixed lg:top-[460px] xl:top-[530px] left-1/2 lg:ml-[180px] lg:mt-8 xl:ml-[250px] transform -translate-x-1/2 -translate-y-1/2 w-24 h-auto z-10 rounded-md" />
               <Image src={CelticsHero} alt="Celtics Big3 Hero Image" className="x-0 md:px-10 lg:py-4 lg:px-8 xl:p-0" />
 
               <Button className="absolute w-[80%] py-6 -mb-16 bottom-4 left-1/2 transform -translate-x-1/2 bg-black hover:bg-black/80 text-white shadow-lg dark:bg-gray-200 dark:text-black dark:hover:bg-gray-200/90 font-bold">
@@ -67,7 +67,7 @@ export default async function Home({ searchParams: { page = 0 } }: { searchParam
             <Image className="w-auto h-auto -mt-8" src='/trophy.png' alt='celtics' width={35} height={35} />
           </div>
           <br className="visible lg:hidden" />
-          <Button className="visible p-6 w-full lg:hidden">
+          <Button className="visible p-6 w-full md:hidden">
             <Icons.nbaLogo width={40} height={40} />
             <Link href="/nba-celtics" className="font-bold">GO TO NBA STATS</Link>
           </Button>

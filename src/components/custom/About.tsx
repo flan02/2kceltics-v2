@@ -19,7 +19,7 @@ const About = (props: Props) => {
         </TextShimmer>
         <br />
         <TextShimmer className='font-mono text-sm md:text-lg lg:text-xl' duration={1}>
-          This season 2025/26, we have prepared an exciting schedule with streamed games, advanced stats, and season stats. You can also check the standings and follow the games in real-time. Do not miss out on the fun!
+          This season 2026/27, we have prepared an exciting schedule with streamed games, advanced stats, and season stats. You can also check the standings and follow the games in real-time. Do not miss out on the fun!
         </TextShimmer>
         <br />
         <TextShimmer className='font-mono text-sm md:text-lg lg:text-xl' duration={1}>
