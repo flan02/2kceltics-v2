@@ -14,3 +14,7 @@ New 2kceltics website built with Nextjs
 
 - shot charts
 - filters (create a page where users can filter games by wins, defeats, point scored, %2, %3, etc.)
+
+## Vercel website to manage and create og card
+
+[website](https://og-playground.vercel.app/)

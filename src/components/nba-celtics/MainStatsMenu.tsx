@@ -4,7 +4,7 @@ import ShotChart from '@/components/nba-celtics/ShotChart';
 import GameSelector from './GameSelector';
 import { useState, useRef, useEffect, useMemo } from 'react';
 import Image from 'next/image';
-import { GameStatsProps, playersNBA_season2025_26, ShotChartExportData, ShotStats, TeamSeasonData } from '@/lib/types';
+import { GameStatsProps, INITIAL_FILTERS, playersNBA_season2025_26, ShotChartExportData, ShotStats, TeamSeasonData } from '@/lib/types';
 import Link from 'next/link';
 import { ExportCardButton } from './ExportCardButton';
 import { ExportShotChartCard } from "./ExportShotChartCard";
@@ -38,13 +38,11 @@ export default function MainStatsMenu({ availableGames, activeGameId, shots: raw
     : null;
 
   // 3. Solo mostramos el logo si es "ALL" o si no encontramos foto para ese jugador
-  const playerImageSrc = isAll
-    ? "/celtics-logo.png"
-    : playerPhoto || "/celtics-logo.png";
+  const playerImageSrc = isAll ? "/celtics-logo.png" : playerPhoto || "/celtics-logo.png";
 
   const [exportData, setExportData] = useState<ShotChartExportData>({
     filteredShots: rawShots,
-    filters: { player: "ALL", period: "ALL", shotType: "ALL", outcome: "ALL", distance: "ALL", timing: "ALL" },
+    filters: INITIAL_FILTERS,
   });
 
   useEffect(() => {
@@ -61,11 +59,6 @@ export default function MainStatsMenu({ availableGames, activeGameId, shots: raw
           seasonFg3: seasonData?.fg3Pct!,
         })
 
-        if (seasonData) {
-
-        } else {
-          console.warn("⚠️ No se encontraron estadísticas para la temporada solicitada.");
-        }
       } catch (err) {
         console.error("❌ Error al cargar estadísticas de temporada:", err);
       }
@@ -121,7 +114,6 @@ export default function MainStatsMenu({ availableGames, activeGameId, shots: raw
             <ExportCardButton
               stats={stats}
               gameMatchup={matchupText}
-              // courtRef={courtContainerRef}
               courtRef={exportCardRef}
             />
           </div>
@@ -174,8 +166,47 @@ export default function MainStatsMenu({ availableGames, activeGameId, shots: raw
             </div>
           ) : (
             /* CONTENIDO REAL (Se muestra cuando llegan las stats) */
+            // <div className="relative z-10 w-full flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 transition-opacity duration-300">
+            //   {/* Perfil: Avatar + Nombre */}
+            //   <div className="flex items-center gap-3 sm:gap-4 w-full sm:w-auto min-w-0">
+            //     <div className="size-12 sm:size-16 shrink-0 flex items-center justify-center bg-neutral-950 overflow-hidden">
+            //       <Image
+            //         key={playerImageSrc}
+            //         src={playerImageSrc}
+            //         alt={
+            //           stats?.selectedPlayer === "ALL"
+            //             ? "Celtics Logo"
+            //             : stats?.selectedPlayer || "Player"
+            //         }
+            //         width={80}
+            //         height={80}
+            //         priority
+            //         className={`select-none transition-opacity duration-150 ${stats?.selectedPlayer === "ALL"
+            //           ? "size-12 sm:size-20 object-contain"
+            //           : "size-12 sm:size-16 rounded-sm object-cover object-top border-[0.5px] lg:border border-violet-300"
+            //           }`}
+            //       />
+            //     </div>
+
+            //     <div className="min-w-0">
+            //       <span className="text-[9px] sm:text-xs font-bold uppercase tracking-widest text-celtics block">
+            //         {stats?.selectedPlayer === "ALL"
+            //           ? "Team Shot Profile"
+            //           : "Player Shot Profile"}
+            //       </span>
+            //       <h2 className="text-base sm:text-xl md:text-2xl font-black uppercase tracking-tight truncate bg-gradient-to-r from-zinc-200 via-neutral-400 to-zinc-100 bg-clip-text text-transparent drop-shadow-sm">
+            //         {stats?.selectedPlayer === "ALL"
+            //           ? "Boston Celtics"
+            //           : stats?.selectedPlayer}
+            //       </h2>
+            //     </div>
+            //   </div>
+
+            //   {/* Métricas: Att / Made / Miss / Acc */}
+            //   <ShotLabels stats={stats} />
+            // </div>
             <div className="relative z-10 w-full flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 transition-opacity duration-300">
-              {/* Perfil: Avatar + Nombre */}
+              {/* Perfil: Avatar + Nombre + Score */}
               <div className="flex items-center gap-3 sm:gap-4 w-full sm:w-auto min-w-0">
                 <div className="size-12 sm:size-16 shrink-0 flex items-center justify-center bg-neutral-950 overflow-hidden">
                   <Image
@@ -196,22 +227,44 @@ export default function MainStatsMenu({ availableGames, activeGameId, shots: raw
                   />
                 </div>
 
-                <div className="min-w-0">
+                <div className="min-w-0 flex-1">
                   <span className="text-[9px] sm:text-xs font-bold uppercase tracking-widest text-celtics block">
                     {stats?.selectedPlayer === "ALL"
                       ? "Team Shot Profile"
                       : "Player Shot Profile"}
                   </span>
-                  <h2 className="text-base sm:text-xl md:text-2xl font-black uppercase tracking-tight truncate bg-gradient-to-r from-zinc-200 via-neutral-400 to-zinc-100 bg-clip-text text-transparent drop-shadow-sm">
-                    {stats?.selectedPlayer === "ALL"
-                      ? "Boston Celtics"
-                      : stats?.selectedPlayer}
-                  </h2>
+
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <h2 className="text-base sm:text-xl md:text-2xl font-black uppercase tracking-tight truncate bg-gradient-to-r from-zinc-200 via-neutral-400 to-zinc-100 bg-clip-text text-transparent drop-shadow-sm">
+                      {stats?.selectedPlayer === "ALL"
+                        ? "Boston Celtics"
+                        : stats?.selectedPlayer}
+                    </h2>
+
+                    {/* Badge compacto con el resultado del partido */}
+                    {currentGame?.homeScore !== null && currentGame?.awayScore !== null && (
+                      <div className="inline-flex items-center ml-2 gap-1.5 px-0.5 py-0.5 rounded bg-neutral-900 border border-neutral-800 shadow-sm shrink-0">
+                        <span
+                          className={`text-[12px] sm:text-base font-black px-2 py-0.2 rounded ${currentGame?.status?.includes("(W)")
+                            ? "bg-green-400/20 text-green-400"
+                            : "bg-rose-500/20 text-rose-400"
+                            }`}
+                        >
+                          {currentGame?.status?.includes("(W)") ? "W" : "L"}
+                        </span>
+                        <span className="text-[11px] sm:text-xs font-mono font-bold text-neutral-200 tracking-wider">
+                          {currentGame?.homeScore} - {currentGame?.awayScore}
+                        </span>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
 
               {/* Métricas: Att / Made / Miss / Acc */}
-              <ShotLabels stats={stats} />
+              <div className="w-full sm:w-auto shrink-0 flex justify-center sm:justify-end">
+                <ShotLabels stats={stats} />
+              </div>
             </div>
           )}
         </div>

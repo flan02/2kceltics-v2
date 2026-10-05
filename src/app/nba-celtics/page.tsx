@@ -1,4 +1,5 @@
 import MainStatsMenu from '@/components/nba-celtics/MainStatsMenu';
+import { GameOption } from '@/lib/types';
 import { getAvailableGames, getShotsByGameId } from '@/services/db/shotChart';
 
 
@@ -12,7 +13,7 @@ async function NbaCeltics({ searchParams }: Props) {
   // searchParams lee lo que router.push escribió en la URL
   const { gameId } = await searchParams;
 
-  const games = await getAvailableGames();
+  const games = await getAvailableGames() as GameOption[];
   const activeGameId = gameId || games[0]?.gameId!;
   const shots = await getShotsByGameId(activeGameId);
 

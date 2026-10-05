@@ -18,6 +18,8 @@ interface RawGameLog {
   game_date: string;
   matchup: string;
   wl: string | null;
+  celtics_pts: number | null;
+  opp_pts: number | null;
 }
 
 async function getCelticsGames(
@@ -31,7 +33,7 @@ async function getCelticsGames(
     SeasonType: seasonType,
   });
 
-  const url = `https://stats.nba.com/stats/teamgamelog?${params.toString()}`;
+  const url = `https://stats.nba.com/stats/teamgamelogs?${params.toString()}`;
   const res = await fetch(url, { headers: NBA_HEADERS });
 
   if (!res.ok) {
@@ -39,7 +41,9 @@ async function getCelticsGames(
   }
 
   const data: any = await res.json();
-  const dataset = data.resultSets?.find((rs: any) => rs.name === "TeamGameLog");
+  const dataset = data.resultSets?.find(
+    (rs: any) => rs.name === "TeamGameLogs",
+  );
 
   if (!dataset) {
     throw new Error("No se encontró el conjunto de datos TeamGameLog.");
@@ -48,14 +52,42 @@ async function getCelticsGames(
   const headers: string[] = dataset.headers;
   const rows: any[][] = dataset.rowSet;
 
-  const getCol = (row: any[], col: string) => row[headers.indexOf(col)];
+  // 👉 AGREGÁ ESTA LÍNEA PARA VER TODAS LAS COLUMNAS QUE MANDA LA NBA:
+  console.log("Columnas que envía la NBA:", headers);
 
-  return rows.map((row) => ({
-    game_id: String(getCol(row, "Game_ID")),
-    game_date: String(getCol(row, "GAME_DATE")),
-    matchup: String(getCol(row, "MATCHUP")),
-    wl: getCol(row, "WL") ? String(getCol(row, "WL")) : null,
-  }));
+  const getCol = (row: any[], colName: string) => {
+    const idx = headers.findIndex(
+      (h) => h.toLowerCase() === colName.toLowerCase(),
+    );
+    return idx !== -1 ? row[idx] : null;
+  };
+
+  return rows.map((row) => {
+    const rawPts = getCol(row, "PTS");
+    const rawPlusMinus = getCol(row, "PLUS_MINUS") ?? getCol(row, "PLUSMINUS");
+
+    const pts =
+      rawPts !== null && rawPts !== undefined && rawPts !== ""
+        ? Number(rawPts)
+        : null;
+
+    const plusMinus =
+      rawPlusMinus !== null && rawPlusMinus !== undefined && rawPlusMinus !== ""
+        ? Number(rawPlusMinus)
+        : null;
+
+    // Con PTS y PLUS_MINUS calculamos directamente los puntos del rival
+    const opp_pts = pts !== null && plusMinus !== null ? pts - plusMinus : null;
+
+    return {
+      game_id: String(getCol(row, "Game_ID")),
+      game_date: String(getCol(row, "GAME_DATE")),
+      matchup: String(getCol(row, "MATCHUP")),
+      wl: getCol(row, "WL") ? String(getCol(row, "WL")) : null,
+      celtics_pts: pts,
+      opp_pts,
+    };
+  });
 }
 
 function parseMatchup(matchup: string) {
@@ -80,12 +112,36 @@ async function uploadSchedule() {
   const games = await getCelticsGames(season, "Regular Season");
   console.log(`🏀 Se encontraron ${games.length} partidos. Guardando en DB...`);
 
+  // 👉 LOG DE MUESTRA PARA CONFIRMAR ANTES DE LA DB
+  if (games.length > 0) {
+    console.log("🔍 Ejemplo del primer partido obtenido:", {
+      matchup: games[0].matchup,
+      wl: games[0].wl,
+      celtics_pts: games[0].celtics_pts,
+      opp_pts: games[0].opp_pts,
+    });
+  }
+
   let count = 0;
 
   for (const game of games) {
     const { homeTeam, awayTeam } = parseMatchup(game.matchup);
     const parsedDate = new Date(game.game_date);
     const status = game.wl ? `Final (${game.wl})` : "Scheduled";
+
+    const homeScore =
+      game.celtics_pts !== null && game.opp_pts !== null
+        ? homeTeam === "BOS"
+          ? game.celtics_pts
+          : game.opp_pts
+        : null;
+
+    const awayScore =
+      game.celtics_pts !== null && game.opp_pts !== null
+        ? homeTeam === "BOS"
+          ? game.opp_pts
+          : game.celtics_pts
+        : null;
 
     await prisma.scheduleNBAList.upsert({
       where: {
@@ -97,6 +153,8 @@ async function uploadSchedule() {
         awayTeam,
         matchup: game.matchup,
         status,
+        homeScore,
+        awayScore,
       },
       create: {
         gameId: game.game_id,
@@ -105,6 +163,8 @@ async function uploadSchedule() {
         awayTeam,
         matchup: game.matchup,
         status,
+        homeScore,
+        awayScore,
       },
     });
 

@@ -14,6 +14,9 @@ export async function getAvailableGames() {
       gameId: true,
       matchup: true,
       gameDate: true,
+      status: true,
+      homeScore: true,
+      awayScore: true,
     },
   });
 }

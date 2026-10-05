@@ -9,7 +9,7 @@ const ShotLabels = ({ stats }: Props) => {
     <div className="w-full sm:w-auto grid grid-cols-4 gap-2 !bg-black/85 px-3 lg:px-6 py-2 rounded-xl border border-neutral-800 font-mono text-center shrink-0">
       <div>
         <span className="text-[9px] tracking-wider lg:text-sm !text-neutral-400 uppercase block font-sans">
-          Attempt
+          Attempts
         </span>
         <strong className="text-sm sm:text-base !text-white">
           {stats?.totalCount ?? 0}

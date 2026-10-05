@@ -399,6 +399,8 @@ export interface GameOption {
   gameDate: string | Date;
   matchup: string;
   status?: string;
+  homeScore: number;
+  awayScore: number;
 }
 
 export interface TeamSeasonData {

@@ -1,12 +1,12 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { Inter, Recursive } from "next/font/google";
+import { Recursive } from "next/font/google";
 import Navbar from "@/components/custom/Navbar";
 import Footer from "@/components/custom/Footer";
 import { Toaster } from "@/components/ui/toaster";
 import { ThemeProvider } from "@/components/reutilizable/theme-provider"
 const recursive = Recursive({ subsets: ["latin"] });
-const inter = Inter({ subsets: ["latin"] });
+
 
 export const metadata: Metadata = {
   title: "2kceltics | Home",
