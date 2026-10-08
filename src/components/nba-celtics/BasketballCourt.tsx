@@ -58,7 +58,6 @@ export const BasketballCourt = ({ shots: filteredShots }: Props) => {
   return (
     <div className="relative w-full aspect-[510/590] md:aspect-[1020/590] rounded-2xl overflow-hidden border-none lg:border lg:border-neutral-800 bg-[#E8D3A7] shadow-2xl transition-all duration-300">
       <svg
-        // viewBox="0 0 1020 590"
         viewBox={isMobile ? "0 0 510 590" : "0 0 1020 590"}
         className="w-full h-auto rounded-2xl overflow-hidden select-none font-sans block"
       >

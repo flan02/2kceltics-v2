@@ -6,12 +6,12 @@ import { useState, useRef, useEffect, useMemo } from 'react';
 import Image from 'next/image';
 import { GameStatsProps, INITIAL_FILTERS, playersNBA_season2025_26, ShotChartExportData, ShotStats, TeamSeasonData } from '@/lib/types';
 import Link from 'next/link';
-import { ExportCardButton } from './ExportCardButton';
 import { ExportShotChartCard } from "./ExportShotChartCard";
 import { formatShortDate } from '@/lib/utils';
 import { TeamSeasonComparison } from './TeamSeasonComparison';
 import { getTeamSeasonTotalsAction } from "@/services/server-functions";
 import ShotLabels from './ShotLabels';
+import SocialMediaSection from './SocialMediaSection';
 
 
 
@@ -109,14 +109,13 @@ export default function MainStatsMenu({ availableGames, activeGameId, shots: raw
             shots={rawShots}
           />
 
-          {/* Export and Share button */}
-          <div className="flex justify-end xl:justify-center">
-            <ExportCardButton
-              stats={stats}
-              gameMatchup={matchupText}
-              courtRef={exportCardRef}
-            />
-          </div>
+          {/* Export and Share button - For Desktop Only */}
+          <SocialMediaSection
+            stats={fixedGameStats}
+            matchupText={matchupText}
+            exportCardRef={exportCardRef}
+            className="hidden lg:flex"
+          />
         </div>
 
         {/* 2. Banner de Estadísticas del Jugador (Ocupa todo el ancho restante) */}
@@ -165,46 +164,6 @@ export default function MainStatsMenu({ availableGames, activeGameId, shots: raw
               </div>
             </div>
           ) : (
-            /* CONTENIDO REAL (Se muestra cuando llegan las stats) */
-            // <div className="relative z-10 w-full flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 transition-opacity duration-300">
-            //   {/* Perfil: Avatar + Nombre */}
-            //   <div className="flex items-center gap-3 sm:gap-4 w-full sm:w-auto min-w-0">
-            //     <div className="size-12 sm:size-16 shrink-0 flex items-center justify-center bg-neutral-950 overflow-hidden">
-            //       <Image
-            //         key={playerImageSrc}
-            //         src={playerImageSrc}
-            //         alt={
-            //           stats?.selectedPlayer === "ALL"
-            //             ? "Celtics Logo"
-            //             : stats?.selectedPlayer || "Player"
-            //         }
-            //         width={80}
-            //         height={80}
-            //         priority
-            //         className={`select-none transition-opacity duration-150 ${stats?.selectedPlayer === "ALL"
-            //           ? "size-12 sm:size-20 object-contain"
-            //           : "size-12 sm:size-16 rounded-sm object-cover object-top border-[0.5px] lg:border border-violet-300"
-            //           }`}
-            //       />
-            //     </div>
-
-            //     <div className="min-w-0">
-            //       <span className="text-[9px] sm:text-xs font-bold uppercase tracking-widest text-celtics block">
-            //         {stats?.selectedPlayer === "ALL"
-            //           ? "Team Shot Profile"
-            //           : "Player Shot Profile"}
-            //       </span>
-            //       <h2 className="text-base sm:text-xl md:text-2xl font-black uppercase tracking-tight truncate bg-gradient-to-r from-zinc-200 via-neutral-400 to-zinc-100 bg-clip-text text-transparent drop-shadow-sm">
-            //         {stats?.selectedPlayer === "ALL"
-            //           ? "Boston Celtics"
-            //           : stats?.selectedPlayer}
-            //       </h2>
-            //     </div>
-            //   </div>
-
-            //   {/* Métricas: Att / Made / Miss / Acc */}
-            //   <ShotLabels stats={stats} />
-            // </div>
             <div className="relative z-10 w-full flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 transition-opacity duration-300">
               {/* Perfil: Avatar + Nombre + Score */}
               <div className="flex items-center gap-3 sm:gap-4 w-full sm:w-auto min-w-0">
@@ -280,6 +239,14 @@ export default function MainStatsMenu({ availableGames, activeGameId, shots: raw
           onExportDataFilter={setExportData}
         />
       </div>
+
+      {/* Export and Share button - For Mobile Only */}
+      <SocialMediaSection
+        stats={fixedGameStats}
+        matchupText={matchupText}
+        exportCardRef={exportCardRef}
+        className="flex lg:hidden"
+      />
 
       <div className="w-full">
         <TeamSeasonComparison

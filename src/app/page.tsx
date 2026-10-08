@@ -37,11 +37,8 @@ export default async function Home({ searchParams: { page = 0 } }: { searchParam
             </section>
 
 
-            {/* ****************** */}
-
             <article className="flex mt-8 md:order-1 lg:order-0">
               <H2underline className="text-grad" firstPhrase="Feel the" underlinedPhrase="Celtics" secondPhrase="spirit like never before in our 2k simulation league" />
-
             </article>
 
 
@@ -51,7 +48,7 @@ export default async function Home({ searchParams: { page = 0 } }: { searchParam
               <VideoPlayer src="/gifs/twinkle-stars.webm" alt="Twinkle Stars" className="hidden lg:block lg:fixed lg:top-[460px] xl:top-[530px] left-1/2 lg:ml-[180px] lg:mt-8 xl:ml-[250px] transform -translate-x-1/2 -translate-y-1/2 w-24 h-auto z-10 rounded-md" />
               <Image src={CelticsHero} alt="Celtics Big3 Hero Image" className="x-0 md:px-10 lg:py-4 lg:px-8 xl:p-0" />
 
-              <Button className="absolute w-[80%] py-6 -mb-16 bottom-4 left-1/2 transform -translate-x-1/2 bg-black hover:bg-black/80 text-white shadow-lg dark:bg-gray-200 dark:text-black dark:hover:bg-gray-200/90 font-bold">
+              <Button className="hidden lg:flex absolute w-[80%] py-6 -mb-16 bottom-4 left-1/2 transform -translate-x-1/2 bg-black hover:bg-black/80 text-white shadow-lg dark:bg-gray-200 dark:text-black dark:hover:bg-gray-200/90 font-bold">
                 <Icons.nbaLogo width={40} height={40} />
                 <Link href="/nba-celtics">GO TO NBA STATS</Link>
               </Button>
@@ -67,15 +64,11 @@ export default async function Home({ searchParams: { page = 0 } }: { searchParam
             <Image className="w-auto h-auto -mt-8" src='/trophy.png' alt='celtics' width={35} height={35} />
           </div>
           <br className="visible lg:hidden" />
-          <Button className="visible p-6 w-full md:hidden">
+          <Button className="lg:hidden p-6 w-[50%] flex mx-auto">
             <Icons.nbaLogo width={40} height={40} />
             <Link href="/nba-celtics" className="font-bold">GO TO NBA STATS</Link>
           </Button>
         </div>
-
-
-
-
       </MaxWidthWrapper>
 
       <MaxWidthWrapper className="max-w-screen-3xl dark:bg-night-80/50 bg-zinc-200/60 px-0 sm:px-10 md:px-24 -mt-16 md:mt-0 ">
