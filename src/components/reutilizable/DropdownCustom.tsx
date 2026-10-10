@@ -10,31 +10,6 @@ import {
 import Link from "next/link"
 import { MenuIcon } from "lucide-react"
 
-
-
-/* 
-? Component calling DropdownCustom example (server side rendering)
-const options = {
-   label: "menu",
-   items: [
-     {
-       label: "Streams",
-       href: "/streamed-games"
-     },
-     {
-       label: "Season stats",
-       href: "/season-stats",
-     },
-     {
-       label: "Advanced",
-       href: "/advanced",
-     }
-   ]
- }
-
- <DropdownCustom label={options.label} items={options.items} />
-*/
-
 type Props = {
   label: string;
   items: {
@@ -60,10 +35,10 @@ const DropdownCustom = ({ label, items }: Props) => {
           <DropdownMenuSeparator />
           {
             items.map((item: any, index: number) => (
-              <DropdownMenuItem key={index} className="hover:bg-slate-200/70">
-                <div className="flex items-center justify-center gap-2">
+              <DropdownMenuItem key={index} className="hover:bg-neutral-800/15 dark:hover:bg-neutral-900 text-celtics">
+                <div className="flex items-center text-celtics justify-center gap-2">
                   <span>{item.icon}</span>
-                  <Link href={item.href} className="text-muted-foreground hover:underline" target={item.label == "My website" ? "_blank" : ""} >{item.label}</Link>
+                  <Link href={item.href} className="text-celtics hover:underline" target={item.label == "My website" ? "_blank" : ""} >{item.label}</Link>
                 </div>
               </DropdownMenuItem>
             ))

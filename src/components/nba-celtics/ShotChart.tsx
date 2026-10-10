@@ -119,7 +119,7 @@ export default function ShotChart({ shots, onStatsChange, onExportDataFilter, co
           ref={courtRef} // <-- Enganchamos la ref acá
           className="relative w-full aspect-[510/590] md:aspect-[1020/590] rounded-2xl overflow-hidden"
         >
-          <BasketballCourt shots={filteredShots} />
+          <BasketballCourt shots={filteredShots} isExport={false} />
 
           {shots.length === 0 && (
             <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px] flex items-center justify-center transition-opacity">

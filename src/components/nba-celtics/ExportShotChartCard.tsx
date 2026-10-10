@@ -199,7 +199,7 @@ export const ExportShotChartCard = forwardRef<HTMLDivElement, ExportCardProps>((
       {/* ========================================================================= */}
       <div className="flex-1 flex items-center justify-center min-w-0">
         <div className="w-full aspect-[1020/590] rounded-2xl overflow-hidden border border-neutral-800 shadow-2xl">
-          <BasketballCourt shots={shots} />
+          <BasketballCourt shots={shots} isExport={true} />
         </div>
       </div>
     </div>

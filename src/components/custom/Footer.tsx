@@ -1,6 +1,6 @@
 import React from 'react'
 import { Icons } from './Icons'
-import { ArrowRight, Heart, Linkedin, MapPinCheckInsideIcon, Twitch } from 'lucide-react'
+import { ArrowRight, Heart, Linkedin, MapPinCheckInsideIcon, Twitch, User } from 'lucide-react'
 
 type Props = {
 }
@@ -50,7 +50,7 @@ const groupIcons: { [key: string]: React.ReactNode } = {
   facebook: <Icons.facebook key={3} />,
   linkedin: <Linkedin key={4} size={20} />,
   twitch: <Twitch key={5} />,
-  curriculum: <MapPinCheckInsideIcon />
+  curriculum: <User key={6} className='text-gray-700' />
 }
 
 const socialMediaUrl: string[] = [
@@ -60,7 +60,7 @@ const socialMediaUrl: string[] = [
   "https://www.facebook.com/dan.chanivet/",
   "https://www.linkedin.com/in/dan-chanivet-574084b2/",
   "https://www.twitch.tv/flano2",
-  "https://danchanivet.me",
+  "https://danchanivet.xyz",
 ]
 
 const Footer = (props: Props) => {

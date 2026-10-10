@@ -2,7 +2,7 @@ import Link from "next/link"
 import { buttonVariants } from "../../ui/button"
 
 import DropdownCustom from "@/components/reutilizable/DropdownCustom"
-import { ChartSpline, Map, MapPinMinusInsideIcon, MonitorPlay, NotebookPen, Rss, WholeWord } from "lucide-react"
+import { ChartScatter, ChartSpline, MonitorPlay, NotebookPen, Rss } from "lucide-react"
 
 
 
@@ -29,13 +29,18 @@ const Upload = ({ isAdmin }: Props) => {
       {
         label: "Advanced",
         href: "/advanced",
+        icon: <ChartScatter size={16} />
+      },
+      {
+        label: "Shot chart",
+        href: "/nba-celtics",
         icon: <ChartSpline size={16} />
       },
       {
         label: "My website",
         href: MY_WEBSITE,
         icon: <Rss size={16} />
-      }
+      },
     ]
   }
 

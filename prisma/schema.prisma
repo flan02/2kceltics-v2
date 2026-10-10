@@ -256,7 +256,7 @@ model Shot {
   @@index([playerId])
 }
 
-model PlayerGameStat {
+model PlayerGameStatsNBA {
   id         String   @id @default(auto()) @map("_id") @db.ObjectId
   gameId     String
   gameDate   DateTime
@@ -266,6 +266,8 @@ model PlayerGameStat {
   min        Float
   pts        Int
   reb        Int
+  oreb       Int?
+  dreb       Int?
   ast        Int
   stl        Int
   blk        Int
@@ -274,11 +276,15 @@ model PlayerGameStat {
   fga        Int
   fg3m       Int
   fg3a       Int
-  plusMinus  Int
+  ftm        Int
+  fta        Int
+  pf         Int?
+  plusMinus  Int?
   createdAt  DateTime @default(now())
 
   @@unique([gameId, playerId]) // Evita duplicar el registro si re-sincronizás
   @@index([playerId]) // Clave para que la consulta por jugador sea instantánea
+  @@map("PlayerGameStat")
 }
 
 model ScheduleNBAList {

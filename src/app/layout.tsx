@@ -72,29 +72,3 @@ export default function RootLayout({
     </html>
   );
 }
-
-
-/* 
-
-<!-- HTML Meta Tags -->
-<title>2kceltics | Home</title>
-<meta name="description" content="2kceltics v2 created by Dan Chanivet">
-
-<!-- Facebook Meta Tags -->
-<meta property="og:url" content="https://www.2kceltics.xyz">
-<meta property="og:type" content="website">
-<meta property="og:title" content="2kceltics | Home">
-<meta property="og:description" content="2kceltics v2 created by Dan Chanivet">
-<meta property="og:image" content="https://www.2kceltics.xyz/opengraph-image.png?d7e0d55a938256e6">
-
-<!-- Twitter Meta Tags -->
-<meta name="twitter:card" content="summary_large_image">
-<meta property="twitter:domain" content="2kceltics.xyz">
-<meta property="twitter:url" content="https://www.2kceltics.xyz">
-<meta name="twitter:title" content="2kceltics | Home">
-<meta name="twitter:description" content="2kceltics v2 created by Dan Chanivet">
-<meta name="twitter:image" content="https://www.2kceltics.xyz/opengraph-image.png?d7e0d55a938256e6">
-
-<!-- Meta Tags Generated via https://www.opengraph.xyz -->
-
-*/

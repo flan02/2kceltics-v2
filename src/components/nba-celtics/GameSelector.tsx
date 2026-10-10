@@ -9,7 +9,7 @@ type Props = {
   shots: ShotItem[];
 }
 
-const GameSelector = ({ availableGames, activeGameId, shots }: Props) => {
+const GameSelector = ({ availableGames, activeGameId }: Props) => {
   const router = useRouter();
   const handleGameChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     router.push(`?gameId=${e.target.value}`);

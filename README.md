@@ -18,3 +18,7 @@ New 2kceltics website built with Nextjs
 ## Vercel website to manage and create og card
 
 [website](https://og-playground.vercel.app/)
+
+## OpenGraph (the easiest way to get metadata about a URL. As a service)
+
+[website](https://opengraph.ninja/)

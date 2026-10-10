@@ -64,7 +64,7 @@ export default async function Home({ searchParams: { page = 0 } }: { searchParam
             <Image className="w-auto h-auto -mt-8" src='/trophy.png' alt='celtics' width={35} height={35} />
           </div>
           <br className="visible lg:hidden" />
-          <Button className="lg:hidden p-6 w-[50%] flex mx-auto">
+          <Button className="lg:hidden p-6 w-[100%] md:w-[50%] flex mx-auto">
             <Icons.nbaLogo width={40} height={40} />
             <Link href="/nba-celtics" className="font-bold">GO TO NBA STATS</Link>
           </Button>

@@ -208,3 +208,23 @@ export function formatExportFileName(
 
   return baseName.toLowerCase();
 }
+
+export const getPercentage = (made: number, att: number): number => {
+  if (!att || att === 0) return 0;
+  return Number(((made / att) * 100).toFixed(1));
+};
+
+/* 
+FG%: getPercentage(fgm, fga)
+
+3P%: getPercentage(fg3m, fg3a)
+
+FT%: getPercentage(ftm, fta)
+
+2P%: getPercentage(fgm - fg3m, fga - fg3a)
+
+eFG% (Effective Field Goal %): ((fgm + 0.5 * fg3m) / fga) * 100
+
+TS% (True Shooting %): (pts / (2 * (fga + 0.44 * fta))) * 100
+
+*/

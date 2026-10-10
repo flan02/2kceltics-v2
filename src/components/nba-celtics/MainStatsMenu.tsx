@@ -248,7 +248,7 @@ export default function MainStatsMenu({ availableGames, activeGameId, shots: raw
         className="flex lg:hidden"
       />
 
-      <div className="w-full">
+      <div className="w-full z-0">
         <TeamSeasonComparison
           seasonData={teamStats}
           matchPctData={fixedGameStats}

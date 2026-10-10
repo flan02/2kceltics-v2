@@ -15,7 +15,7 @@ const Navbar = async (props: Props) => {
   let isAdmin = false
 
   return (
-    <header className='px-4 border-b border-slate-200 flex items-end justify-between h-[50px] bg-emerald-50/50 sticky top-0 z-[10] backdrop-blur-lg transition-all'>
+    <header className='px-4 border-b border-slate-200 flex items-end justify-between h-[50px] bg-emerald-50/50 sticky top-0 z-[50] backdrop-blur-lg transition-all'>
       <div className='flex'>
         <Link href='/' className='flex items-center gap-1 '>
           <Image src="/trebol-navbar.png" alt="trebol logo" width={24} height={24} />
@@ -37,7 +37,9 @@ const Navbar = async (props: Props) => {
       </div>
 
       <div className='flex gap-1 z-50'>
-        <ModeToggle />
+        <div className="mb-0.5">
+          <ModeToggle />
+        </div>
         <Upload isAdmin={isAdmin} />
       </div>
 
