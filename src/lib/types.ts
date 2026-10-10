@@ -383,11 +383,13 @@ export interface ShotChartProps {
   onStatsChange?: (stats: ShotStats) => void;
   onExportDataFilter?: (filters: ShotChartExportData) => void;
   courtRef?: React.Ref<HTMLDivElement>;
+  initialFilters?: CourtFilters; // Agregado para pasar filtros iniciales
 }
 
 export interface CourtFilters {
+  gameId?: string;
   player: string; // "ALL" | nombre del jugador
-  period: string; // "ALL" | "Q1" | "Q2" | "Q3" | "Q4"
+  period: string | number; // "ALL" | "Q1" | "Q2" | "Q3" | "Q4"
   shotType: string; // "ALL" | "2PT" | "3PT"
   outcome: string; // "ALL" | "Made" | "Missed"
   distance: string; // "ALL" | "RIM" | "MID" | "THREE"
@@ -413,6 +415,7 @@ export interface GameStatsProps {
   availableGames: GameOption[];
   activeGameId: string;
   shots: ShotItem[];
+  initialFilters?: CourtFilters;
 }
 
 export const INITIAL_FILTERS: CourtFilters = {
@@ -435,7 +438,7 @@ export interface TeamComparisonProps {
 
 export interface ActiveFilters {
   player: string;
-  period: string;
+  period: string | number;
   shotType: string;
   outcome: string;
   distance: string;

@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import { toBlob } from "html-to-image";
 import { X } from "lucide-react";
-import { FaWhatsapp } from "react-icons/fa6";
+import { FaReddit, FaWhatsapp } from "react-icons/fa6";
 
 type Props = {
   courtRef: React.RefObject<HTMLDivElement | null>;
@@ -95,10 +95,10 @@ const ShareCardButton = ({ courtRef, gameMatchup }: Props) => {
     ? `${baseUrl}${window.location.pathname}${window.location.search}`
     : baseUrl;
   // const currentUrl = typeof window !== "undefined" ? window.location.href : "";
-  const shareText = `Boston Celtics Shot Chart - ${cleanMatchup.toUpperCase()} ☘️`;
+  const shareText = `Boston Celtics Shot Chart - ${cleanMatchup.toUpperCase()} ☘️ \n`;
 
   const xShareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(currentUrl)}`;
-  // const redditShareUrl = `https://www.reddit.com/submit?url=${encodeURIComponent(currentUrl)}&title=${encodeURIComponent(shareText)}`;
+  const redditShareUrl = `https://www.reddit.com/submit?url=${encodeURIComponent(currentUrl)}&title=${encodeURIComponent(shareText)}`;
   const whatsappShareUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(`${shareText}${currentUrl}`)}`;
 
   return (
@@ -145,16 +145,16 @@ const ShareCardButton = ({ courtRef, gameMatchup }: Props) => {
           </a>
 
           {/* Reddit */}
-          {/* <a
+          <a
             href={redditShareUrl}
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => setIsOpenMenu(false)}
             className="flex items-center gap-2.5 px-3 py-2 text-neutral-200 hover:text-white hover:bg-neutral-800/80 rounded-lg transition-colors"
           >
-            <span className="font-bold text-orange-500 text-sm">r/</span>
-            <span>Publicar en Reddit</span>
-          </a> */}
+            <FaReddit size={16} />
+            <span>Share on Reddit</span>
+          </a>
 
           {/* WhatsApp Web */}
           <a

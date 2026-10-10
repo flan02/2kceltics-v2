@@ -8,54 +8,72 @@ import { DistanceRange, OutcomeFilter, PeriodFilter, ShotChartProps, ShotTimingF
 import ShotTimingComponent from "./ShotTimingComponent";
 import QuarterComponent from "./QuarterComponent";
 import ShotRangeComponent from "./ShotRangeComponent";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+
+export interface FilterState {
+  player: string;
+  shotType: ShotTypeFilter;
+  period: PeriodFilter;
+  outcome: OutcomeFilter;
+  distance: DistanceRange;
+  timing: ShotTimingFilter;
+}
 
 
 
 
-export default function ShotChart({ shots, onStatsChange, onExportDataFilter, courtRef }: ShotChartProps) {
+export default function ShotChart({ shots, onStatsChange, onExportDataFilter, courtRef, initialFilters }: ShotChartProps) {
 
-  const [selectedPlayer, setSelectedPlayer] = useState<string>("ALL");
-  const [shotTypeFilter, setShotTypeFilter] = useState<ShotTypeFilter>("ALL");
-  const [selectedPeriod, setSelectedPeriod] = useState<PeriodFilter>("ALL");
-  const [outcomeFilter, setOutcomeFilter] = useState<OutcomeFilter>("ALL");
-  const [distanceFilter, setDistanceFilter] = useState<DistanceRange>("ALL");
-  const [timingFilter, setTimingFilter] = useState<ShotTimingFilter>("ALL");
+  const DEFAULT_FILTERS: FilterState = {
+    player: initialFilters?.player || "ALL",
+    shotType: (initialFilters?.shotType as ShotTypeFilter) || "ALL",
+    period: (initialFilters?.period as PeriodFilter) || "ALL",
+    outcome: (initialFilters?.outcome as OutcomeFilter) || "ALL",
+    distance: (initialFilters?.distance as DistanceRange) || "ALL",
+    timing: (initialFilters?.timing as ShotTimingFilter) || "ALL",
+  };
+
+  const [filters, setFilters] = useState<FilterState>(DEFAULT_FILTERS);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   // Extraer nombres únicos ordenados
   const players = ["ALL", ...Array.from(new Set(shots.map((s) => s.playerName))).sort()];
 
   const filteredShots = useMemo(() => {
     return shots.filter((s) => {
-      const matchPlayer = selectedPlayer === "ALL" || s.playerName === selectedPlayer;
+      const matchPlayer = filters.player === "ALL" || s.playerName === filters.player;
       const matchType =
-        shotTypeFilter === "ALL" ||
-        (shotTypeFilter === "3PT" && s.shotType?.startsWith("3PT")) ||
-        (shotTypeFilter === "2PT" && s.shotType?.startsWith("2PT"));
-      const matchPeriod = selectedPeriod === "ALL" || String(s.period) === String(selectedPeriod);
+        filters.shotType === "ALL" ||
+        (filters.shotType === "3PT" && s.shotType?.startsWith("3PT")) ||
+        (filters.shotType === "2PT" && s.shotType?.startsWith("2PT"));
+      const matchPeriod = filters.period === "ALL" || String(s.period) === String(filters.period);
       const shotOutcome =
-        outcomeFilter === "ALL" ||
-        (outcomeFilter === "MADE" && s.eventType === "Made Shot") ||
-        (outcomeFilter === "MISSED" && s.eventType === "Missed Shot");
+        filters.outcome === "ALL" ||
+        (filters.outcome === "MADE" && s.eventType === "Made Shot") ||
+        (filters.outcome === "MISSED" && s.eventType === "Missed Shot");
 
       // 🏀 Filtro de distancia por rangos analíticos
       const dist = Number(s.shotDistance);
       const matchDistance =
-        distanceFilter === "ALL" ||
-        (distanceFilter === "RIM" && dist < 8) ||
-        (distanceFilter === "MID" && dist >= 8 && dist < 22) ||
-        (distanceFilter === "THREE" && dist >= 22);
+        filters.distance === "ALL" ||
+        (filters.distance === "RIM" && dist < 8) ||
+        (filters.distance === "MID" && dist >= 8 && dist < 22) ||
+        (filters.distance === "THREE" && dist >= 22);
 
       // ⏱️ Filtro de Timing (Minutos restantes en el reloj)
       const mins = Number(s.minutesRemaining ?? 12);
       const matchTiming =
-        timingFilter === "ALL" ||
-        (timingFilter === "LAST_5" && mins < 5) ||
-        (timingFilter === "LAST_2" && mins < 2);
+        filters.timing === "ALL" ||
+        (filters.timing === "LAST_5" && mins < 5) ||
+        (filters.timing === "LAST_2" && mins < 2);
 
       return matchPlayer && matchType && matchPeriod && shotOutcome && matchDistance && matchTiming;
     });
-  }, [shots, selectedPlayer, shotTypeFilter, selectedPeriod, outcomeFilter, distanceFilter, timingFilter]);
+  }, [filters, shots]);
 
   const filterAsideRef = useRef<HTMLElement | null>(null);
 
@@ -65,14 +83,51 @@ export default function ShotChart({ shots, onStatsChange, onExportDataFilter, co
   const missedCount = totalCount - madeCount;
 
   const handlePlayerChange = (player: string) => {
-    setSelectedPlayer(player);
+    // 1. Resetea los filtros secundarios en memoria y guarda el nuevo jugador
+    setFilters({
+      ...DEFAULT_FILTERS,
+      player
+    });
 
-    // Resetea todos los filtros secundarios al cambiar de jugador
-    setShotTypeFilter("ALL");
-    setSelectedPeriod("ALL");
-    setOutcomeFilter("ALL");
-    setDistanceFilter("ALL");
-    setTimingFilter("ALL");
+    // 2. Tomamos los parámetros actuales (para no perder gameId)
+    const params = new URLSearchParams(searchParams.toString());
+
+    // 3. Limpiamos de la URL los filtros secundarios del jugador anterior
+    ["shotType", "period", "outcome", "distance", "timing"].forEach((key) => {
+      params.delete(key);
+    });
+
+    // 4. Si eligió un jugador concreto lo agregamos; si puso "ALL" lo sacamos
+    if (player && player !== "ALL") {
+      params.set("player", player);
+    } else {
+      params.delete("player");
+    }
+
+    // 5. Impactamos en la URL silenciosamente
+    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+  }
+
+  const handleFilterChange = <K extends keyof FilterState>(key: K, value: FilterState[K]) => {
+    // 1. Actualizamos el estado interno de React
+    setFilters((prev) => ({
+      ...prev,
+      [key]: value,
+    }));
+
+    // 2. Tomamos los parámetros actuales que ya tiene la URL
+    const params = new URLSearchParams(searchParams.toString());
+
+    // 3. Si el valor es distinto de "ALL" y no está vacío, lo agregamos/actualizamos.
+    //    Si el usuario volvió a poner "ALL", lo borramos de la URL para mantenerla limpia.
+    if (value && value !== "ALL" && value !== "") {
+      params.set(key, String(value));
+    } else {
+      params.delete(key);
+    }
+
+    // 4. Actualizamos la barra de direcciones sin recargar la página
+    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
   };
 
   useEffect(() => {
@@ -82,33 +137,44 @@ export default function ShotChart({ shots, onStatsChange, onExportDataFilter, co
       madeCount,
       missedCount,
       pct,
-      selectedPlayer,
+      selectedPlayer: filters.player,
     });
 
     // 2. Enviar datos a la tarjeta de exportación
     onExportDataFilter?.({
       filteredShots,
       filters: {
-        player: selectedPlayer,
-        period: String(selectedPeriod),
-        shotType: shotTypeFilter,
-        outcome: outcomeFilter,
-        distance: distanceFilter,
-        timing: timingFilter,
+        player: filters.player,
+        period: String(filters.period),
+        shotType: filters.shotType,
+        outcome: filters.outcome,
+        distance: filters.distance,
+        timing: filters.timing,
       },
     });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [shots, selectedPlayer, selectedPeriod, shotTypeFilter, outcomeFilter, distanceFilter, timingFilter]);
+  }, [filters]);
 
   useEffect(() => {
-    setSelectedPlayer("ALL");
-    setShotTypeFilter("ALL");
-    setSelectedPeriod("ALL");
-    setOutcomeFilter("ALL");
-    setDistanceFilter("ALL");
-    setTimingFilter("ALL");
-  }, [shots]);
+    if (initialFilters) {
+      setFilters({
+        player: initialFilters.player || "ALL",
+        shotType: (initialFilters.shotType as ShotTypeFilter) || "ALL",
+        // Convertimos a número para que coincida con 1 | 2 | 3 | 4
+        period:
+          initialFilters.period && initialFilters.period !== "ALL"
+            ? (Number(initialFilters.period) as PeriodFilter)
+            : "ALL",
+        outcome: (initialFilters.outcome as OutcomeFilter) || "ALL",
+        distance: (initialFilters.distance as DistanceRange) || "ALL",
+        timing: (initialFilters.timing as ShotTimingFilter) || "ALL",
+      });
+    } else {
+      setFilters(DEFAULT_FILTERS);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [shots, initialFilters]);
 
   return (
     // <div className="w-full max-w-[1600px] mx-auto px-1 lg:px-4 flex flex-col xl:flex-row gap-6 items-start">
@@ -132,63 +198,63 @@ export default function ShotChart({ shots, onStatsChange, onExportDataFilter, co
       </main>
 
       {/* Solo aparece si hay filtros distintos de ALL */}
-      {(shotTypeFilter !== "ALL" || selectedPeriod !== "ALL" || outcomeFilter !== "ALL" || distanceFilter !== "ALL") && (
+      {(filters.shotType !== "ALL" || filters.period !== "ALL" || filters.outcome !== "ALL" || filters.distance !== "ALL") && (
         <div className="visible lg:hidden flex items-center gap-1.5 px-2 py-1 mb-2 overflow-x-auto text-[10px] md:text-lg font-mono">
           <span className="text-neutral-500 uppercase tracking-wider font-sans font-bold text-[9px] md:text-lg">
             Filters:
           </span>
 
-          {shotTypeFilter !== "ALL" && (
+          {filters.shotType !== "ALL" && (
             <span className="bg-neutral-800 text-neutral-200 px-2 py-0.5 rounded-full border border-neutral-700 flex items-center gap-1">
-              {shotTypeFilter}
-              <button onClick={() => setShotTypeFilter("ALL")} className="text-neutral-400 hover:text-white">✕</button>
+              {filters.shotType}
+              <button onClick={() => handleFilterChange("shotType", "ALL")} className="text-neutral-400 hover:text-white">✕</button>
             </span>
           )}
 
-          {selectedPeriod !== "ALL" && (
+          {filters.period !== "ALL" && (
             <span className="bg-emerald-950/80 text-emerald-300 border border-emerald-800 px-2 py-0.5 rounded-full flex items-center gap-1">
-              Q{selectedPeriod}
-              <button onClick={() => setSelectedPeriod("ALL")} className="text-emerald-400 hover:text-white">✕</button>
+              Q{filters.period}
+              <button onClick={() => handleFilterChange("period", "ALL")} className="text-emerald-400 hover:text-white">✕</button>
             </span>
           )}
 
-          {outcomeFilter !== "ALL" && (
-            <span className={`px-2 py-0.5 rounded-full border flex items-center gap-1 ${outcomeFilter === "MADE"
+          {filters.outcome !== "ALL" && (
+            <span className={`px-2 py-0.5 rounded-full border flex items-center gap-1 ${filters.outcome === "MADE"
               ? "bg-amber-950/80 text-amber-300 border-amber-800"
               : "bg-rose-950/80 text-rose-300 border-rose-800"
               }`}>
-              {outcomeFilter}
-              <button onClick={() => setOutcomeFilter("ALL")} className="hover:text-white">✕</button>
+              {filters.outcome === "MADE" ? "Made" : "Missed"}
+              <button onClick={() => handleFilterChange("outcome", "ALL")} className="hover:text-white">✕</button>
             </span>
           )}
 
-          {distanceFilter !== "ALL" && (
-            <span className={`px-2 py-0.5 rounded-full border flex items-center gap-1 ${distanceFilter === "RIM"
+          {filters.distance !== "ALL" && (
+            <span className={`px-2 py-0.5 rounded-full border flex items-center gap-1 ${filters.distance === "RIM"
               ? "bg-cyan-950/80 text-cyan-300 border-cyan-800"
               : "bg-violet-950/80 text-violet-300 border-violet-800"
               }`}>
-              {distanceFilter === "RIM" ? "<8ft" : distanceFilter === "MID" ? "8-22ft" : "22ft+"}
-              <button onClick={() => setDistanceFilter("ALL")} className="hover:text-white">✕</button>
+              {filters.distance === "RIM" ? "<8ft" : filters.distance === "MID" ? "8-22ft" : "22ft+"}
+              <button onClick={() => handleFilterChange("distance", "ALL")} className="hover:text-white">✕</button>
             </span>
           )}
 
-          {timingFilter !== "ALL" && (
+          {filters.timing !== "ALL" && (
             <span className="bg-amber-950/80 text-amber-300 border border-amber-800 px-2 py-0.5 rounded-full flex items-center gap-1">
-              {timingFilter === "LAST_5" ? "< 5 min" : "< 2 min"}
-              <button onClick={() => setTimingFilter("ALL")} className="hover:text-white">✕</button>
+              {filters.timing === "LAST_5" ? "< 5 min" : "< 2 min"}
+              <button onClick={() => handleFilterChange("timing", "ALL")} className="hover:text-white">✕</button>
             </span>
           )}
 
           {/* Reset rápido */}
           <button
             onClick={() => {
-              // setSelectedPlayer("ALL");
-              setShotTypeFilter("ALL");
-              setSelectedPeriod("ALL");
-              setOutcomeFilter("ALL");
-              setDistanceFilter("ALL");
-              setTimingFilter("ALL");
+              setFilters(DEFAULT_FILTERS);
+              const params = new URLSearchParams();
+              const gameId = searchParams.get("gameId");
+              if (gameId) params.set("gameId", gameId);
+              router.replace(`${pathname}?${params.toString()}`, { scroll: false });
             }}
+
             className="text-neutral-500 hover:text-neutral-300 underline text-[9px] md:text-xs underline-offset-2 ml-1 uppercase"
           >
             Clear
@@ -257,7 +323,7 @@ export default function ShotChart({ shots, onStatsChange, onExportDataFilter, co
           {/* Vista Mobile: Select desplegable nativo */}
           <div className="xl:hidden">
             <select
-              value={selectedPlayer}
+              value={filters.player}
               onChange={(e) => {
                 handlePlayerChange(e.target.value);
                 //setIsFilterOpen(false); // Descomentá esta línea si querés que se cierre solo al elegir jugador
@@ -280,7 +346,7 @@ export default function ShotChart({ shots, onStatsChange, onExportDataFilter, co
                 type="button"
                 // onClick={() => setSelectedPlayer(player)}
                 onClick={() => handlePlayerChange(player)}
-                className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition-colors ${selectedPlayer === player
+                className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition-colors ${filters.player === player
                   ? "bg-celtics text-white shadow-md shadow-emerald-900/40"
                   : "bg-neutral-800 text-neutral-400 hover:bg-neutral-700 hover:text-white"
                   }`}
@@ -294,18 +360,19 @@ export default function ShotChart({ shots, onStatsChange, onExportDataFilter, co
         <hr className="border-neutral-800" />
 
         {/* 2. Tipo de Tiro: 2PT / 3PT */}
-        <ShotRangeComponent shotTypeFilter={shotTypeFilter} setShotTypeFilter={setShotTypeFilter} />
-
+        <ShotRangeComponent
+          shotTypeFilter={filters.shotType}
+          setShotTypeFilter={(value) => handleFilterChange("shotType", value)}
+        />
         {/* 3. Selector de Cuartos */}
-
-        <QuarterComponent selectedPeriod={selectedPeriod} setSelectedPeriod={setSelectedPeriod} />
-
+        <QuarterComponent
+          selectedPeriod={filters.period} setSelectedPeriod={(value) => handleFilterChange("period", value)} />
         {/* 4. Selector de Resultado: All / Made / Missed */}
-        <OutcomeComponent outcomeFilter={outcomeFilter} setOutcomeFilter={setOutcomeFilter} />
+        <OutcomeComponent outcomeFilter={filters.outcome} setOutcomeFilter={(value) => handleFilterChange("outcome", value)} />
         {/* 5. Selector de Distancia: All / RIM / MID / THREE */}
-        <ShotDistanceComponent distanceFilter={distanceFilter} setDistanceFilter={setDistanceFilter} />
+        <ShotDistanceComponent distanceFilter={filters.distance} setDistanceFilter={(value) => handleFilterChange("distance", value)} />
         {/* 6. Selector de Tiempo: All / Last 5m / Last 2m */}
-        <ShotTimingComponent timingFilter={timingFilter} setTimingFilter={setTimingFilter} />
+        <ShotTimingComponent timingFilter={filters.timing} setTimingFilter={(value) => handleFilterChange("timing", value)} />
 
         {/* Botón Aplicar en Mobile */}
         <button

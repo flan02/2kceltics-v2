@@ -17,7 +17,7 @@ import SocialMediaSection from './SocialMediaSection';
 
 const CURRENT_SEASON = process.env.NEXT_PUBLIC_SCRIPTS_CURRENT_SEASON!
 
-export default function MainStatsMenu({ availableGames, activeGameId, shots: rawShots }: GameStatsProps) {
+export default function MainStatsMenu({ availableGames, activeGameId, shots: rawShots, initialFilters }: GameStatsProps) {
   const [stats, setStats] = useState<ShotStats | null>(null);
   const isLoading = !rawShots || rawShots.length === 0;
   const exportCardRef = useRef<HTMLDivElement>(null);
@@ -42,7 +42,10 @@ export default function MainStatsMenu({ availableGames, activeGameId, shots: raw
 
   const [exportData, setExportData] = useState<ShotChartExportData>({
     filteredShots: rawShots,
-    filters: INITIAL_FILTERS,
+    filters: {
+      ...INITIAL_FILTERS,
+      ...initialFilters
+    }
   });
 
   useEffect(() => {
@@ -96,6 +99,7 @@ export default function MainStatsMenu({ availableGames, activeGameId, shots: raw
       fg3Pct: Number(fg3Pct.toFixed(1)),
     };
   }, [rawShots]);
+
 
   return (
     <div className="w-full max-w-[1500px] mx-auto px-2 lg:px-4 py-2 lg:py-4 flex flex-col gap-4">
@@ -233,7 +237,7 @@ export default function MainStatsMenu({ availableGames, activeGameId, shots: raw
       {/* FILA INFERIOR: ShotChart (Cancha + Panel de Filtros) */}
       <div className="w-full">
         <ShotChart
-          // key={activeGameId} // Forzamos re-render cuando cambia de partido
+          initialFilters={initialFilters}
           shots={rawShots}
           onStatsChange={setStats}
           onExportDataFilter={setExportData}

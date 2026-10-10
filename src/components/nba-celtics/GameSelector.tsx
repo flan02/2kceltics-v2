@@ -1,7 +1,7 @@
-'use client'
-import { GameOption, ShotItem } from '@/lib/types';
-import { formatShortDate } from '@/lib/utils';
-import { useRouter } from 'next/navigation';
+import { GameOption, ShotItem } from "@/lib/types";
+import { formatShortDate } from "@/lib/utils";
+import { useRouter, useSearchParams } from "next/navigation";
+
 
 type Props = {
   availableGames: GameOption[];
@@ -11,10 +11,22 @@ type Props = {
 
 const GameSelector = ({ availableGames, activeGameId }: Props) => {
   const router = useRouter();
-  const handleGameChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    router.push(`?gameId=${e.target.value}`);
-  };
+  const searchParams = useSearchParams();
 
+  const handleGameChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const newGameId = e.target.value;
+
+    // Tomamos todos los parámetros actuales
+    const params = new URLSearchParams(searchParams.toString());
+
+    // Actualizamos el partido
+    params.set("gameId", newGameId);
+
+    // Opcional: si cambiás de partido y preferís resetear el jugador para evitar pantallas vacías:
+    // params.delete("player");
+
+    router.push(`?${params.toString()}`);
+  };
 
   return (
     <div className="bg-white/50 dark:bg-neutral-900/90 border border-gray-300 dark:border dark:border-neutral-800 -mt-4 lg:mt-0 p-1 lg:p-5 rounded-sm lg:rounded-2xl shadow-xl flex items-start lg:block md:w-[70%] lg:w-auto">
@@ -29,18 +41,24 @@ const GameSelector = ({ availableGames, activeGameId }: Props) => {
         {availableGames.map((game, index) => {
           const gameNumber = availableGames.length - index;
           const dateFormatted = formatShortDate(game.gameDate);
-          const result = game.status?.match(/\((.*?)\)/)?.[1] || '';
-          const badge = result ? `(${result})` : '';
+          const result = game.status?.match(/\((.*?)\)/)?.[1] || "";
+          const badge = result ? `(${result})` : "";
 
           return (
-            <option key={game.gameId} value={game.gameId} className="text-celtics rounded-md text-sm lg:text-sm dark:bg-neutral-900">
+            <option
+              key={game.gameId}
+              value={game.gameId}
+              className="text-celtics rounded-md text-sm lg:text-sm dark:bg-neutral-900"
+            >
               {`#${gameNumber} ${game.matchup} ${badge} · ${dateFormatted}`}
             </option>
           );
         })}
       </select>
     </div>
-  )
-}
+  );
+};
 
-export default GameSelector
+export default GameSelector;
+
+

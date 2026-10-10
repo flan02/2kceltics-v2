@@ -1,11 +1,21 @@
 import MainStatsMenu from "@/components/nba-celtics/MainStatsMenu";
-import { GameOption } from "@/lib/types";
+import { CourtFilters, GameOption } from "@/lib/types";
 import { getAvailableGames, getShotsByGameId } from "@/services/db/shotChart";
 import { Metadata } from "next";
 
 export const dynamic = "force-dynamic"; // Evita que se cachee mientras probás
 
-type Props = { searchParams: Promise<{ gameId?: string }> };
+type FilterParams = {
+  gameId?: string;
+  player?: string;
+  range?: string;
+  period?: string;
+  outcome?: string;
+  distance?: string;
+  time?: string;
+}
+
+type Props = { searchParams: Promise<FilterParams> };
 
 export async function generateMetadata({ searchParams }: Props): Promise<Metadata> {
   const { gameId } = await searchParams;
@@ -21,10 +31,10 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
 
   return {
     title: `Celtics Shot Chart - ${matchupTitle} | 2KCeltics`,
-    description: `Shot distribution, shooting splits and visual analytics for Boston Celtics vs ${matchupTitle}.`,
+    description: `Shot distribution, shooting splits and visual analytics for the ${matchupTitle} game.`,
     openGraph: {
       title: `Boston Celtics Shot Chart · ${matchupTitle}`,
-      description: `Analiza los tiros, porcentajes y volumen de juego en 2KCeltics.`,
+      description: `Analize the shot distribution and stats for the ${matchupTitle} game.`,
       url: pageUrl,
       siteName: "2KCeltics",
       images: [
@@ -48,7 +58,7 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
 
 async function NbaCeltics({ searchParams }: Props) {
   // searchParams lee lo que router.push escribió en la URL
-  const { gameId } = await searchParams;
+  const { gameId, player, shotType, period, outcome, distance, timing } = await searchParams as CourtFilters;
 
   const games = (await getAvailableGames()) as GameOption[];
 
@@ -61,6 +71,17 @@ async function NbaCeltics({ searchParams }: Props) {
   // 3. Traemos los tiros del partido válido
   const shots = activeGameId ? await getShotsByGameId(activeGameId) : [];
 
+
+
+  const INITIAL_FILTERS = {
+    player: player || "ALL",
+    shotType: shotType || "ALL",
+    period: period || "ALL",
+    outcome: outcome || "ALL",
+    distance: distance || "ALL",
+    timing: timing || "ALL",
+  };
+
   return (
     <main className="min-h-screen py-8">
       <h1 className="text-2xl tracking-tight leading-snug lg:tracking-normal lg:text-5xl font-bold text-center text-celtics mb-8">
@@ -70,6 +91,7 @@ async function NbaCeltics({ searchParams }: Props) {
         availableGames={games}
         activeGameId={activeGameId}
         shots={shots}
+        initialFilters={INITIAL_FILTERS}
       />
     </main>
   );
