@@ -118,6 +118,7 @@ export default function MainStatsMenu({ availableGames, activeGameId, shots: raw
             stats={fixedGameStats}
             matchupText={matchupText}
             exportCardRef={exportCardRef}
+            filters={exportData.filters}
             className="hidden lg:flex"
           />
         </div>
@@ -249,6 +250,7 @@ export default function MainStatsMenu({ availableGames, activeGameId, shots: raw
         stats={fixedGameStats}
         matchupText={matchupText}
         exportCardRef={exportCardRef}
+        filters={exportData.filters}
         className="flex lg:hidden"
       />
 

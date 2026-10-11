@@ -1,6 +1,5 @@
 'use client'
 import { useEffect, useState } from 'react';
-
 import { CelticsCourtLogo } from './CelticsCourtLogo';
 import { ShotItem } from '@/lib/types';
 
@@ -8,8 +7,6 @@ type Props = {
   shots: ShotItem[];
   isExport?: boolean;
 }
-
-
 
 
 export const BasketballCourt = ({ shots: filteredShots, isExport }: Props) => {

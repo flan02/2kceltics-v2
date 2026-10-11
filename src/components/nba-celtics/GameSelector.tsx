@@ -1,31 +1,22 @@
 import { GameOption, ShotItem } from "@/lib/types";
 import { formatShortDate } from "@/lib/utils";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 
 type Props = {
   availableGames: GameOption[];
   activeGameId: string;
-  shots: ShotItem[];
+  shots: ShotItem[]
 }
 
 const GameSelector = ({ availableGames, activeGameId }: Props) => {
   const router = useRouter();
-  const searchParams = useSearchParams();
 
   const handleGameChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newGameId = e.target.value;
 
-    // Tomamos todos los parámetros actuales
-    const params = new URLSearchParams(searchParams.toString());
-
-    // Actualizamos el partido
-    params.set("gameId", newGameId);
-
-    // Opcional: si cambiás de partido y preferís resetear el jugador para evitar pantallas vacías:
-    // params.delete("player");
-
-    router.push(`?${params.toString()}`);
+    // Solo navegamos al nuevo partido (limpiando filtros del partido anterior)
+    router.push(`/nba-celtics?gameId=${newGameId}`);
   };
 
   return (

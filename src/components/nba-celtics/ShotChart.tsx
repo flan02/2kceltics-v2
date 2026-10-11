@@ -8,7 +8,7 @@ import { DistanceRange, OutcomeFilter, PeriodFilter, ShotChartProps, ShotTimingF
 import ShotTimingComponent from "./ShotTimingComponent";
 import QuarterComponent from "./QuarterComponent";
 import ShotRangeComponent from "./ShotRangeComponent";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+
 
 export interface FilterState {
   player: string;
@@ -35,10 +35,6 @@ export default function ShotChart({ shots, onStatsChange, onExportDataFilter, co
 
   const [filters, setFilters] = useState<FilterState>(DEFAULT_FILTERS);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
-
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
 
   // Extraer nombres únicos ordenados
   const players = ["ALL", ...Array.from(new Set(shots.map((s) => s.playerName))).sort()];
@@ -82,52 +78,18 @@ export default function ShotChart({ shots, onStatsChange, onExportDataFilter, co
   const pct = totalCount > 0 ? ((madeCount / totalCount) * 100).toFixed(1) : "0.0";
   const missedCount = totalCount - madeCount;
 
-  const handlePlayerChange = (player: string) => {
-    // 1. Resetea los filtros secundarios en memoria y guarda el nuevo jugador
-    setFilters({
-      ...DEFAULT_FILTERS,
-      player
-    });
-
-    // 2. Tomamos los parámetros actuales (para no perder gameId)
-    const params = new URLSearchParams(searchParams.toString());
-
-    // 3. Limpiamos de la URL los filtros secundarios del jugador anterior
-    ["shotType", "period", "outcome", "distance", "timing"].forEach((key) => {
-      params.delete(key);
-    });
-
-    // 4. Si eligió un jugador concreto lo agregamos; si puso "ALL" lo sacamos
-    if (player && player !== "ALL") {
-      params.set("player", player);
-    } else {
-      params.delete("player");
-    }
-
-    // 5. Impactamos en la URL silenciosamente
-    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
-  }
-
   const handleFilterChange = <K extends keyof FilterState>(key: K, value: FilterState[K]) => {
-    // 1. Actualizamos el estado interno de React
     setFilters((prev) => ({
       ...prev,
       [key]: value,
     }));
+  };
 
-    // 2. Tomamos los parámetros actuales que ya tiene la URL
-    const params = new URLSearchParams(searchParams.toString());
-
-    // 3. Si el valor es distinto de "ALL" y no está vacío, lo agregamos/actualizamos.
-    //    Si el usuario volvió a poner "ALL", lo borramos de la URL para mantenerla limpia.
-    if (value && value !== "ALL" && value !== "") {
-      params.set(key, String(value));
-    } else {
-      params.delete(key);
-    }
-
-    // 4. Actualizamos la barra de direcciones sin recargar la página
-    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+  const handlePlayerChange = (player: string) => {
+    setFilters({
+      ...DEFAULT_FILTERS,
+      player,
+    });
   };
 
   useEffect(() => {
@@ -248,13 +210,21 @@ export default function ShotChart({ shots, onStatsChange, onExportDataFilter, co
           {/* Reset rápido */}
           <button
             onClick={() => {
+              // 1. Resetea los filtros en el estado local
               setFilters(DEFAULT_FILTERS);
-              const params = new URLSearchParams();
-              const gameId = searchParams.get("gameId");
-              if (gameId) params.set("gameId", gameId);
-              router.replace(`${pathname}?${params.toString()}`, { scroll: false });
-            }}
 
+              // 2. Lee los parámetros actuales de la barra de direcciones
+              const currentParams = new URLSearchParams(window.location.search);
+              const gameId = currentParams.get("gameId");
+
+              // 3. Crea nuevos parámetros dejando únicamente el gameId
+              const newParams = new URLSearchParams();
+              if (gameId) newParams.set("gameId", gameId);
+
+              // 4. Actualiza la URL silenciosamente sin recargar ni consultar al server
+              const newUrl = `${window.location.pathname}?${newParams.toString()}`;
+              window.history.replaceState(null, "", newUrl);
+            }}
             className="text-neutral-500 hover:text-neutral-300 underline text-[9px] md:text-xs underline-offset-2 ml-1 uppercase"
           >
             Clear

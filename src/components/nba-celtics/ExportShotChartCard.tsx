@@ -18,6 +18,20 @@ export const ExportShotChartCard = forwardRef<HTMLDivElement, ExportCardProps>((
   const activeFilters = filters || INITIAL_FILTERS
 
 
+  const SHOT_TYPE_CONFIG: Record<string, { label: string; styles: string }> = {
+    ALL: {
+      label: "All Shots",
+      styles: "bg-neutral-900 text-neutral-300 border-neutral-700/80",
+    },
+    "2PT": {
+      label: "2PT",
+      styles: "bg-cyan-950/60 text-cyan-400 border-cyan-600/50",
+    },
+    "3PT": {
+      label: "3PT",
+      styles: "bg-fuchsia-950/60 text-fuchsia-400 border-fuchsia-600/50",
+    },
+  };
 
   const DISTANCE_CONFIG: Record<string, { label: string; styles: string }> = {
     RIM: {
@@ -38,6 +52,29 @@ export const ExportShotChartCard = forwardRef<HTMLDivElement, ExportCardProps>((
     },
   };
 
+  const PERIOD_CONFIG: Record<string, { label: string; styles: string }> = {
+    1: {
+      label: "Q1",
+      styles: "bg-teal-900/50 text-teal-400 border-teal-600/50",
+    },
+    2: {
+      label: "Q2",
+      styles: "bg-teal-900/50 text-teal-400 border-teal-600/50",
+    },
+    3: {
+      label: "Q3",
+      styles: "bg-teal-900/50 text-teal-400 border-teal-600/50",
+    },
+    4: {
+      label: "Q4",
+      styles: "bg-teal-900/50 text-teal-400 border-teal-600/50",
+    },
+    ALL: {
+      label: "Fullgame",
+      styles: "bg-neutral-900 text-neutral-300 border-neutral-700/80",
+    },
+  };
+
   const targetedPlayer = activeFilters.player || stats?.selectedPlayer || "ALL";
   const isAll = targetedPlayer === "ALL";
   const playerName = isAll ? "Boston Celtics" : targetedPlayer;
@@ -45,21 +82,18 @@ export const ExportShotChartCard = forwardRef<HTMLDivElement, ExportCardProps>((
   const playerPhoto = !isAll ? playersNBA_season2025_26[targetedPlayer] : null;
   const currentImageSrc = isAll ? "/celtics-logo.png" : (playerPhoto || "/celtics-logo.png");
 
-
-  // 1. Extraer los filtros de forma segura (sin importar si vienen en prop 'filters' o 'stats.filters')
-  // const activeFilters = filters || (stats as any)?.filters;
-
-  const rawPeriod = activeFilters?.period ? String(activeFilters.period) : "ALL";
-  const periodLabel = rawPeriod === "ALL"
-    ? "Full Game"
-    : rawPeriod.startsWith("Q") ? rawPeriod : `Q${rawPeriod}`;
-
-  const shotTypeLabel = activeFilters?.shotType || "ALL";
   const outcomeLabel = activeFilters?.outcome || "ALL";
   const shotTimingLabel = activeFilters?.timing || "";
 
   const currentDistance = activeFilters?.distance || "ALL";
   const badge = DISTANCE_CONFIG[currentDistance] || DISTANCE_CONFIG.ALL;
+
+  const currentPeriod = String(activeFilters?.period || "ALL");
+  const periodBadge = PERIOD_CONFIG[currentPeriod] || PERIOD_CONFIG.ALL;
+
+  const shotTypeLabel = activeFilters?.shotType || "ALL";
+  const shotTypeBadge = SHOT_TYPE_CONFIG[shotTypeLabel] || SHOT_TYPE_CONFIG.ALL;
+
 
   return (
     <div
@@ -67,6 +101,7 @@ export const ExportShotChartCard = forwardRef<HTMLDivElement, ExportCardProps>((
       style={{ width: 1280, height: 720 }}
       className="bg-[#080808] text-white p-7 flex gap-7 border-4 border-neutral-800 rounded-3xl shadow-2xl font-sans box-border select-none overflow-hidden"
     >
+      <span className="bg-"></span>
       {/* ========================================================================= */}
       {/* COLUMNA IZQUIERDA: DESCRIPCIÓN, FILTROS, STATS Y LOG (ANCHO FIJO: 380px)  */}
       {/* ========================================================================= */}
@@ -130,16 +165,20 @@ export const ExportShotChartCard = forwardRef<HTMLDivElement, ExportCardProps>((
 
           {/* Badges de filtros protegidos contra null */}
           <div className="flex flex-wrap gap-1.5">
-            <span className="bg-neutral-900 text-neutral-200 text-[10px] font-mono font-bold px-2.5 py-0.5 rounded border border-neutral-700">
-              {periodLabel}
+            <span
+              className={`border text-[10px] font-mono font-bold px-2.5 py-0.5 rounded ${periodBadge.styles}`}
+            >
+              {periodBadge.label}
             </span>
-            <span className="bg-neutral-900 text-neutral-200 text-[10px] font-mono font-bold px-2.5 py-0.5 rounded border border-neutral-700">
-              {shotTypeLabel === "ALL" ? "2PT/3PT" : shotTypeLabel}
+
+            <span className={`text-[10px] font-mono font-bold px-2.5 py-0.5 rounded border ${shotTypeBadge.styles}`}>
+              {shotTypeBadge.label}
             </span>
+
             <span className={`text-[10px] font-mono font-bold px-2.5 py-0.5 rounded border ${outcomeLabel === "MADE"
-              ? "bg-amber-950/50 text-amber-400 border-amber-600/40"
+              ? "bg-green-950/50 text-green-400 border-green-600/40"
               : outcomeLabel === "MISSED"
-                ? "bg-rose-950/50 text-rose-400 border-rose-600/40"
+                ? "bg-rose-950/50 text-red-500 border-red-700/40"
                 : "bg-neutral-900 text-neutral-200 border-neutral-700"
               }`}>
               {outcomeLabel === "ALL" ? "Made/Missed" : outcomeLabel}
@@ -147,20 +186,15 @@ export const ExportShotChartCard = forwardRef<HTMLDivElement, ExportCardProps>((
             {shotTimingLabel !== "ALL" && (
               <span
                 className={`text-[10px] font-mono font-bold px-2.5 py-0.5 rounded border ${shotTimingLabel === "LAST_2"
-                  ? "bg-rose-950/50 text-rose-300 border-rose-600/40"
-                  : "bg-violet-950/50 text-violet-300 border-violet-600/40"
+                  ? "bg-rose-950/50 text-rose-400 border-rose-600/40"
+                  : "bg-orange-950/50 text-orange-400 border-orange-600/40"
                   }`}
               >
                 {shotTimingLabel === "LAST_2" ? "<2 min" : "<5 min"}
               </span>
             )}
 
-            <span
-              className={`inline-flex items-center text-[10px] font-mono font-bold px-2 py-0.5 rounded border whitespace-nowrap ${badge.styles}`}
-            >
-              {badge.label}
-            </span>
-
+            <span className={`inline-flex items-center text-[10px] font-mono font-bold px-2 py-0.5 rounded border whitespace-nowrap ${badge.styles}`}>{badge.label}</span>
           </div>
         </div>
 
@@ -193,7 +227,6 @@ export const ExportShotChartCard = forwardRef<HTMLDivElement, ExportCardProps>((
         </div>
 
       </div>
-
       {/* ========================================================================= */}
       {/* COLUMNA DERECHA: LA CANCHA COMPLETA                                      */}
       {/* ========================================================================= */}

@@ -4,25 +4,57 @@ import { useState, useRef, useEffect } from "react";
 import { toBlob } from "html-to-image";
 import { X } from "lucide-react";
 import { FaReddit, FaWhatsapp } from "react-icons/fa6";
+import { CourtFilters } from "@/lib/types";
 
 type Props = {
   courtRef: React.RefObject<HTMLDivElement | null>;
   gameMatchup: string;
+  filters?: CourtFilters;
 };
 
-const ShareCardButton = ({ courtRef, gameMatchup }: Props) => {
+const ShareCardButton = ({ courtRef, gameMatchup, filters }: Props) => {
   const [isGenerating, setIsGenerating] = useState<boolean>(false);
   const [copied, setCopied] = useState<boolean>(false);
   const [isOpenMenu, setIsOpenMenu] = useState<boolean>(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
-  // const cleanMatchup = gameMatchup
-  //   .toLowerCase()
-  //   .replace(/[@vs.]+/g, "vs")
-  //   .replace(/\s+/g, "-")
-  //   .trim();
-
   const cleanMatchup = gameMatchup
+
+  console.log("ShareCardButton - filters:", filters);
+
+  // Construir la URL completa con los filtros al momento de compartir
+  const getShareUrl = () => {
+    if (typeof window === "undefined") return "https://2kceltics.xyz";
+
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || window.location.origin;
+    const params = new URLSearchParams(window.location.search);
+
+    // Si recibimos filtros desde React, los inyectamos en la URL para compartir
+    if (filters) {
+      if (filters.player && filters.player !== "ALL") params.set("player", filters.player);
+      else params.delete("player");
+
+      if (filters.shotType && filters.shotType !== "ALL") params.set("shotType", filters.shotType);
+      else params.delete("shotType");
+
+      if (filters.period && filters.period !== "ALL") params.set("period", String(filters.period));
+      else params.delete("period");
+
+      if (filters.outcome && filters.outcome !== "ALL") params.set("outcome", filters.outcome);
+      else params.delete("outcome");
+
+      if (filters.distance && filters.distance !== "ALL") params.set("distance", filters.distance);
+      else params.delete("distance");
+
+      if (filters.timing && filters.timing !== "ALL") params.set("timing", filters.timing);
+      else params.delete("timing");
+    }
+
+    const queryString = params.toString();
+    return `${baseUrl}${window.location.pathname}${queryString ? `?${queryString}` : ""}`;
+  };
+
+  const shareUrl = getShareUrl();
 
   // Cerrar menú si el usuario hace clic afuera
   useEffect(() => {
@@ -62,7 +94,7 @@ const ShareCardButton = ({ courtRef, gameMatchup }: Props) => {
           await navigator.share({
             title: `Boston Celtics Shot Chart - ${cleanMatchup.toUpperCase()}`,
             text: `Mirá el mapa de tiros de los Celtics vs ${cleanMatchup.toUpperCase()} en 2KCeltics.xyz`,
-            url: window.location.href,
+            url: shareUrl, // window.location.href,
             files: [file],
           });
           return;
@@ -80,8 +112,10 @@ const ShareCardButton = ({ courtRef, gameMatchup }: Props) => {
     setIsOpenMenu((prev) => !prev);
   };
 
+
+
   const copyToClipboard = async () => {
-    await navigator.clipboard.writeText(window.location.href);
+    await navigator.clipboard.writeText(shareUrl);
     setCopied(true);
     setTimeout(() => {
       setCopied(false);
@@ -89,17 +123,12 @@ const ShareCardButton = ({ courtRef, gameMatchup }: Props) => {
     }, 1800);
   };
 
-  // Enlaces directos para PC
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://2kceltics.xyz";
-  const currentUrl = typeof window !== "undefined"
-    ? `${baseUrl}${window.location.pathname}${window.location.search}`
-    : baseUrl;
-  // const currentUrl = typeof window !== "undefined" ? window.location.href : "";
+
   const shareText = `Boston Celtics Shot Chart - ${cleanMatchup.toUpperCase()} ☘️ \n`;
 
-  const xShareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(currentUrl)}`;
-  const redditShareUrl = `https://www.reddit.com/submit?url=${encodeURIComponent(currentUrl)}&title=${encodeURIComponent(shareText)}`;
-  const whatsappShareUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(`${shareText}${currentUrl}`)}`;
+  const xShareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`;
+  const redditShareUrl = `https://www.reddit.com/submit?url=${encodeURIComponent(shareText)}&title=${encodeURIComponent(shareText)}`;
+  const whatsappShareUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(`${shareText}${shareUrl}`)}`;
 
   return (
     <div className="relative inline-block" ref={menuRef}>
