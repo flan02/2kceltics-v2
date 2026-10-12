@@ -20,7 +20,6 @@ const ShareCardButton = ({ courtRef, gameMatchup, filters }: Props) => {
 
   const cleanMatchup = gameMatchup
 
-  console.log("ShareCardButton - filters:", filters);
 
   // Construir la URL completa con los filtros al momento de compartir
   const getShareUrl = () => {

@@ -35,8 +35,6 @@ const SeasonStats = async ({ average, total, opt, span, label }: SeasonProps) =>
   //console.log('current span', span);
   //  console.log('total', total);
 
-
-
   return (
     <section className='mt-4 flex flex-col space-y-20'>
       <div>
@@ -45,7 +43,7 @@ const SeasonStats = async ({ average, total, opt, span, label }: SeasonProps) =>
         </div>
         <aside className='flex justify-center'>
           {
-            average
+            average?.gamestat
               ? <MarkdownRenderer markdown={average.gamestat} />
               : <NoStats />
           }
@@ -60,7 +58,8 @@ const SeasonStats = async ({ average, total, opt, span, label }: SeasonProps) =>
             </div>
             <aside className='flex justify-center'>
               {
-                total != null || span == "82"
+                // total != null || span == "82"
+                total?.gamestat
                   ? <MarkdownRenderer markdown={total!.gamestat} />
                   : <NoStats />
               }
