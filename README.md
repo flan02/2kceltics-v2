@@ -22,3 +22,7 @@ New 2kceltics website built with Nextjs
 ## OpenGraph (the easiest way to get metadata about a URL. As a service)
 
 [website](https://opengraph.ninja/)
+
+## NBA API documentation
+
+[valid endpoints](https://github.com/swar/nba_api/tree/master/docs/nba_api/stats/endpoints)
