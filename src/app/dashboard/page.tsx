@@ -12,8 +12,7 @@ import SignIn from '@/components/reutilizable/sign-in';
 const DashboardPage = async ({ searchParams: { opt } }: { searchParams: { opt: string } }) => {
 
   const session = await auth()
-
-  console.log('Session obtained', { session });
+  // console.log('Session obtained', { session });
 
   return (
     <MaxWidthWrapper className='min-h-[calc(100vh-60px)] mb-16'>

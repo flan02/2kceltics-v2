@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import React from 'react'
-import { Button, buttonVariants } from '../../ui/button'
+import { buttonVariants } from '../../ui/button'
 import Image from 'next/image'
 import Yo from '../../../../public/yo-unbackground.png'
 import AddTeam from './AddTeam'
@@ -55,7 +55,6 @@ const Dashboard = async ({ opt, photo, given_name }: Props) => {
           {
             session && session.user && <div className='flex justify-start items-end my-1 md:my-0'><SignOut /></div>
           }
-
           {
             OPTIONS.map((option) => (
               <Link key={option} href={`/dashboard?opt=${option}`} className={buttonVariants({
@@ -66,8 +65,6 @@ const Dashboard = async ({ opt, photo, given_name }: Props) => {
               </Link>
             ))
           }
-
-
 
           <Link href="/dashboard" className={buttonVariants({
             size: "sm", variant: `${(opt === '/') ? 'default' : 'outline'}`,

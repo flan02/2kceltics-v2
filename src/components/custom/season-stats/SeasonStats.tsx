@@ -58,7 +58,6 @@ const SeasonStats = async ({ average, total, opt, span, label }: SeasonProps) =>
             </div>
             <aside className='flex justify-center'>
               {
-                // total != null || span == "82"
                 total?.gamestat
                   ? <MarkdownRenderer markdown={total!.gamestat} />
                   : <NoStats />

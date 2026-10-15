@@ -86,6 +86,14 @@ enum PlayoffsRound {
   FINALS
 }
 
+enum SeasonType {
+  PRESEASON
+  REGULAR_SEASON
+  PLAY_IN
+  PLAYOFFS
+  IN_SEASON_TOURNAMENT
+}
+
 model User {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   email     String   @unique
@@ -257,33 +265,38 @@ model Shot {
 }
 
 model PlayerGameStatsNBA {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
-  gameId     String
-  gameDate   DateTime
-  matchup    String // ej: "BOS vs NYK"
-  playerId   Int
-  playerName String
-  min        Float
-  pts        Int
-  reb        Int
-  oreb       Int?
-  dreb       Int?
-  ast        Int
-  stl        Int
-  blk        Int
-  tov        Int
-  fgm        Int
-  fga        Int
-  fg3m       Int
-  fg3a       Int
-  ftm        Int
-  fta        Int
-  pf         Int?
-  plusMinus  Int?
-  createdAt  DateTime @default(now())
+  id          String     @id @default(auto()) @map("_id") @db.ObjectId
+  gameId      String
+  season      String
+  seasonType  SeasonType
+  gameDate    DateTime
+  matchupText String // ej: "BOS vs NYK"
+  playerId    Int
+  playerName  String
+  teamId      Int
+  teamAbbr    String
+  min         Float
+  pts         Int
+  reb         Int
+  oreb        Int?
+  dreb        Int?
+  ast         Int
+  stl         Int
+  blk         Int
+  tov         Int
+  fgm         Int
+  fga         Int
+  fg3m        Int
+  fg3a        Int
+  ftm         Int
+  fta         Int
+  pf          Int?
+  plusMinus   Int?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
 
   @@unique([gameId, playerId]) // Evita duplicar el registro si re-sincronizás
-  @@index([playerId]) // Clave para que la consulta por jugador sea instantánea
+  @@index([playerId, season, seasonType]) // Clave para que la consulta por jugador sea instantánea
   @@map("PlayerGameStat")
 }
 

@@ -8,7 +8,6 @@ import { z } from "zod"
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -21,16 +20,13 @@ import { toast } from "@/components/ui/use-toast"
 import { useEffect, useState, lazy, useRef } from "react"
 import LoadingButton from "@/components/reutilizable/LoadingButton"
 //import RichTextEditor from "../RichTextEditor"
+//const RichTextEditor = lazy(() => import("../RichTextEditor"));
 
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { seasonTypes, teamEastTypes, teamTypes, teamWestTypes } from "@/lib/types"
 import { createPlayoffsSchema } from "@/zod/validation"
 import SelectSeed from "./SelectSeed"
 import { createNewPlayoffs } from "@/app/dashboard/actions"
-
-
-
-//const RichTextEditor = lazy(() => import("../RichTextEditor"));
 
 const pos = ["1", "2", "3", "4", "5", "6", "7", "8"]
 
