@@ -2,13 +2,8 @@
 
 import CardSchedule from "../reutilizable/CardSchedule"
 import Link from "next/link"
-
 import { getScheduleGames } from "@/app/actions"
 import { Card, CardTitle } from "../ui/card"
-
-//import { useSearchParamsContext } from "@/services/server/SearchParamsContext"
-
-
 
 
 export default async function ScheduleList({ searchParams: { page } }: { searchParams: { page: number } }) {
@@ -30,8 +25,16 @@ export default async function ScheduleList({ searchParams: { page } }: { searchP
     if (game.scoreTeam1! > 0) total_pages.push(game.scoreTeam1 as number)
   })
 
+  // console.log("total games this season", schedule.length)
+
   let W = schedule.filter(game => game.scoreTeam1! > game.scoreTeam2!).length
+  // console.log("total wins this season", W)
   let L = schedule.filter(game => game.scoreTeam1! < game.scoreTeam2!).length
+  // console.log("total losses this season", L)
+
+
+  // auditSchedule(schedule)
+  // robustAuditSchedule(schedule)
 
   const currentSchedule = schedule.slice(page * limit, (page + 1) * limit)
   return (
@@ -49,7 +52,6 @@ export default async function ScheduleList({ searchParams: { page } }: { searchP
                 scoreTeam1={game.scoreTeam1 as number}
                 scoreTeam2={game.scoreTeam2 as number}
                 stage={game.stage}
-
               />
             ))
         }

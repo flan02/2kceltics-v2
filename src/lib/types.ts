@@ -491,3 +491,14 @@ export const NBA_TEAMS_LOGOS: Record<string, string> = {
   UTA: "UTA.png",
   WAS: "WAS.png",
 };
+
+// 2k26 playoffs brackets
+export interface TeamState {
+  id: string;
+  position: string;
+  conference: "WEST" | "EAST";
+  wins: number;
+  losses: number;
+  eliminated: boolean;
+  round: string;
+}

@@ -6,8 +6,11 @@ import {
   playerImages2K25,
   PlayoffSpans,
   SeasonSpans,
+  TeamState,
 } from "./types";
 import { getCurrentRound, getCurrentSpan } from "@/app/actions";
+import { Round } from "@prisma/client";
+import { Game } from "@/components/custom/playoffs/UpdatePlayoffsForm";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -212,6 +215,241 @@ export function formatExportFileName(
 export const getPercentage = (made: number, att: number): number => {
   if (!att || att === 0) return 0;
   return Number(((made / att) * 100).toFixed(1));
+};
+
+export function findPlayoffsRival(
+  team: TeamState,
+  allTeams: TeamState[],
+): TeamState | null {
+  const pos = Number(team.position);
+  const sameConf = allTeams.filter(
+    (t) => t.conference === team.conference && !t.eliminated,
+  );
+
+  // 1. Primera Ronda (wins < 4)
+  if (team.wins < 4) {
+    const rivalPos = 9 - pos;
+    return sameConf.find((t) => Number(t.position) === rivalPos) || null;
+  }
+
+  // 2. Semifinales de Conferencia (wins entre 4 y 7)
+  if (team.wins >= 4 && team.wins < 8) {
+    const isTopHalf = [1, 8, 4, 5].includes(pos);
+    const targetGroup = isTopHalf
+      ? [1, 8].includes(pos)
+        ? [4, 5]
+        : [1, 8]
+      : [3, 6].includes(pos)
+        ? [2, 7]
+        : [3, 6];
+
+    return (
+      sameConf.find(
+        (t) => targetGroup.includes(Number(t.position)) && t.wins >= 4,
+      ) || null
+    );
+  }
+
+  // 3. Final de Conferencia (wins entre 8 y 11)
+  if (team.wins >= 8 && team.wins < 12) {
+    const isTopHalf = [1, 8, 4, 5].includes(pos);
+    const targetGroup = isTopHalf ? [3, 6, 2, 7] : [1, 8, 4, 5];
+
+    return (
+      sameConf.find(
+        (t) => targetGroup.includes(Number(t.position)) && t.wins >= 8,
+      ) || null
+    );
+  }
+
+  // 4. The Finals (wins >= 12)
+  if (team.wins >= 12) {
+    const otherConf = allTeams.filter(
+      (t) => t.conference !== team.conference && !t.eliminated,
+    );
+    return otherConf.find((t) => t.wins >= 12) || null;
+  }
+
+  return null;
+}
+
+export function determineRound(wins: number, conference: any) {
+  if (conference === "EAST") {
+    if (wins > 3 && wins < 8) return Round.ECSF;
+    if (wins > 7 && wins < 12) return Round.ECF;
+    if (wins > 11 && wins < 17) return Round.FINALS;
+  } else if (conference === "WEST") {
+    if (wins > 3 && wins < 8) return Round.WCSF;
+    if (wins > 7 && wins < 12) return Round.WCF;
+    if (wins > 11 && wins < 17) return Round.FINALS;
+  }
+  return Round.FIRST_ROUND;
+}
+
+// Helper para formatear el nombre de la ronda
+export const formatRound = (round: string) => {
+  switch (round) {
+    case "FIRST_ROUND":
+      return "1st Round";
+    case "ECSF":
+    case "WCSF":
+      return "Semis";
+    case "ECF":
+    case "WCF":
+      return "Conf. Finals";
+    case "FINALS":
+      return "The Finals";
+    default:
+      return round;
+  }
+};
+
+export const getRoundBadgeStyle = (round: string) => {
+  switch (round) {
+    case "FIRST_ROUND":
+      // Gris neutro
+      return "bg-zinc-200 text-zinc-700 dark:bg-zinc-800 dark:text-zinc-400 border border-zinc-300 dark:border-zinc-700";
+
+    case "ECSF":
+    case "WCSF":
+      // Semis: Azul / Celeste
+      return "bg-sky-500/15 text-sky-600 dark:text-sky-400 border border-sky-500/30";
+
+    case "ECF":
+    case "WCF":
+      // Finales de Conferencia: Naranja / Ámbar
+      return "bg-violet-500/15 text-violet-600 dark:text-violet-400 border border-violet-500/30";
+
+    case "FINALS":
+      // The Finals: Dorado / Amarillo oro
+      return "bg-yellow-500/20 text-yellow-600 dark:text-yellow-400 border border-yellow-500/40 font-bold";
+
+    default:
+      return "bg-zinc-200 text-zinc-700 dark:bg-zinc-800 dark:text-zinc-400";
+  }
+};
+
+// Encuentra al rival activo para emparejarlo en la serie
+export const getRival = (winner: Game, allGames: Game[]): Game | null => {
+  const pos = Number(winner.position);
+
+  // 1. Primera Ronda (1 vs 8, 2 vs 7, 3 vs 6, 4 vs 5)
+  if (winner.wins < 4) {
+    const rivalPos = String(9 - pos);
+    return (
+      allGames.find(
+        (g) => g.conference === winner.conference && g.position === rivalPos,
+      ) || null
+    );
+  }
+
+  // 2. Semifinales de Conferencia (wins 4 a 7)
+  if (winner.wins >= 4 && winner.wins < 8) {
+    const isTop = [1, 8, 4, 5].includes(pos);
+    const targetPositions = isTop
+      ? [1, 8].includes(pos)
+        ? ["4", "5"]
+        : ["1", "8"]
+      : [3, 6].includes(pos)
+        ? ["2", "7"]
+        : ["3", "6"];
+
+    return (
+      allGames.find(
+        (g) =>
+          g.conference === winner.conference &&
+          targetPositions.includes(g.position) &&
+          !g.eliminated &&
+          g.wins >= 4,
+      ) || null
+    );
+  }
+
+  // 3. Finales de Conferencia (wins 8 a 11)
+  if (winner.wins >= 8 && winner.wins < 12) {
+    const isTop = [1, 8, 4, 5].includes(pos);
+    const targetPositions = isTop ? ["3", "6", "2", "7"] : ["1", "8", "4", "5"];
+    return (
+      allGames.find(
+        (g) =>
+          g.conference === winner.conference &&
+          targetPositions.includes(g.position) &&
+          !g.eliminated &&
+          g.wins >= 8,
+      ) || null
+    );
+  }
+
+  // 4. The Finals (wins >= 12)
+  if (winner.wins >= 12) {
+    return (
+      allGames.find(
+        (g) =>
+          g.conference !== winner.conference && !g.eliminated && g.wins >= 12,
+      ) || null
+    );
+  }
+
+  return null;
+};
+
+// Helper para calcular W y L de la ronda actual
+export function getSeriesScore(team: Game, allTeams: Game[]) {
+  // 1. Determinamos la base de victorias de la ronda actual
+  let winsBase = 0;
+  if (team.wins >= 12)
+    winsBase = 12; // The Finals
+  else if (team.wins >= 8)
+    winsBase = 8; // Finals de Conf
+  else if (team.wins >= 4)
+    winsBase = 4; // Semis
+  else winsBase = 0; // 1st Round
+
+  // Victorias en la serie actual:
+  const currentRoundWins = Math.max(0, Math.min(team.wins - winsBase, 4));
+
+  // 2. Si el equipo está eliminado, sus derrotas en esa serie son 4
+  if (team.eliminated) {
+    return {
+      wins: currentRoundWins,
+      losses: 4,
+    };
+  }
+
+  // 3. Si sigue en carrera, sus derrotas son las victorias de su rival en la ronda
+  const rival = getRival(team, allTeams);
+  if (!rival) {
+    return {
+      wins: currentRoundWins,
+      losses: 0,
+    };
+  }
+
+  let rivalWinsBase = 0;
+  if (rival.wins >= 12) rivalWinsBase = 12;
+  else if (rival.wins >= 8) rivalWinsBase = 8;
+  else if (rival.wins >= 4) rivalWinsBase = 4;
+  else rivalWinsBase = 0;
+
+  const currentRoundLosses = Math.max(
+    0,
+    Math.min(rival.wins - rivalWinsBase, 4),
+  );
+
+  return {
+    wins: currentRoundWins,
+    losses: currentRoundLosses,
+  };
+}
+
+// Cálculo limpio de victorias para la ronda actual
+export const getRoundWins = (totalWins: number, conferenceFinals: boolean) => {
+  if (conferenceFinals) {
+    // Finales de Conferencia (ronda 3): victorias del 8 al 12
+    return Math.max(0, Math.min(totalWins - 8, 4));
+  }
+  // Semifinales (ronda 2): victorias del 4 al 8
+  return Math.max(0, Math.min(totalWins - 4, 4));
 };
 
 /* 

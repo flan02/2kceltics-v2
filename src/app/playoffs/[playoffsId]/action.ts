@@ -1,12 +1,16 @@
-import { db } from "@/db"
-import { cache } from "react"
+import { db } from "@/db";
+import { cache } from "react";
 
 export const getSeeds = cache(async (playoffsId: string) => {
   try {
     const seeds = await db.seed.findMany({
       where: {
-        playoffsId
+        playoffsId,
       },
+      orderBy: [
+        { conference: "desc" }, // WEST primero, EAST después
+        { position: "asc" }, // 1 al 8
+      ],
       select: {
         id: true,
         team_code: true,
@@ -15,35 +19,31 @@ export const getSeeds = cache(async (playoffsId: string) => {
         round: true,
         wins: true,
         losses: true,
-        eliminated: true
-      }
-    })
+        eliminated: true,
+      },
+    });
 
-    return seeds
+    return seeds;
   } catch (error) {
-    console.error(error)
-    return { error: 'An error occurred while fetching the seeds' }
+    console.error(error);
+    return { error: "An error occurred while fetching the seeds" };
   }
-
-})
-
+});
 
 export const getPlayoffsGames = cache(async (playoffsId: string) => {
   try {
     const response = await db.playoffs.findUnique({
       where: {
-        id: playoffsId
+        id: playoffsId,
       },
       select: {
-        gamesPlayed: true
-      }
-    })
+        gamesPlayed: true,
+      },
+    });
     //console.log(response);
-    return response
+    return response;
   } catch (error) {
-    console.error(error)
-    return null
+    console.error(error);
+    return null;
   }
-})
-
-
+});
