@@ -1,7 +1,7 @@
 "use server";
 
 import { db } from "@/db";
-import { Round } from "@/lib/types";
+import { Round } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 
 export const updateSeed = async (values: any) => {
@@ -45,3 +45,28 @@ export const updateSeed = async (values: any) => {
     return { error: "An error occurred while updating the seed" };
   }
 };
+
+export async function resetPlayoffs(playoffsId: string) {
+  try {
+    await db.seed.updateMany({
+      where: { playoffsId },
+      data: {
+        wins: 0,
+        losses: 0,
+        eliminated: false,
+        round: Round.FIRST_ROUND,
+      },
+    });
+
+    revalidatePath(`/playoffs/${playoffsId}`);
+    revalidatePath(`/playoffs`);
+
+    return { success: true };
+  } catch (error) {
+    console.error("Error al resetear playoffs:", error);
+    return {
+      success: false,
+      error: "An error occurred while resetting the playoffs.",
+    };
+  }
+}
