@@ -71,7 +71,7 @@ async function NbaCeltics({ searchParams }: Props) {
   // 3. Traemos los tiros del partido válido
   const shots = activeGameId ? await getShotsByGameId(activeGameId) : [];
 
-
+  const CURRENT_SEASON = process.env.SCRIPTS_CURRENT_SEASON!;
 
   const INITIAL_FILTERS = {
     player: player || "ALL",
@@ -85,7 +85,7 @@ async function NbaCeltics({ searchParams }: Props) {
   return (
     <main className="min-h-screen py-8">
       <h1 className="text-2xl tracking-tight leading-snug lg:tracking-normal lg:text-5xl font-bold text-center text-celtics mb-8">
-        CELTICS SHOT CHART SEASON 2025-26
+        CELTICS SHOT CHART SEASON {CURRENT_SEASON}
       </h1>
       <MainStatsMenu
         availableGames={games}

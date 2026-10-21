@@ -362,6 +362,8 @@ export const playersNBA_season2026_27: Record<string, string> = {
   "Amari Williams": "/amari-profile.png",
   "Hugo González": "/hugo-profile.png",
   "Ron Harper Jr.": "/ron-profile.png",
+  "Paul George": "/pg-profile.png",
+  "Mitchell Robinson": "/mitchell-profile.png",
 };
 
 export type ShotTypeFilter = "ALL" | "2PT" | "3PT";
