@@ -4,7 +4,7 @@ import ShotChart from '@/components/nba-celtics/ShotChart';
 import GameSelector from './GameSelector';
 import { useState, useRef, useEffect, useMemo } from 'react';
 import Image from 'next/image';
-import { GameStatsProps, INITIAL_FILTERS, playersNBA_season2025_26, ShotChartExportData, ShotStats, TeamSeasonData } from '@/lib/types';
+import { GameStatsProps, INITIAL_FILTERS, playersNBA_season2025_26, playersNBA_season2026_27, ShotChartExportData, ShotStats, TeamSeasonData } from '@/lib/types';
 import Link from 'next/link';
 import { ExportShotChartCard } from "./ExportShotChartCard";
 import { formatShortDate } from '@/lib/utils';
@@ -33,12 +33,16 @@ export default function MainStatsMenu({ availableGames, activeGameId, shots: raw
   const [teamStats, setTeamStats] = useState<TeamSeasonData | null>(null)
 
   // 2. Buscamos la foto en tu diccionario de la temporada
+  // const playerPhoto = stats?.selectedPlayer
+  //   ? playersNBA_season2025_26[stats.selectedPlayer]
+  //   : null;
+
   const playerPhoto = stats?.selectedPlayer
-    ? playersNBA_season2025_26[stats.selectedPlayer]
+    ? playersNBA_season2026_27[stats.selectedPlayer]
     : null;
 
   // 3. Solo mostramos el logo si es "ALL" o si no encontramos foto para ese jugador
-  const playerImageSrc = isAll ? "/celtics-logo.png" : playerPhoto || "/celtics-logo.png";
+  const playerImageSrc = isAll ? "/celtics-logo.png" : playerPhoto || "/default.png";
 
   const [exportData, setExportData] = useState<ShotChartExportData>({
     filteredShots: rawShots,

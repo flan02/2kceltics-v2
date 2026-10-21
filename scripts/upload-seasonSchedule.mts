@@ -112,6 +112,39 @@ async function uploadSchedule() {
   const games = await getCelticsGames(season, "Regular Season");
   console.log(`🏀 Se encontraron ${games.length} partidos. Guardando en DB...`);
 
+  // 👉 LOG DE MUESTRA PARA CONFIRMAR EL ULTIMO PARTIDOANTES DE LA DB
+  // if (games.length > 0) {
+  //   const ultimoPartido = games[0]; // El índice 0 siempre es el último jugado
+  //   const { homeTeam, awayTeam } = parseMatchup(ultimoPartido.matchup);
+
+  //   const homeScore =
+  //     homeTeam === "BOS" ? ultimoPartido.celtics_pts : ultimoPartido.opp_pts;
+  //   const awayScore =
+  //     homeTeam === "BOS" ? ultimoPartido.opp_pts : ultimoPartido.celtics_pts;
+
+  //   console.log("\n🔥 ÚLTIMO PARTIDO JUGADO:");
+  //   console.table([
+  //     {
+  //       Fecha: ultimoPartido.game_date,
+  //       Local: homeTeam,
+  //       "PTS Local": homeScore,
+  //       Visitante: awayTeam,
+  //       "PTS Visita": awayScore,
+  //       Resultado:
+  //         ultimoPartido.wl === "W"
+  //           ? "Victoria ✅"
+  //           : ultimoPartido.wl === "L"
+  //             ? "Derrota ❌"
+  //             : "Pendiente",
+  //       GameID: ultimoPartido.game_id,
+  //     },
+  //   ]);
+
+  //   // 👇 Descomentá este 'return' si querés ver la tabla en consola y frenar el script
+  //   // sin guardar nada en MongoDB todavía.
+  //   return;
+  // }
+
   // 👉 LOG DE MUESTRA PARA CONFIRMAR ANTES DE LA DB
   if (games.length > 0) {
     console.log("🔍 Ejemplo del primer partido obtenido:", {

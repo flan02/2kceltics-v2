@@ -349,6 +349,21 @@ export const playersNBA_season2025_26: Record<string, string> = {
   "Dalano Banton": "/banton-profile.png",
 };
 
+export const playersNBA_season2026_27: Record<string, string> = {
+  "Jayson Tatum": "/jt-profile.png",
+  "Derrick White": "/dw-profile.png",
+  "Payton Pritchard": "/pp-profile.png",
+  "Sam Hauser": "/sam-profile.png",
+  "Neemias Queta": "/queta-profile.png",
+  "Jordan Walsh": "/walsh-profile.png",
+  "Xavier Tillman": "/til-profile.png",
+  "Baylor Scheierman": "/scheierman-profile.png",
+  "Luka Garza": "/garza-profile.png",
+  "Amari Williams": "/amari-profile.png",
+  "Hugo González": "/hugo-profile.png",
+  "Ron Harper Jr.": "/ron-profile.png",
+};
+
 export type ShotTypeFilter = "ALL" | "2PT" | "3PT";
 export type PeriodFilter = "ALL" | 1 | 2 | 3 | 4;
 export type DistanceRange = "ALL" | "RIM" | "MID" | "THREE";

@@ -16,6 +16,8 @@
     "upload:shots": "node --env-file=.env.local --experimental-strip-types scripts/upload-shots.mts",
     "upload:schedule": "node --env-file=.env.local --experimental-strip-types scripts/upload-seasonSchedule.mts",
     "upload:teamStats": "node --env-file=.env.local --experimental-strip-types scripts/upload-teamStats.mts",
+    "upload:lastPlayedGame": "node --env-file=.env.local --experimental-strip-types scripts/upload-lastPlayedGame.mts",
+    "upload:lastGameShots": "node --env-file=.env.local --experimental-strip-types scripts/upload-lastGameShots.mts",
     "remove:shots": "node --experimental-strip-types scripts/remove-shotChartData.mts"
   },
   "dependencies": {

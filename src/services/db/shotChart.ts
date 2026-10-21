@@ -5,6 +5,7 @@ export async function getAvailableGames() {
     // Si querés listar solo los que ya se jugaron o tienen tiros:
     where: {
       status: { startsWith: "Final" }, // o status: "Final"
+      season: process.env.SCRIPTS_CURRENT_SEASON!,
     },
     orderBy: {
       gameDate: "desc",
