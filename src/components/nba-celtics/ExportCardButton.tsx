@@ -6,12 +6,11 @@ import { formatExportFileName } from "@/lib/utils";
 
 interface Props {
   playerName: string;
-  stats: any;
   gameMatchup: string;
   courtRef: RefObject<HTMLDivElement | null>;
 }
 
-export const ExportCardButton = ({ playerName, stats, gameMatchup, courtRef }: Props) => {
+export const ExportCardButton = ({ playerName, gameMatchup, courtRef }: Props) => {
   const [isGenerating, setIsGenerating] = useState(false);
 
   const handleDownload = async () => {

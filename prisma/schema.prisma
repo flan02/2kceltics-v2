@@ -265,12 +265,8 @@ model Shot {
 }
 
 model PlayerGameStatsNBA {
-  id            String     @id @default(auto()) @map("_id") @db.ObjectId
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
   gameId        String
-  season        String
-  seasonType    SeasonType
-  gameDate      DateTime
-  matchupText   String // ej: "BOS vs NYK"
   playerId      Int
   playerName    String
   teamId        Int
@@ -294,29 +290,33 @@ model PlayerGameStatsNBA {
   fta           Int
   pf            Int?
   plusMinus     Int?
-  createdAt     DateTime   @default(now())
-  updatedAt     DateTime   @updatedAt
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  // Relación contra el partido (igual que hiciste con Shot)
+  game ScheduleNBAList @relation(fields: [gameId], references: [gameId])
 
   @@unique([gameId, playerId]) // Evita duplicar el registro si re-sincronizás
-  @@index([playerId, season, seasonType]) // Clave para que la consulta por jugador sea instantánea
+  @@index([playerId]) // Índice simplificado
   @@map("PlayerGameStat")
 }
 
 model ScheduleNBAList {
-  id         String      @id @default(auto()) @map("_id") @db.ObjectId
-  gameId     String      @unique // El ID de la NBA: "0022600011"
-  gameDate   DateTime
-  season     String?     @default("2026-27")
-  seasonType SeasonType? @default(REGULAR_SEASON)
-  homeTeam   String
-  awayTeam   String
-  matchup    String
-  status     String // "Final", "7:00 pm ET", etc.
-  homeScore  Int?
-  awayScore  Int?
-  shots      Shot[]
-  createdAt  DateTime    @default(now())
-  updatedAt  DateTime    @updatedAt
+  id          String               @id @default(auto()) @map("_id") @db.ObjectId
+  gameId      String               @unique // El ID de la NBA: "0022600011"
+  gameDate    DateTime
+  season      String?              @default("2026-27")
+  seasonType  SeasonType?          @default(REGULAR_SEASON)
+  homeTeam    String
+  awayTeam    String
+  matchup     String
+  status      String // "Final", "7:00 pm ET", etc.
+  homeScore   Int?
+  awayScore   Int?
+  shots       Shot[]
+  playerStats PlayerGameStatsNBA[]
+  createdAt   DateTime             @default(now())
+  updatedAt   DateTime             @updatedAt
 
   @@index([gameDate])
   @@map("ScheduleList")

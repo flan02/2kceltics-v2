@@ -25,7 +25,6 @@ const SocialMediaSection = ({ playerName, stats, matchupText, exportCardRef, cla
       <div className="flex justify-end xl:justify-center">
         <ExportCardButton
           playerName={playerName}
-          stats={stats}
           gameMatchup={matchupText}
           courtRef={exportCardRef}
         />
