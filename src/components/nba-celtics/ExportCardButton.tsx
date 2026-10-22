@@ -5,17 +5,18 @@ import { toPng } from "html-to-image";
 import { formatExportFileName } from "@/lib/utils";
 
 interface Props {
+  playerName: string;
   stats: any;
   gameMatchup: string;
   courtRef: RefObject<HTMLDivElement | null>;
 }
 
-export const ExportCardButton = ({ stats, gameMatchup, courtRef }: Props) => {
+export const ExportCardButton = ({ playerName, stats, gameMatchup, courtRef }: Props) => {
   const [isGenerating, setIsGenerating] = useState(false);
 
   const handleDownload = async () => {
     if (!courtRef.current) {
-      console.warn("courtRef.current no está montado aún");
+      console.warn("courtRef.current isn't mounted yet");
       return;
     }
 
@@ -31,7 +32,7 @@ export const ExportCardButton = ({ stats, gameMatchup, courtRef }: Props) => {
         skipFonts: true,
       });
 
-      const fileName = formatExportFileName(gameMatchup, stats?.selectedPlayer);
+      const fileName = formatExportFileName(gameMatchup, playerName);
 
       // 2. Convertir dataUrl en Blob (solución estándar para compatibilidad con navegadores móviles)
       const res = await fetch(dataUrl);

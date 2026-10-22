@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { forwardRef } from "react";
 import { BasketballCourt } from "./BasketballCourt";
-import { ExportCardProps, INITIAL_FILTERS, playersNBA_season2025_26 } from '@/lib/types';
+import { ExportCardProps, INITIAL_FILTERS, playersNBA_season2025_26, playersNBA_season2026_27 } from '@/lib/types';
 import BannerAttributes from "./BannerAttributes";
 import { formatLogoAwayImage } from "@/lib/utils";
 
@@ -79,8 +79,9 @@ export const ExportShotChartCard = forwardRef<HTMLDivElement, ExportCardProps>((
   const isAll = targetedPlayer === "ALL";
   const playerName = isAll ? "Boston Celtics" : targetedPlayer;
 
-  const playerPhoto = !isAll ? playersNBA_season2025_26[targetedPlayer] : null;
-  const currentImageSrc = isAll ? "/celtics-logo.png" : (playerPhoto || "/celtics-logo.png");
+  // const playerPhoto = !isAll ? playersNBA_season2025_26[targetedPlayer] : null;
+  const playerPhoto = !isAll ? playersNBA_season2026_27[targetedPlayer] : null;
+  const currentImageSrc = isAll ? "/celtics-logo.png" : (playerPhoto || "/default.png");
 
   const outcomeLabel = activeFilters?.outcome || "ALL";
   const shotTimingLabel = activeFilters?.timing || "";

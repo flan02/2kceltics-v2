@@ -119,6 +119,7 @@ export default function MainStatsMenu({ availableGames, activeGameId, shots: raw
 
           {/* Export and Share button - For Desktop Only */}
           <SocialMediaSection
+            playerName={stats?.selectedPlayer || "ALL"}
             stats={fixedGameStats}
             matchupText={matchupText}
             exportCardRef={exportCardRef}
@@ -251,6 +252,7 @@ export default function MainStatsMenu({ availableGames, activeGameId, shots: raw
 
       {/* Export and Share button - For Mobile Only */}
       <SocialMediaSection
+        playerName={stats?.selectedPlayer || "ALL"}
         stats={fixedGameStats}
         matchupText={matchupText}
         exportCardRef={exportCardRef}

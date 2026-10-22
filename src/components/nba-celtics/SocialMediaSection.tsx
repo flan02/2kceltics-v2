@@ -3,6 +3,7 @@ import { ExportCardButton } from "./ExportCardButton"
 import ShareCardButton from "./ShareCardButton"
 
 type Props = {
+  playerName: string;
   stats: any;
   matchupText: string;
   exportCardRef: React.RefObject<HTMLDivElement | null>;
@@ -10,7 +11,7 @@ type Props = {
   filters?: CourtFilters;
 }
 
-const SocialMediaSection = ({ stats, matchupText, exportCardRef, className, filters }: Props) => {
+const SocialMediaSection = ({ playerName, stats, matchupText, exportCardRef, className, filters }: Props) => {
 
   return (
     <section className={`w-full space-x-1 justify-center items-center ${className || ""}`}>
@@ -23,6 +24,7 @@ const SocialMediaSection = ({ stats, matchupText, exportCardRef, className, filt
       </div>
       <div className="flex justify-end xl:justify-center">
         <ExportCardButton
+          playerName={playerName}
           stats={stats}
           gameMatchup={matchupText}
           courtRef={exportCardRef}
