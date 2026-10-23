@@ -11,7 +11,7 @@ import { resetPlayoffs, updateSeed } from "@/app/playoffs/action"
 import { useRouter } from 'next/navigation';
 import { useState } from "react"
 import { Round } from "@/lib/types"
-import { getRival } from "@/lib/utils"
+import { getRival, isWaitingForPreviousRound } from "@/lib/utils"
 
 type Props = {
   seeds: any,
@@ -57,10 +57,10 @@ const UpdatePlayoffsForm = ({ seeds, gamesPlayed, playoffsId }: Props) => {
   const isChampionCrowned = Boolean(champion);
 
 
-  const hasPendingMatchups = activeTeams.some((team) => {
-    const rival = getRival(team, allGames);
-    return Boolean(rival) && !team.disabled;
-  })
+  // const hasPendingMatchups = activeTeams.some((team) => {
+  //   const rival = getRival(team, allGames);
+  //   return Boolean(rival) && !team.disabled;
+  // })
 
 
   const handleReset = async () => {
@@ -188,6 +188,19 @@ const UpdatePlayoffsForm = ({ seeds, gamesPlayed, playoffsId }: Props) => {
     }
   }
 
+  const hasChangesToSave = allGames.some((g) => g.disabled);
+
+  // 2. Buscamos si quedó algún equipo activo cuyo botón DEBERÍA estar clickeable pero no se tocó:
+  const hasUnplayedEligibleMatches = allGames.some((team) => {
+    if (team.eliminated || team.disabled) return false;
+
+    const rival = getRival(team, allGames);
+    const waitingRound = isWaitingForPreviousRound(team.wins, allGames);
+
+    // Si tiene rival y no está esperando ronda previa, significa que tenía que jugar sí o sí
+    return Boolean(rival) && !waitingRound;
+  });
+
   const form = useForm<z.infer<typeof updateSeedSchema>>({
     resolver: zodResolver(updateSeedSchema),
     defaultValues: {
@@ -212,7 +225,7 @@ const UpdatePlayoffsForm = ({ seeds, gamesPlayed, playoffsId }: Props) => {
   });
 
   const { register, handleSubmit, formState, watch, trigger, control, setValue, getValues, setFocus, formState: { isSubmitting, isSubmitted, errors } } = form
-  const isUpdateDisabled = isSubmitting || hasPendingMatchups;
+  const isUpdateDisabled = isSubmitting || hasUnplayedEligibleMatches || !hasChangesToSave || isChampionCrowned;
   return (
 
 

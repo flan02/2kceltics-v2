@@ -452,6 +452,26 @@ export const getRoundWins = (totalWins: number, conferenceFinals: boolean) => {
   return Math.max(0, Math.min(totalWins - 4, 4));
 };
 
+// Verifica si hay equipos compitiendo en una ronda inferior
+export const isWaitingForPreviousRound = (
+  currentWins: number,
+  allGames: Game[],
+) => {
+  // Si está listo para Semis (4 a 7 wins), espera que todos terminen 1st Round (< 4 wins)
+  if (currentWins >= 4 && currentWins < 8) {
+    return allGames.some((g) => !g.eliminated && g.wins < 4);
+  }
+  // Si está listo para Conf. Finals (8 a 11 wins), espera que todos terminen Semis (< 8 wins)
+  if (currentWins >= 8 && currentWins < 12) {
+    return allGames.some((g) => !g.eliminated && g.wins < 8);
+  }
+  // Si está listo para Finals (>= 12 wins), espera que terminen Conf. Finals (< 12 wins)
+  if (currentWins >= 12) {
+    return allGames.some((g) => !g.eliminated && g.wins < 12);
+  }
+  return false;
+};
+
 /* 
 FG%: getPercentage(fgm, fga)
 

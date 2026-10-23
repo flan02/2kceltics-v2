@@ -5,7 +5,7 @@ import { useState } from 'react'
 import { Game } from './UpdatePlayoffsForm'
 import { Round } from '@/lib/types'
 import { Control, UseFormGetValues, UseFormSetValue } from 'react-hook-form'
-import { formatRound, getRival, getRoundBadgeStyle, getSeriesScore } from '@/lib/utils'
+import { formatRound, getRival, getRoundBadgeStyle, getSeriesScore, isWaitingForPreviousRound } from '@/lib/utils'
 
 type Props = {
   conference: 'WEST' | 'EAST';
@@ -15,6 +15,8 @@ type Props = {
 }
 
 const ConferenceSeed = ({ conference, control, allGames, handleWin }: Props) => {
+
+
 
   const conferenceGames = allGames.filter((g) => g.conference === conference);
 
@@ -30,7 +32,8 @@ const ConferenceSeed = ({ conference, control, allGames, handleWin }: Props) => 
           // Buscamos rival y calculamos récords consultando el universo de 16 equipos (allGames)
           const rival = getRival(seed, allGames);
           const hasNoRivalYet = !rival;
-          const isButtonDisabled = seed.eliminated || seed.disabled || hasNoRivalYet;
+          const waitingRound = isWaitingForPreviousRound(seed.wins, allGames);
+          const isButtonDisabled = seed.eliminated || seed.disabled || hasNoRivalYet || waitingRound;
           const score = getSeriesScore(seed, allGames);
 
           return (

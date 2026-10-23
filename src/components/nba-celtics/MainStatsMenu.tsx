@@ -32,11 +32,6 @@ export default function MainStatsMenu({ availableGames, activeGameId, shots: raw
 
   const [teamStats, setTeamStats] = useState<TeamSeasonData | null>(null)
 
-  // 2. Buscamos la foto en tu diccionario de la temporada
-  // const playerPhoto = stats?.selectedPlayer
-  //   ? playersNBA_season2025_26[stats.selectedPlayer]
-  //   : null;
-
   const playerPhoto = stats?.selectedPlayer
     ? playersNBA_season2026_27[stats.selectedPlayer]
     : null;

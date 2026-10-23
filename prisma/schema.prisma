@@ -313,6 +313,30 @@ model ScheduleNBAList {
   status      String // "Final", "7:00 pm ET", etc.
   homeScore   Int?
   awayScore   Int?
+  isWin       Boolean?
+  min         Int?
+  // Resumen del Equipo (Nuevos)
+  pts         Int? // PTS
+  fgPct       Float?               @map("fg%") // ".519"
+  fgm         Float?
+  fga         Float?
+  tpPct       Float?               @map("3p%") // ".581"
+  tpm         Float?
+  tpa         Float?
+  ftPct       Float?               @map("ft%") // ".806"
+  ftm         Float?
+  fta         Float?
+  // Rebotes
+  oreb        Int? // OREB (Ofensivos)
+  dreb        Int? // DREB (Defensivos)
+  reb         Int? // REB (Totales)
+  // Creación y Defensa
+  ast         Int? // AST (Asistencias)
+  stl         Int? // STL (Robos)
+  blk         Int? // BLK (Bloqueos)
+  tov         Int? // TOV (Pérdidas)
+  pf          Int? // PF (Faltas personales)
+  plusMinus   Float?               @map("+/-")
   shots       Shot[]
   playerStats PlayerGameStatsNBA[]
   createdAt   DateTime             @default(now())

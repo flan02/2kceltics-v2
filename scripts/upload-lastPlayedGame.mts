@@ -1,5 +1,5 @@
 /// <reference types="node" />
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, SeasonType } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
@@ -20,6 +20,27 @@ interface RawGameLog {
   wl: string | null;
   celtics_pts: number | null;
   opp_pts: number | null;
+  isWin: boolean | null;
+  min: number;
+  pts: number;
+  fgPct: number;
+  fgm: number;
+  fga: number;
+  tpPct: number;
+  tpm: number;
+  tpa: number;
+  ftPct: number;
+  ftm: number;
+  fta: number;
+  oreb: number;
+  dreb: number;
+  reb: number;
+  ast: number;
+  stl: number;
+  blk: number;
+  tov: number;
+  pf: number;
+  plusMinus: number;
 }
 
 async function getCelticsGames(
@@ -53,7 +74,7 @@ async function getCelticsGames(
   const rows: any[][] = dataset.rowSet;
 
   // 👉 AGREGÁ ESTA LÍNEA PARA VER TODAS LAS COLUMNAS QUE MANDA LA NBA:
-  console.log("Columnas que envía la NBA:", headers);
+  // console.log("Columnas que envía la NBA:", headers);
 
   const getCol = (row: any[], colName: string) => {
     const idx = headers.findIndex(
@@ -66,26 +87,44 @@ async function getCelticsGames(
     const rawPts = getCol(row, "PTS");
     const rawPlusMinus = getCol(row, "PLUS_MINUS") ?? getCol(row, "PLUSMINUS");
 
-    const pts =
-      rawPts !== null && rawPts !== undefined && rawPts !== ""
-        ? Number(rawPts)
-        : null;
-
+    const pts = rawPts !== null && rawPts !== "" ? Number(rawPts) : 0;
     const plusMinus =
-      rawPlusMinus !== null && rawPlusMinus !== undefined && rawPlusMinus !== ""
-        ? Number(rawPlusMinus)
-        : null;
-
-    // Con PTS y PLUS_MINUS calculamos directamente los puntos del rival
+      rawPlusMinus !== null && rawPlusMinus !== "" ? Number(rawPlusMinus) : 0;
     const opp_pts = pts !== null && plusMinus !== null ? pts - plusMinus : null;
+    const wl = getCol(row, "WL") ? String(getCol(row, "WL")) : null;
+
+    // Cálculo de overtimes (minutos regulares = 240, cada suplementario = 25 min extra)
+    const minRaw = getCol(row, "MIN");
+    const min = minRaw !== null && minRaw !== "" ? Number(minRaw) : 0;
 
     return {
       game_id: String(getCol(row, "Game_ID")),
       game_date: String(getCol(row, "GAME_DATE")),
       matchup: String(getCol(row, "MATCHUP")),
-      wl: getCol(row, "WL") ? String(getCol(row, "WL")) : null,
+      wl,
       celtics_pts: pts,
       opp_pts,
+      isWin: wl === "W" ? true : false,
+      min,
+      pts,
+      fgPct: Number(getCol(row, "FG_PCT")) || 0,
+      fgm: Number(getCol(row, "FGM")) || 0,
+      fga: Number(getCol(row, "FGA")) || 0,
+      tpPct: Number(getCol(row, "FG3_PCT")) || 0,
+      tpm: Number(getCol(row, "FG3M")) || 0,
+      tpa: Number(getCol(row, "FG3A")) || 0,
+      ftPct: Number(getCol(row, "FT_PCT")) || 0,
+      ftm: Number(getCol(row, "FTM")) || 0,
+      fta: Number(getCol(row, "FTA")) || 0,
+      oreb: Number(getCol(row, "OREB")) || 0,
+      dreb: Number(getCol(row, "DREB")) || 0,
+      reb: Number(getCol(row, "REB")) || 0,
+      ast: Number(getCol(row, "AST")) || 0,
+      stl: Number(getCol(row, "STL")) || 0,
+      blk: Number(getCol(row, "BLK")) || 0,
+      tov: Number(getCol(row, "TOV")) || 0,
+      pf: Number(getCol(row, "PF")) || 0,
+      plusMinus,
     };
   });
 }
@@ -96,12 +135,12 @@ function parseMatchup(matchup: string) {
   const separator = isHome ? "vs." : "@";
   const parts = matchup.split(separator).map((s) => s.trim());
 
-  const team1 = parts[0] || "BOS";
-  const team2 = parts[1] || "OPP";
+  // const team1 = parts[0] || "BOS";
+  // const team2 = parts[1] || "OPP";
 
   return {
-    homeTeam: isHome ? team1 : team2,
-    awayTeam: isHome ? team2 : team1,
+    homeTeam: isHome ? parts[0] || "BOS" : parts[1] || "OPP",
+    awayTeam: isHome ? parts[1] || "OPP" : parts[0] || "BOS",
   };
 }
 
@@ -138,6 +177,40 @@ async function uploadLastGame() {
         : lastGame.celtics_pts
       : null;
 
+  // Creamos un objeto con todos los datos para pasarlo limpio a update/create
+  const gameData = {
+    gameDate: parsedDate,
+    season,
+    seasonType: SeasonType.REGULAR_SEASON,
+    homeTeam,
+    awayTeam,
+    matchup: lastGame.matchup,
+    status,
+    homeScore,
+    awayScore,
+    isWin: lastGame.isWin,
+    min: lastGame.min,
+    pts: lastGame.pts,
+    fgPct: lastGame.fgPct,
+    fgm: lastGame.fgm,
+    fga: lastGame.fga,
+    tpPct: lastGame.tpPct,
+    tpm: lastGame.tpm,
+    tpa: lastGame.tpa,
+    ftPct: lastGame.ftPct,
+    ftm: lastGame.ftm,
+    fta: lastGame.fta,
+    oreb: lastGame.oreb,
+    dreb: lastGame.dreb,
+    reb: lastGame.reb,
+    ast: lastGame.ast,
+    stl: lastGame.stl,
+    blk: lastGame.blk,
+    tov: lastGame.tov,
+    pf: lastGame.pf,
+    plusMinus: lastGame.plusMinus,
+  };
+
   console.log("\n🔥 ACTUALIZANDO ÚLTIMO PARTIDO:");
   console.table([
     {
@@ -159,41 +232,20 @@ async function uploadLastGame() {
   //  Hacemos el upsert SOLO de este partido
   try {
     await prisma.scheduleNBAList.upsert({
-      where: {
-        gameId: lastGame.game_id,
-      },
-      update: {
-        gameDate: parsedDate,
-        season,
-        seasonType: "REGULAR_SEASON",
-        homeTeam,
-        awayTeam,
-        matchup: lastGame.matchup,
-        status,
-        homeScore,
-        awayScore,
-      },
+      where: { gameId: lastGame.game_id },
+      update: gameData,
       create: {
         gameId: lastGame.game_id,
-        gameDate: parsedDate,
-        season,
-        seasonType: "REGULAR_SEASON",
-        homeTeam,
-        awayTeam,
-        matchup: lastGame.matchup,
-        status,
-        homeScore,
-        awayScore,
+        ...gameData,
       },
     });
   } catch (error) {
     console.error("❌ Error al hacer upsert del último partido:", error);
-    throw error; // Re-lanzamos el error para que el bloque catch externo lo capture
+    throw error;
   } finally {
     await prisma.$disconnect();
-
     console.log(
-      `✅ ¡Listo! GameID ${lastGame.game_id} guardado en la base de datos.`,
+      `✅ ¡Listo! GameID ${lastGame.game_id} guardado en la base de datos con estadísticas completas.`,
     );
   }
 }
