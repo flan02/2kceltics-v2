@@ -26,3 +26,7 @@ New 2kceltics website built with Nextjs
 ## NBA API documentation
 
 [valid endpoints](https://github.com/swar/nba_api/tree/master/docs/nba_api/stats/endpoints)
+
+## Upcoming features
+
+- Create a server component to run our scripts by pressing a button in admin dashboard. (This will be a private page for admins only)
