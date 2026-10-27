@@ -357,13 +357,15 @@ export const playersNBA_season2026_27: Record<string, string> = {
   "Neemias Queta": "/queta-profile.png",
   "Jordan Walsh": "/walsh-profile.png",
   "Xavier Tillman": "/til-profile.png",
-  "Baylor Scheierman": "/scheierman-profile.png",
+  "Baylor Scheierman": "/scheierman2-profile.png",
   "Luka Garza": "/garza-profile.png",
   "Amari Williams": "/amari-profile.png",
   "Hugo González": "/hugo-profile.png",
-  "Ron Harper Jr.": "/ron-profile.png",
+  "Ron Harper Jr.": "/ron2-profile.png",
   "Paul George": "/pg-profile.png",
   "Mitchell Robinson": "/mitchell-profile.png",
+  "Chris Cenac Jr.": "/cenac-profile.png",
+  "Mike Conley": "/conley-profile.png",
 };
 
 export type ShotTypeFilter = "ALL" | "2PT" | "3PT";
