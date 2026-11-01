@@ -1,4 +1,5 @@
 import AddSeasonForm from "./AddSeasonForm";
+import AddTeam from "./AddTeam";
 
 
 
@@ -11,6 +12,7 @@ export default async function AddSeason() {
       <h1 className=' text-center text-4xl text-celtics'>Add New Season</h1>
       <br />
       <AddSeasonForm />
+      <AddTeam />
     </div>
   )
 }

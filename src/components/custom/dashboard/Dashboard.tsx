@@ -19,6 +19,7 @@ import ShareOnX from './ShareOnX'
 import ModalTask from './ModalTask'
 import { Task } from '@/lib/types'
 import { truncateWords } from '@/lib/utils'
+import NbaCeltics from './NbaCeltics'
 
 
 type Props = {
@@ -32,14 +33,16 @@ const Dashboard = async ({ opt, photo, given_name }: Props) => {
   const tasks = await getTasks() // server function
 
 
-  const addTeam = opt === 'addteam'
+  // const addTeam = opt === 'addteam'
+  const nbaCeltics = opt === 'nba-celtics'
   const schedule = opt === 'schedule'
   const addStats = opt === 'addstats'
   const addSeason = opt === 'addseason'
   const addPlayoffs = opt === 'addplayoffs'
 
   const OPTIONS = [
-    'addteam',
+    // 'addteam',
+    "nba-celtics",
     'schedule',
     'addstats',
     'addseason',
@@ -112,7 +115,8 @@ const Dashboard = async ({ opt, photo, given_name }: Props) => {
             </div>
             : null
         }
-        {addTeam ? <AddTeam /> : null}
+        {/* {addTeam ? <AddTeam /> : null} */}
+        {nbaCeltics ? <NbaCeltics /> : null}
         {schedule ? <Schedule /> : null}
         {addStats ? <AddStats /> : null}
         {addSeason ? <AddSeason /> : null}

@@ -16,7 +16,7 @@ export default async function AddTeam() {
   const season2k: Props = await getSeasons2k(CURRENT_SEASON) as Props;
 
   return (
-    <section className='flex flex-col space-y-6 justify-start items-center mt-16 min-h-[calc(100vh-50px)]'>
+    <section className='flex flex-col w-full space-y-6 justify-start items-center mt-16 min-h-[calc(100vh-50px)]'>
       <h1 className=' text-center text-4xl text-celtics'>Add/Edit Team</h1>
       <div className="grid grid-cols-1 w-full">
 
