@@ -51,17 +51,10 @@ const UpdatePlayoffsForm = ({ seeds, gamesPlayed, playoffsId }: Props) => {
     }))
   );
 
-  const activeTeams = allGames.filter((g) => !g.eliminated);
+  // const activeTeams = allGames.filter((g) => !g.eliminated);
 
   const champion = allGames.find((g) => g.wins >= 16);
   const isChampionCrowned = Boolean(champion);
-
-
-  // const hasPendingMatchups = activeTeams.some((team) => {
-  //   const rival = getRival(team, allGames);
-  //   return Boolean(rival) && !team.disabled;
-  // })
-
 
   const handleReset = async () => {
     const confirmed = window.confirm("⚠️ Are you sure you want to reset all playoffs?\n\nThis action will set all wins and losses to 0, unmark eliminated teams, and return all teams to First Round.");
@@ -195,10 +188,18 @@ const UpdatePlayoffsForm = ({ seeds, gamesPlayed, playoffsId }: Props) => {
     if (team.eliminated || team.disabled) return false;
 
     const rival = getRival(team, allGames);
-    const waitingRound = isWaitingForPreviousRound(team.wins, allGames);
+    const waitingRound = isWaitingForPreviousRound(team.wins, allGames, team.conference);
 
-    // Si tiene rival y no está esperando ronda previa, significa que tenía que jugar sí o sí
-    return Boolean(rival) && !waitingRound;
+    // Si no tiene rival o está esperando ronda previa, no tiene partido pendiente
+    if (!rival || waitingRound) return false;
+
+    // Si su rival ya jugó en este turno (ej. recién ganó su Game 7), no es un cruce pendiente ahora
+    if (rival.disabled) return false;
+
+    // Si están en rondas distintas en el estado local, tampoco
+    if (rival.round !== team.round) return false;
+
+    return true;
   });
 
   const form = useForm<z.infer<typeof updateSeedSchema>>({

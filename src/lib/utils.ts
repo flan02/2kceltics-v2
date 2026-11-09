@@ -453,19 +453,41 @@ export const getRoundWins = (totalWins: number, conferenceFinals: boolean) => {
 };
 
 // Verifica si hay equipos compitiendo en una ronda inferior
+// export const isWaitingForPreviousRound = (
+//   currentWins: number,
+//   allGames: Game[],
+// ) => {
+//   // Si está listo para Semis (4 a 7 wins), espera que todos terminen 1st Round (< 4 wins)
+//   if (currentWins >= 4 && currentWins < 8) {
+//     return allGames.some((g) => !g.eliminated && g.wins < 4);
+//   }
+//   // Si está listo para Conf. Finals (8 a 11 wins), espera que todos terminen Semis (< 8 wins)
+//   if (currentWins >= 8 && currentWins < 12) {
+//     return allGames.some((g) => !g.eliminated && g.wins < 8);
+//   }
+//   // Si está listo para Finals (>= 12 wins), espera que terminen Conf. Finals (< 12 wins)
+//   if (currentWins >= 12) {
+//     return allGames.some((g) => !g.eliminated && g.wins < 12);
+//   }
+//   return false;
+// };
+
 export const isWaitingForPreviousRound = (
   currentWins: number,
   allGames: Game[],
+  conference: "WEST" | "EAST",
 ) => {
-  // Si está listo para Semis (4 a 7 wins), espera que todos terminen 1st Round (< 4 wins)
+  const confGames = allGames.filter((g) => g.conference === conference);
+
+  // Semis (4 a 7 wins): espera que su propia conferencia termine 1st Round (< 4 wins)
   if (currentWins >= 4 && currentWins < 8) {
-    return allGames.some((g) => !g.eliminated && g.wins < 4);
+    return confGames.some((g) => !g.eliminated && g.wins < 4);
   }
-  // Si está listo para Conf. Finals (8 a 11 wins), espera que todos terminen Semis (< 8 wins)
+  // Conf Finals (8 a 11 wins): espera que su propia conferencia termine Semis (< 8 wins)
   if (currentWins >= 8 && currentWins < 12) {
-    return allGames.some((g) => !g.eliminated && g.wins < 8);
+    return confGames.some((g) => !g.eliminated && g.wins < 8);
   }
-  // Si está listo para Finals (>= 12 wins), espera que terminen Conf. Finals (< 12 wins)
+  // Finals (>= 12 wins): acá sí espera a la otra conferencia
   if (currentWins >= 12) {
     return allGames.some((g) => !g.eliminated && g.wins < 12);
   }
@@ -474,15 +496,9 @@ export const isWaitingForPreviousRound = (
 
 /* 
 FG%: getPercentage(fgm, fga)
-
 3P%: getPercentage(fg3m, fg3a)
-
 FT%: getPercentage(ftm, fta)
-
 2P%: getPercentage(fgm - fg3m, fga - fg3a)
-
 eFG% (Effective Field Goal %): ((fgm + 0.5 * fg3m) / fga) * 100
-
 TS% (True Shooting %): (pts / (2 * (fga + 0.44 * fta))) * 100
-
 */

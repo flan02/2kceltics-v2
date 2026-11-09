@@ -16,8 +16,6 @@ type Props = {
 
 const ConferenceSeed = ({ conference, control, allGames, handleWin }: Props) => {
 
-
-
   const conferenceGames = allGames.filter((g) => g.conference === conference);
 
   return (
@@ -32,8 +30,18 @@ const ConferenceSeed = ({ conference, control, allGames, handleWin }: Props) => 
           // Buscamos rival y calculamos récords consultando el universo de 16 equipos (allGames)
           const rival = getRival(seed, allGames);
           const hasNoRivalYet = !rival;
-          const waitingRound = isWaitingForPreviousRound(seed.wins, allGames);
-          const isButtonDisabled = seed.eliminated || seed.disabled || hasNoRivalYet || waitingRound;
+          const waitingRound = isWaitingForPreviousRound(seed.wins, allGames, seed.conference);
+
+          const isRivalUnavailable = Boolean(rival && rival.disabled);
+          const isRivalDifferentRound = Boolean(rival && rival.round !== seed.round);
+          // const isButtonDisabled = seed.eliminated || seed.disabled || hasNoRivalYet || waitingRound;
+          const isButtonDisabled =
+            seed.eliminated ||
+            seed.disabled ||
+            hasNoRivalYet ||
+            waitingRound ||
+            isRivalUnavailable ||
+            isRivalDifferentRound;
           const score = getSeriesScore(seed, allGames);
 
           return (
